@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   Style: ${estilo}. 
   Emotion: ${emocion}. 
   Vibrant colors, dramatic lighting, 16:9 format, professional quality, 
-  eye-catching design, bold composition.`;
+  eye-catching design, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean cinematic background only.`;
 
   const response = await openai.images.generate({
     model: "dall-e-3",
