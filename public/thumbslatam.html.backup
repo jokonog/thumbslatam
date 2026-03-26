@@ -1369,7 +1369,7 @@
   </ul>
   <div class="nav-cta">
     <a href="#" class="btn-ghost">Iniciar sesión</a>
-    <a href="#pricing" class="btn-primary">Empezar gratis →</a>
+    <a href="/registro" class="btn-primary">Empezar gratis →</a>
   </div>
 </nav>
 
@@ -1394,7 +1394,7 @@
   </p>
 
   <div class="hero-actions">
-    <a href="#pricing" class="btn-hero">Crear mi primera miniatura gratis →</a>
+    <a href="/registro" class="btn-hero">Crear mi primera miniatura gratis →</a>
     <a href="#features" class="btn-hero-outline">Ver cómo funciona</a>
   </div>
 
