@@ -25,7 +25,7 @@ export default function Registro() {
     if (error) {
       setMensaje("Error: " + error.message);
     } else {
-      window.location.href = "/generador";
+      window.location.href = "/dashboard";
     }
     setCargando(false);
   }
