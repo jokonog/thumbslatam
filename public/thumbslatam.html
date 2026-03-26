@@ -1420,6 +1420,54 @@ cssnav {
   .testi-card { padding: 20px 16px; }
   .feature-card { padding: 22px 18px; }
 }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--c-text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: rgba(6,8,16,0.98);
+  backdrop-filter: blur(20px);
+  padding: 20px 24px;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 99;
+  border-bottom: 1px solid var(--c-border);
+}
+.mobile-menu a {
+  color: var(--c-text);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.mobile-menu.open {
+  display: flex;
+}
+@media (max-width: 900px) {
+  .hamburger { display: flex; }
+  .nav-links { display: none; }
+  .nav-cta .btn-ghost { display: none; }
+  .btn-primary { font-size: 0.8rem; padding: 8px 12px; }
+}
 </style>
 </head>
 <body>
@@ -1437,7 +1485,17 @@ cssnav {
     <a href="#" class="btn-ghost">Iniciar sesión</a>
     <a href="#pricing" class="btn-primary">Empezar gratis →</a>
   </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" onclick="toggleMenu()">Funciones</a>
+  <a href="#compare" onclick="toggleMenu()">Comparar</a>
+  <a href="#pricing" onclick="toggleMenu()">Precios</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#pricing" class="btn-primary" style="text-align:center;margin-top:8px" onclick="toggleMenu()">Empezar gratis →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -2042,6 +2100,12 @@ cssnav {
       nav.style.background = 'rgba(6,8,16,0.85)';
     }
   });
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+}
+</script>
 </script>
 </body>
 </html>
