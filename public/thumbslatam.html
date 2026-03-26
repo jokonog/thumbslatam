@@ -62,7 +62,8 @@
   }
 
   /* ─── NAV ─── */
-  nav {
+  Paso 14: Reemplaza ese bloque por esto:
+cssnav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
@@ -73,15 +74,18 @@
     background: rgba(6,8,16,0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--c-border);
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .nav-logo {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--c-text);
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .nav-logo span {
@@ -106,8 +110,9 @@
 
   .nav-cta {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
+    flex-shrink: 0;
   }
 
   .btn-ghost {
@@ -317,18 +322,24 @@
 
   .hero-stats {
     display: flex;
-    gap: 48px;
+    gap: 24px;
     margin-top: 72px;
     padding-top: 40px;
     border-top: 1px solid var(--c-border);
     animation: fadeInUp 0.7s ease 0.4s both;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
   }
 
   .stat { text-align: center; }
 
   .stat-num {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: clamp(1rem, 3.5vw, 2rem);
     font-weight: 800;
     color: var(--c-text);
     letter-spacing: -0.03em;
@@ -1341,8 +1352,8 @@
   .nav-cta .btn-ghost { display: none; }
   .btn-primary { padding: 8px 14px; font-size: 0.8rem; }
   .hero { padding: 100px 20px 60px; }
-  .hero h1 { font-size: 2.2rem; letter-spacing: -0.02em; }
-  .hero-sub { font-size: 0.95rem; padding: 0 10px; }
+  .hero h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); letter-spacing: -0.02em; }
+  .hero-sub { font-size: 0.9rem; padding: 0 16px; }
   .hero-stats {
     gap: 16px;
     flex-wrap: wrap;
