@@ -9,7 +9,7 @@ const[imagen,setImagen]=useState("");
 const[fotos,setFotos]=useState([]);
 const[fotosBase64,setFotosBase64]=useState([]);
 const[cargando,setCargando]=useState(false);
-function procesarFotos(e){
+function procesarFotos(e: React.ChangeEvent<HTMLInputElement>){
 const files=Array.from(e.target.files).slice(0,5);
 const urls=files.map(f=>URL.createObjectURL(f));
 setFotos(urls);
