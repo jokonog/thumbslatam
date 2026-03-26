@@ -1385,7 +1385,7 @@
   </div>
 
   <h1>
-    Miniaturas con IA<br>que <em>explotan clicks</em><br>desde $2 USD al mes
+    Miniaturas con IA<br>que <em>explotan clicks</em><br>desde $10 USD al mes
   </h1>
 
   <p class="hero-sub">
@@ -1706,7 +1706,7 @@
         <div class="plan-desc">Para youtubers y streamers que suben contenido regularmente</div>
         <div class="plan-price">
           <span class="price-usd-sym">$</span>
-          <span class="price-usd" style="color:var(--c-accent)">5</span>
+          <span class="price-usd" style="color:var(--c-accent)">10</span>
           <span class="price-period">/mes</span>
         </div>
         <div class="price-latam">≈ MXN $85 · ARS $4,800 · COP $19,000 · CLP $4,800</div>
@@ -1729,7 +1729,7 @@
         <div class="plan-desc">Para agencias y creadores con múltiples canales</div>
         <div class="plan-price">
           <span class="price-usd-sym">$</span>
-          <span class="price-usd">12</span>
+          <span class="price-usd">25</span>
           <span class="price-period">/mes</span>
         </div>
         <div class="price-latam">≈ MXN $204 · ARS $11,500 · COP $46,000</div>
