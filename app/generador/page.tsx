@@ -1,28 +1,31 @@
 "use client";
 import{useState}from"react";
 export default function Generador(){
-const[descripcion,setDescripcion]=useState("");
-const[estilo,setEstilo]=useState("gaming");
-const[emocion,setEmocion]=useState("emocionado");
-const[formato,setFormato]=useState("youtube");
-const[imagen,setImagen]=useState("");
-const[fotos,setFotos]=useState([]);
-const[fotosBase64,setFotosBase64]=useState([]);
-const[cargando,setCargando]=useState(false);
-function procesarFotos(e: React.ChangeEvent<HTMLInputElement>){
-const files=Array.from(e.target.files ?? []).slice(0,5);
-const urls=files.map(f=>URL.createObjectURL(f));
+const[descripcion,setDescripcion]=useState<string>("");
+const[estilo,setEstilo]=useState<string>("gaming");
+const[emocion,setEmocion]=useState<string>("emocionado");
+const[formato,setFormato]=useState<string>("youtube");
+const[imagen,setImagen]=useState<string>("");
+const[fotos,setFotos]=useState<string[]>([]);
+const[fotosBase64,setFotosBase64]=useState<string[]>([]);
+const[cargando,setCargando]=useState<boolean>(false);
+function procesarFotos(e:React.ChangeEvent<HTMLInputElement>){
+const fileList=e.target.files;
+if(!fileList)return;
+const files=Array.from(fileList).slice(0,5);
+const urls=files.map((f:File)=>URL.createObjectURL(f));
 setFotos(urls);
-const promises=files.map(f=>new Promise(res=>{
+const promises=files.map((f:File)=>new Promise<string>((res)=>{
 const r=new FileReader();
-r.onload=()=>res(r.result);
+r.onload=()=>res(r.result as string);
 r.readAsDataURL(f);
 }));
-Promise.all(promises).then(results=>setFotosBase64(results));
+Promise.all(promises).then((results:string[])=>setFotosBase64(results));
 }
 async function generarMiniatura(){
 setCargando(true);
-const res=await fetch("/api/generate-avatar",{
+const endpoint=fotosBase64.length>0?"/api/generate-avatar":"/api/generate";
+const res=await fetch(endpoint,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({descripcion,estilo,emocion,formato,fotosBase64}),
@@ -70,9 +73,8 @@ return(
 </select>
 </div>
 <div style={{marginBottom:"32px",padding:"20px",borderRadius:"12px",background:"#111827",border:"2px dashed #3A3D52"}}>
-<label style={{display:"block",marginBottom:"8px",fontWeight:"600"}}>Tus 5 fotos</label>
-<p style={{color:"#8B8FA8",fontSize:"0.85rem",marginBottom:"4px"}}>Frente, perfil izquierdo, perfil derecho, sonriendo, serio</p>
-<p style={{color:"#FF4D00",fontSize:"0.8rem",marginBottom:"12px"}}>Mas fotos = mejor parecido</p>
+<label style={{display:"block",marginBottom:"8px",fontWeight:"600"}}>Tus fotos</label>
+<p style={{color:"#8B8FA8",fontSize:"0.85rem",marginBottom:"4px"}}>Sube hasta 5 fotos tuyas para mejor parecido</p>
 <input type="file" accept="image/*" multiple onChange={procesarFotos} style={{color:"#8B8FA8"}}/>
 <div style={{display:"flex",gap:"8px",flexWrap:"wrap",marginTop:"12px"}}>
 {fotos.map((f,i)=>(
@@ -81,8 +83,8 @@ return(
 </div>
 {fotos.length>0&&<p style={{color:"#06D6A0",fontSize:"0.8rem",marginTop:"8px"}}>{fotos.length} foto{fotos.length>1?"s":""} seleccionada{fotos.length>1?"s":""}</p>}
 </div>
-<button onClick={generarMiniatura} disabled={cargando||!descripcion||fotosBase64.length===0} style={{width:"100%",padding:"14px",borderRadius:"10px",background:(descripcion&&fotosBase64.length>0)?"#FF4D00":"#3A3D52",border:"none",color:"white",fontSize:"1rem",fontWeight:"700",marginBottom:"32px"}}>
-{cargando?"Aprendiendo tu cara... 60 segundos":"Generar miniatura con mi cara"}
+<button onClick={generarMiniatura} disabled={cargando||!descripcion} style={{width:"100%",padding:"14px",borderRadius:"10px",background:descripcion?"#FF4D00":"#3A3D52",border:"none",color:"white",fontSize:"1rem",fontWeight:"700",marginBottom:"32px"}}>
+{cargando?"Generando... espera 60 segundos":"Generar miniatura"}
 </button>
 {imagen&&(
 <div>
