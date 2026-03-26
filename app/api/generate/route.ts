@@ -23,6 +23,6 @@ export async function POST(request: Request) {
     quality: "hd",
   });
 
-  const imageUrl = response.data[0].url;
+  const imageUrl = response.data?.[0]?.url ?? "";
   return NextResponse.json({ imageUrl });
 }
