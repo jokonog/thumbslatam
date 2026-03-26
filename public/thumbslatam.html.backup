@@ -1332,112 +1332,27 @@
   }
 
   /* ─── RESPONSIVE ─── */
-  /* ─── HAMBURGER ─── */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px 4px;
-    flex-shrink: 0;
-  }
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--c-text);
-    border-radius: 2px;
-  }
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 57px;
-    left: 0;
-    right: 0;
-    background: rgba(6,8,16,0.98);
-    backdrop-filter: blur(20px);
-    padding: 20px 24px 28px;
-    flex-direction: column;
-    gap: 4px;
-    z-index: 99;
-    border-bottom: 1px solid var(--c-border);
-  }
-  .mobile-menu a {
-    color: var(--c-text);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--c-border);
-    display: block;
-  }
-  .mobile-menu a:last-child { border-bottom: none; }
-  .mobile-menu.open { display: flex; }
-
   @media (max-width: 900px) {
-    nav { padding: 14px 20px; }
+    nav { padding: 16px 24px; }
     .nav-links { display: none; }
-    .nav-logo { font-size: clamp(1rem, 3vw, 1.4rem); white-space: nowrap; }
-    .nav-cta .btn-ghost { display: none; }
-    .btn-primary { padding: 8px 14px; font-size: 0.8rem; white-space: nowrap; }
-    .hamburger { display: flex; }
-    .hero { padding: 100px 20px 60px; }
-    .hero h1 { font-size: clamp(1.8rem, 6vw, 3rem); }
-    .hero-sub { font-size: 0.95rem; padding: 0 8px; }
-    .hero-stats {
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-      box-sizing: border-box;
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-    .stat { min-width: 70px; text-align: center; }
-    .stat-num { font-size: clamp(1rem, 3.5vw, 1.8rem); }
-    .stat-label { font-size: 0.65rem; }
     .steps-grid { grid-template-columns: repeat(2, 1fr); }
     .steps-grid::before { display: none; }
     .features-grid { grid-template-columns: repeat(2, 1fr); }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    .pricing-grid { grid-template-columns: 1fr; }
     .testi-grid { grid-template-columns: repeat(2, 1fr); }
-    footer { grid-template-columns: 1fr 1fr; gap: 30px; padding: 40px 24px; }
-    .footer-bottom { flex-direction: column; gap: 10px; padding: 20px 24px; text-align: center; }
+    footer { grid-template-columns: 1fr 1fr; gap: 30px; }
+    .footer-bottom { flex-direction: column; gap: 10px; padding: 20px 24px; }
+    .hero-stats { gap: 24px; }
     .mockup-body { grid-template-columns: 1fr; }
     .mockup-sidebar { display: none; }
-    .compare-section { padding: 60px 16px; }
-    .compare-table { font-size: 0.78rem; }
-    .compare-head-cell { padding: 12px 10px; }
-    .compare-cell { padding: 10px 10px; }
-    .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); }
-    .preview-section { padding: 0 16px 60px; }
-    .hero-actions { flex-direction: column; align-items: center; width: 100%; }
-    .btn-hero { width: 100%; text-align: center; }
-    .btn-hero-outline { width: 100%; text-align: center; }
+    .compare-section { overflow-x: auto; }
   }
 
   @media (max-width: 600px) {
-    nav { padding: 12px 16px; }
-    .hero { padding: 88px 16px 48px; }
-    .hero h1 { font-size: clamp(1.6rem, 5.5vw, 2.2rem); }
     .features-grid { grid-template-columns: 1fr; }
     .testi-grid { grid-template-columns: 1fr; }
     .steps-grid { grid-template-columns: 1fr; }
-    footer { grid-template-columns: 1fr; padding: 32px 16px 16px; }
-    .pricing-grid { max-width: 100%; }
-    .plan-card { padding: 24px 18px; }
-    .price-usd { font-size: 2.2rem; }
-    .form-row { flex-direction: column; }
-    .email-input { width: 100%; }
-    .cta-title { font-size: clamp(1.6rem, 5vw, 2.5rem); }
-    .badge { font-size: 0.72rem; padding: 5px 12px; }
-    .compare-head-cell { padding: 10px 8px; font-size: 0.72rem; }
-    .compare-cell { padding: 9px 8px; font-size: 0.72rem; }
-    .testi-card { padding: 20px 16px; }
-    .feature-card { padding: 20px 16px; }
-    .hero-stats { gap: 10px; }
+    footer { grid-template-columns: 1fr; padding: 40px 24px 24px; }
   }
 </style>
 </head>
@@ -1456,18 +1371,7 @@
     <a href="#" class="btn-ghost">Iniciar sesión</a>
     <a href="#pricing" class="btn-primary">Empezar gratis →</a>
   </div>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#features" onclick="toggleMenu()">Funciones</a>
-  <a href="#compare" onclick="toggleMenu()">Comparar</a>
-  <a href="#pricing" onclick="toggleMenu()">Precios</a>
-  <a href="#faq" onclick="toggleMenu()">FAQ</a>
-  <a href="#" onclick="toggleMenu()" style="color:var(--c-muted)">Iniciar sesión</a>
-  <a href="#pricing" onclick="toggleMenu()" style="background:var(--c-accent);color:#fff;padding:12px 16px;border-radius:8px;text-align:center;font-weight:700;margin-top:8px;border:none">Empezar gratis →</a>
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -2070,26 +1974,6 @@
       nav.style.background = 'rgba(6,8,16,0.96)';
     } else {
       nav.style.background = 'rgba(6,8,16,0.85)';
-    }
-  });
-
-  // Mobile menu toggle
-  function toggleMenu() {
-    const menu = document.getElementById('mobileMenu');
-    if (menu.style.display === 'flex') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'flex';
-      menu.style.flexDirection = 'column';
-    }
-  }
-
-  // Close menu when clicking outside
-  document.addEventListener('click', function(e) {
-    const menu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.hamburger');
-    if (menu && hamburger && !menu.contains(e.target) && !hamburger.contains(e.target)) {
-      menu.style.display = 'none';
     }
   });
 </script>
