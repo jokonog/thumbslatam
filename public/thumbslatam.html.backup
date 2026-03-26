@@ -1720,7 +1720,7 @@
           <li><span class="fi">✓</span> Historial ilimitado</li>
           <li><span class="fi">✓</span> Soporte prioritario</li>
         </ul>
-        <button class="plan-btn plan-btn-filled" onclick="alert('¡Empezando tu prueba de 7 días gratis!')">Probar 7 días gratis →</button>
+        <a href="/registro" class="plan-btn plan-btn-filled" style="text-align:center;text-decoration:none">Probar 7 días gratis →</a>
       </div>
 
       <!-- STUDIO -->
@@ -1743,7 +1743,7 @@
           <li><span class="fi">✓</span> Manager de cuenta dedicado</li>
           <li><span class="fi">✓</span> Plantillas de marca personalizadas</li>
         </ul>
-        <button class="plan-btn plan-btn-outline" onclick="alert('¡Activando tu Studio!')">Comenzar Studio</button>
+        <a href="/registro" class="plan-btn plan-btn-outline" style="text-align:center;text-decoration:none">Comenzar Studio</a>
       </div>
 
     </div>
