@@ -6,23 +6,24 @@ const openai = new OpenAI({
 });
 
 export async function POST(request: Request) {
-  const { descripcion, estilo, emocion } = await request.json();
+  try {
+    const { descripcion, estilo, emocion } = await request.json();
 
-  const prompt = `YouTube thumbnail for a Latin American content creator. 
-  Video about: ${descripcion}. 
-  Style: ${estilo}. 
-  Emotion: ${emocion}. 
-  Vibrant colors, dramatic lighting, 16:9 format, professional quality, 
-  eye-catching design, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean cinematic background only.`;
+    const prompt = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, 16:9, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
-  const response = await openai.images.generate({
-    model: "dall-e-3",
-    prompt: prompt,
-    n: 1,
-    size: "1792x1024",
-    quality: "hd",
-  });
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: prompt,
+      n: 1,
+      size: "1792x1024",
+      quality: "hd",
+    });
 
-  const imageUrl = response.data?.[0]?.url ?? "";
-  return NextResponse.json({ imageUrl });
+    const imageUrl = response.data?.[0]?.url ?? "";
+    return NextResponse.json({ imageUrl });
+
+  } catch (error: any) {
+    console.error("ERROR:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
