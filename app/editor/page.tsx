@@ -69,31 +69,64 @@ export default function Editor() {
   async function cambiarPlataforma(val: string) {
     setPlataforma(val);
     if (!fabricRef.current?.canvas) return;
-    const { canvas, FabricImage } = fabricRef.current;
+    const { canvas } = fabricRef.current;
     const np = plataformas[val];
     canvas.setDimensions({ width: np.w, height: np.h });
-    if (canvas.backgroundImage) {
-      const img = canvas.backgroundImage as any;
-      const imgW = img.width! * img.scaleX!;
-      const imgH = img.height! * img.scaleY!;
-      const newValVertical = val === "instagram_story" || val === "tiktok";
-      const fondoEsV = fondoOrientacion === "vertical";
-      if (!fondoEsV && newValVertical) {
-        const scale = np.h / img.height!;
-        img.set({ scaleX: scale, scaleY: scale, left: 0, top: 0, selectable: true, evented: true });
-        canvas.add(img);
-        canvas.backgroundImage = undefined;
-        canvas.setActiveObject(img);
-        img.set({ hasControls: false });
-      } else {
-        const scaleX = np.w / img.width!;
-        const scaleY = np.h / img.height!;
-        img.set({ scaleX, scaleY, left: 0, top: 0, selectable: false, evented: false });
-        canvas.backgroundImage = img;
-        if (canvas.contains(img)) canvas.remove(img);
-      }
-      canvas.renderAll();
+
+    const newValVertical = val === "instagram_story" || val === "tiktok";
+    const fondoEsV = fondoOrientacion === "vertical";
+
+    let img = canvas.backgroundImage as any;
+    if (!img) {
+      const objs = canvas.getObjects();
+      if (objs.length > 0) img = objs[0];
     }
+    if (!img) return;
+
+    if (canvas.contains(img)) canvas.remove(img);
+    canvas.backgroundImage = undefined;
+
+    const scale = Math.max(np.w / img.width!, np.h / img.height!);
+    const scaledW = img.width! * scale;
+    const scaledH = img.height! * scale;
+    const needsCrop = scaledW > np.w || scaledH > np.h;
+    const leftInicial = scaledW > np.w ? (np.w - scaledW) / 2 : 0;
+    const topInicial = scaledH > np.h ? (np.h - scaledH) / 2 : 0;
+
+    if (needsCrop) {
+      img.set({
+        scaleX: scale,
+        scaleY: scale,
+        left: leftInicial,
+        top: topInicial,
+        selectable: true,
+        evented: true,
+        hasControls: false,
+        hasBorders: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        lockMovementY: scaledW > np.w,
+        lockMovementX: scaledH > np.h,
+      });
+      canvas.add(img);
+      canvas.setActiveObject(img);
+    } else {
+      img.set({
+        scaleX: scale,
+        scaleY: scale,
+        left: 0,
+        top: 0,
+        selectable: false,
+        evented: false,
+        lockMovementY: false,
+        lockMovementX: false,
+        lockScalingX: false,
+        lockScalingY: false,
+      });
+      canvas.backgroundImage = img;
+    }
+    canvas.renderAll();
   }
 
   async function generarFondo() {
@@ -101,6 +134,12 @@ export default function Editor() {
     setCargando(true);
     setProgreso(0);
     setFondoGenerado(false);
+    if (fabricRef.current?.canvas) {
+      const { canvas } = fabricRef.current;
+      canvas.getObjects().forEach((obj: any) => canvas.remove(obj));
+      canvas.backgroundImage = undefined;
+      canvas.renderAll();
+    }
     const interval = setInterval(() => {
       setProgreso(prev => prev >= 90 ? 90 : prev + 5);
     }, 1000);
