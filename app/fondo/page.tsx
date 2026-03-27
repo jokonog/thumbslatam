@@ -7,6 +7,7 @@ export default function Fondo() {
   const [formato, setFormato] = useState("youtube");
   const [imagen, setImagen] = useState("");
   const [cargando, setCargando] = useState(false);
+const [progreso, setProgreso] = useState(0);
 
   async function generarFondo() {
     setCargando(true);

@@ -7,6 +7,7 @@ export default function Registro() {
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [cargando, setCargando] = useState(false);
+const [progreso, setProgreso] = useState(0);
 
   async function registrar() {
     setCargando(true);

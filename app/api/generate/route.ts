@@ -1,5 +1,12 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -7,20 +14,30 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
   try {
-    const { descripcion, estilo, emocion } = await request.json();
+    const { descripcion, estilo, emocion, orientacion } = await request.json();
 
-    const prompt = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, 16:9, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    const esVertical = orientacion?.includes("vertical");
+    const aspectRatio = esVertical
+      ? "9:16 vertical portrait format, tall narrow composition, mobile screen format"
+      : "16:9 horizontal landscape format, wide cinematic composition";
+    const size = esVertical ? "1024x1792" : "1792x1024";
+
+    const prompt = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${aspectRatio}, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt: prompt,
       n: 1,
-      size: "1792x1024",
+      size: size as "1024x1792" | "1792x1024",
       quality: "hd",
     });
 
-    const imageUrl = response.data?.[0]?.url ?? "";
-    return NextResponse.json({ imageUrl });
+    const dalleUrl = response.data?.[0]?.url ?? "";
+    const uploaded = await cloudinary.uploader.upload(dalleUrl, {
+      folder: "thumbslatam/fondos",
+    });
+
+    return NextResponse.json({ imageUrl: uploaded.secure_url });
 
   } catch (error: any) {
     console.error("ERROR:", error.message);
