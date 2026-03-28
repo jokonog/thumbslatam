@@ -9,6 +9,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function cargarDatos() {
+      console.log("cargando datos...")
       const { data: authData } = await supabase.auth.getUser();
       if (!authData.user) {
         window.location.href = "/registro";
@@ -21,6 +22,7 @@ export default function Dashboard() {
         .eq("id", authData.user.id)
         .single();
 
+      console.log("usuarioData:", usuarioData);
       if (usuarioData) {
         setCreditos(usuarioData.creditos);
         setPlan(usuarioData.plan);
