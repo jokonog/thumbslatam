@@ -8,9 +8,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const supabase = createClient(
+const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 export async function POST(request: Request) {
@@ -24,13 +24,16 @@ export async function POST(request: Request) {
       transformation: [{ width: 400, height: 400, crop: "fill", gravity: "face" }],
     });
 
-    await supabase
+    const { error } = await supabaseAdmin
       .from("usuarios")
       .update({ avatar_url: upload.secure_url })
       .eq("id", userId);
 
+    if (error) throw new Error(error.message);
+
     return NextResponse.json({ avatarUrl: upload.secure_url });
   } catch (error: any) {
+    console.error("Avatar error:", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
