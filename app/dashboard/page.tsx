@@ -6,7 +6,7 @@ import { supabase } from "../../lib/supabase";
 export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [creditos, setCreditos] = useState(10);
+  const [creditos, setCreditos] = useState<number | null>(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
