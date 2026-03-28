@@ -22,6 +22,7 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
+    window.history.replaceState(null, "", window.location.href);
     async function cargarDatos() {
       const { data: authData } = await supabase.auth.getUser();
       if (!authData.user) { window.location.href = "/registro"; return; }
