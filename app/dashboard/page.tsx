@@ -7,11 +7,11 @@ export default function Dashboard() {
   const [plan, setPlan] = useState("gratis");
   const [miniaturas, setMiniaturas] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [plataforma, setPlataforma] = useState<string>("youtube");
-  const [mounted, setMounted] = useState(false);
+  const [plataforma, setPlataforma] = useState("youtube");
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
   const [escena, setEscena] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   const plataformas = [
     { id: "youtube", label: "YouTube 16:9" },
@@ -46,13 +46,11 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    cargarDatos();
     setMounted(true);
+    cargarDatos();
 
-    // Recargar cuando el usuario vuelve con el botón atrás
     const handlePageShow = (e: PageTransitionEvent) => {
       if (e.persisted) cargarDatos();
-    setMounted(true);
     };
     window.addEventListener("pageshow", handlePageShow);
     return () => window.removeEventListener("pageshow", handlePageShow);
@@ -68,6 +66,8 @@ export default function Dashboard() {
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
 
+  if (!mounted) return null;
+
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
 
@@ -75,10 +75,7 @@ export default function Dashboard() {
         <h1 style={{fontSize:"1.8rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
           Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
         </h1>
-        <button
-          onClick={() => supabase.auth.signOut().then(() => window.location.href = "/")}
-          style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}
-        >
+        <button onClick={() => supabase.auth.signOut().then(() => window.location.href = "/")} style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
           Cerrar sesión
         </button>
       </div>
@@ -141,7 +138,7 @@ export default function Dashboard() {
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>1. Elige la plataforma</div>
           <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
             {plataformas.map((p) => (
-              <button key={p.id} onClick={() => setPlataforma(p.id)} style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:mounted&&plataforma===p.id?"#FF4D00":"#1f2937",color:mounted&&plataforma===p.id?"white":"#8B8FA8",fontWeight:mounted&&plataforma===p.id?"700":"400"}}>
+              <button key={p.id} onClick={() => setPlataforma(p.id)} style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:plataforma===p.id?"#FF4D00":"#1f2937",color:plataforma===p.id?"white":"#8B8FA8",fontWeight:plataforma===p.id?"700":"400"}}>
                 {p.label}
               </button>
             ))}
