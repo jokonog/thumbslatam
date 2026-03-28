@@ -279,7 +279,7 @@ export default function Editor() {
         fill: colorTexto,
         fontWeight: "bold",
         fontFamily: "Impact, Arial Black, sans-serif",
-        shadow: "3px 3px 10px rgba(0,0,0,0.9)",
+        shadow: new (require("fabric").Shadow)({ color: "rgba(0,0,0,0.9)", blur: 10, offsetX: 3, offsetY: 3 }),
         stroke: "rgba(0,0,0,0.5)",
         strokeWidth: 2,
       });
