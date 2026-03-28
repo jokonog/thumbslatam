@@ -76,7 +76,7 @@ export default function Avatar() {
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"600px",margin:"0 auto"}}>
 
       <div style={{display:"flex",alignItems:"center",gap:"16px",marginBottom:"32px"}}>
-        <a href="/dashboard" style={{color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>← Dashboard</a>
+        <a href="/dashboard" onClick={(e)=>{e.preventDefault();window.location.href='/dashboard';}} style={{color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>← Dashboard</a>
         <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
           Mi <span style={{color:"#FF4D00"}}>Avatar</span>
         </h1>
