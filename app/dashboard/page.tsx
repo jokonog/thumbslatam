@@ -37,9 +37,12 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{display:"flex",gap:"12px",marginBottom:"40px"}}>
-        <a href="/generador" style={{padding:"13px 24px",borderRadius:"10px",background:"#FF4D00",color:"white",textDecoration:"none",fontWeight:"700",fontSize:"0.95rem"}}>
-          Generar miniatura →
+      <div style={{display:"flex",gap:"12px",marginBottom:"40px",flexWrap:"wrap"}}>
+        <a href="/editor" style={{padding:"13px 24px",borderRadius:"10px",background:"#FF4D00",color:"white",textDecoration:"none",fontWeight:"700",fontSize:"0.95rem"}}>
+          Editor de miniaturas →
+        </a>
+        <a href="/fondo" style={{padding:"13px 24px",borderRadius:"10px",background:"transparent",border:"1px solid #FF4D00",color:"#FF4D00",textDecoration:"none",fontWeight:"600",fontSize:"0.95rem"}}>
+          Solo fondo IA
         </a>
         <a href="#" style={{padding:"13px 24px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:"white",textDecoration:"none",fontSize:"0.95rem"}}>
           Mejorar plan
