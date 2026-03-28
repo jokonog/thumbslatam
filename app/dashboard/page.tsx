@@ -7,7 +7,8 @@ export default function Dashboard() {
   const [plan, setPlan] = useState("gratis");
   const [miniaturas, setMiniaturas] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [plataforma, setPlataforma] = useState("youtube");
+  const [plataforma, setPlataforma] = useState<string>("youtube");
+  const [mounted, setMounted] = useState(false);
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
   const [escena, setEscena] = useState("");
@@ -46,10 +47,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     cargarDatos();
+    setMounted(true);
 
     // Recargar cuando el usuario vuelve con el botón atrás
     const handlePageShow = (e: PageTransitionEvent) => {
       if (e.persisted) cargarDatos();
+    setMounted(true);
     };
     window.addEventListener("pageshow", handlePageShow);
     return () => window.removeEventListener("pageshow", handlePageShow);
@@ -138,7 +141,7 @@ export default function Dashboard() {
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>1. Elige la plataforma</div>
           <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
             {plataformas.map((p) => (
-              <button key={p.id} onClick={() => setPlataforma(p.id)} style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:plataforma===p.id?"#FF4D00":"#1f2937",color:plataforma===p.id?"white":"#8B8FA8",fontWeight:plataforma===p.id?"700":"400"}}>
+              <button key={p.id} onClick={() => setPlataforma(p.id)} style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:mounted&&plataforma===p.id?"#FF4D00":"#1f2937",color:mounted&&plataforma===p.id?"white":"#8B8FA8",fontWeight:mounted&&plataforma===p.id?"700":"400"}}>
                 {p.label}
               </button>
             ))}
