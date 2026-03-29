@@ -132,7 +132,7 @@ export default function Avatar() {
           { texto: "Sin fotos grupales", ok: false },
         ].map((tip, i) => (
           <div key={i} style={{fontSize:"0.85rem",color:tip.ok?"#06D6A0":"#ef4444",marginBottom:"6px"}}>
-            {tip.ok ? "✅" : "❌"} {tip.texto}
+            {tip.ok ? "✓" : "✗"} {tip.texto}
           </div>
         ))}
       </div>
