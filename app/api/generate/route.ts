@@ -7,6 +7,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const OPENAI_KEY = "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";
+
 export async function POST(request: Request) {
   try {
     const { descripcion, estilo, emocion, orientacion } = await request.json();
@@ -21,7 +23,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${["sk-proj-wBr6amEr9IfqVdvi2DJJCVKwh6DSgIXN1Ye78mNglpyDXbXl_0zMe7PYkJaevsnF-oVobBURWU","T3BlbkFJAMeJfE1mG0iZ-8SFs3_6G_84CCtBgdKTq90A_7LjQZTHJbvycdqOwdwOfUheHpzCnl3b4xxZsA"].join("")}`,
+        "Authorization": `Bearer ${OPENAI_KEY}`,
       },
       body: JSON.stringify({
         model: "dall-e-3",
