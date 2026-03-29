@@ -12,6 +12,8 @@ export default function Dashboard() {
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
   const [escena, setEscena] = useState("");
+  const [generando, setGenerando] = useState(false);
+  const [errorGen, setErrorGen] = useState("");
 
   const plataformas = [
     { id: "youtube", label: "YouTube 16:9" },
@@ -48,10 +50,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     cargarDatos();
-
-    const handlePageShow = (e: PageTransitionEvent) => {
-      cargarDatos();
-    };
+    const handlePageShow = (e: PageTransitionEvent) => { cargarDatos(); };
     window.addEventListener("pageshow", handlePageShow);
     window.addEventListener("focus", cargarDatos);
     return () => {
@@ -59,9 +58,6 @@ export default function Dashboard() {
       window.removeEventListener("focus", cargarDatos);
     };
   }, []);
-
-  const [generando, setGenerando] = useState(false);
-  const [errorGen, setErrorGen] = useState("");
 
   async function irAGenerar() {
     if (!tema || creditos === null) return;
@@ -72,7 +68,6 @@ export default function Dashboard() {
       const esVertical = plataforma === "instagram_story" || plataforma === "tiktok";
       const orientacion = esVertical ? "vertical 9:16 portrait" : "horizontal 16:9 landscape";
       const descripcion = escena ? `${tema}. Escena: ${escena}` : tema;
-
       let imageUrl = "";
 
       if (modo === "cara") {
@@ -84,8 +79,6 @@ export default function Dashboard() {
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         imageUrl = data.imageUrl;
-
-        // Descontar 5 créditos
         const nuevos = creditos - 5;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
         setCreditos(nuevos);
@@ -98,31 +91,46 @@ export default function Dashboard() {
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         imageUrl = data.imageUrl;
-
-        // Descontar 3 créditos
         const nuevos = creditos - 3;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
         setCreditos(nuevos);
-
-        // Guardar miniatura
-        if (userId) {
-          await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
-        }
+        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
       }
 
-      // Ir al editor con la imagen ya generada
       const params = new URLSearchParams({ plataforma, imageUrl });
       window.location.href = `/editor?${params.toString()}`;
 
     } catch (err: any) {
       setErrorGen("Error generando: " + err.message);
+      setGenerando(false);
     }
-    setGenerando(false);
   }
 
   const sinCreditos = creditos !== null && creditos < 3;
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
+
+  // Pantalla de carga
+  if (generando) return (
+    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
+      <style>{`@keyframes loadbar { 0%{width:5%} 50%{width:85%} 100%{width:5%} }`}</style>
+      <div style={{textAlign:"center",maxWidth:"420px",width:"100%"}}>
+        <div style={{fontSize:"3rem",marginBottom:"24px"}}>🎨</div>
+        <h2 style={{fontSize:"1.3rem",fontWeight:"800",marginBottom:"8px",letterSpacing:"-0.03em"}}>
+          Generando tu miniatura...
+        </h2>
+        <p style={{color:"#8B8FA8",fontSize:"0.85rem",marginBottom:"32px",lineHeight:"1.5"}}>
+          {modo === "cara"
+            ? "Estamos generando la escena y ajustando tu cara — puede tardar hasta 2 minutos"
+            : "Esto tarda unos 30 segundos, no cierres esta pantalla"}
+        </p>
+        <div style={{background:"#111827",borderRadius:"999px",height:"8px",overflow:"hidden",marginBottom:"16px"}}>
+          <div style={{height:"100%",background:"linear-gradient(90deg,#FF4D00,#ff7a00)",borderRadius:"999px",animation:"loadbar 2s ease-in-out infinite"}}/>
+        </div>
+        <p style={{color:"#3A3D52",fontSize:"0.75rem"}}>No cierres esta pantalla</p>
+      </div>
+    </main>
+  );
 
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
@@ -174,15 +182,15 @@ export default function Dashboard() {
         {creditos !== null && creditos < 6 ? (
           <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"16px",display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <div style={{fontSize:"0.82rem",color:"#FF4D00",marginBottom:"8px"}}>
-              ⚠️ Te quedan {creditos} créditos — fondo cuesta 3, con tu cara cuesta 5.
+              Te quedan {creditos} creditos — fondo cuesta 3, con tu cara cuesta 5.
             </div>
             <a href="#" style={{fontSize:"0.78rem",color:"#FF4D00",fontWeight:"700",textDecoration:"none"}}>Mejorar plan →</a>
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-            <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}}>Costo por generación</div>
-            <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>3 créditos</span></div>
-            <div style={{fontSize:"0.82rem",color:"white",marginTop:"2px"}}>Con mi cara — <span style={{color:"#FF4D00"}}>5 créditos</span></div>
+            <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}}>Costo por generacion</div>
+            <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>3 creditos</span></div>
+            <div style={{fontSize:"0.82rem",color:"white",marginTop:"2px"}}>Con mi cara — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
           </div>
         )}
       </div>
@@ -202,18 +210,18 @@ export default function Dashboard() {
         </div>
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. ¿Cómo quieres generarla?</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. Como quieres generarla?</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
             <button onClick={() => setModo("fondo")} disabled={sinCreditos} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",textAlign:"left",opacity:sinCreditos?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Solo fondo IA</div>
               <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Genera el fondo y edita con texto en el editor</div>
-              <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>3 créditos</div>
+              <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>3 creditos</div>
             </button>
             <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
-              <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara ⭐</div>
-              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tú en la miniatura generada con IA</div>
+              <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara</div>
+              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tu en la miniatura generada con IA</div>
               <div suppressHydrationWarning style={{fontSize:"0.72rem",color:!tieneAvatar?"#3A3D52":"#FF4D00"}}>
-                {!tieneAvatar ? "Requiere avatar — sube tus fotos primero" : "5 créditos"}
+                {!tieneAvatar ? "Requiere avatar — sube tus fotos primero" : "5 creditos"}
               </div>
             </button>
           </div>
@@ -221,12 +229,18 @@ export default function Dashboard() {
 
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>3. Describe tu miniatura</div>
-          <input type="text" placeholder="¿De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
-          <input type="text" placeholder="Escena (opcional): explosión de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
+          <input type="text" placeholder="De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
+          <input type="text" placeholder="Escena (opcional): explosion de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
         </div>
 
+        {errorGen && (
+          <div style={{padding:"10px 14px",borderRadius:"8px",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",color:"#ef4444",fontSize:"0.82rem",marginBottom:"10px"}}>
+            {errorGen}
+          </div>
+        )}
+
         <button onClick={irAGenerar} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
-          {sinCreditos?"Sin créditos — Mejora tu plan":"Generar miniatura →"}
+          {sinCreditos ? "Sin creditos — Mejora tu plan" : "Generar miniatura →"}
         </button>
       </div>
 
