@@ -109,7 +109,7 @@ export default function Avatar() {
               <div key={i} onClick={() => cambiarFotoPrincipal(url)} style={{position:"relative",cursor:"pointer"}}>
                 <img src={url} alt={`foto ${i+1}`} style={{width:"80px",height:"80px",borderRadius:"10px",objectFit:"cover",border:fotoSeleccionada===url?"3px solid #FF4D00":"2px solid #3A3D52"}}/>
                 {fotoSeleccionada === url && (
-                  <div style={{position:"absolute",top:"4px",right:"4px",background:"#FF4D00",borderRadius:"50%",width:"18px",height:"18px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"10px"}}>✓</div>
+                  <div style={{position:"absolute",top:"4px",right:"4px",background:"#FF4D00",borderRadius:"50%",width:"18px",height:"18px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"10px",color:"white"}}>✓</div>
                 )}
               </div>
             ))}
@@ -136,28 +136,48 @@ export default function Avatar() {
           Selfies o fotos profesionales — la primera foto sera tu foto principal
         </p>
 
-        {/* Input visible y simple */}
-        <div style={{marginBottom:"16px"}}>
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={seleccionarFotos}
-            style={{color:"#8B8FA8",fontSize:"0.85rem",width:"100%"}}
-          />
-        </div>
+        {/* Input oculto con ref */}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={seleccionarFotos}
+          style={{display:"none"}}
+        />
 
-        {previews.length > 0 && (
-          <div style={{display:"flex",gap:"10px",flexWrap:"wrap",marginBottom:"16px"}}>
-            {previews.map((url, i) => (
-              <div key={i} style={{position:"relative"}}>
-                <img src={url} alt={`nueva foto ${i+1}`} style={{width:"80px",height:"80px",borderRadius:"10px",objectFit:"cover",border:i===0?"2px solid #FF4D00":"2px solid #3A3D52"}}/>
-                {i === 0 && (
-                  <div style={{position:"absolute",bottom:"4px",left:"50%",transform:"translateX(-50%)",background:"#FF4D00",color:"white",fontSize:"9px",padding:"1px 6px",borderRadius:"999px",whiteSpace:"nowrap"}}>Principal</div>
-                )}
-              </div>
-            ))}
+        {/* Recuadro bonito que activa el input */}
+        {previews.length === 0 ? (
+          <div
+            onClick={() => inputRef.current?.click()}
+            style={{padding:"28px 20px",borderRadius:"10px",border:"2px dashed #3A3D52",textAlign:"center",cursor:"pointer",marginBottom:"16px",transition:"border-color 0.2s"}}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = "#FF4D00")}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = "#3A3D52")}
+          >
+            <div style={{fontSize:"2.5rem",marginBottom:"8px"}}>📷</div>
+            <div style={{fontSize:"0.9rem",color:"white",fontWeight:"600",marginBottom:"4px"}}>
+              {fotosGuardadas.length > 0 ? "Seleccionar nuevas fotos" : "Seleccionar fotos"}
+            </div>
+            <div style={{fontSize:"0.78rem",color:"#8B8FA8"}}>Hasta 5 fotos — selfies o fotos profesionales</div>
+          </div>
+        ) : (
+          <div style={{marginBottom:"16px"}}>
+            <div style={{display:"flex",gap:"10px",flexWrap:"wrap",marginBottom:"10px"}}>
+              {previews.map((url, i) => (
+                <div key={i} style={{position:"relative"}}>
+                  <img src={url} alt={`nueva foto ${i+1}`} style={{width:"80px",height:"80px",borderRadius:"10px",objectFit:"cover",border:i===0?"2px solid #FF4D00":"2px solid #3A3D52"}}/>
+                  {i === 0 && (
+                    <div style={{position:"absolute",bottom:"4px",left:"50%",transform:"translateX(-50%)",background:"#FF4D00",color:"white",fontSize:"9px",padding:"1px 6px",borderRadius:"999px",whiteSpace:"nowrap"}}>Principal</div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => { setFotos([]); setPreviews([]); if (inputRef.current) inputRef.current.value = ""; }}
+              style={{fontSize:"0.78rem",color:"#8B8FA8",background:"transparent",border:"none",cursor:"pointer",padding:0}}
+            >
+              Cambiar seleccion
+            </button>
           </div>
         )}
 
