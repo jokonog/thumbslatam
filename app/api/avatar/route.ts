@@ -57,10 +57,12 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const { userId, avatarUrl } = await request.json();
+    const { userId, avatarUrl, avatar_fotos } = await request.json();
+    const updates: any = { avatar_url: avatarUrl };
+    if (avatar_fotos !== undefined) updates.avatar_fotos = avatar_fotos;
     await supabaseAdmin
       .from("usuarios")
-      .update({ avatar_url: avatarUrl })
+      .update(updates)
       .eq("id", userId);
     return NextResponse.json({ ok: true });
   } catch (error: any) {

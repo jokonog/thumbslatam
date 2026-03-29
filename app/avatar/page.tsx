@@ -132,6 +132,20 @@ export default function Avatar() {
     setMensaje("Foto principal actualizada.");
   }
 
+  async function borrarFoto(url: string) {
+    if (!userId) return;
+    const nuevasFotos = fotosGuardadas.filter(f => f !== url);
+    const nuevoPrincipal = fotoSeleccionada === url ? (nuevasFotos[0] || null) : fotoSeleccionada;
+    setFotosGuardadas(nuevasFotos);
+    setFotoSeleccionada(nuevoPrincipal);
+    await fetch("/api/avatar", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, avatarUrl: nuevoPrincipal, avatar_fotos: nuevasFotos }),
+    });
+    setMensaje("Foto eliminada.");
+  }
+
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"600px",margin:"0 auto"}}>
 
