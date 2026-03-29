@@ -28,6 +28,7 @@ export default function Editor() {
   const [userId, setUserId] = useState<string | null>(null);
   const [errorCreditos, setErrorCreditos] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [imagenPreCargada, setImagenPreCargada] = useState<string | null>(null);
 
   const COSTO_GENERAR = 3;
   const COSTO_CARA = 5;
@@ -55,10 +56,12 @@ export default function Editor() {
       const temaParam = params.get("tema");
       const escenaParam = params.get("escena");
       const plataformaParam = params.get("plataforma");
+      const imageUrlParam = params.get("imageUrl");
       if (modoParam) setModo(modoParam);
       if (temaParam) setTema(temaParam);
       if (escenaParam) setEscena(escenaParam);
       if (plataformaParam) setPlataforma(plataformaParam);
+      if (imageUrlParam) setImagenPreCargada(imageUrlParam);
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
         window.location.href = "/registro";
@@ -127,6 +130,19 @@ export default function Editor() {
     initFabric();
     return () => { mounted = false; };
   }, [isMounted]);
+
+  // ─── Cargar imagen pre-generada desde URL ──────────────────────────────────
+  useEffect(() => {
+    if (!imagenPreCargada || !fabricRef.current?.canvas || !isMounted) return;
+    async function cargarImagenPreGenerada() {
+      const { FabricImage } = await import("fabric");
+      const img = await FabricImage.fromURL(imagenPreCargada!, { crossOrigin: "anonymous" });
+      aplicarImagenAlCanvas(img, p, false);
+      setFondoGenerado(true);
+      setFondoOrientacion(esVertical ? "vertical" : "horizontal");
+    }
+    cargarImagenPreGenerada();
+  }, [imagenPreCargada, isMounted, fabricRef.current?.canvas]);
 
   // ─── Atajos de teclado ──────────────────────────────────────────────────────
   useEffect(() => {
