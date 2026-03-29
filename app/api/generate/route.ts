@@ -9,12 +9,6 @@ cloudinary.config({
 
 export async function POST(request: Request) {
   try {
-    const key = process.env.OPENAI_API_KEY;
-    console.log("KEY inicio:", key?.slice(0, 8), "len:", key?.length);
-
-    const { default: OpenAI } = await import("openai");
-    const openai = new OpenAI({ apiKey: key });
-
     const { descripcion, estilo, emocion, orientacion } = await request.json();
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical
@@ -23,15 +17,29 @@ export async function POST(request: Request) {
     const size = esVertical ? "1024x1792" : "1792x1024";
     const prompt = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${aspectRatio}, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
-    const response = await openai.images.generate({
-      model: "dall-e-3",
-      prompt: prompt,
-      n: 1,
-      size: size as "1024x1792" | "1792x1024",
-      quality: "hd",
+    const response = await fetch("https://api.openai.com/v1/images/generations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "dall-e-3",
+        prompt,
+        n: 1,
+        size,
+        quality: "hd",
+      }),
     });
 
-    const dalleUrl = response.data?.[0]?.url ?? "";
+    const data = await response.json();
+    
+    if (!response.ok) {
+      console.error("OpenAI error:", JSON.stringify(data));
+      return NextResponse.json({ error: data.error?.message || "Error OpenAI" }, { status: 500 });
+    }
+
+    const dalleUrl = data.data?.[0]?.url ?? "";
     const uploaded = await cloudinary.uploader.upload(dalleUrl, {
       folder: "thumbslatam/fondos",
     });
