@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function Editor() {
@@ -26,8 +27,11 @@ export default function Editor() {
   const [creditos, setCreditos] = useState<number | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [errorCreditos, setErrorCreditos] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const COSTO_GENERAR = 3;
+  const COSTO_CARA = 5;
+  const [modo, setModo] = useState("fondo");
 
   const plataformas: Record<string, { w: number; h: number }> = {
     youtube: { w: 1280, h: 720 },
@@ -45,6 +49,16 @@ export default function Editor() {
   // ─── Cargar usuario y créditos al montar ────────────────────────────────────
   useEffect(() => {
     async function cargarUsuario() {
+      // Leer params de URL
+      const params = new URLSearchParams(window.location.search);
+      const modoParam = params.get("modo");
+      const temaParam = params.get("tema");
+      const escenaParam = params.get("escena");
+      const plataformaParam = params.get("plataforma");
+      if (modoParam) setModo(modoParam);
+      if (temaParam) setTema(temaParam);
+      if (escenaParam) setEscena(escenaParam);
+      if (plataformaParam) setPlataforma(plataformaParam);
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
         window.location.href = "/registro";
@@ -206,8 +220,9 @@ export default function Editor() {
 
     // Verificar créditos suficientes
     if (creditos === null) return;
-    if (creditos < COSTO_GENERAR) {
-      setErrorCreditos(`Necesitas ${COSTO_GENERAR} créditos para generar. Te quedan ${creditos}. Mejora tu plan.`);
+    const costoCorrecto = modo === "cara" ? COSTO_CARA : COSTO_GENERAR;
+    if (creditos < costoCorrecto) {
+      setErrorCreditos(`Necesitas ${costoCorrecto} créditos para generar. Te quedan ${creditos}. Mejora tu plan.`);
       return;
     }
 
@@ -230,10 +245,14 @@ export default function Editor() {
     const descripcion = escena ? `${tema}. Escena: ${escena}` : tema;
     const orientacion = esVertical ? "vertical 9:16 portrait" : "horizontal 16:9 landscape";
 
-    const res = await fetch("/api/generate", {
+    const endpoint = modo === "cara" ? "/api/generate-with-face" : "/api/generate";
+    const body = modo === "cara"
+      ? { userId, descripcion, estilo, orientacion }
+      : { descripcion, estilo, emocion: "epico", orientacion };
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ descripcion, estilo, emocion: "epico", orientacion }),
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
@@ -242,7 +261,8 @@ export default function Editor() {
 
     // Descontar créditos en Supabase
     if (userId) {
-      const nuevosCreditos = creditos - COSTO_GENERAR;
+      const costoCorrecto = modo === "cara" ? COSTO_CARA : COSTO_GENERAR;
+      const nuevosCreditos = creditos - costoCorrecto;
       await supabase
         .from("usuarios")
         .update({ creditos: nuevosCreditos })
