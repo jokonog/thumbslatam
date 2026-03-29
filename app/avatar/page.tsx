@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
 
 export default function Avatar() {
@@ -10,10 +10,9 @@ export default function Avatar() {
   const [fotoSeleccionada, setFotoSeleccionada] = useState<string | null>(null);
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setMounted(true);
     async function cargarUsuario() {
       const { data } = await supabase.auth.getUser();
       if (!data.user) { window.location.href = "/registro"; return; }
@@ -35,8 +34,10 @@ export default function Avatar() {
 
   function seleccionarFotos(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []).slice(0, 5);
+    if (!files.length) return;
     setFotos(files);
     setPreviews(files.map(f => URL.createObjectURL(f)));
+    setMensaje("");
   }
 
   async function guardarAvatar() {
@@ -64,13 +65,12 @@ export default function Avatar() {
         setMensaje(`${fotos.length} foto${fotos.length > 1 ? "s" : ""} guardada${fotos.length > 1 ? "s" : ""} correctamente`);
         setFotos([]);
         setPreviews([]);
-        const inp = document.querySelector("input[type=file]") as HTMLInputElement;
-        if (inp) inp.value = "";
+        if (inputRef.current) inputRef.current.value = "";
       } else {
-        setMensaje("Error al guardar. Intenta de nuevo.");
+        setMensaje("Error: " + (data.error || "Intenta de nuevo"));
       }
-    } catch {
-      setMensaje("Error al guardar. Intenta de nuevo.");
+    } catch (err: any) {
+      setMensaje("Error: " + err.message);
     }
     setCargando(false);
   }
@@ -85,8 +85,6 @@ export default function Avatar() {
     });
     setMensaje("Foto principal actualizada.");
   }
-
-  if (!mounted) return null;
 
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"600px",margin:"0 auto"}}>
@@ -105,7 +103,7 @@ export default function Avatar() {
             <h2 style={{fontSize:"0.95rem",fontWeight:"700",margin:0}}>Mis fotos guardadas</h2>
             <span style={{fontSize:"0.78rem",color:"#8B8FA8"}}>{fotosGuardadas.length} de 5</span>
           </div>
-          <p style={{fontSize:"0.78rem",color:"#8B8FA8",margin:"0 0 12px"}}>Toca una foto para usarla como principal en tus generaciones</p>
+          <p style={{fontSize:"0.78rem",color:"#8B8FA8",margin:"0 0 12px"}}>Toca una foto para usarla como principal</p>
           <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
             {fotosGuardadas.map((url, i) => (
               <div key={i} onClick={() => cambiarFotoPrincipal(url)} style={{position:"relative",cursor:"pointer"}}>
@@ -122,30 +120,33 @@ export default function Avatar() {
       {/* Instrucciones */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
         <h2 style={{fontSize:"0.95rem",fontWeight:"700",margin:"0 0 12px"}}>Como tomar buenas fotos</h2>
-        <div style={{display:"flex",flexDirection:"column",gap:"8px"}}>
-          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Foto frontal mirando a la camara</div>
-          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Fondo claro y liso</div>
-          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Buena iluminacion</div>
-          <div style={{fontSize:"0.85rem",color:"#ef4444"}}>✗ Sin lentes de sol ni gorras</div>
-          <div style={{fontSize:"0.85rem",color:"#ef4444"}}>✗ Sin fotos grupales</div>
-        </div>
+        <div style={{fontSize:"0.85rem",color:"#06D6A0",marginBottom:"6px"}}>✓ Foto frontal mirando a la camara</div>
+        <div style={{fontSize:"0.85rem",color:"#06D6A0",marginBottom:"6px"}}>✓ Fondo claro y liso</div>
+        <div style={{fontSize:"0.85rem",color:"#06D6A0",marginBottom:"6px"}}>✓ Buena iluminacion</div>
+        <div style={{fontSize:"0.85rem",color:"#ef4444",marginBottom:"6px"}}>✗ Sin lentes de sol ni gorras</div>
+        <div style={{fontSize:"0.85rem",color:"#ef4444"}}>✗ Sin fotos grupales</div>
       </div>
 
       {/* Subir fotos */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
         <h2 style={{fontSize:"0.95rem",fontWeight:"700",margin:"0 0 4px"}}>
-          {fotosGuardadas.length > 0 ? "Agregar o reemplazar fotos" : "Sube hasta 5 fotos tuyas"}
+          {fotosGuardadas.length > 0 ? "Actualizar fotos" : "Sube hasta 5 fotos tuyas"}
         </h2>
         <p style={{fontSize:"0.8rem",color:"#8B8FA8",margin:"0 0 16px"}}>
           Selfies o fotos profesionales — la primera foto sera tu foto principal
         </p>
 
-        <label style={{display:"block",padding:"20px",borderRadius:"10px",border:"2px dashed #3A3D52",textAlign:"center",cursor:"pointer",marginBottom:"16px"}}>
-          <input type="file" accept="image/*" multiple onChange={seleccionarFotos} style={{display:"none"}}/>
-          <div style={{fontSize:"2rem",marginBottom:"8px"}}>📷</div>
-          <div style={{fontSize:"0.85rem",color:"#8B8FA8"}}>Toca para seleccionar fotos</div>
-          <div style={{fontSize:"0.75rem",color:"#3A3D52",marginTop:"4px"}}>Maximo 5 fotos</div>
-        </label>
+        {/* Input visible y simple */}
+        <div style={{marginBottom:"16px"}}>
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={seleccionarFotos}
+            style={{color:"#8B8FA8",fontSize:"0.85rem",width:"100%"}}
+          />
+        </div>
 
         {previews.length > 0 && (
           <div style={{display:"flex",gap:"10px",flexWrap:"wrap",marginBottom:"16px"}}>
@@ -166,8 +167,12 @@ export default function Avatar() {
           </div>
         )}
 
-        <button onClick={guardarAvatar} disabled={!fotos.length||cargando} style={{width:"100%",padding:"13px",borderRadius:"10px",background:fotos.length&&!cargando?"#FF4D00":"#3A3D52",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:fotos.length&&!cargando?"pointer":"not-allowed"}}>
-          {cargando?"Guardando fotos...":"Guardar fotos →"}
+        <button
+          onClick={guardarAvatar}
+          disabled={!fotos.length || cargando}
+          style={{width:"100%",padding:"13px",borderRadius:"10px",background:fotos.length&&!cargando?"#FF4D00":"#3A3D52",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:fotos.length&&!cargando?"pointer":"not-allowed"}}
+        >
+          {cargando ? "Guardando fotos..." : fotos.length ? `Guardar ${fotos.length} foto${fotos.length>1?"s":""}` : "Selecciona fotos primero"}
         </button>
       </div>
 
