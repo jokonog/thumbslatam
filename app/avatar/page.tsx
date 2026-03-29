@@ -166,11 +166,12 @@ export default function Avatar() {
           <p style={{fontSize:"0.78rem",color:"#8B8FA8",margin:"0 0 12px"}}>Toca una foto para usarla como principal</p>
           <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
             {fotosGuardadas.map((url, i) => (
-              <div key={i} onClick={() => cambiarFotoPrincipal(url)} style={{position:"relative",cursor:"pointer"}}>
-                <img src={url} alt={`foto ${i+1}`} style={{width:"80px",height:"80px",borderRadius:"10px",objectFit:"cover",border:fotoSeleccionada===url?"3px solid #FF4D00":"2px solid #3A3D52"}}/>
+              <div key={i} style={{position:"relative"}}>
+                <img onClick={() => cambiarFotoPrincipal(url)} src={url} alt={`foto ${i+1}`} style={{width:"80px",height:"80px",borderRadius:"10px",objectFit:"cover",border:fotoSeleccionada===url?"3px solid #FF4D00":"2px solid #3A3D52",cursor:"pointer"}}/>
                 {fotoSeleccionada === url && (
                   <div style={{position:"absolute",top:"4px",right:"4px",background:"#FF4D00",borderRadius:"50%",width:"18px",height:"18px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"10px",color:"white"}}>✓</div>
                 )}
+                <button onClick={(e)=>{e.stopPropagation();borrarFoto(url);}} style={{position:"absolute",bottom:"4px",right:"4px",background:"rgba(239,68,68,0.9)",border:"none",borderRadius:"50%",width:"20px",height:"20px",cursor:"pointer",color:"white",fontSize:"11px",padding:0}}>x</button>
               </div>
             ))}
           </div>
