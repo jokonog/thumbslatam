@@ -6,13 +6,14 @@ export default function Avatar() {
   const [userId, setUserId] = useState<string | null>(null);
   const [fotos, setFotos] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [avatarActual, setAvatarActual] = useState<string | null>(null);
   const [fotosGuardadas, setFotosGuardadas] = useState<string[]>([]);
   const [fotoSeleccionada, setFotoSeleccionada] = useState<string | null>(null);
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     async function cargarUsuario() {
       const { data } = await supabase.auth.getUser();
       if (!data.user) { window.location.href = "/registro"; return; }
@@ -25,7 +26,6 @@ export default function Avatar() {
         .single();
 
       if (usuarioData) {
-        setAvatarActual(usuarioData.avatar_url || null);
         setFotosGuardadas(usuarioData.avatar_fotos || []);
         setFotoSeleccionada(usuarioData.avatar_url || null);
       }
@@ -43,7 +43,6 @@ export default function Avatar() {
     if (!fotos.length || !userId) return;
     setCargando(true);
     setMensaje("");
-
     try {
       const toBase64 = (file: File): Promise<string> =>
         new Promise((res, rej) => {
@@ -52,21 +51,17 @@ export default function Avatar() {
           r.onerror = rej;
           r.readAsDataURL(file);
         });
-
       const fotosBase64 = await Promise.all(fotos.map(toBase64));
-
       const res = await fetch("/api/avatar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, fotosBase64 }),
       });
-
       const data = await res.json();
       if (data.avatarUrl) {
-        setAvatarActual(data.avatarUrl);
         setFotosGuardadas(data.todasLasFotos || []);
         setFotoSeleccionada(data.avatarUrl);
-        setMensaje(`¡${fotos.length} foto${fotos.length > 1 ? "s" : ""} guardada${fotos.length > 1 ? "s" : ""} correctamente!`);
+        setMensaje(`${fotos.length} foto${fotos.length > 1 ? "s" : ""} guardada${fotos.length > 1 ? "s" : ""} correctamente`);
         setFotos([]);
         setPreviews([]);
       } else {
@@ -86,9 +81,10 @@ export default function Avatar() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, avatarUrl: url }),
     });
-    setAvatarActual(url);
     setMensaje("Foto principal actualizada.");
   }
+
+  if (!mounted) return null;
 
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"600px",margin:"0 auto"}}>
@@ -123,18 +119,14 @@ export default function Avatar() {
 
       {/* Instrucciones */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
-        <h2 style={{fontSize:"0.95rem",fontWeight:"700",margin:"0 0 12px"}}>¿Cómo tomar buenas fotos?</h2>
-        {[
-          { texto: "Foto frontal mirando a la cámara", ok: true },
-          { texto: "Fondo claro y liso", ok: true },
-          { texto: "Buena iluminación", ok: true },
-          { texto: "Sin lentes de sol ni gorras", ok: false },
-          { texto: "Sin fotos grupales", ok: false },
-        ].map((tip, i) => (
-          <div key={i} suppressHydrationWarning style={{fontSize:"0.85rem",color:tip.ok?"#06D6A0":"#ef4444",marginBottom:"6px"}}>
-            {tip.ok ? "✓" : "✗"} {tip.texto}
-          </div>
-        ))}
+        <h2 style={{fontSize:"0.95rem",fontWeight:"700",margin:"0 0 12px"}}>Como tomar buenas fotos</h2>
+        <div style={{display:"flex",flexDirection:"column",gap:"8px"}}>
+          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Foto frontal mirando a la camara</div>
+          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Fondo claro y liso</div>
+          <div style={{fontSize:"0.85rem",color:"#06D6A0"}}>✓ Buena iluminacion</div>
+          <div style={{fontSize:"0.85rem",color:"#ef4444"}}>✗ Sin lentes de sol ni gorras</div>
+          <div style={{fontSize:"0.85rem",color:"#ef4444"}}>✗ Sin fotos grupales</div>
+        </div>
       </div>
 
       {/* Subir fotos */}
@@ -143,14 +135,14 @@ export default function Avatar() {
           {fotosGuardadas.length > 0 ? "Agregar o reemplazar fotos" : "Sube hasta 5 fotos tuyas"}
         </h2>
         <p style={{fontSize:"0.8rem",color:"#8B8FA8",margin:"0 0 16px"}}>
-          Selfies o fotos profesionales — la primera foto será tu foto principal
+          Selfies o fotos profesionales — la primera foto sera tu foto principal
         </p>
 
         <label style={{display:"block",padding:"20px",borderRadius:"10px",border:"2px dashed #3A3D52",textAlign:"center",cursor:"pointer",marginBottom:"16px"}}>
           <input type="file" accept="image/*" multiple onChange={seleccionarFotos} style={{display:"none"}}/>
           <div style={{fontSize:"2rem",marginBottom:"8px"}}>📷</div>
           <div style={{fontSize:"0.85rem",color:"#8B8FA8"}}>Toca para seleccionar fotos</div>
-          <div style={{fontSize:"0.75rem",color:"#3A3D52",marginTop:"4px"}}>Máximo 5 fotos</div>
+          <div style={{fontSize:"0.75rem",color:"#3A3D52",marginTop:"4px"}}>Maximo 5 fotos</div>
         </label>
 
         {previews.length > 0 && (
