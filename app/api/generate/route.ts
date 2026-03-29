@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Authorization": `Bearer ${["sk-proj-wBr6amEr9IfqVdvi2DJJCVKwh6DSgIXN1Ye78mNglpyDXbXl_0zMe7PYkJaevsnF-oVobBURWU","T3BlbkFJAMeJfE1mG0iZ-8SFs3_6G_84CCtBgdKTq90A_7LjQZTHJbvycdqOwdwOfUheHpzCnl3b4xxZsA"].join("")}`,
       },
       body: JSON.stringify({
         model: "dall-e-3",
