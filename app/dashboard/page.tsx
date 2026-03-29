@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
   const [escena, setEscena] = useState("");
+  const [emocion, setEmocion] = useState("epico");
   const [generando, setGenerando] = useState(false);
   const [errorGen, setErrorGen] = useState("");
 
@@ -78,7 +79,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", orientacion }),
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -91,7 +92,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ descripcion, estilo: "gaming", emocion: "epico", orientacion }),
+          body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -250,6 +251,24 @@ export default function Dashboard() {
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>3. Describe tu miniatura</div>
           <input type="text" placeholder="De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
           <input type="text" placeholder="Escena (opcional): explosion de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
+        </div>
+
+        <div style={{marginBottom:"20px"}}>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>4. Emocion principal</div>
+          <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
+            {[
+              {id:"epico", label:"Epico"},
+              {id:"emocionado", label:"Emocionado"},
+              {id:"sorprendido", label:"Sorprendido"},
+              {id:"gracioso", label:"Gracioso"},
+              {id:"misterioso", label:"Misterioso"},
+              {id:"serio", label:"Serio"},
+            ].map((e) => (
+              <button key={e.id} onClick={() => setEmocion(e.id)} suppressHydrationWarning style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:emocion===e.id?"#FF4D00":"#1f2937",color:emocion===e.id?"white":"#8B8FA8",fontWeight:emocion===e.id?"700":"400"}}>
+                {e.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {errorGen && (
