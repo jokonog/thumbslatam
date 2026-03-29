@@ -6,6 +6,7 @@ export default function Dashboard() {
   const [creditos, setCreditos] = useState<number | null>(null);
   const [plan, setPlan] = useState("gratis");
   const [miniaturas, setMiniaturas] = useState(0);
+  const [listaMinis, setListaMinis] = useState<{id:number, imagen_url:string, created_at:string}[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [plataforma, setPlataforma] = useState("youtube");
@@ -40,12 +41,15 @@ export default function Dashboard() {
       setAvatarUrl(usuarioData.avatar_url || null);
     }
 
-    const { count } = await supabase
+    const { data: miniData, count } = await supabase
       .from("miniatura")
-      .select("*", { count: "exact", head: true })
-      .eq("usuario_id", authData.user.id);
+      .select("*", { count: "exact" })
+      .eq("usuario_id", authData.user.id)
+      .order("created_at", { ascending: false })
+      .limit(12);
 
     setMiniaturas(count || 0);
+    setListaMinis(miniData || []);
   }
 
   useEffect(() => {
