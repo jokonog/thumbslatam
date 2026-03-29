@@ -11,7 +11,6 @@ export default function Dashboard() {
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
   const [escena, setEscena] = useState("");
-  const [mounted, setMounted] = useState(false);
 
   const plataformas = [
     { id: "youtube", label: "YouTube 16:9" },
@@ -46,14 +45,17 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    setMounted(true);
     cargarDatos();
 
     const handlePageShow = (e: PageTransitionEvent) => {
-      if (e.persisted) cargarDatos();
+      cargarDatos();
     };
     window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
+    window.addEventListener("focus", cargarDatos);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      window.removeEventListener("focus", cargarDatos);
+    };
   }, []);
 
   function irAGenerar() {
@@ -65,8 +67,6 @@ export default function Dashboard() {
   const sinCreditos = creditos !== null && creditos < 3;
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
-
-  if (!mounted) return null;
 
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
@@ -136,9 +136,9 @@ export default function Dashboard() {
 
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>1. Elige la plataforma</div>
-          <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
+          <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}} suppressHydrationWarning>
             {plataformas.map((p) => (
-              <button key={p.id} onClick={() => setPlataforma(p.id)} style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:plataforma===p.id?"#FF4D00":"#1f2937",color:plataforma===p.id?"white":"#8B8FA8",fontWeight:plataforma===p.id?"700":"400"}}>
+              <button key={p.id} onClick={() => setPlataforma(p.id)} suppressHydrationWarning style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:plataforma===p.id?"#FF4D00":"#1f2937",color:plataforma===p.id?"white":"#8B8FA8",fontWeight:plataforma===p.id?"700":"400"}}>
                 {p.label}
               </button>
             ))}
@@ -148,15 +148,15 @@ export default function Dashboard() {
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. ¿Cómo quieres generarla?</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
-            <button onClick={() => setModo("fondo")} disabled={sinCreditos} style={{padding:"14px",borderRadius:"10px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",textAlign:"left",opacity:sinCreditos?0.5:1}}>
+            <button onClick={() => setModo("fondo")} disabled={sinCreditos} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",textAlign:"left",opacity:sinCreditos?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Solo fondo IA</div>
               <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Genera el fondo y edita con texto en el editor</div>
               <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>3 créditos</div>
             </button>
-            <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
+            <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara ⭐</div>
               <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tú en la miniatura generada con IA</div>
-              <div style={{fontSize:"0.72rem",color:!tieneAvatar?"#3A3D52":"#FF4D00"}}>
+              <div suppressHydrationWarning style={{fontSize:"0.72rem",color:!tieneAvatar?"#3A3D52":"#FF4D00"}}>
                 {!tieneAvatar ? "Requiere avatar — sube tus fotos primero" : "5 créditos"}
               </div>
             </button>
@@ -169,7 +169,7 @@ export default function Dashboard() {
           <input type="text" placeholder="Escena (opcional): explosión de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
         </div>
 
-        <button onClick={irAGenerar} disabled={!tema||sinCreditos} style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
+        <button onClick={irAGenerar} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
           {sinCreditos?"Sin créditos — Mejora tu plan":"Generar miniatura →"}
         </button>
       </div>
