@@ -111,6 +111,20 @@ export default function Dashboard() {
     }
   }
 
+  async function descargarMini(url: string, index: number) {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `miniatura-thumbslatam-${index + 1}.jpg`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch {
+      window.open(url, "_blank");
+    }
+  }
+
   const sinCreditos = creditos !== null && creditos < 3;
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
@@ -265,9 +279,9 @@ export default function Dashboard() {
                 <span style={{fontSize:"0.72rem",color:"#8B8FA8"}}>
                   {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
                 </span>
-                <a href={mini.imagen_url} download onClick={e => e.stopPropagation()} style={{fontSize:"0.72rem",color:"#FF4D00",textDecoration:"none",fontWeight:"600"}}>
+                <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, listaMinis.indexOf(mini)); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
                   Descargar
-                </a>
+                </button>
               </div>
             </div>
           ))}
