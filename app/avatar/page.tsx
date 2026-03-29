@@ -33,7 +33,17 @@ export default function Avatar() {
   }, []);
 
   function seleccionarFotos(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files || []).slice(0, 5);
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    const archivosValidos = Array.from(e.target.files || []).filter(f => {
+      if (f.size > MAX_SIZE) {
+        setMensaje(`Error: "${f.name}" pesa mas de 5MB. Usa fotos mas ligeras.`);
+        return false;
+      }
+      return true;
+    });
+    if (!archivosValidos.length) return;
+    const files = archivosValidos.slice(0, 5);
+    // ya filtrado arriba
     if (!files.length) return;
     setFotos(files);
     setPreviews(files.map(f => URL.createObjectURL(f)));
