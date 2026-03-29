@@ -8,6 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+console.log("OPENAI KEY presente:", !!process.env.OPENAI_API_KEY, "longitud:", process.env.OPENAI_API_KEY?.length);
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
