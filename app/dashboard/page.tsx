@@ -86,6 +86,7 @@ export default function Dashboard() {
         const nuevos = creditos - 5;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
         setCreditos(nuevos);
+        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
       } else {
         const res = await fetch("/api/generate", {
           method: "POST",
