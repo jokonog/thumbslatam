@@ -64,6 +64,8 @@ export default function Avatar() {
         setMensaje(`${fotos.length} foto${fotos.length > 1 ? "s" : ""} guardada${fotos.length > 1 ? "s" : ""} correctamente`);
         setFotos([]);
         setPreviews([]);
+        const inp = document.querySelector("input[type=file]") as HTMLInputElement;
+        if (inp) inp.value = "";
       } else {
         setMensaje("Error al guardar. Intenta de nuevo.");
       }
