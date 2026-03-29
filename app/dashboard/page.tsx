@@ -7,6 +7,7 @@ export default function Dashboard() {
   const [plan, setPlan] = useState("gratis");
   const [miniaturas, setMiniaturas] = useState(0);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [plataforma, setPlataforma] = useState("youtube");
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
@@ -23,6 +24,7 @@ export default function Dashboard() {
   async function cargarDatos() {
     const { data: authData } = await supabase.auth.getUser();
     if (!authData.user) { window.location.href = "/registro"; return; }
+    setUserId(authData.user.id);
 
     const { data: usuarioData } = await supabase
       .from("usuarios")
