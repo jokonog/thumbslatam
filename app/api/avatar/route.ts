@@ -17,20 +17,31 @@ export async function POST(request: Request) {
   try {
     const { userId, fotosBase64 } = await request.json();
 
-    // Subir todas las fotos a Cloudinary
+    // Obtener fotos existentes
+    const { data: usuarioData } = await supabaseAdmin
+      .from("usuarios")
+      .select("avatar_fotos")
+      .eq("id", userId)
+      .single();
+
+    const fotosExistentes: string[] = usuarioData?.avatar_fotos || [];
+
+    // Subir fotos nuevas a Cloudinary
     const uploads = await Promise.all(
       fotosBase64.map((foto: string, i: number) =>
         cloudinary.uploader.upload(foto, {
           folder: "thumbslatam-avatars",
-          public_id: `avatar-${userId}-${i}`,
-          overwrite: true,
+          public_id: `avatar-${userId}-${Date.now()}-${i}`,
           transformation: [{ width: 400, height: 400, crop: "fill", gravity: "face" }],
         })
       )
     );
 
-    const todasLasFotos = uploads.map(u => u.secure_url);
-    const avatarUrl = todasLasFotos[0]; // primera foto = principal
+    const fotosNuevas = uploads.map(u => u.secure_url);
+
+    // Combinar existentes + nuevas, máximo 5
+    const todasLasFotos = [...fotosExistentes, ...fotosNuevas].slice(0, 5);
+    const avatarUrl = fotosNuevas[0]; // la primera nueva es la principal
 
     await supabaseAdmin
       .from("usuarios")
@@ -47,12 +58,10 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const { userId, avatarUrl } = await request.json();
-
     await supabaseAdmin
       .from("usuarios")
       .update({ avatar_url: avatarUrl })
       .eq("id", userId);
-
     return NextResponse.json({ ok: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
