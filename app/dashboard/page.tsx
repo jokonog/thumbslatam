@@ -244,12 +244,30 @@ export default function Dashboard() {
         </button>
       </div>
 
-      <h2 style={{fontSize:"1rem",fontWeight:"700",marginBottom:"12px"}}>Mis miniaturas</h2>
-      <div style={{background:"#111827",borderRadius:"12px",padding:"32px",border:"1px solid rgba(255,255,255,0.07)",textAlign:"center"}}>
-        <p style={{color:"#8B8FA8",margin:"0 0 12px"}}>
-          {miniaturas===0?"Aun no has generado miniaturas":`${miniaturas} miniatura${miniaturas!==1?"s":""} generada${miniaturas!==1?"s":""}`}
-        </p>
-      </div>
+      <h2 style={{fontSize:"1rem",fontWeight:"700",marginBottom:"12px"}}>
+        Mis miniaturas {miniaturas > 0 && <span style={{fontSize:"0.78rem",color:"#8B8FA8",fontWeight:"400"}}>({miniaturas} generada{miniaturas!==1?"s":""})</span>}
+      </h2>
+      {listaMinis.length === 0 ? (
+        <div style={{background:"#111827",borderRadius:"12px",padding:"32px",border:"1px solid rgba(255,255,255,0.07)",textAlign:"center"}}>
+          <p style={{color:"#8B8FA8",margin:0}}>Aun no has generado miniaturas</p>
+        </div>
+      ) : (
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(200px, 1fr))",gap:"12px"}}>
+          {listaMinis.map((mini) => (
+            <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
+              <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
+              <div style={{padding:"8px 10px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <span style={{fontSize:"0.72rem",color:"#8B8FA8"}}>
+                  {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
+                </span>
+                <a href={mini.imagen_url} download onClick={e => e.stopPropagation()} style={{fontSize:"0.72rem",color:"#FF4D00",textDecoration:"none",fontWeight:"600"}}>
+                  Descargar
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
