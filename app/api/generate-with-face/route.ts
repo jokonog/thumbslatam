@@ -97,6 +97,9 @@ export async function POST(request: Request) {
     );
 
     // Leer resultado del face swap
+    console.log("faceSwapOutput keys:", Object.keys(faceSwapOutput || {}));
+    console.log("faceSwapOutput.image type:", typeof faceSwapOutput?.image);
+    console.log("faceSwapOutput:", JSON.stringify(faceSwapOutput, null, 2));
     let finalBuffer: Buffer | null = null;
     if (faceSwapOutput?.image instanceof ReadableStream) {
       const reader = faceSwapOutput.image.getReader();
