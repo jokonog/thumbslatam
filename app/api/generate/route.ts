@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -8,21 +7,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-console.log("OPENAI KEY presente:", !!process.env.OPENAI_API_KEY, "longitud:", process.env.OPENAI_API_KEY?.length);
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(request: Request) {
   try {
-    const { descripcion, estilo, emocion, orientacion } = await request.json();
+    const key = process.env.OPENAI_API_KEY;
+    console.log("KEY inicio:", key?.slice(0, 8), "len:", key?.length);
 
+    const { default: OpenAI } = await import("openai");
+    const openai = new OpenAI({ apiKey: key });
+
+    const { descripcion, estilo, emocion, orientacion } = await request.json();
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical
       ? "9:16 vertical portrait format, tall narrow composition, mobile screen format"
       : "16:9 horizontal landscape format, wide cinematic composition";
     const size = esVertical ? "1024x1792" : "1792x1024";
-
     const prompt = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${aspectRatio}, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
     const response = await openai.images.generate({
@@ -39,7 +37,6 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ imageUrl: uploaded.secure_url });
-
   } catch (error: any) {
     console.error("ERROR:", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
