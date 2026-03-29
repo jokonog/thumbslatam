@@ -58,10 +58,64 @@ export default function Dashboard() {
     };
   }, []);
 
-  function irAGenerar() {
-    if (!tema) return;
-    const params = new URLSearchParams({ plataforma, modo, tema, escena });
-    window.location.href = `/editor?${params.toString()}`;
+  const [generando, setGenerando] = useState(false);
+  const [errorGen, setErrorGen] = useState("");
+
+  async function irAGenerar() {
+    if (!tema || creditos === null) return;
+    setErrorGen("");
+    setGenerando(true);
+
+    try {
+      const esVertical = plataforma === "instagram_story" || plataforma === "tiktok";
+      const orientacion = esVertical ? "vertical 9:16 portrait" : "horizontal 16:9 landscape";
+      const descripcion = escena ? `${tema}. Escena: ${escena}` : tema;
+
+      let imageUrl = "";
+
+      if (modo === "cara") {
+        const res = await fetch("/api/generate-with-face", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", orientacion }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        imageUrl = data.imageUrl;
+
+        // Descontar 5 créditos
+        const nuevos = creditos - 5;
+        await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
+        setCreditos(nuevos);
+      } else {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ descripcion, estilo: "gaming", emocion: "epico", orientacion }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        imageUrl = data.imageUrl;
+
+        // Descontar 3 créditos
+        const nuevos = creditos - 3;
+        await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
+        setCreditos(nuevos);
+
+        // Guardar miniatura
+        if (userId) {
+          await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
+        }
+      }
+
+      // Ir al editor con la imagen ya generada
+      const params = new URLSearchParams({ plataforma, imageUrl });
+      window.location.href = `/editor?${params.toString()}`;
+
+    } catch (err: any) {
+      setErrorGen("Error generando: " + err.message);
+    }
+    setGenerando(false);
   }
 
   const sinCreditos = creditos !== null && creditos < 3;
