@@ -188,7 +188,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-            <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}}>Costo por generacion</div>
+            <div suppressHydrationWarning style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}}>Costo por generacion</div>
             <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>3 creditos</span></div>
             <div style={{fontSize:"0.82rem",color:"white",marginTop:"2px"}}>Con mi cara — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
           </div>
