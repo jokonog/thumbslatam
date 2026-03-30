@@ -45,15 +45,20 @@ export async function POST(request: Request) {
       }
     );
 
-    // Kontext Pro devuelve una URL directamente
+    // Kontext Pro devuelve un objeto URL de Node
     let imageUrl = "";
-    if (typeof output === "string") {
+    if (output instanceof URL) {
+      imageUrl = output.href;
+    } else if (typeof output === "string") {
       imageUrl = output;
-    } else if (output?.url) {
-      imageUrl = typeof output.url === "function" ? output.url() : output.url;
     } else if (Array.isArray(output) && output[0]) {
-      imageUrl = typeof output[0] === "string" ? output[0] : output[0].url();
+      const item = output[0];
+      imageUrl = item instanceof URL ? item.href : (typeof item === "string" ? item : String(item));
+    } else if (output?.href) {
+      imageUrl = output.href;
     }
+
+    console.log("Kontext output type:", typeof output, "imageUrl:", imageUrl);
 
     if (!imageUrl) {
       return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
