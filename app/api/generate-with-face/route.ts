@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `Place this person in the following scene: ${descripcion}. The person should have a ${emocion} expression, ${estilo} style, cinematic dramatic lighting. Keep the person's face and identity exactly as in the reference photo. Face clearly visible, no mask, no helmet, upper body visible. Natural hand anatomy, realistic fingers, hands properly gripping any objects, no deformed or extra fingers.`,
+          prompt: `The reference person appears ONLY as the RIGHT SIDE character in this scene: ${descripcion}. Style: ${estilo}, mood: ${emocion}, cinematic dramatic lighting. IMPORTANT: any other character in the scene must look completely different — different face, different ethnicity, different hair, invented person, NO resemblance to the reference photo whatsoever. Only the right side character matches the reference photo exactly. Face of reference person clearly visible, no mask, no helmet. Natural hand anatomy, realistic fingers, hands properly gripping any objects, no deformed or extra fingers.`,
           input_image: usuarioData.avatar_url,
           aspect_ratio: aspectRatio,
         }
