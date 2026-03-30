@@ -35,16 +35,43 @@ export async function POST(request: Request) {
     const avatarBuffer = await avatarRes.arrayBuffer();
     const avatarBase64 = `data:image/jpeg;base64,${Buffer.from(avatarBuffer).toString("base64")}`;
 
-    // PASO 1: FLUX PuLID genera persona con tu cara
-    const escenaOutput: any = await replicate.run(
+    const esVertical = orientacion.includes("portrait");
+    const size = esVertical ? "1024x1792" : "1792x1024";
+
+    // PASO 1: Generar escena con DALL-E (sin persona)
+    const dalleRes = await fetch("https://api.openai.com/v1/images/generations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "dall-e-3",
+        prompt: `${descripcion}, ${estilo} style, ${emocion} mood, cinematic dramatic lighting, ultra detailed, NO PEOPLE, NO FACES, NO PERSONS, clean background scene only`,
+        n: 1,
+        size,
+        quality: "hd",
+      }),
+    });
+
+    const dalleData = await dalleRes.json();
+    if (!dalleRes.ok) throw new Error(dalleData.error?.message || "Error DALL-E");
+    const dalleUrl = dalleData.data?.[0]?.url ?? "";
+
+    const escenaUpload = await cloudinary.uploader.upload(dalleUrl, {
+      folder: "thumbslatam-temp",
+    });
+
+    // PASO 2: FLUX PuLID genera retrato con tu cara (busto limpio)
+    const retratoOutput: any = await replicate.run(
       "bytedance/flux-pulid:8baa7ef2255075b46f4d91cd238c21d31181b3e6a864463f967960bb0112525b",
       {
         input: {
           main_face_image: avatarBase64,
-          prompt: `portrait of a person, ${emocion} expression, ${estilo} style, ${descripcion} background, cinematic dramatic lighting, face clearly visible and prominent, upper body shot, no helmet no mask`,
-          negative_prompt: "ugly, blurry, low quality, deformed, back view, text, watermark, helmet, mask, face hidden, small face, full body, wide shot",
-          width: orientacion.includes("portrait") ? 720 : 1280,
-          height: orientacion.includes("portrait") ? 1280 : 720,
+          prompt: `portrait photo of a person, ${emocion} expression, neutral background, face clearly visible, upper body, professional headshot, high quality`,
+          negative_prompt: "ugly, blurry, low quality, deformed, back view, text, watermark, helmet, mask",
+          width: 768,
+          height: 1024,
           num_steps: 20,
           guidance_scale: 4,
           id_weight: 1.2,
@@ -53,9 +80,8 @@ export async function POST(request: Request) {
       }
     );
 
-    // Leer resultado
-    let escenaBuffer: Buffer | null = null;
-    for (const item of escenaOutput) {
+    let retratoBuffer: Buffer | null = null;
+    for (const item of retratoOutput) {
       if (item instanceof ReadableStream) {
         const reader = item.getReader();
         const chunks: Uint8Array[] = [];
@@ -64,62 +90,54 @@ export async function POST(request: Request) {
           if (done) break;
           chunks.push(value);
         }
-        escenaBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
+        retratoBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
       }
     }
 
-    if (!escenaBuffer) {
-      return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
-    }
+    if (!retratoBuffer) throw new Error("Error generando retrato");
 
-    // Subir escena a Cloudinary
-    const escenaUpload = await cloudinary.uploader.upload(
-      `data:image/jpeg;base64,${escenaBuffer.toString("base64")}`,
+    const retratoUpload = await cloudinary.uploader.upload(
+      `data:image/jpeg;base64,${retratoBuffer.toString("base64")}`,
       { folder: "thumbslatam-temp" }
     );
 
-    // Subir avatar a Cloudinary
+    // PASO 3: Face swap — poner tu cara de FLUX en la escena de DALL-E
     const avatarUpload = await cloudinary.uploader.upload(avatarUrl, {
       folder: "thumbslatam-temp",
     });
 
-    // PASO 2: Face swap para mejorar parecido al 95%
-    let finalImageUrl = escenaUpload.secure_url;
-    try {
-      const faceSwapOutput: any = await replicate.run(
-        "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
-        {
-          input: {
-            source_image: avatarUpload.secure_url,
-            target_image: escenaUpload.secure_url,
-          }
+    const faceSwapOutput: any = await replicate.run(
+      "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
+      {
+        input: {
+          source_image: retratoUpload.secure_url,
+          target_image: escenaUpload.secure_url,
         }
-      );
-
-      let finalBuffer: Buffer | null = null;
-      if (faceSwapOutput?.image instanceof ReadableStream) {
-        const reader = faceSwapOutput.image.getReader();
-        const chunks: Uint8Array[] = [];
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          chunks.push(value);
-        }
-        finalBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
       }
+    );
 
-      if (finalBuffer) {
-        const finalUpload = await cloudinary.uploader.upload(
-          `data:image/jpeg;base64,${finalBuffer.toString("base64")}`,
-          { folder: "thumbslatam-generated" }
-        );
-        finalImageUrl = finalUpload.secure_url;
+    let finalBuffer: Buffer | null = null;
+    if (faceSwapOutput?.image instanceof ReadableStream) {
+      const reader = faceSwapOutput.image.getReader();
+      const chunks: Uint8Array[] = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
       }
-    } catch (swapError: any) {
-      console.log("Face swap falló, usando imagen de FLUX:", swapError.message);
+      finalBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
     }
 
-    return NextResponse.json({ imageUrl: finalImageUrl });
+    // Si face swap falla, usar el retrato de FLUX sobre la escena
+    const imageToUpload = finalBuffer
+      ? `data:image/jpeg;base64,${finalBuffer.toString("base64")}`
+      : `data:image/jpeg;base64,${retratoBuffer.toString("base64")}`;
+
+    const finalUpload = await cloudinary.uploader.upload(imageToUpload, {
+      folder: "thumbslatam-generated"
+    });
+
+    return NextResponse.json({ imageUrl: finalUpload.secure_url });
 
   } catch (error: any) {
     console.error("generate-with-face error:", error.message);
