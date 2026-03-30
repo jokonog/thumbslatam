@@ -178,10 +178,13 @@ export default function Dashboard() {
   // Pantalla de variaciones
   if (variaciones.length > 0) return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
-      <div style={{display:"flex",alignItems:"center",gap:"16px",marginBottom:"8px"}}>
-        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"none",cursor:"pointer"}}>← Volver</button>
-        <h1 style={{fontSize:"1.3rem",fontWeight:"800",margin:0,letterSpacing:"-0.03em"}}>Elige tu miniatura</h1>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}}>
+        <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
+          Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
+        </h1>
+        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"none",cursor:"pointer",padding:"8px 16px",borderRadius:"8px",border:"1px solid #3A3D52"}}>← Volver</button>
       </div>
+      <h2 style={{fontSize:"1.1rem",fontWeight:"700",margin:"0 0 4px",letterSpacing:"-0.02em"}}>Elige tu miniatura</h2>
       <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 24px"}}>
         Generamos 2 variaciones — elige la que mas te guste y edita el formato en el editor
       </p>
@@ -212,13 +215,10 @@ export default function Dashboard() {
       </div>
 
       {varSeleccionada && !confirmando && (
-        <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"14px 16px",marginBottom:"16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"14px 16px",marginBottom:"16px"}}>
           <p style={{fontSize:"0.82rem",color:"#FF4D00",margin:0}}>
-            Lista para editar — podras cambiar el formato en el editor
+            Lista para editar — podras cambiar el formato a tu gusto en el editor
           </p>
-          <button onClick={elegirVariacion} style={{padding:"8px 20px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.85rem",cursor:"pointer",whiteSpace:"nowrap",marginLeft:"12px"}}>
-            Editar esta →
-          </button>
         </div>
       )}
 
@@ -228,7 +228,7 @@ export default function Dashboard() {
           disabled={creditos !== null && creditos < 3}
           style={{padding:"12px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:creditos !== null && creditos < 3?"#3A3D52":"#8B8FA8",cursor:creditos !== null && creditos < 3?"not-allowed":"pointer",fontSize:"0.85rem"}}
         >
-          Regenerar (3 creditos)
+          Regenerar (3 créditos)
         </button>
         <button
           onClick={elegirVariacion}
