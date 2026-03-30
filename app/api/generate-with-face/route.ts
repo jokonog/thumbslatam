@@ -33,7 +33,6 @@ export async function POST(request: Request) {
     const esVertical = orientacion.includes("portrait");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    // FLUX Kontext Pro — genera al usuario en la escena en un solo paso
     const output: any = await replicate.run(
       "black-forest-labs/flux-kontext-pro",
       {
@@ -45,17 +44,13 @@ export async function POST(request: Request) {
       }
     );
 
-    // Kontext Pro devuelve un objeto URL de Node
     const imageUrl = String(output);
-    console.log("Kontext imageUrl:", imageUrl);
+    console.log("Kontext output:", imageUrl);
 
     if (!imageUrl || !imageUrl.startsWith("http")) {
-      console.log("Output tipo:", typeof output, "constructor:", output?.constructor?.name);
       return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
     }
-    }
 
-    // Subir a Cloudinary
     const uploaded = await cloudinary.uploader.upload(imageUrl, {
       folder: "thumbslatam-generated"
     });
