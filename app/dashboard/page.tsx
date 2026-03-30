@@ -2,6 +2,23 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 
+function BarraProgreso({ duracion }: { duracion: number }) {
+  const [progreso, setProgreso] = useState(0);
+  useEffect(() => {
+    const inicio = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = (Date.now() - inicio) / 1000;
+      const pct = Math.min(95, (elapsed / duracion) * 100);
+      setProgreso(pct);
+      if (pct >= 95) clearInterval(interval);
+    }, 500);
+    return () => clearInterval(interval);
+  }, [duracion]);
+  return (
+    <div style={{height:"100%",background:"#FF4D00",borderRadius:"999px",width:`${progreso}%`,transition:"width 0.5s ease"}}/>
+  );
+}
+
 export default function Dashboard() {
   const [creditos, setCreditos] = useState<number | null>(null);
   const [plan, setPlan] = useState("gratis");
