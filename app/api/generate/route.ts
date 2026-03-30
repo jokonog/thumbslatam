@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import Replicate from "replicate";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
@@ -7,19 +8,24 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-async function generarImagen(prompt: string, size: string): Promise<string> {
-  const response = await fetch("https://api.openai.com/v1/images/generations", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({ model: "dall-e-3", prompt, n: 1, size, quality: "hd" }),
-  });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error?.message || "Error OpenAI");
-  const dalleUrl = data.data?.[0]?.url ?? "";
-  const uploaded = await cloudinary.uploader.upload(dalleUrl, { folder: "thumbslatam/fondos" });
+const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
+
+async function generarImagen(prompt: string, aspectRatio: string): Promise<string> {
+  const output: any = await replicate.run(
+    "black-forest-labs/flux-1.1-pro",
+    {
+      input: {
+        prompt,
+        aspect_ratio: aspectRatio,
+        output_format: "jpg",
+        output_quality: 95,
+        safety_tolerance: 5,
+      }
+    }
+  );
+  const fluxUrl = String(output);
+  if (!fluxUrl || !fluxUrl.startsWith("http")) throw new Error("FLUX no genero imagen");
+  const uploaded = await cloudinary.uploader.upload(fluxUrl, { folder: "thumbslatam/fondos" });
   return uploaded.secure_url;
 }
 
@@ -27,17 +33,14 @@ export async function POST(request: Request) {
   try {
     const { descripcion, estilo, emocion, orientacion } = await request.json();
     const esVertical = orientacion?.includes("vertical");
-    const aspectRatio = esVertical
-      ? "9:16 vertical portrait format, tall narrow composition, mobile screen format"
-      : "16:9 horizontal landscape format, wide cinematic composition";
-    const size = esVertical ? "1024x1792" : "1792x1024";
+    const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    const prompt1 = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${aspectRatio}, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
-    const prompt2 = `Cinematic ${descripcion}, ${estilo} aesthetic, ${emocion} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, ${aspectRatio}, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    const prompt1 = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    const prompt2 = `Cinematic ${descripcion}, ${estilo} aesthetic, ${emocion} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
     const [imageUrl1, imageUrl2] = await Promise.all([
-      generarImagen(prompt1, size),
-      generarImagen(prompt2, size),
+      generarImagen(prompt1, aspectRatio),
+      generarImagen(prompt2, aspectRatio),
     ]);
 
     return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
