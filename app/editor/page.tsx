@@ -481,81 +481,13 @@ export default function Editor() {
             )}
           </div>
 
-          {/* 2. Fondo con IA */}
+          {/* Volver a generar */}
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}>
-              <h3 style={{margin:0,fontSize:"0.85rem",fontWeight:"700"}}>2. Fondo con IA</h3>
-              <span style={{fontSize:"0.72rem",color:"#3A3D52",background:"#060810",padding:"2px 8px",borderRadius:"999px"}}>
-                {COSTO_GENERAR} créditos
-              </span>
-            </div>
-            <input
-              type="text"
-              placeholder="¿De que es tu video? Ej: Minecraft"
-              value={tema}
-              onChange={(e) => setTema(e.target.value)}
-              style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px",boxSizing:"border-box"}}
-            />
-            <input
-              type="text"
-              placeholder="Describe la escena (opcional)..."
-              value={escena}
-              onChange={(e) => setEscena(e.target.value)}
-              style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px",boxSizing:"border-box"}}
-            />
-            <select
-              value={estilo}
-              onChange={(e) => setEstilo(e.target.value)}
-              style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px"}}
-            >
-              <option value="gaming">Gaming</option>
-              <option value="vlog">Vlog</option>
-              <option value="tutorial">Tutorial</option>
-              <option value="reaccion">Reaccion</option>
-              <option value="stream">Stream Highlights</option>
-              <option value="entretenimiento">Entretenimiento</option>
-              <option value="comedia">Comedia</option>
-              <option value="deportes">Deportes</option>
-              <option value="terror">Terror</option>
-              <option value="musica">Musica</option>
-            </select>
-
-            {/* Alerta sin créditos */}
-            {errorCreditos && (
-              <div style={{background:"rgba(255,77,0,0.1)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"10px",marginBottom:"8px",fontSize:"0.78rem",color:"#FF4D00",lineHeight:"1.4"}}>
-                ⚠️ {errorCreditos}
-                <a href="/dashboard" style={{display:"block",marginTop:"6px",color:"#FF4D00",fontWeight:"700",textDecoration:"underline"}}>
-                  Mejorar plan →
-                </a>
-              </div>
-            )}
-
-            <button
-              onClick={generarFondo}
-              disabled={cargando || !tema || sinCreditos}
-              style={{
-                width:"100%",padding:"10px",borderRadius:"8px",
-                background: sinCreditos ? "#3A3D52" : (tema && !cargando ? "#FF4D00" : "#3A3D52"),
-                border:"none",color:"white",fontWeight:"700",
-                cursor: sinCreditos || !tema || cargando ? "not-allowed" : "pointer",
-                fontSize:"0.85rem",
-              }}
-            >
-              {cargando ? (
-                <div style={{width:"100%"}}>
-                  <div style={{fontSize:"0.8rem",marginBottom:"6px",textAlign:"center"}}>Generando tu fondo...</div>
-                  <div style={{background:"rgba(255,255,255,0.15)",borderRadius:"999px",height:"6px",overflow:"hidden"}}>
-                    <div style={{background:"white",height:"100%",width:`${progreso}%`,borderRadius:"999px",transition:"width 0.5s ease"}}/>
-                  </div>
-                </div>
-              ) : sinCreditos ? "Sin créditos — Mejora tu plan" : "Generar fondo →"}
-            </button>
-          </div>
-
-          {/* 3. Subir fondo */}
-          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>3. O sube tu fondo</h3>
-            <input type="file" accept="image/*" onChange={subirFondo} style={{color:"#8B8FA8",fontSize:"0.8rem",width:"100%"}}/>
+            <h3 style={{margin:"0 0 8px",fontSize:"0.85rem",fontWeight:"700"}}>¿No te convence?</h3>
+            <p style={{fontSize:"0.75rem",color:"#8B8FA8",margin:"0 0 10px",lineHeight:"1.4"}}>Vuelve al inicio y genera una nueva miniatura con diferentes opciones.</p>
+            <a href="/dashboard" style={{display:"block",textAlign:"center",padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.82rem",textDecoration:"none",fontWeight:"600"}}>
+              ← Volver a generar
+            </a>
           </div>
 
           {/* 4. Texto */}
