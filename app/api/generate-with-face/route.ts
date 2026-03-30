@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
     const output: any = await replicate.run(
-      "black-forest-labs/flux-kontext-pro",
+      "black-forest-labs/flux-kontext-max",
       {
         input: {
           prompt: `Place this person in the following scene: ${descripcion}. The person should have a ${emocion} expression, ${estilo} style, cinematic dramatic lighting. Keep the person's face and identity exactly as in the reference photo. Face clearly visible, no mask, no helmet.`,
