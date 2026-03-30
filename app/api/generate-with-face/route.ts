@@ -35,20 +35,20 @@ export async function POST(request: Request) {
     const avatarBuffer = await avatarRes.arrayBuffer();
     const avatarBase64 = `data:image/jpeg;base64,${Buffer.from(avatarBuffer).toString("base64")}`;
 
-    // FLUX PuLID — genera la escena con tu cara integrada directamente
+    // PASO 1: FLUX PuLID genera persona con tu cara
     const escenaOutput: any = await replicate.run(
       "bytedance/flux-pulid:8baa7ef2255075b46f4d91cd238c21d31181b3e6a864463f967960bb0112525b",
       {
         input: {
           main_face_image: avatarBase64,
-          prompt: `${descripcion}, ${emocion} expression, ${estilo} style, cinematic dramatic lighting, ${orientacion}, professional photography, face clearly visible, no helmet no mask`,
-          negative_prompt: "ugly, blurry, low quality, deformed, back view, text, watermark, helmet, mask, face hidden, face covered",
+          prompt: `portrait of a person, ${emocion} expression, ${estilo} style, ${descripcion} background, cinematic dramatic lighting, face clearly visible and prominent, upper body shot, no helmet no mask`,
+          negative_prompt: "ugly, blurry, low quality, deformed, back view, text, watermark, helmet, mask, face hidden, small face, full body, wide shot",
           width: orientacion.includes("portrait") ? 720 : 1280,
           height: orientacion.includes("portrait") ? 1280 : 720,
           num_steps: 20,
           guidance_scale: 4,
-          id_weight: 1.0,
-          start_step: 4,
+          id_weight: 1.2,
+          start_step: 0,
         }
       }
     );
@@ -72,12 +72,54 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
     }
 
-    const finalUpload = await cloudinary.uploader.upload(
+    // Subir escena a Cloudinary
+    const escenaUpload = await cloudinary.uploader.upload(
       `data:image/jpeg;base64,${escenaBuffer.toString("base64")}`,
-      { folder: "thumbslatam-generated" }
+      { folder: "thumbslatam-temp" }
     );
 
-    return NextResponse.json({ imageUrl: finalUpload.secure_url });
+    // Subir avatar a Cloudinary
+    const avatarUpload = await cloudinary.uploader.upload(avatarUrl, {
+      folder: "thumbslatam-temp",
+    });
+
+    // PASO 2: Face swap para mejorar parecido al 95%
+    let finalImageUrl = escenaUpload.secure_url;
+    try {
+      const faceSwapOutput: any = await replicate.run(
+        "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
+        {
+          input: {
+            source_image: avatarUpload.secure_url,
+            target_image: escenaUpload.secure_url,
+          }
+        }
+      );
+
+      let finalBuffer: Buffer | null = null;
+      if (faceSwapOutput?.image instanceof ReadableStream) {
+        const reader = faceSwapOutput.image.getReader();
+        const chunks: Uint8Array[] = [];
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+        }
+        finalBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
+      }
+
+      if (finalBuffer) {
+        const finalUpload = await cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${finalBuffer.toString("base64")}`,
+          { folder: "thumbslatam-generated" }
+        );
+        finalImageUrl = finalUpload.secure_url;
+      }
+    } catch (swapError: any) {
+      console.log("Face swap falló, usando imagen de FLUX:", swapError.message);
+    }
+
+    return NextResponse.json({ imageUrl: finalImageUrl });
 
   } catch (error: any) {
     console.error("generate-with-face error:", error.message);
