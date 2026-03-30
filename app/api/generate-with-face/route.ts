@@ -87,11 +87,11 @@ export async function POST(request: Request) {
 
     // PASO 2: Face swap
     const faceSwapOutput: any = await replicate.run(
-      "xiankgx/face-swap:cce479f9be3c4c573d59ce9ddc28a51bf7aa9b98837c15c05b099a6cdaa60b79",
+      "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
       {
         input: {
-          source: avatarUpload.secure_url,
-          target: escenaUpload.secure_url,
+          source_image: avatarUpload.secure_url,
+          target_image: escenaUpload.secure_url,
         }
       }
     );
