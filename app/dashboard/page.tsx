@@ -150,7 +150,6 @@ export default function Dashboard() {
   // Pantalla de carga
   if (generando) return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
-      <style>{`@keyframes loadbar { 0%{width:5%} 50%{width:85%} 100%{width:5%} }`}</style>
       <div style={{textAlign:"center",maxWidth:"420px",width:"100%"}}>
         <div style={{fontSize:"3rem",marginBottom:"24px"}}>🎨</div>
         <h2 style={{fontSize:"1.3rem",fontWeight:"800",marginBottom:"8px",letterSpacing:"-0.03em"}}>
@@ -162,7 +161,7 @@ export default function Dashboard() {
             : "Esto tarda unos 30 segundos, no cierres esta pantalla"}
         </p>
         <div style={{background:"#111827",borderRadius:"999px",height:"8px",overflow:"hidden",marginBottom:"16px"}}>
-          <div style={{height:"100%",background:"linear-gradient(90deg,#FF4D00,#ff7a00)",borderRadius:"999px",animation:"loadbar 2s ease-in-out infinite"}}/>
+          <BarraProgreso duracion={modo === "cara" ? 120 : 35} />
         </div>
         <p style={{color:"#3A3D52",fontSize:"0.75rem"}}>No cierres esta pantalla</p>
       </div>
