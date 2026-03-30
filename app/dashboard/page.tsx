@@ -393,7 +393,7 @@ export default function Dashboard() {
         )}
 
         <button onClick={generarVariaciones} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
-          {sinCreditos ? "Sin creditos — Mejora tu plan" : `Generar — se descontaran ${costo} creditos →`}
+          {sinCreditos ? "Sin creditos — Mejora tu plan" : `Generar — se descontarán ${costo} creditos →`}
         </button>
       </div>
 
