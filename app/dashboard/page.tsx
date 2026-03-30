@@ -235,7 +235,7 @@ export default function Dashboard() {
           disabled={!varSeleccionada}
           style={{padding:"12px",borderRadius:"10px",background:varSeleccionada?"#FF4D00":"#3A3D52",border:"none",color:"white",fontWeight:"700",fontSize:"0.85rem",cursor:varSeleccionada?"pointer":"not-allowed"}}
         >
-          Editar en el editor →
+          Editar esta →
         </button>
       </div>
     </main>
