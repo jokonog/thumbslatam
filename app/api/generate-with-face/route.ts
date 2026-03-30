@@ -20,7 +20,6 @@ export async function POST(request: Request) {
   try {
     const { userId, descripcion, estilo, orientacion, emocion } = await request.json();
 
-    // Obtener avatar del usuario
     const { data: usuarioData } = await supabaseAdmin
       .from("usuarios")
       .select("avatar_url")
@@ -32,20 +31,18 @@ export async function POST(request: Request) {
     }
 
     const avatarUrl = usuarioData.avatar_url;
-
-    // Convertir avatar a base64
     const avatarRes = await fetch(avatarUrl);
     const avatarBuffer = await avatarRes.arrayBuffer();
     const avatarBase64 = `data:image/jpeg;base64,${Buffer.from(avatarBuffer).toString("base64")}`;
 
-    // PASO 1: Generar escena con FLUX PuLID
+    // FLUX PuLID — genera la escena con tu cara integrada directamente
     const escenaOutput: any = await replicate.run(
       "bytedance/flux-pulid:8baa7ef2255075b46f4d91cd238c21d31181b3e6a864463f967960bb0112525b",
       {
         input: {
           main_face_image: avatarBase64,
-          prompt: `${descripcion}, ${emocion} expression, ${estilo} style, cinematic dramatic lighting, ${orientacion}, professional photography, medium shot waist up, face prominently visible and well lit, no face covering`,
-          negative_prompt: "ugly, blurry, low quality, deformed, back view, looking away, text, watermark, helmet, mask, hood covering face, face in shadow, small face, face hidden",
+          prompt: `${descripcion}, ${emocion} expression, ${estilo} style, cinematic dramatic lighting, ${orientacion}, professional photography, face clearly visible, no helmet no mask`,
+          negative_prompt: "ugly, blurry, low quality, deformed, back view, text, watermark, helmet, mask, face hidden, face covered",
           width: orientacion.includes("portrait") ? 720 : 1280,
           height: orientacion.includes("portrait") ? 1280 : 720,
           num_steps: 20,
@@ -56,7 +53,7 @@ export async function POST(request: Request) {
       }
     );
 
-    // Guardar escena en Cloudinary
+    // Leer resultado
     let escenaBuffer: Buffer | null = null;
     for (const item of escenaOutput) {
       if (item instanceof ReadableStream) {
@@ -72,60 +69,13 @@ export async function POST(request: Request) {
     }
 
     if (!escenaBuffer) {
-      return NextResponse.json({ error: "Error generando escena" }, { status: 500 });
+      return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
     }
 
-    const escenaUpload = await cloudinary.uploader.upload(
+    const finalUpload = await cloudinary.uploader.upload(
       `data:image/jpeg;base64,${escenaBuffer.toString("base64")}`,
       { folder: "thumbslatam-generated" }
     );
-
-    // Subir avatar a Cloudinary para face swap
-    const avatarUpload = await cloudinary.uploader.upload(avatarUrl, {
-      folder: "thumbslatam-temp",
-    });
-
-    // PASO 2: Face swap
-    const faceSwapOutput: any = await replicate.run(
-      "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
-      {
-        input: {
-          source_image: avatarUpload.secure_url,
-          target_image: escenaUpload.secure_url,
-        }
-      }
-    );
-    // Leer resultado del face swap
-    console.log("faceSwapOutput keys:", Object.keys(faceSwapOutput || {}));
-    console.log("faceSwapOutput.image type:", typeof faceSwapOutput?.image);
-    console.log("faceSwapOutput:", JSON.stringify(faceSwapOutput, null, 2));
-    let finalBuffer: Buffer | null = null;
-    if (faceSwapOutput?.image instanceof ReadableStream) {
-      const reader = faceSwapOutput.image.getReader();
-      const chunks: Uint8Array[] = [];
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-      }
-      finalBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
-    }
-
-    if (!finalBuffer) {
-      return NextResponse.json({ error: "La IA no detectó una cara clara en la escena. Intenta describir al personaje sin casco, máscara ni elementos que cubran el rostro." }, { status: 500 });
-    }
-
-    // Subir resultado final a Cloudinary
-    const finalUpload = await cloudinary.uploader.upload(
-      `data:image/jpeg;base64,${finalBuffer.toString("base64")}`,
-      { folder: "thumbslatam-generated" }
-    );
-
-    // Guardar en tabla miniatura
-    await supabaseAdmin.from("miniatura").insert({
-      usuario_id: userId,
-      imagen_url: finalUpload.secure_url,
-    });
 
     return NextResponse.json({ imageUrl: finalUpload.secure_url });
 
