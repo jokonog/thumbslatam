@@ -182,7 +182,7 @@ export default function Dashboard() {
         <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
           Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
         </h1>
-        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"none",cursor:"pointer",padding:"8px 16px",borderRadius:"8px",border:"1px solid #3A3D52"}}>← Volver</button>
+        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"1px solid #3A3D52",cursor:"pointer",padding:"8px 16px",borderRadius:"8px"}}>← Volver</button>
       </div>
       <h2 style={{fontSize:"1.1rem",fontWeight:"700",margin:"0 0 4px",letterSpacing:"-0.02em"}}>Elige tu miniatura</h2>
       <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 24px"}}>
