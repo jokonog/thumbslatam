@@ -431,7 +431,7 @@ export default function Editor() {
           ← Dashboard
         </a>
         <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
-          Thumbs<span style={{color:"#FF4D00"}}>Latam</span> Editor
+          Thumbs<span style={{color:"#FF4D00",fontWeight:"800",letterSpacing:"-0.03em"}}>Latam</span> <span style={{fontWeight:"800",letterSpacing:"-0.03em"}}>Editor</span>
         </h1>
         {/* Créditos + Descargar */}
         <div style={{display:"flex",alignItems:"center",gap:"12px"}}>
