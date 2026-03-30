@@ -217,7 +217,7 @@ export default function Dashboard() {
       {varSeleccionada && !confirmando && (
         <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"14px 16px",marginBottom:"16px"}}>
           <p style={{fontSize:"0.82rem",color:"#FF4D00",margin:0}}>
-            Lista para editar — podras cambiar el formato a tu gusto en el editor
+            Lista — en el editor podras agregar texto y elegir el formato final (YouTube, Instagram, TikTok...)
           </p>
         </div>
       )}
