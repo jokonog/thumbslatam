@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       {
         input: {
           main_face_image: avatarBase64,
-          prompt: `YouTube thumbnail, person facing camera directly, close up portrait, face clearly visible, looking at camera, ${descripcion}, ${estilo} style, ${emocion} expression, cinematic dramatic lighting, ${orientacion}, professional photography`,
+          prompt: `${descripcion}, ${emocion} expression, ${estilo} style, cinematic dramatic lighting, ${orientacion}, professional photography, face clearly visible and unobstructed, person facing forward`,
           negative_prompt: "ugly, blurry, low quality, deformed, back view, looking away, text, watermark",
           width: orientacion.includes("portrait") ? 720 : 1280,
           height: orientacion.includes("portrait") ? 1280 : 720,
