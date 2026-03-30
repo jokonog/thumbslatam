@@ -33,6 +33,9 @@ export default function Dashboard() {
   const [emocion, setEmocion] = useState("epico");
   const [generando, setGenerando] = useState(false);
   const [errorGen, setErrorGen] = useState("");
+  const [variaciones, setVariaciones] = useState<string[]>([]);
+  const [varSeleccionada, setVarSeleccionada] = useState<string | null>(null);
+  const [confirmando, setConfirmando] = useState(false);
 
   const plataformas = [
     { id: "youtube", label: "YouTube 16:9" },
@@ -81,16 +84,19 @@ export default function Dashboard() {
     };
   }, []);
 
-  async function irAGenerar() {
+  async function generarVariaciones() {
     if (!tema || creditos === null) return;
     setErrorGen("");
     setGenerando(true);
+    setVariaciones([]);
+    setVarSeleccionada(null);
+    setConfirmando(false);
 
     try {
       const esVertical = plataforma === "instagram_story" || plataforma === "tiktok";
       const orientacion = esVertical ? "vertical 9:16 portrait" : "horizontal 16:9 landscape";
       const descripcion = escena ? `${tema}. Escena: ${escena}` : tema;
-      let imageUrl = "";
+      const costo = modo === "cara" ? 5 : 3;
 
       if (modo === "cara") {
         const res = await fetch("/api/generate-with-face", {
@@ -100,33 +106,54 @@ export default function Dashboard() {
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
-        imageUrl = data.imageUrl;
-        const nuevos = creditos - 5;
+        // Cara solo genera 1 por el costo
+        const nuevos = creditos - costo;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
         setCreditos(nuevos);
-        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
-      } else {
-        const res = await fetch("/api/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion }),
-        });
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
-        imageUrl = data.imageUrl;
-        const nuevos = creditos - 3;
-        await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
-        setCreditos(nuevos);
-        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: imageUrl });
+        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: data.imageUrl });
+        const params = new URLSearchParams({ plataforma, imageUrl: data.imageUrl });
+        window.location.href = `/editor?${params.toString()}`;
+        return;
       }
 
-      const params = new URLSearchParams({ plataforma, imageUrl });
-      window.location.href = `/editor?${params.toString()}`;
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
 
+      // Descontar creditos al generar
+      const nuevos = creditos - costo;
+      await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
+      setCreditos(nuevos);
+
+      if (data.variaciones && data.variaciones.length > 1) {
+        setVariaciones(data.variaciones);
+      } else {
+        const params = new URLSearchParams({ plataforma, imageUrl: data.imageUrl });
+        window.location.href = `/editor?${params.toString()}`;
+      }
     } catch (err: any) {
       setErrorGen("Error generando: " + err.message);
-      setGenerando(false);
     }
+    setGenerando(false);
+  }
+
+  async function elegirVariacion() {
+    if (!varSeleccionada) return;
+    if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: varSeleccionada });
+    const params = new URLSearchParams({ plataforma, imageUrl: varSeleccionada });
+    window.location.href = `/editor?${params.toString()}`;
+  }
+
+  async function regenerar() {
+    if (creditos === null || creditos < 3) return;
+    setVariaciones([]);
+    setVarSeleccionada(null);
+    setConfirmando(false);
+    generarVariaciones();
   }
 
   async function descargarMini(url: string, index: number) {
@@ -146,6 +173,73 @@ export default function Dashboard() {
   const sinCreditos = creditos !== null && creditos < 3;
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
+  const costo = modo === "cara" ? 5 : 3;
+
+  // Pantalla de variaciones
+  if (variaciones.length > 0) return (
+    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
+      <div style={{display:"flex",alignItems:"center",gap:"16px",marginBottom:"8px"}}>
+        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"none",cursor:"pointer"}}>← Volver</button>
+        <h1 style={{fontSize:"1.3rem",fontWeight:"800",margin:0,letterSpacing:"-0.03em"}}>Elige tu miniatura</h1>
+      </div>
+      <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 24px"}}>
+        Generamos 2 variaciones — elige la que mas te guste y edita el formato en el editor
+      </p>
+
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px",marginBottom:"20px"}}>
+        {variaciones.map((url, i) => (
+          <div key={i}
+            onClick={() => { setVarSeleccionada(url); setConfirmando(false); }}
+            style={{borderRadius:"12px",overflow:"hidden",border:`2px solid ${varSeleccionada===url?"#FF4D00":"#1f2937"}`,cursor:"pointer",transition:"border-color 0.2s",background:"#111827"}}
+          >
+            <div style={{position:"relative"}}>
+              <img src={url} alt={`variacion ${i+1}`} style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
+              {varSeleccionada === url && (
+                <div style={{position:"absolute",top:"8px",right:"8px",background:"#FF4D00",borderRadius:"50%",width:"24px",height:"24px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"12px",color:"white",fontWeight:"700"}}>✓</div>
+              )}
+              <div style={{position:"absolute",top:"8px",left:"8px",background:"rgba(0,0,0,0.6)",borderRadius:"999px",padding:"3px 10px",fontSize:"11px",color:"white",fontWeight:"600"}}>
+                Variacion {i+1}
+              </div>
+            </div>
+            <div style={{padding:"10px 12px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.78rem",color:"#8B8FA8"}}>{i===0?"Estilo epico":"Estilo cinematico"}</span>
+              <span style={{fontSize:"0.78rem",color:varSeleccionada===url?"#FF4D00":"#8B8FA8",fontWeight:"700"}}>
+                {varSeleccionada===url?"Seleccionada":"Elegir esta →"}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {varSeleccionada && !confirmando && (
+        <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"14px 16px",marginBottom:"16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <p style={{fontSize:"0.82rem",color:"#FF4D00",margin:0}}>
+            Lista para editar — podras cambiar el formato en el editor
+          </p>
+          <button onClick={elegirVariacion} style={{padding:"8px 20px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.85rem",cursor:"pointer",whiteSpace:"nowrap",marginLeft:"12px"}}>
+            Editar esta →
+          </button>
+        </div>
+      )}
+
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
+        <button
+          onClick={regenerar}
+          disabled={creditos !== null && creditos < 3}
+          style={{padding:"12px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:creditos !== null && creditos < 3?"#3A3D52":"#8B8FA8",cursor:creditos !== null && creditos < 3?"not-allowed":"pointer",fontSize:"0.85rem"}}
+        >
+          Regenerar (3 creditos)
+        </button>
+        <button
+          onClick={elegirVariacion}
+          disabled={!varSeleccionada}
+          style={{padding:"12px",borderRadius:"10px",background:varSeleccionada?"#FF4D00":"#3A3D52",border:"none",color:"white",fontWeight:"700",fontSize:"0.85rem",cursor:varSeleccionada?"pointer":"not-allowed"}}
+        >
+          Editar en el editor →
+        </button>
+      </div>
+    </main>
+  );
 
   // Pantalla de carga
   if (generando) return (
@@ -158,10 +252,10 @@ export default function Dashboard() {
         <p style={{color:"#8B8FA8",fontSize:"0.85rem",marginBottom:"32px",lineHeight:"1.5"}}>
           {modo === "cara"
             ? "Estamos generando la escena y ajustando tu cara — puede tardar hasta 2 minutos"
-            : "Esto tarda unos 30 segundos, no cierres esta pantalla"}
+            : "Generando 2 variaciones para que elijas — unos 30 segundos"}
         </p>
         <div style={{background:"#111827",borderRadius:"999px",height:"8px",overflow:"hidden",marginBottom:"16px"}}>
-          <BarraProgreso duracion={modo === "cara" ? 120 : 35} />
+          <BarraProgreso duracion={modo === "cara" ? 120 : 40} />
         </div>
         <p style={{color:"#3A3D52",fontSize:"0.75rem"}}>No cierres esta pantalla</p>
       </div>
@@ -176,14 +270,14 @@ export default function Dashboard() {
           Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
         </h1>
         <button onClick={() => supabase.auth.signOut().then(() => window.location.href = "/")} style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
-          Cerrar sesión
+          Cerrar sesion
         </button>
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"12px",marginBottom:"24px"}}>
         <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)"}}>
           <div style={{fontSize:"2rem",fontWeight:"800",color:"#FF4D00"}}>{creditos === null ? "..." : creditos}</div>
-          <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Créditos disponibles</div>
+          <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Creditos disponibles</div>
         </div>
         <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)"}}>
           <div style={{fontSize:"2rem",fontWeight:"800"}}>{miniaturas}</div>
@@ -206,7 +300,7 @@ export default function Dashboard() {
             )}
             <div>
               <div style={{fontSize:"0.82rem",color:tieneAvatar?"white":"#8B8FA8",marginBottom:"4px"}}>
-                {tieneAvatar ? "Avatar guardado" : "Sin avatar todavía"}
+                {tieneAvatar ? "Avatar guardado" : "Sin avatar todavia"}
               </div>
               <a href="/avatar" style={{fontSize:"0.78rem",color:"#FF4D00",textDecoration:"none"}}>
                 {tieneAvatar ? "Actualizar fotos →" : "Subir mis fotos →"}
@@ -224,7 +318,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-            <div suppressHydrationWarning style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}}>Costo por generacion</div>
+            <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}} suppressHydrationWarning>Costo por generacion</div>
             <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>3 creditos</span></div>
             <div style={{fontSize:"0.82rem",color:"white",marginTop:"2px"}}>Con mi cara — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
           </div>
@@ -250,12 +344,12 @@ export default function Dashboard() {
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
             <button onClick={() => setModo("fondo")} disabled={sinCreditos} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",textAlign:"left",opacity:sinCreditos?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Solo fondo IA</div>
-              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Genera el fondo y edita con texto en el editor</div>
+              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>2 variaciones para elegir la mejor</div>
               <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>3 creditos</div>
             </button>
             <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara</div>
-              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tu en la miniatura generada con IA</div>
+              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tu en la miniatura</div>
               <div suppressHydrationWarning style={{fontSize:"0.72rem",color:!tieneAvatar?"#3A3D52":"#FF4D00"}}>
                 {!tieneAvatar ? "Requiere avatar — sube tus fotos primero" : "5 creditos"}
               </div>
@@ -293,8 +387,8 @@ export default function Dashboard() {
           </div>
         )}
 
-        <button onClick={irAGenerar} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
-          {sinCreditos ? "Sin creditos — Mejora tu plan" : "Generar miniatura →"}
+        <button onClick={generarVariaciones} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer"}}>
+          {sinCreditos ? "Sin creditos — Mejora tu plan" : `Generar miniatura (${costo} creditos) →`}
         </button>
       </div>
 
@@ -307,14 +401,14 @@ export default function Dashboard() {
         </div>
       ) : (
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(200px, 1fr))",gap:"12px"}}>
-          {listaMinis.map((mini) => (
+          {listaMinis.map((mini, index) => (
             <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
               <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
               <div style={{padding:"8px 10px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                 <span style={{fontSize:"0.72rem",color:"#8B8FA8"}}>
                   {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
                 </span>
-                <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, listaMinis.indexOf(mini)); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
+                <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, index); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
                   Descargar
                 </button>
               </div>
