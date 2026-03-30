@@ -46,25 +46,13 @@ export async function POST(request: Request) {
     );
 
     // Kontext Pro devuelve un objeto URL de Node
-    let imageUrl = "";
-    if (output instanceof URL) {
-      imageUrl = output.href;
-    } else if (typeof output === "string") {
-      imageUrl = output;
-    } else if (Array.isArray(output) && output[0]) {
-      const item = output[0];
-      imageUrl = item instanceof URL ? item.href : (typeof item === "string" ? item : String(item));
-    } else if (output?.href) {
-      imageUrl = output.href;
-    }
+    const imageUrl = String(output);
+    console.log("Kontext imageUrl:", imageUrl);
 
-    console.log("Kontext output raw:", JSON.stringify(output));
-console.log("Kontext output type:", typeof output);
-console.log("Kontext output constructor:", output?.constructor?.name);
-console.log("Kontext output keys:", output ? Object.keys(output) : "null");
-
-    if (!imageUrl) {
+    if (!imageUrl || !imageUrl.startsWith("http")) {
+      console.log("Output tipo:", typeof output, "constructor:", output?.constructor?.name);
       return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
+    }
     }
 
     // Subir a Cloudinary
