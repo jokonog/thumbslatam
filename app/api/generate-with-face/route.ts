@@ -91,7 +91,6 @@ export async function POST(request: Request) {
       {
           source: avatarUpload.secure_url,
           target: escenaUpload.secure_url,
-          target_image: escenaUpload.secure_url,
         }
       }
     );
