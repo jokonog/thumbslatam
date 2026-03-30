@@ -95,7 +95,8 @@ export async function POST(request: Request) {
           target: escenaUpload.secure_url,
         }
       }
-
+      }
+    );
     // Leer resultado del face swap
     console.log("faceSwapOutput keys:", Object.keys(faceSwapOutput || {}));
     console.log("faceSwapOutput.image type:", typeof faceSwapOutput?.image);
