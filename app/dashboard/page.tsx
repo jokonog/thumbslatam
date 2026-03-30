@@ -96,7 +96,7 @@ export default function Dashboard() {
       const esVertical = plataforma === "instagram_story" || plataforma === "tiktok";
       const orientacion = esVertical ? "vertical 9:16 portrait" : "horizontal 16:9 landscape";
       const descripcion = escena ? `${tema}. Escena: ${escena}` : tema;
-      const costo = modo === "cara" ? 5 : 3;
+      const costo = modo === "cara" ? 5 : 4;
 
       if (modo === "cara") {
         const res = await fetch("/api/generate-with-face", {
@@ -149,7 +149,7 @@ export default function Dashboard() {
   }
 
   async function regenerar() {
-    if (creditos === null || creditos < 3) return;
+    if (creditos === null || creditos < 4) return;
     setVariaciones([]);
     setVarSeleccionada(null);
     setConfirmando(false);
@@ -170,10 +170,10 @@ export default function Dashboard() {
     }
   }
 
-  const sinCreditos = creditos !== null && creditos < 3;
+  const sinCreditos = creditos !== null && creditos < 4;
   const sinCreditosCara = creditos !== null && creditos < 5;
   const tieneAvatar = !!avatarUrl;
-  const costo = modo === "cara" ? 5 : 3;
+  const costo = modo === "cara" ? 5 : 4;
 
   // Pantalla de variaciones
   if (variaciones.length > 0) return (
@@ -225,10 +225,10 @@ export default function Dashboard() {
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
         <button
           onClick={regenerar}
-          disabled={creditos !== null && creditos < 3}
-          style={{padding:"12px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:creditos !== null && creditos < 3?"#3A3D52":"#8B8FA8",cursor:creditos !== null && creditos < 3?"not-allowed":"pointer",fontSize:"0.85rem"}}
+          disabled={creditos !== null && creditos < 4}
+          style={{padding:"12px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:creditos !== null && creditos < 4?"#3A3D52":"#8B8FA8",cursor:creditos !== null && creditos < 4?"not-allowed":"pointer",fontSize:"0.85rem"}}
         >
-          Regenerar (3 créditos)
+          Regenerar (4 créditos)
         </button>
         <button
           onClick={elegirVariacion}
@@ -312,14 +312,14 @@ export default function Dashboard() {
         {creditos !== null && creditos < 6 ? (
           <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"16px",display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <div style={{fontSize:"0.82rem",color:"#FF4D00",marginBottom:"8px"}}>
-              Te quedan {creditos} creditos — fondo cuesta 3, con tu cara cuesta 5.
+              Te quedan {creditos} creditos — fondo cuesta 4, con tu cara cuesta 5.
             </div>
             <a href="#" style={{fontSize:"0.78rem",color:"#FF4D00",fontWeight:"700",textDecoration:"none"}}>Mejorar plan →</a>
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"4px"}} suppressHydrationWarning>Costo por generacion</div>
-            <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>3 creditos</span></div>
+            <div style={{fontSize:"0.82rem",color:"white"}}>Solo fondo IA — <span style={{color:"#FF4D00"}}>4 créditos</span></div>
             <div style={{fontSize:"0.82rem",color:"white",marginTop:"2px"}}>Con mi cara — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
           </div>
         )}
@@ -345,7 +345,7 @@ export default function Dashboard() {
             <button onClick={() => setModo("fondo")} disabled={sinCreditos} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",textAlign:"left",opacity:sinCreditos?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Solo fondo IA</div>
               <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>2 variaciones para elegir la mejor</div>
-              <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>3 creditos</div>
+              <div style={{fontSize:"0.72rem",color:"#FF4D00"}}>4 créditos</div>
             </button>
             <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara</div>
