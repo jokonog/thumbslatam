@@ -33,29 +33,78 @@ export async function POST(request: Request) {
     const esVertical = orientacion.includes("portrait");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    const output: any = await replicate.run(
+    // PASO 1: Kontext Max genera la escena con el personaje
+    const kontextOutput: any = await replicate.run(
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `Place this person in the following scene: ${descripcion}. The person should have a ${emocion} expression, ${estilo} style, cinematic dramatic lighting. Keep the person's face and identity exactly as in the reference photo. Face clearly visible, no mask, no helmet.`,
+          prompt: `Place this person in the following scene: ${descripcion}. The person should have a ${emocion} expression, ${estilo} style, cinematic dramatic lighting. Keep the person's face and identity exactly as in the reference photo. Face clearly visible, no mask, no helmet, upper body visible.`,
           input_image: usuarioData.avatar_url,
           aspect_ratio: aspectRatio,
         }
       }
     );
 
-    const imageUrl = String(output);
-    console.log("Kontext output:", imageUrl);
-
-    if (!imageUrl || !imageUrl.startsWith("http")) {
-      return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
+    const escenaUrl = String(kontextOutput);
+    if (!escenaUrl || !escenaUrl.startsWith("http")) {
+      return NextResponse.json({ error: "Error generando la escena. Intenta de nuevo." }, { status: 500 });
     }
 
-    const uploaded = await cloudinary.uploader.upload(imageUrl, {
-      folder: "thumbslatam-generated"
+    // Subir escena a Cloudinary
+    const escenaUpload = await cloudinary.uploader.upload(escenaUrl, {
+      folder: "thumbslatam-temp"
     });
 
-    return NextResponse.json({ imageUrl: uploaded.secure_url });
+    // Subir avatar a Cloudinary
+    const avatarUpload = await cloudinary.uploader.upload(usuarioData.avatar_url, {
+      folder: "thumbslatam-temp"
+    });
+
+    // PASO 2: Face swap para mejorar parecido al 95%
+    let finalImageUrl = escenaUpload.secure_url;
+
+    try {
+      const faceSwapOutput: any = await replicate.run(
+        "codeplugtech/face-swap:d5900f9ebed33e7ae08a07f17e0d98b4ebc68ab9528a70462afc3899cfe23bab",
+        {
+          input: {
+            source_image: avatarUpload.secure_url,
+            target_image: escenaUpload.secure_url,
+          }
+        }
+      );
+
+      let finalBuffer: Buffer | null = null;
+      if (faceSwapOutput?.image instanceof ReadableStream) {
+        const reader = faceSwapOutput.image.getReader();
+        const chunks: Uint8Array[] = [];
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+        }
+        finalBuffer = Buffer.concat(chunks.map(c => Buffer.from(c)));
+      }
+
+      if (finalBuffer) {
+        const finalUpload = await cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${finalBuffer.toString("base64")}`,
+          { folder: "thumbslatam-generated" }
+        );
+        finalImageUrl = finalUpload.secure_url;
+        console.log("Face swap exitoso");
+      } else {
+        console.log("Face swap sin resultado — usando Kontext");
+        const upload = await cloudinary.uploader.upload(escenaUrl, { folder: "thumbslatam-generated" });
+        finalImageUrl = upload.secure_url;
+      }
+    } catch (swapError: any) {
+      console.log("Face swap falló:", swapError.message, "— usando Kontext");
+      const upload = await cloudinary.uploader.upload(escenaUrl, { folder: "thumbslatam-generated" });
+      finalImageUrl = upload.secure_url;
+    }
+
+    return NextResponse.json({ imageUrl: finalImageUrl });
 
   } catch (error: any) {
     console.error("generate-with-face error:", error.message);
