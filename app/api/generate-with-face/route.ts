@@ -58,7 +58,10 @@ export async function POST(request: Request) {
       imageUrl = output.href;
     }
 
-    console.log("Kontext output type:", typeof output, "imageUrl:", imageUrl);
+    console.log("Kontext output raw:", JSON.stringify(output));
+console.log("Kontext output type:", typeof output);
+console.log("Kontext output constructor:", output?.constructor?.name);
+console.log("Kontext output keys:", output ? Object.keys(output) : "null");
 
     if (!imageUrl) {
       return NextResponse.json({ error: "Error generando la imagen. Intenta de nuevo." }, { status: 500 });
