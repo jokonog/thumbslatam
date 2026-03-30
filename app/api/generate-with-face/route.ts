@@ -113,7 +113,7 @@ export async function POST(request: Request) {
     }
 
     if (!finalBuffer) {
-      return NextResponse.json({ error: "Error en face swap" }, { status: 500 });
+      return NextResponse.json({ error: "La IA no detectó una cara clara en la escena. Intenta describir al personaje sin casco, máscara ni elementos que cubran el rostro." }, { status: 500 });
     }
 
     // Subir resultado final a Cloudinary
