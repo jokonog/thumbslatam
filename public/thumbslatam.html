@@ -2095,32 +2095,25 @@
 </script>
 
 
+
 <script>
-  (function() {
-    try {
-      const raw = localStorage.getItem('thumbslatam-auth');
-      if (raw) {
-        const session = JSON.parse(raw);
-        const loggedIn = session && (session.access_token || (session.data && session.data.session));
-        if (loggedIn) {
-          document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a[href="/registro"]').forEach(function(btn) {
-              const txt = btn.textContent.trim();
-              if (txt.includes('Iniciar')) {
-                btn.textContent = 'Mi dashboard';
-                btn.href = '/dashboard';
-              } else if (txt.includes('Empezar gratis') || txt.includes('Crear mi primera')) {
-                btn.textContent = 'Ir al dashboard →';
-                btn.href = '/dashboard';
-              } else if (txt.includes('Probar 7') || txt.includes('Comenzar Studio')) {
-                btn.href = '/dashboard';
-              }
-            });
-          });
-        }
+  fetch('/api/check-session')
+    .then(r => r.json())
+    .then(function(data) {
+      if (data.loggedIn) {
+        document.querySelectorAll('a[href="/registro"]').forEach(function(btn) {
+          const txt = btn.textContent.trim();
+          if (txt.includes('Iniciar') || txt.includes('sesi')) {
+            btn.textContent = 'Mi dashboard';
+            btn.href = '/dashboard';
+          } else if (txt.includes('Empezar') || txt.includes('Crear mi primera') || txt.includes('Probar') || txt.includes('Comenzar')) {
+            btn.textContent = 'Ir al dashboard →';
+            btn.href = '/dashboard';
+          }
+        });
       }
-    } catch(e) {}
-  })();
+    })
+    .catch(function() {});
 </script>
 </body>
 </html>
