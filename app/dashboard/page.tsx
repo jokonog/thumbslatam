@@ -23,6 +23,9 @@ function BarraProgreso({ duracion }: { duracion: number }) {
 export default function Dashboard() {
   const [creditos, setCreditos] = useState<number | null>(null);
   const [plan, setPlan] = useState("gratis");
+  const [codigo, setCodigo] = useState("");
+  const [codigoMsg, setCodigoMsg] = useState("");
+  const [canjeando, setCanjeando] = useState(false);
   const [miniaturas, setMiniaturas] = useState(0);
   const [listaMinis, setListaMinis] = useState<{id:number, imagen_url:string, created_at:string}[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -156,6 +159,30 @@ export default function Dashboard() {
     setVarSeleccionada(null);
     setConfirmando(false);
     generarVariaciones();
+  }
+
+  async function canjearCodigo() {
+    if (!codigo.trim()) return;
+    setCanjeando(true);
+    setCodigoMsg("");
+    try {
+      const res = await fetch("/api/canjear-codigo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, codigo }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setCodigoMsg(`Canjeado — +${data.creditos} creditos. Total: ${data.nuevoTotal}`);
+        setCreditos(data.nuevoTotal);
+        setCodigo("");
+      } else {
+        setCodigoMsg(data.error || "Codigo no valido");
+      }
+    } catch {
+      setCodigoMsg("Error al canjear");
+    }
+    setCanjeando(false);
   }
 
   async function descargarMini(url: string, index: number) {
@@ -307,6 +334,30 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Campo canjear codigo */}
+        <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"8px"}}>Tienes un codigo de regalo?</div>
+          <div style={{display:"flex",gap:"8px"}}>
+            <input
+              value={codigo}
+              onChange={e => setCodigo(e.target.value.toUpperCase())}
+              placeholder="THUMBS-NOMBRE-2026"
+              style={{flex:1,background:"#060810",border:"1px solid #3A3D52",borderRadius:"8px",padding:"8px 12px",color:"white",fontSize:"0.8rem"}}
+            />
+            <button
+              onClick={canjearCodigo}
+              disabled={canjeando}
+              style={{background:"#FF4D00",border:"none",borderRadius:"8px",padding:"8px 14px",color:"white",fontSize:"0.8rem",fontWeight:"700",cursor:"pointer"}}
+            >
+              {canjeando ? "..." : "Canjear"}
+            </button>
+          </div>
+          {codigoMsg && (
+            <div style={{fontSize:"0.75rem",marginTop:"6px",color:codigoMsg.includes("Canjeado") ? "#06D6A0" : "#ef4444"}}>
+              {codigoMsg}
+            </div>
+          )}
+        </div>
         {creditos !== null && creditos < 6 ? (
           <div style={{background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",padding:"16px",display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <div style={{fontSize:"0.82rem",color:"#FF4D00",marginBottom:"8px"}}>
