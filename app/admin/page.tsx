@@ -23,6 +23,7 @@ export default function AdminPage() {
   const [creditosNuevo, setCreditosNuevo] = useState(50);
   const [codigoGenerado, setCodigoGenerado] = useState("");
   const [creando, setCreando] = useState(false);
+  const [stats, setStats] = useState<any>(null);
 
   async function login() {
     setCargando(true);
@@ -53,10 +54,17 @@ export default function AdminPage() {
     if (data.ok) {
       setStep("panel");
       cargarCodigos();
+      cargarStats();
     } else {
       setError(data.error);
     }
     setCargando(false);
+  }
+
+  async function cargarStats() {
+    const res = await fetch("/api/admin-stats");
+    const data = await res.json();
+    setStats(data);
   }
 
   async function cargarCodigos() {
@@ -131,6 +139,42 @@ export default function AdminPage() {
         <span style={{fontSize:"0.8rem",color:"#8B8FA8",background:"#111827",padding:"6px 12px",borderRadius:"8px",border:"1px solid #3A3D52"}}>Admin Panel</span>
       </div>
 
+      {/* Estadisticas */}
+      {stats && (
+        <div style={{marginBottom:"24px"}}>
+          <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px",color:"#8B8FA8",textTransform:"uppercase",letterSpacing:"0.05em",fontSize:"0.75rem"}}>Estadisticas generales</h3>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(160px, 1fr))",gap:"12px",marginBottom:"16px"}}>
+            {[
+              { label: "Usuarios totales", value: stats.totalUsuarios, color: "white" },
+              { label: "Nuevos esta semana", value: stats.usuariosSemanales, color: "#06D6A0" },
+              { label: "Miniaturas totales", value: stats.totalMiniaturas, color: "white" },
+              { label: "Minis esta semana", value: stats.miniaturasSemanales, color: "#06D6A0" },
+              { label: "Codigos canjeados", value: `${stats.codigosCanjeados}/${stats.totalCodigos}`, color: "#FF4D00" },
+            ].map((s, i) => (
+              <div key={i} style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
+                <div style={{fontSize:"1.4rem",fontWeight:800,color:s.color}}>{s.value}</div>
+                <div style={{color:"#8B8FA8",fontSize:"0.72rem",marginTop:"4px"}}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
+            <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"12px",textTransform:"uppercase",letterSpacing:"0.05em"}}>Usuarios por plan</div>
+            <div style={{display:"flex",gap:"16px",flexWrap:"wrap"}}>
+              {[
+                { plan: "Gratis", count: stats.planes.gratis, color: "#8B8FA8" },
+                { plan: "Pro", count: stats.planes.pro, color: "#FF4D00" },
+                { plan: "Studio", count: stats.planes.studio, color: "#06D6A0" },
+              ].map((p, i) => (
+                <div key={i} style={{display:"flex",alignItems:"center",gap:"8px"}}>
+                  <div style={{width:"8px",height:"8px",borderRadius:"50%",background:p.color}}></div>
+                  <span style={{fontSize:"0.85rem",color:"white",fontWeight:600}}>{p.count}</span>
+                  <span style={{fontSize:"0.82rem",color:"#8B8FA8"}}>{p.plan}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       {/* Crear codigo */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
         <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px"}}>Crear codigo de regalo</h3>
