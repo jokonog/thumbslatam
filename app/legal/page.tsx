@@ -223,7 +223,7 @@ export default function LegalPage() {
                 <div>
                   <h3 className="font-medium mb-1">Correo electronico</h3>
                   <p className="text-white/50 text-sm mb-3">Respondemos en un plazo de 24 a 48 horas habiles.</p>
-                  
+                  <a
                     href="mailto:soporte@thumbslatam.com"
                     className="inline-block bg-white text-black text-sm font-medium px-4 py-2 rounded-lg hover:bg-white/90 transition-colors"
                   >
