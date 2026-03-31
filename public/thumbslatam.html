@@ -2093,5 +2093,33 @@
     }
   });
 </script>
+
+<script>
+  // Detectar sesion de Supabase y actualizar botones
+  (function() {
+    try {
+      const keys = Object.keys(localStorage);
+      const authKey = keys.find(k => k.includes('thumbslatam-auth'));
+      if (authKey) {
+        const session = JSON.parse(localStorage.getItem(authKey));
+        if (session && session.access_token) {
+          // Usuario logueado — cambiar botones
+          document.addEventListener('DOMContentLoaded', function() {
+            const btns = document.querySelectorAll('a[href="/registro"]');
+            btns.forEach(function(btn) {
+              if (btn.textContent.includes('Iniciar')) {
+                btn.textContent = 'Mi dashboard';
+                btn.href = '/dashboard';
+              } else if (btn.textContent.includes('Empezar gratis')) {
+                btn.textContent = 'Ir al dashboard →';
+                btn.href = '/dashboard';
+              }
+            });
+          });
+        }
+      }
+    } catch(e) {}
+  })();
+</script>
 </body>
 </html>
