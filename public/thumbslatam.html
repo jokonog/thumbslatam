@@ -2112,17 +2112,10 @@
 
 
 
+
 <script>
   function aplicarSesion() {
-    var loggedIn = false;
-    try {
-      var raw = localStorage.getItem('thumbslatam-auth');
-      if (raw) {
-        var data = JSON.parse(raw);
-        loggedIn = !!(data && data.access_token);
-      }
-    } catch(e) {}
-
+    var loggedIn = window.__LOGGED_IN__ === true;
     var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
     if (loggedIn) {
       if (btnIniciar) {
