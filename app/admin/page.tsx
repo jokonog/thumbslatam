@@ -24,6 +24,12 @@ export default function AdminPage() {
   const [codigoGenerado, setCodigoGenerado] = useState("");
   const [creando, setCreando] = useState(false);
   const [stats, setStats] = useState<any>(null);
+  const [usuarios, setUsuarios] = useState<any[]>([]);
+  const [buscarUsuario, setBuscarUsuario] = useState("");
+  const [editandoId, setEditandoId] = useState<string | null>(null);
+  const [editCreditos, setEditCreditos] = useState(0);
+  const [editPlan, setEditPlan] = useState("");
+  const [guardando, setGuardando] = useState(false);
 
   async function login() {
     setCargando(true);
@@ -55,10 +61,29 @@ export default function AdminPage() {
       setStep("panel");
       cargarCodigos();
       cargarStats();
+      cargarUsuarios();
     } else {
       setError(data.error);
     }
     setCargando(false);
+  }
+
+  async function cargarUsuarios(q = "") {
+    const res = await fetch(`/api/admin-usuarios${q ? `?q=${q}` : ""}`);
+    const data = await res.json();
+    setUsuarios(data.usuarios || []);
+  }
+
+  async function guardarUsuario(userId: string) {
+    setGuardando(true);
+    await fetch("/api/admin-usuarios", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, creditos: editCreditos, plan: editPlan }),
+    });
+    setEditandoId(null);
+    cargarUsuarios();
+    setGuardando(false);
   }
 
   async function cargarStats() {
@@ -208,6 +233,81 @@ export default function AdminPage() {
         )}
       </div>
 
+      {/* Usuarios */}
+      <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px",flexWrap:"wrap",gap:"10px"}}>
+          <h3 style={{fontSize:"0.95rem",fontWeight:700}}>Usuarios ({usuarios.length})</h3>
+          <div style={{display:"flex",gap:"8px"}}>
+            <input
+              placeholder="Buscar por email..."
+              value={buscarUsuario}
+              onChange={e => { setBuscarUsuario(e.target.value); cargarUsuarios(e.target.value); }}
+              style={{padding:"6px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.8rem",width:"200px"}}
+            />
+            <button onClick={() => cargarUsuarios(buscarUsuario)} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+              Actualizar
+            </button>
+          </div>
+        </div>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",fontSize:"0.82rem"}}>
+            <thead>
+              <tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Email</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Plan</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Creditos</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Registro</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usuarios.map(u => (
+                <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                  <td style={{padding:"8px",color:"white"}}>{u.email}</td>
+                  <td style={{padding:"8px"}}>
+                    {editandoId === u.id ? (
+                      <select value={editPlan} onChange={e => setEditPlan(e.target.value)} style={{background:"#060810",border:"1px solid #3A3D52",borderRadius:"6px",color:"white",padding:"4px",fontSize:"0.8rem"}}>
+                        <option value="gratis">Gratis</option>
+                        <option value="pro">Pro</option>
+                        <option value="studio">Studio</option>
+                      </select>
+                    ) : (
+                      <span style={{color: u.plan === "pro" ? "#FF4D00" : u.plan === "studio" ? "#06D6A0" : "#8B8FA8",textTransform:"capitalize"}}>{u.plan || "gratis"}</span>
+                    )}
+                  </td>
+                  <td style={{padding:"8px"}}>
+                    {editandoId === u.id ? (
+                      <input type="number" value={editCreditos} onChange={e => setEditCreditos(Number(e.target.value))} style={{width:"70px",background:"#060810",border:"1px solid #3A3D52",borderRadius:"6px",color:"white",padding:"4px",fontSize:"0.8rem"}} />
+                    ) : (
+                      <span style={{color:"#FF4D00",fontWeight:600}}>{u.creditos}</span>
+                    )}
+                  </td>
+                  <td style={{padding:"8px",color:"#8B8FA8",fontSize:"0.75rem"}}>
+                    {new Date(u.created_at).toLocaleDateString("es-ES")}
+                  </td>
+                  <td style={{padding:"8px"}}>
+                    {editandoId === u.id ? (
+                      <div style={{display:"flex",gap:"6px"}}>
+                        <button onClick={() => guardarUsuario(u.id)} disabled={guardando} style={{background:"#06D6A0",border:"none",borderRadius:"6px",padding:"4px 10px",color:"black",fontSize:"0.75rem",fontWeight:700,cursor:"pointer"}}>
+                          {guardando ? "..." : "Guardar"}
+                        </button>
+                        <button onClick={() => setEditandoId(null)} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+                          Cancelar
+                        </button>
+                      </div>
+                    ) : (
+                      <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+                        Editar
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {usuarios.length === 0 && <p style={{color:"#8B8FA8",textAlign:"center",padding:"20px"}}>No hay usuarios</p>}
+        </div>
+      </div>
       {/* Lista de codigos */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}>
