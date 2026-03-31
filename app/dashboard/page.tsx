@@ -177,7 +177,7 @@ export default function Dashboard() {
 
   // Pantalla de variaciones
   if (variaciones.length > 0) return (
-    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
+    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}}>
         <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
           Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
@@ -243,7 +243,7 @@ export default function Dashboard() {
 
   // Pantalla de carga
   if (generando) return (
-    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
+    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
       <div style={{textAlign:"center",maxWidth:"420px",width:"100%"}}>
         <div style={{fontSize:"3rem",marginBottom:"24px"}}>🎨</div>
         <h2 style={{fontSize:"1.3rem",fontWeight:"800",marginBottom:"8px",letterSpacing:"-0.03em"}}>
@@ -263,7 +263,7 @@ export default function Dashboard() {
   );
 
   return (
-    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
+    <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
 
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
         <h1 style={{fontSize:"1.8rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
@@ -413,9 +413,14 @@ export default function Dashboard() {
                 <span style={{fontSize:"0.72rem",color:"#8B8FA8"}}>
                   {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
                 </span>
-                <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, index); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
-                  Descargar
-                </button>
+                <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+                  <button onClick={e => { e.stopPropagation(); const params = new URLSearchParams({ imageUrl: mini.imagen_url, plataforma: "youtube" }); window.location.href = `/editor?${params.toString()}`; }} style={{fontSize:"0.72rem",color:"#8B8FA8",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
+                    Editor
+                  </button>
+                  <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, index); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
+                    Descargar
+                  </button>
+                </div>
               </div>
             </div>
           ))}
