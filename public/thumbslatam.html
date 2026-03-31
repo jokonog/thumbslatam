@@ -2102,32 +2102,32 @@
 
 
 
+
 <script>
   function aplicarSesion() {
-    fetch('/api/check-session')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
-        if (data.loggedIn) {
-          if (btnIniciar) {
-            btnIniciar.textContent = 'Mi dashboard';
-            btnIniciar.href = '/dashboard';
-            btnIniciar.target = '_top';
-          }
-          // Cambiar todos los botones de planes al dashboard
-          document.querySelectorAll('a[href="/registro"]').forEach(function(btn) {
-            btn.href = '/dashboard';
-            btn.target = '_top';
-          });
-        } else {
-          if (btnIniciar) {
-            btnIniciar.textContent = 'Iniciar sesion';
-            btnIniciar.href = '/registro';
-            btnIniciar.target = '_top';
-          }
-        }
-      })
-      .catch(function() {});
+    var loggedIn = false;
+    try {
+      var raw = localStorage.getItem('thumbslatam-auth');
+      if (raw) {
+        var data = JSON.parse(raw);
+        loggedIn = !!(data && data.access_token);
+      }
+    } catch(e) {}
+
+    var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
+    if (loggedIn) {
+      if (btnIniciar) {
+        btnIniciar.textContent = 'Mi dashboard';
+        btnIniciar.href = '/dashboard';
+        btnIniciar.target = '_top';
+      }
+    } else {
+      if (btnIniciar) {
+        btnIniciar.textContent = 'Iniciar sesión';
+        btnIniciar.href = '/registro';
+        btnIniciar.target = '_top';
+      }
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', aplicarSesion);
