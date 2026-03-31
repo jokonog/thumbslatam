@@ -27,7 +27,7 @@ const [progreso, setProgreso] = useState(0);
     if (error) {
       setMensaje("Error: " + error.message);
     } else {
-      setTimeout(() => { window.location.href = "/dashboard"; }, 500);
+      window.location.replace("/dashboard");
     }
     setCargando(false);
   }
