@@ -203,35 +203,7 @@ export default function AdminPage() {
           </div>
         </div>
       )}
-      {/* Crear codigo */}
-      <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
-        <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px"}}>Crear codigo de regalo</h3>
-        <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
-          <input
-            placeholder="Nombre del creador (ej: P3P3)"
-            value={nombreNuevo}
-            onChange={e => setNombreNuevo(e.target.value)}
-            style={{flex:1,minWidth:"180px",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem"}}
-          />
-          <input
-            type="number"
-            value={creditosNuevo}
-            onChange={e => setCreditosNuevo(Number(e.target.value))}
-            style={{width:"80px",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem"}}
-          />
-          <button onClick={crearCodigo} disabled={creando} style={{background:"#FF4D00",border:"none",borderRadius:"8px",padding:"10px 20px",color:"white",fontWeight:700,fontSize:"0.85rem",cursor:"pointer"}}>
-            {creando ? "..." : "Generar"}
-          </button>
-        </div>
-        {codigoGenerado && (
-          <div style={{marginTop:"12px",background:"rgba(6,214,160,0.08)",border:"1px solid rgba(6,214,160,0.25)",borderRadius:"8px",padding:"12px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <span style={{fontFamily:"monospace",fontSize:"1rem",color:"#06D6A0"}}>{codigoGenerado}</span>
-            <button onClick={() => navigator.clipboard.writeText(codigoGenerado)} style={{background:"none",border:"1px solid #06D6A0",borderRadius:"6px",padding:"4px 10px",color:"#06D6A0",fontSize:"0.75rem",cursor:"pointer"}}>
-              Copiar
-            </button>
-          </div>
-        )}
-      </div>
+      
 
       {/* Usuarios */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
@@ -307,6 +279,36 @@ export default function AdminPage() {
           </table>
           {usuarios.length === 0 && <p style={{color:"#8B8FA8",textAlign:"center",padding:"20px"}}>No hay usuarios</p>}
         </div>
+      </div>
+      
+      {/* Crear codigo */}
+      <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
+        <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px"}}>Crear codigo de regalo</h3>
+        <div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
+          <input
+            placeholder="Nombre del creador (ej: P3P3)"
+            value={nombreNuevo}
+            onChange={e => setNombreNuevo(e.target.value)}
+            style={{flex:1,minWidth:"180px",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem"}}
+          />
+          <input
+            type="number"
+            value={creditosNuevo}
+            onChange={e => setCreditosNuevo(Number(e.target.value))}
+            style={{width:"80px",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem"}}
+          />
+          <button onClick={crearCodigo} disabled={creando} style={{background:"#FF4D00",border:"none",borderRadius:"8px",padding:"10px 20px",color:"white",fontWeight:700,fontSize:"0.85rem",cursor:"pointer"}}>
+            {creando ? "..." : "Generar"}
+          </button>
+        </div>
+        {codigoGenerado && (
+          <div style={{marginTop:"12px",background:"rgba(6,214,160,0.08)",border:"1px solid rgba(6,214,160,0.25)",borderRadius:"8px",padding:"12px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontFamily:"monospace",fontSize:"1rem",color:"#06D6A0"}}>{codigoGenerado}</span>
+            <button onClick={() => navigator.clipboard.writeText(codigoGenerado)} style={{background:"none",border:"1px solid #06D6A0",borderRadius:"6px",padding:"4px 10px",color:"#06D6A0",fontSize:"0.75rem",cursor:"pointer"}}>
+              Copiar
+            </button>
+          </div>
+        )}
       </div>
       {/* Lista de codigos */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)"}}>
