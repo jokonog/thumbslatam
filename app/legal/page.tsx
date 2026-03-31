@@ -60,10 +60,8 @@ export default function LegalPage() {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       {/* Header */}
       <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
-        <Link href="/dashboard" className="text-white/60 hover:text-white text-sm transition-colors">
-          ← Volver al dashboard
-        </Link>
         <Logo height={26} href="/" />
+        <span></span>
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-12">
