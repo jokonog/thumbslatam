@@ -47,9 +47,10 @@ export default function Dashboard() {
   ];
 
   async function cargarDatos() {
-    const { data: authData } = await supabase.auth.getUser();
-    if (!authData.user) { window.location.href = "/registro"; return; }
-    setUserId(authData.user.id);
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) { window.location.href = "/registro"; return; }
+    setUserId(session.user.id);
+    const authData = { user: session.user };
 
     const { data: usuarioData } = await supabase
       .from("usuarios")
