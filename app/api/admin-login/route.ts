@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { TOTP } from "otplib";
+import { verify } from "otplib";
 import { cookies } from "next/headers";
-
-const totp = new TOTP();
 
 export async function POST(request: Request) {
   try {
@@ -13,10 +11,7 @@ export async function POST(request: Request) {
     }
 
     if (totpCode) {
-      const valid = totp.verify({
-        token: totpCode,
-        secret: process.env.ADMIN_TOTP_SECRET!,
-      });
+      const valid = verify(totpCode, process.env.ADMIN_TOTP_SECRET!);
       if (!valid) {
         return NextResponse.json({ error: "Codigo 2FA incorrecto" }, { status: 401 });
       }
