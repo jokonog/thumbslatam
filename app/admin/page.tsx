@@ -142,7 +142,7 @@ export default function AdminPage() {
       {/* Estadisticas */}
       {stats && (
         <div style={{marginBottom:"24px"}}>
-          <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px",color:"#8B8FA8",textTransform:"uppercase",letterSpacing:"0.05em",fontSize:"0.75rem"}}>Estadisticas generales</h3>
+          <h3 style={{fontWeight:700,marginBottom:"16px",color:"#8B8FA8",textTransform:"uppercase",letterSpacing:"0.05em",fontSize:"0.75rem"}}>Estadisticas generales</h3>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(160px, 1fr))",gap:"12px",marginBottom:"16px"}}>
             {[
               { label: "Usuarios totales", value: stats.totalUsuarios, color: "white" },
