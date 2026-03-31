@@ -2094,24 +2094,25 @@
   });
 </script>
 
+
 <script>
-  // Detectar sesion de Supabase y actualizar botones
   (function() {
     try {
-      const keys = Object.keys(localStorage);
-      const authKey = keys.find(k => k.includes('thumbslatam-auth'));
-      if (authKey) {
-        const session = JSON.parse(localStorage.getItem(authKey));
-        if (session && session.access_token) {
-          // Usuario logueado — cambiar botones
+      const raw = localStorage.getItem('thumbslatam-auth');
+      if (raw) {
+        const session = JSON.parse(raw);
+        const loggedIn = session && (session.access_token || (session.data && session.data.session));
+        if (loggedIn) {
           document.addEventListener('DOMContentLoaded', function() {
-            const btns = document.querySelectorAll('a[href="/registro"]');
-            btns.forEach(function(btn) {
-              if (btn.textContent.includes('Iniciar')) {
+            document.querySelectorAll('a[href="/registro"]').forEach(function(btn) {
+              const txt = btn.textContent.trim();
+              if (txt.includes('Iniciar')) {
                 btn.textContent = 'Mi dashboard';
                 btn.href = '/dashboard';
-              } else if (btn.textContent.includes('Empezar gratis')) {
+              } else if (txt.includes('Empezar gratis') || txt.includes('Crear mi primera')) {
                 btn.textContent = 'Ir al dashboard →';
+                btn.href = '/dashboard';
+              } else if (txt.includes('Probar 7') || txt.includes('Comenzar Studio')) {
                 btn.href = '/dashboard';
               }
             });
