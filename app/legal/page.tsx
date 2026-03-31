@@ -16,11 +16,11 @@ const faqs = [
   },
   {
     q: "¿Cuantas miniaturas puedo generar con cada plan?",
-    a: "Plan Gratis (10 creditos): hasta 2 generaciones de fondo o 2 con tu cara. Plan Creador Pro ($10/mes, 100 creditos): hasta 25 generaciones de fondo o 20 con tu cara. Plan Studio ($25/mes, 300 creditos): hasta 75 generaciones de fondo o 60 con tu cara. Puedes combinar ambos tipos en cada plan.",
+    a: "Plan Gratis (10 creditos unicos al registrarte): hasta 2 generaciones de fondo (4 creditos c/u) o 2 con tu cara (5 creditos c/u). No se renuevan. Plan Creador Pro ($10/mes, 100 creditos): hasta 25 generaciones de fondo o 20 con tu cara. Plan Studio ($25/mes, 300 creditos): hasta 75 generaciones de fondo o 60 con tu cara. Puedes combinar ambos tipos en cada plan.",
   },
   {
     q: "¿Los creditos se acumulan mes a mes?",
-    a: "No. Los creditos se renuevan al inicio de cada ciclo mensual. Los creditos no utilizados del mes anterior no se transfieren al siguiente.",
+    a: "Los creditos del plan gratis son unicos — se otorgan al registrarte y no se renuevan. Los creditos de planes pagos (Pro y Studio) se renuevan cada mes al inicio del ciclo. En ambos casos, los creditos no utilizados no se acumulan ni se transfieren.",
   },
   {
     q: "¿Puedo usar las imagenes generadas comercialmente?",
@@ -134,7 +134,7 @@ export default function LegalPage() {
 
             <section>
               <h3 className="text-white font-medium mb-2">3. Creditos y planes</h3>
-              <p>Los creditos son la unidad de consumo del servicio. Se asignan segun el plan contratado y se renuevan mensualmente. Los creditos no utilizados no se acumulan ni se reembolsan. El plan gratuito otorga 10 creditos unicos al momento del registro.</p>
+              <p>Los creditos son la unidad de consumo del servicio. El plan gratuito otorga 10 creditos unicos al momento del registro y no se renuevan. Los planes pagos incluyen creditos que se renuevan mensualmente. En todos los casos, los creditos no utilizados no se acumulan ni se reembolsan.</p>
             </section>
 
             <section>
