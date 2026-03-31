@@ -2100,30 +2100,26 @@
 
 
 
+
 <script>
   function aplicarSesion() {
-    fetch('/api/check-session')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
-        var btnEmpezar = document.querySelector('.nav-cta a.btn-primary');
-        if (data.loggedIn) {
-          if (btnIniciar) { btnIniciar.textContent = 'Mi dashboard'; btnIniciar.href = '/dashboard'; }
-          if (btnEmpezar) { btnEmpezar.textContent = 'Ir al dashboard →'; btnEmpezar.href = '/dashboard'; }
-        } else {
-          if (btnIniciar) { btnIniciar.textContent = 'Iniciar sesión'; btnIniciar.href = '/registro'; }
-          if (btnEmpezar) { btnEmpezar.textContent = 'Empezar gratis →'; btnEmpezar.href = '#pricing'; }
-        }
-      })
-      .catch(function() {});
+    var params = new URLSearchParams(window.location.search);
+    var loggedIn = params.get('loggedIn') === 'true';
+    var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
+    var btnEmpezar = document.querySelector('.nav-cta a.btn-primary');
+    if (loggedIn) {
+      if (btnIniciar) { btnIniciar.textContent = 'Mi dashboard'; btnIniciar.href = '/dashboard'; }
+      if (btnEmpezar) { btnEmpezar.textContent = 'Ir al dashboard →'; btnEmpezar.href = '/dashboard'; }
+    } else {
+      if (btnIniciar) { btnIniciar.textContent = 'Iniciar sesión'; btnIniciar.href = '/registro'; }
+      if (btnEmpezar) { btnEmpezar.textContent = 'Empezar gratis →'; btnEmpezar.href = '#pricing'; }
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', aplicarSesion);
   } else {
     aplicarSesion();
   }
-  window.addEventListener('focus', aplicarSesion);
-  window.addEventListener('pageshow', aplicarSesion);
 </script>
 </body>
 </html>
