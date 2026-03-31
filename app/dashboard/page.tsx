@@ -181,7 +181,7 @@ export default function Dashboard() {
   if (variaciones.length > 0) return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}}>
-        <Logo height={28} href="/" />
+        <Logo height={28} href="/?loggedIn=true" />
         <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"1px solid #3A3D52",cursor:"pointer",padding:"8px 16px",borderRadius:"8px"}}>← Volver</button>
       </div>
       <h2 style={{fontSize:"1.1rem",fontWeight:"700",margin:"0 0 4px",letterSpacing:"-0.02em"}}>Elige tu miniatura</h2>
@@ -266,7 +266,7 @@ export default function Dashboard() {
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
 
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
-        <Logo height={32} href="/" onClick={() => window.location.href = "/"} />
+        <Logo height={32} href="/?loggedIn=true" onClick={() => { window.location.href = "/?loggedIn=true"; }} />
         <button onClick={() => supabase.auth.signOut().then(() => { window.location.replace("/registro"); })} style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
           Cerrar sesion
         </button>
