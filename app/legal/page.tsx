@@ -1,4 +1,5 @@
 "use client";
+import Logo from "@/components/Logo";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -58,9 +59,7 @@ export default function LegalPage() {
         <Link href="/dashboard" className="text-white/60 hover:text-white text-sm transition-colors">
           ← Volver al dashboard
         </Link>
-        <Link href="/dashboard" className="text-white font-extrabold text-lg tracking-tight">
-          Thumbs<span style={{color:"#FF4D00"}}>Latam</span>
-        </Link>
+        <Logo size="1.4rem" />
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-12">
