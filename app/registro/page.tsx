@@ -1,4 +1,5 @@
 "use client";
+import Logo from "@/components/Logo";
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 
@@ -34,7 +35,7 @@ const [progreso, setProgreso] = useState(0);
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"24px"}}>
       <div style={{width:"100%",maxWidth:"400px",background:"#111827",borderRadius:"16px",padding:"40px 32px",border:"1px solid rgba(255,255,255,0.07)"}}>
-        <h1 style={{fontSize:"1.8rem",fontWeight:"800",marginBottom:"8px",letterSpacing:"-0.03em"}}>ThumbsLatam</h1>
+        <div style={{marginBottom:"8px"}}><Logo height={36} href="/" /></div>
         <p style={{color:"#8B8FA8",marginBottom:"32px",fontSize:"0.9rem"}}>Crea tu cuenta o inicia sesión</p>
         <div style={{marginBottom:"16px"}}>
           <label style={{display:"block",marginBottom:"8px",fontSize:"0.85rem"}}>Email</label>
