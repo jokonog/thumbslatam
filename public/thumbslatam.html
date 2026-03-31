@@ -1454,7 +1454,7 @@
   </ul>
   <div class="nav-cta">
     <a href="/registro" class="btn-ghost">Iniciar sesión</a>
-    <a href="/#pricing" class="btn-primary">Empezar gratis →</a>
+    <a href="#pricing" class="btn-primary">Empezar gratis →</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -2098,8 +2098,9 @@
 
 
 
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function aplicarSesion() {
     fetch('/api/check-session')
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -2117,7 +2118,12 @@
         }
       })
       .catch(function() {});
-  });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', aplicarSesion);
+  } else {
+    aplicarSesion();
+  }
 </script>
 </body>
 </html>
