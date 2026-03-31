@@ -2099,22 +2099,20 @@
 
 
 
+
 <script>
   function aplicarSesion() {
     fetch('/api/check-session')
       .then(function(r) { return r.json(); })
       .then(function(data) {
+        var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
+        var btnEmpezar = document.querySelector('.nav-cta a.btn-primary');
         if (data.loggedIn) {
-          var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
-          if (btnIniciar) {
-            btnIniciar.textContent = 'Mi dashboard';
-            btnIniciar.href = '/dashboard';
-          }
-          var btnEmpezar = document.querySelector('.nav-cta a.btn-primary');
-          if (btnEmpezar) {
-            btnEmpezar.textContent = 'Ir al dashboard →';
-            btnEmpezar.href = '/dashboard';
-          }
+          if (btnIniciar) { btnIniciar.textContent = 'Mi dashboard'; btnIniciar.href = '/dashboard'; }
+          if (btnEmpezar) { btnEmpezar.textContent = 'Ir al dashboard →'; btnEmpezar.href = '/dashboard'; }
+        } else {
+          if (btnIniciar) { btnIniciar.textContent = 'Iniciar sesión'; btnIniciar.href = '/registro'; }
+          if (btnEmpezar) { btnEmpezar.textContent = 'Empezar gratis →'; btnEmpezar.href = '#pricing'; }
         }
       })
       .catch(function() {});
@@ -2124,6 +2122,8 @@
   } else {
     aplicarSesion();
   }
+  window.addEventListener('focus', aplicarSesion);
+  window.addEventListener('pageshow', aplicarSesion);
 </script>
 </body>
 </html>
