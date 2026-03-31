@@ -1,10 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
 
-export default function Logo({ href = "/dashboard", height = 32 }: { href?: string; height?: number }) {
+export default function Logo({ href = "/", height = 32, onClick }: { href?: string; height?: number; onClick?: () => void }) {
   return (
-    <Link href={href} style={{ textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
+    <a href={href} onClick={onClick} style={{ textDecoration: "none", display: "inline-flex", alignItems: "center" }}>
       <Image src="/logo.png" alt="ThumbsLatam" height={height} width={height * 5.5} style={{ objectFit: "contain" }} />
-    </Link>
+    </a>
   );
 }
