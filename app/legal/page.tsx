@@ -59,7 +59,7 @@ export default function LegalPage() {
         <Link href="/dashboard" className="text-white/60 hover:text-white text-sm transition-colors">
           ← Volver al dashboard
         </Link>
-        <Logo size="1.4rem" />
+        <Logo height={26} />
       </div>
 
       <div className="max-w-4xl mx-auto px-6 py-12">
