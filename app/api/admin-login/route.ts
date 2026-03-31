@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     }
 
     if (totpCode) {
-      const valid = verify(totpCode, process.env.ADMIN_TOTP_SECRET!);
+      const valid = await verify({ secret: process.env.ADMIN_TOTP_SECRET!, token: totpCode, strategy: "totp" } as any);
       if (!valid) {
         return NextResponse.json({ error: "Codigo 2FA incorrecto" }, { status: 401 });
       }
