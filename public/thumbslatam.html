@@ -2096,20 +2096,29 @@
 
 
 
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     fetch('/api/check-session')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.loggedIn) {
-          // Solo cambiar el nav principal, no el menu movil ni los de pricing
-          var navBtns = document.querySelectorAll('.nav-actions a[href="/registro"], .nav-cta a[href="/registro"]');
-          if (navBtns.length === 0) {
-            navBtns = document.querySelectorAll('nav a[href="/registro"]');
+          // Boton "Iniciar sesion" en nav principal
+          var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
+          if (btnIniciar) {
+            btnIniciar.textContent = 'Mi dashboard';
+            btnIniciar.href = '/dashboard';
           }
-          navBtns.forEach(function(btn) {
-            const txt = btn.textContent.trim();
-            if (txt.includes('Iniciar') || txt.includes('sesión')) {
+          // Boton "Empezar gratis" en nav principal — llevar al dashboard
+          var btnEmpezar = document.querySelector('.nav-cta a.btn-primary');
+          if (btnEmpezar) {
+            btnEmpezar.href = '/dashboard';
+          }
+          // Menu movil
+          var movilLinks = document.querySelectorAll('.mobile-menu a[href="/registro"]');
+          movilLinks.forEach(function(btn) {
+            var txt = btn.textContent.trim();
+            if (txt.includes('Iniciar')) {
               btn.textContent = 'Mi dashboard';
               btn.href = '/dashboard';
             } else if (txt.includes('Empezar')) {
