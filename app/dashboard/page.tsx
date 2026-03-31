@@ -312,7 +312,7 @@ export default function Dashboard() {
             <div style={{fontSize:"0.82rem",color:"#FF4D00",marginBottom:"8px"}}>
               Te quedan {creditos} creditos — fondo cuesta 4, con tu cara cuesta 5.
             </div>
-            <a href="#" style={{fontSize:"0.78rem",color:"#FF4D00",fontWeight:"700",textDecoration:"none"}}>Mejorar plan →</a>
+            <a href="/#pricing" target="_blank" style={{fontSize:"0.78rem",color:"#FF4D00",fontWeight:"700",textDecoration:"none"}}>Mejorar plan →</a>
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
