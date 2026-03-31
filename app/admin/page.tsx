@@ -136,7 +136,10 @@ export default function AdminPage() {
     <main style={{minHeight:"100vh",background:"#060810",color:"white",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
         <Logo height={32} />
-        <span style={{fontSize:"0.8rem",color:"#8B8FA8",background:"#111827",padding:"6px 12px",borderRadius:"8px",border:"1px solid #3A3D52"}}>Admin Panel</span>
+        <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+          <span style={{fontSize:"0.8rem",color:"#8B8FA8",background:"#111827",padding:"6px 12px",borderRadius:"8px",border:"1px solid #3A3D52"}}>Admin Panel</span>
+          <button onClick={() => { document.cookie = "admin-session=; maxAge=0; path=/"; setStep("login"); }} style={{fontSize:"0.8rem",color:"#8B8FA8",background:"none",border:"1px solid #3A3D52",padding:"6px 12px",borderRadius:"8px",cursor:"pointer"}}>Cerrar sesion</button>
+        </div>
       </div>
 
       {/* Estadisticas */}
