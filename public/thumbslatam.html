@@ -1522,44 +1522,57 @@
         <div class="mockup-dot"></div>
         <div class="mockup-dot"></div>
         <div class="mockup-dot"></div>
-        <div class="mockup-url">app.thumbslatam.com/editor</div>
+        <div class="mockup-url">thumbslatam.com/dashboard</div>
       </div>
-      <div class="mockup-body">
-        <div class="mockup-sidebar">
-          <div class="mock-label">Herramientas</div>
-          <div class="mock-item active"><div class="mock-icon">🎨</div> Editor Canvas</div>
-          <div class="mock-item"><div class="mock-icon">🤖</div> Modo Sketch IA</div>
-          <div class="mock-item"><div class="mock-icon">👤</div> Mi Avatar</div>
-          <div class="mock-item"><div class="mock-icon">🖼</div> Mis Plantillas</div>
-          <div class="mock-label">Historial</div>
-          <div class="mock-item"><div class="mock-icon">📁</div> Proyectos</div>
-          <div class="mock-item"><div class="mock-icon">⬇️</div> Exportar</div>
+      <div class="mockup-body" style="display:block;padding:20px;background:#060810;">
+        <!-- Header -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <span style="font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:white;">Thumbs<span style="color:#FF4D00">Latam</span></span>
+          <span style="font-size:0.7rem;color:#3A3D52;border:1px solid #3A3D52;padding:4px 10px;border-radius:6px;">Cerrar sesion</span>
         </div>
-        <div class="mockup-main">
-          <div class="mock-toolbar">
-            <div class="mock-tool active">Canvas</div>
-            <div class="mock-tool">Sketch IA</div>
-            <div class="mock-tool">Avatar</div>
-            <div class="mock-tool">Texto</div>
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+          <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:1.2rem;font-weight:800;color:#FF4D00;">100</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Creditos</div>
           </div>
-          <div class="mock-canvas">
-            <div class="thumb-preview">
-              <div class="ai-chip">✨ IA</div>
-              <div class="thumb-bar">NUEVA TEMPORADA</div>
-            </div>
-            <div class="thumb-preview">
-              <div class="ai-chip">✨ IA</div>
-              <div class="thumb-bar">GAMEPLAY ÉPICO</div>
-            </div>
-            <div class="thumb-preview">
-              <div class="ai-chip">✨ IA</div>
-              <div class="thumb-bar">TOP 10 MEJORES</div>
-            </div>
+          <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:1.2rem;font-weight:800;color:white;">12</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Miniaturas</div>
           </div>
-          <div class="mock-prompt">
-            <div class="mock-prompt-text">"Miniatura para video de Minecraft, explosión dramática, cara de sorpresa..."</div>
-            <div class="mock-send">→</div>
+          <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:0.75rem;font-weight:700;color:#06D6A0;">Pro</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Plan actual</div>
           </div>
+        </div>
+        <!-- Plataformas -->
+        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;">1. Elige la plataforma</div>
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="background:#FF4D00;color:white;font-size:0.6rem;font-weight:700;padding:4px 8px;border-radius:6px;">YouTube 16:9</span>
+          <span style="background:#111827;color:#8B8FA8;font-size:0.6rem;padding:4px 8px;border-radius:6px;border:1px solid #3A3D52;">Instagram 1:1</span>
+          <span style="background:#111827;color:#8B8FA8;font-size:0.6rem;padding:4px 8px;border-radius:6px;border:1px solid #3A3D52;">TikTok 9:16</span>
+        </div>
+        <!-- Modo -->
+        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;">2. Como quieres generarla</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+          <div style="background:#111827;border:1px solid #FF4D00;border-radius:8px;padding:8px;">
+            <div style="font-size:0.7rem;font-weight:700;color:white;">Solo fondo IA</div>
+            <div style="font-size:0.6rem;color:#8B8FA8;margin-top:2px;">2 variaciones</div>
+            <div style="font-size:0.6rem;color:#FF4D00;margin-top:4px;">4 creditos</div>
+          </div>
+          <div style="background:#111827;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px;">
+            <div style="font-size:0.7rem;font-weight:700;color:white;">Con mi cara</div>
+            <div style="font-size:0.6rem;color:#8B8FA8;margin-top:2px;">Tu rostro en escena</div>
+            <div style="font-size:0.6rem;color:#FF4D00;margin-top:4px;">5 creditos</div>
+          </div>
+        </div>
+        <!-- Prompt -->
+        <div style="background:#111827;border:1px solid #3A3D52;border-radius:8px;padding:8px 12px;font-size:0.65rem;color:#8B8FA8;margin-bottom:10px;">
+          Ej: Minecraft survival en el nether, explosion epica...
+        </div>
+        <!-- Generar -->
+        <div style="background:#FF4D00;border-radius:8px;padding:8px;text-align:center;font-size:0.7rem;font-weight:700;color:white;">
+          Generar — 4 creditos →
         </div>
       </div>
     </div>
