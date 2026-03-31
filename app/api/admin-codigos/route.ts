@@ -10,7 +10,7 @@ const supabaseAdmin = createClient(
 async function verificarAdmin() {
   const cookieStore = await cookies();
   const session = cookieStore.get("admin-session");
-  return session?.value === process.env.ADMIN_TOTP_SECRET;
+  return session?.value === process.env.ADMIN_SECRET;
 }
 
 export async function GET() {

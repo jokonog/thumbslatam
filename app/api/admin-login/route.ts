@@ -11,12 +11,12 @@ export async function POST(request: Request) {
     }
 
     if (totpCode) {
-      const valid = await verify({ secret: process.env.ADMIN_TOTP_SECRET!, token: totpCode, strategy: "totp" } as any);
+      const valid = await verify({ secret: process.env.ADMIN_SECRET!, token: totpCode, strategy: "totp" } as any);
       if (!valid) {
         return NextResponse.json({ error: "Codigo 2FA incorrecto" }, { status: 401 });
       }
       const res = NextResponse.json({ ok: true, step: "done" });
-      res.cookies.set("admin-session", process.env.ADMIN_TOTP_SECRET!, {
+      res.cookies.set("admin-session", process.env.ADMIN_SECRET!, {
         httpOnly: true,
         secure: true,
         maxAge: 60 * 60 * 8,
