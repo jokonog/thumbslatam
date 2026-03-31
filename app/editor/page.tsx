@@ -432,7 +432,7 @@ export default function Editor() {
           ← Dashboard
         </a>
         <div style={{display:"flex",alignItems:"center",gap:"6px"}}>
-          <Logo size="1.5rem" />
+          <Logo height={28} />
           <span style={{fontSize:"1.5rem",fontWeight:800,letterSpacing:"-0.02em",color:"white",fontFamily:"var(--font-syne)"}}>Editor</span>
         </div>
         {/* Créditos + Descargar */}
