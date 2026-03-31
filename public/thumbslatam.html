@@ -2102,12 +2102,17 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.loggedIn) {
-          document.querySelectorAll('a[href="/registro"]').forEach(function(btn) {
+          // Solo cambiar el nav principal, no el menu movil ni los de pricing
+          var navBtns = document.querySelectorAll('.nav-actions a[href="/registro"], .nav-cta a[href="/registro"]');
+          if (navBtns.length === 0) {
+            navBtns = document.querySelectorAll('nav a[href="/registro"]');
+          }
+          navBtns.forEach(function(btn) {
             const txt = btn.textContent.trim();
             if (txt.includes('Iniciar') || txt.includes('sesión')) {
               btn.textContent = 'Mi dashboard';
               btn.href = '/dashboard';
-            } else if (txt.includes('Empezar') || txt.includes('Crear mi primera') || txt.includes('Probar') || txt.includes('Comenzar')) {
+            } else if (txt.includes('Empezar')) {
               btn.textContent = 'Ir al dashboard →';
               btn.href = '/dashboard';
             }
