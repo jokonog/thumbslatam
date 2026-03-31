@@ -1,4 +1,5 @@
 "use client";
+import Logo from "@/components/Logo";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "../../lib/supabase";
@@ -430,9 +431,10 @@ export default function Editor() {
         <a href="/dashboard" style={{color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>
           ← Dashboard
         </a>
-        <h1 style={{fontSize:"1.5rem",fontWeight:"800",letterSpacing:"-0.03em",margin:0}}>
-          Thumbs<span style={{color:"#FF4D00",fontWeight:"800",letterSpacing:"-0.03em"}}>Latam</span> <span style={{fontWeight:"800",letterSpacing:"-0.03em"}}>Editor</span>
-        </h1>
+        <div style={{display:"flex",alignItems:"center",gap:"6px"}}>
+          <Logo size="1.5rem" />
+          <span style={{fontSize:"1.5rem",fontWeight:800,letterSpacing:"-0.02em",color:"white",fontFamily:"var(--font-syne)"}}>Editor</span>
+        </div>
         {/* Créditos + Descargar */}
         <div style={{display:"flex",alignItems:"center",gap:"12px"}}>
           <div style={{
