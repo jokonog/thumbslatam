@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { authenticator } from "otplib";
+import * as otplib from "otplib";
+const authenticator = otplib.authenticator || (otplib as any).default?.authenticator || (otplib as any).totp;
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
