@@ -12,7 +12,11 @@ const faqs = [
   },
   {
     q: "¿Como funcionan los creditos?",
-    a: "Cada generacion consume creditos segun el tipo: Solo fondo consume 4 creditos (incluye 2 variaciones) y Con mi cara consume 5 creditos. Los creditos del plan gratuito son unicos al registrarte. Los creditos de planes pagos se renuevan cada mes.",
+    a: "Cada generacion consume creditos segun el tipo: Solo fondo IA consume 4 creditos e incluye 2 variaciones para elegir la mejor. Con mi cara consume 5 creditos. El plan gratuito incluye 10 creditos unicos al registrarte. Los creditos de planes pagos se renuevan cada mes.",
+  },
+  {
+    q: "¿Cuantas miniaturas puedo generar con cada plan?",
+    a: "Plan Gratis (10 creditos): hasta 2 generaciones de fondo o 2 con tu cara. Plan Creador Pro ($10/mes, 100 creditos): hasta 25 generaciones de fondo o 20 con tu cara. Plan Studio ($25/mes, 300 creditos): hasta 75 generaciones de fondo o 60 con tu cara. Puedes combinar ambos tipos en cada plan.",
   },
   {
     q: "¿Los creditos se acumulan mes a mes?",
