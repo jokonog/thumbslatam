@@ -75,7 +75,7 @@ export default function Dashboard() {
       .select("*", { count: "exact" })
       .eq("usuario_id", authData.user.id)
       .order("created_at", { ascending: false })
-      .limit(12);
+      .limit(100);
 
     setMiniaturas(count || 0);
     setListaMinis(miniData || []);
