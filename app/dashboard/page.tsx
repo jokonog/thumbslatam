@@ -478,16 +478,7 @@ export default function Dashboard() {
                         Usar mi avatar
                       </button>
                     )}
-                    {modo === "cara" && (
-                      <div
-                        onDragOver={e => e.preventDefault()}
-                        onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
-                        onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
-                        style={{border:"1px dashed #FF4D00",borderRadius:"6px",padding:"4px",textAlign:"center",cursor:"pointer",marginBottom:"6px",fontSize:"0.62rem",color:"#FF4D00"}}
-                      >
-                        + Subir mi foto
-                      </div>
-                    )}
+
                     <input
                       placeholder="O describe... ej: un leon"
                       value={el.descripcion}
