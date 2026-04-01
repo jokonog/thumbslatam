@@ -34,6 +34,7 @@ export default function Dashboard() {
   ]);
   const [titulo, setTitulo] = useState("");
   const [tituloModo, setTituloModo] = useState<"ia" | "manual" | "ninguno">("ninguno");
+  const [modalElementos, setModalElementos] = useState(false);
   const [codigoMsg, setCodigoMsg] = useState("");
   const [canjeando, setCanjeando] = useState(false);
   const [miniaturas, setMiniaturas] = useState(0);
@@ -449,49 +450,84 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Boton distribuir elementos */}
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Elementos (hasta 3)</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px",marginBottom:"8px"}}>
-            {elementos.map((el, i) => (
-              <div key={i} style={{background:"#060810",border:"1px solid #3A3D52",borderRadius:"10px",padding:"10px"}}>
-                <div style={{fontSize:"0.7rem",color:"#8B8FA8",marginBottom:"6px",fontWeight:600}}>
-                  {i === 0 ? "Izquierda" : i === 1 ? "Centro" : "Derecha"}
-                </div>
-                {el.imagen ? (
-                  <div style={{position:"relative"}}>
-                    <img src={el.imagen} style={{width:"100%",aspectRatio:"1",objectFit:"cover",borderRadius:"6px"}} alt="" />
-                    <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:null}; setElementos(arr); }} style={{position:"absolute",top:"2px",right:"2px",background:"rgba(0,0,0,0.7)",border:"none",borderRadius:"50%",width:"20px",height:"20px",color:"white",cursor:"pointer",fontSize:"0.7rem"}}>✕</button>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Elementos (opcional)</div>
+          <button
+            onClick={() => setModalElementos(true)}
+            style={{width:"100%",padding:"12px",borderRadius:"10px",border:"1px solid #3A3D52",background:"transparent",color:"white",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
+          >
+            <span style={{fontSize:"0.85rem"}}>
+              {elementos.some(e => e.imagen || e.descripcion) ? `${elementos.filter(e => e.imagen || e.descripcion).length} elemento(s) configurado(s)` : "Distribuir elementos en la miniatura"}
+            </span>
+            <span style={{fontSize:"0.85rem",color:"#FF4D00"}}>+</span>
+          </button>
+        </div>
+
+        {/* Modal de distribucion */}
+        {modalElementos && (
+          <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",padding:"16px"}}>
+            <div style={{background:"#111827",borderRadius:"16px",padding:"24px",width:"100%",maxWidth:"560px",border:"1px solid rgba(255,255,255,0.1)"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"20px"}}>
+                <h3 style={{margin:0,fontSize:"1rem",fontWeight:700}}>Distribuir elementos</h3>
+                <button onClick={() => setModalElementos(false)} style={{background:"none",border:"none",color:"#8B8FA8",cursor:"pointer",fontSize:"1.2rem"}}>✕</button>
+              </div>
+
+              {/* Canvas visual de la miniatura */}
+              <div style={{background:"#060810",borderRadius:"10px",padding:"12px",marginBottom:"16px",aspectRatio:"16/7",display:"flex",gap:"8px",position:"relative"}}>
+                {["Izquierda","Centro","Derecha"].map((pos, i) => (
+                  <div
+                    key={i}
+                    onDragOver={e => e.preventDefault()}
+                    onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("Maximo 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
+                    style={{flex:1,border:`2px dashed ${elementos[i].imagen ? "#06D6A0" : "#3A3D52"}`,borderRadius:"8px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"6px",position:"relative",overflow:"hidden",cursor:"pointer",background:elementos[i].imagen?"transparent":"rgba(255,255,255,0.02)"}}
+                    onClick={() => { if(!elementos[i].imagen){ const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("Maximo 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}}
+                  >
+                    {elementos[i].imagen ? (
+                      <>
+                        <img src={elementos[i].imagen!} style={{position:"absolute",top:0,left:0,width:"100%",height:"100%",objectFit:"cover",borderRadius:"6px"}} alt="" />
+                        <button onClick={e => { e.stopPropagation(); const arr=[...elementos]; arr[i]={...arr[i],imagen:null,usarAvatar:false}; setElementos(arr); }} style={{position:"absolute",top:"4px",right:"4px",background:"rgba(0,0,0,0.8)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"white",cursor:"pointer",fontSize:"0.75rem",zIndex:2}}>✕</button>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{fontSize:"1.4rem"}}>📎</div>
+                        <div style={{fontSize:"0.65rem",color:"#8B8FA8",textAlign:"center"}}>{pos}</div>
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <div>
-                    <div
-                      onDragOver={e => e.preventDefault()}
-                      onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
-                      onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
-                      style={{border:"2px dashed #3A3D52",borderRadius:"8px",padding:"10px",textAlign:"center",cursor:"pointer",marginBottom:"6px"}}
-                    >
-                      <div style={{fontSize:"1rem"}}>📎</div>
-                      <div style={{fontSize:"0.62rem",color:"#8B8FA8",marginTop:"2px"}}>Subir imagen</div>
-                    </div>
-                    {modo === "cara" && tieneAvatar && (
-                      <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:avatarUrl,usarAvatar:true}; setElementos(arr); }} style={{width:"100%",background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px",color:"#FF4D00",fontSize:"0.62rem",cursor:"pointer",marginBottom:"6px"}}>
-                        Usar mi avatar
+                ))}
+              </div>
+
+              {/* Opciones por slot */}
+              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px",marginBottom:"16px"}}>
+                {elementos.map((el, i) => (
+                  <div key={i} style={{display:"flex",flexDirection:"column",gap:"4px"}}>
+                    {modo === "cara" && tieneAvatar && !el.imagen && (
+                      <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:avatarUrl,usarAvatar:true}; setElementos(arr); }} style={{background:"none",border:"1px solid #FF4D00",borderRadius:"6px",padding:"4px",color:"#FF4D00",fontSize:"0.62rem",cursor:"pointer"}}>
+                        Mi avatar
                       </button>
                     )}
-
                     <input
-                      placeholder="O describe... ej: un leon"
+                      placeholder="Describe... ej: un leon"
                       value={el.descripcion}
                       onChange={e => { const arr=[...elementos]; arr[i]={...arr[i],descripcion:e.target.value}; setElementos(arr); }}
-                      style={{width:"100%",background:"transparent",border:"none",borderTop:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.65rem",padding:"4px 0",boxSizing:"border-box"}}
+                      style={{width:"100%",background:"#060810",border:"1px solid #3A3D52",borderRadius:"6px",color:"#8B8FA8",fontSize:"0.65rem",padding:"5px 8px",boxSizing:"border-box"}}
                     />
                   </div>
-                )}
+                ))}
               </div>
-            ))}
+
+              <div style={{fontSize:"0.7rem",color:"#3A3D52",marginBottom:"16px"}}>Arrastra imagenes a cada zona o haz clic. Maximo 2MB por imagen.</div>
+
+              <button
+                onClick={() => setModalElementos(false)}
+                style={{width:"100%",padding:"12px",borderRadius:"10px",background:"#FF4D00",border:"none",color:"white",fontWeight:700,fontSize:"0.9rem",cursor:"pointer"}}
+              >
+                Confirmar distribucion
+              </button>
+            </div>
           </div>
-          <div style={{fontSize:"0.7rem",color:"#3A3D52"}}>Opcional — deja vacio si no quieres elementos adicionales. Maximo 2MB por imagen.</div>
-        </div>
+        )}
 
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"8px"}}>3. Titulo (opcional)</div>
