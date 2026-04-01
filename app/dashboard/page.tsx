@@ -101,6 +101,20 @@ export default function Dashboard() {
 
   async function generarVariaciones() {
     if (!tema || creditos === null) return;
+
+    // Subir imagenes de elementos a Cloudinary
+    const elementosConUrl = await Promise.all(elementos.map(async (el) => {
+      if (el.imagen && el.imagen.startsWith("data:")) {
+        const res = await fetch("/api/upload-elemento", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imagen: el.imagen }),
+        });
+        const data = await res.json();
+        return { ...el, imagen: data.url };
+      }
+      return el;
+    }));
     setErrorGen("");
     setGenerando(true);
     setVariaciones([]);
@@ -134,7 +148,7 @@ export default function Dashboard() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos, titulo, tituloModo }),
+        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
