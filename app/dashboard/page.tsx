@@ -179,7 +179,7 @@ export default function Dashboard() {
     formData.append("userId", userId);
     await fetch("/api/avatar", { method: "POST", body: formData });
     setAvatarUrl(fotoTemporal);
-    setTieneAvatar(true);
+    // tieneAvatar se deriva de avatarUrl automaticamente
     setFotoTemporal(null);
     setFotoTemporalFile(null);
   }
