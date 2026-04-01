@@ -97,6 +97,50 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   }
 
   if (!imagenBase.startsWith("http")) throw new Error("Error en refinado");
+
+  // Si hay titulo manual, agregarlo con @napi-rs/canvas encima del resultado
+  if (tituloTexto && tituloTexto.trim()) {
+    try {
+      const { createCanvas, GlobalFonts } = await import("@napi-rs/canvas");
+      const esVert = aspectRatio === "9:16";
+      const W2 = esVert ? 720 : 1280;
+      const H2 = esVert ? 1280 : 720;
+      const imgBuf = await descargarBuffer(imagenBase);
+      const fondoResized = await sharp(imgBuf).resize(W2, H2, { fit: "cover" }).png().toBuffer();
+
+      const fontSize = Math.floor(W2 * 0.085);
+      const padH = Math.floor(fontSize * 1.6);
+      const overlayC = createCanvas(W2, padH);
+      const ctx = overlayC.getContext("2d");
+
+      // Fondo semitransparente
+      ctx.fillStyle = "rgba(0,0,0,0.55)";
+      ctx.fillRect(0, 0, W2, padH);
+
+      // Texto con sombra
+      ctx.font = `bold ${fontSize}px Impact, Arial Black`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "rgba(0,0,0,0.9)";
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 4;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillText(tituloTexto.toUpperCase(), W2 / 2, padH / 2);
+
+      const overlayBuf = overlayC.toBuffer("image/png");
+      const conTitulo = await sharp(fondoResized)
+        .composite([{ input: overlayBuf, top: 0, left: 0 }])
+        .jpeg({ quality: 95 })
+        .toBuffer();
+      const base64t = `data:image/jpeg;base64,${conTitulo.toString("base64")}`;
+      const finalT = await cloudinary.uploader.upload(base64t, { folder: "thumbslatam/fondos" });
+      return finalT.secure_url;
+    } catch (e) {
+      console.log("Error agregando titulo:", e);
+    }
+  }
+
   const final = await cloudinary.uploader.upload(imagenBase, { folder: "thumbslatam/fondos" });
   return final.secure_url;
 }
