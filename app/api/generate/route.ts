@@ -86,7 +86,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
         const promptKontext = `${promptRefinado}. Layout instructions: ${slotsOcupados}. Keep ALL characters EXACTLY as they appear in the reference — same face, same outfit, do not modify them. Only blend them into the background with cinematic lighting and color grading. Remove the rectangular box borders around each character and make them blend naturally into the scene. If a title is mentioned, display it at the top with bold dramatic typography. Do NOT invent new characters or elements in empty spaces.`;
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-promptKontext,
+        prompt: promptKontext,
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
