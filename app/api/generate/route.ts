@@ -59,7 +59,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     // Kontext Max integra todo con iluminacion y contexto
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-        prompt: `${promptRefinado}. Preserve the appearance of all people and characters from the reference image. Enhance the scene with cinematic lighting, color grading and atmosphere so everything looks cohesive. If there is a title mentioned, display it with bold dramatic typography at the top. Professional YouTube thumbnail style.`,
+        prompt: `${promptRefinado}. The reference image shows the exact layout to follow: left character stays on the LEFT side, center element stays in the CENTER, right character stays on the RIGHT side. Do not move or reposition any element. Preserve the appearance of all people and characters exactly. Only enhance: cinematic lighting, color grading, background atmosphere so everything looks cohesive and professional. If there is a title mentioned, display it with bold dramatic typography at the top. Professional YouTube thumbnail result.`,
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
