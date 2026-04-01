@@ -587,7 +587,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        <button onClick={generarVariaciones} disabled={!tema||sinCreditos} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer",transition:"transform 0.1s",transform:"scale(1)"}} onMouseDown={e=>(e.currentTarget.style.transform="scale(0.97)")} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")}>
+        <button onClick={generarVariaciones} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer",transition:"transform 0.1s",transform:"scale(1)",opacity:!tema||sinCreditos?0.6:1}} onMouseDown={e=>{ if(!tema||sinCreditos) return; e.currentTarget.style.transform="scale(0.97)"; }} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")}>
           {sinCreditos ? "Sin creditos — Mejora tu plan" : `Generar — se descontarán ${costo} creditos →`}
         </button>
       </div>
