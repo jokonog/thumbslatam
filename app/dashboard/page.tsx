@@ -411,7 +411,7 @@ export default function Dashboard() {
           <input type="text" placeholder="De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
           <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,255,255,0.03)",border:"1px solid #3A3D52",marginBottom:"8px"}}>
             <p style={{fontSize:"0.72rem",color:"#8B8FA8",margin:0,lineHeight:"1.5"}}>
-              La IA tiene limitaciones — evita describir terror extremo, violencia grafica, contenido perturbador o personajes reales. Si tu prompt es rechazado, simplifica la descripcion.
+              Prompts cortos y directos dan mejores resultados. Ej: "Ejecutivo caminando en ciudad moderna, iluminacion cinematografica". Evita terror extremo, violencia grafica o personajes reales.
             </p>
           </div>
           <input type="text" placeholder="Escena (opcional): explosion de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
