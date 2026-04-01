@@ -466,8 +466,8 @@ export default function Dashboard() {
                   <div>
                     <div
                       onDragOver={e => e.preventDefault()}
-                      onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
-                      onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
+                      onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
+                      onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
                       style={{border:"2px dashed #3A3D52",borderRadius:"8px",padding:"10px",textAlign:"center",cursor:"pointer",marginBottom:"6px"}}
                     >
                       <div style={{fontSize:"1rem"}}>📎</div>
@@ -481,8 +481,8 @@ export default function Dashboard() {
                     {modo === "cara" && (
                       <div
                         onDragOver={e => e.preventDefault()}
-                        onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
-                        onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
+                        onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
+                        onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ if(f.size > 2*1024*1024){ alert("La imagen no puede pesar mas de 2MB"); return; } const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
                         style={{border:"1px dashed #FF4D00",borderRadius:"6px",padding:"4px",textAlign:"center",cursor:"pointer",marginBottom:"6px",fontSize:"0.62rem",color:"#FF4D00"}}
                       >
                         + Subir mi foto
@@ -499,7 +499,7 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-          <div style={{fontSize:"0.7rem",color:"#3A3D52"}}>Opcional — deja vacio si no quieres elementos adicionales</div>
+          <div style={{fontSize:"0.7rem",color:"#3A3D52"}}>Opcional — deja vacio si no quieres elementos adicionales. Maximo 2MB por imagen.</div>
         </div>
 
         <div style={{marginBottom:"20px"}}>
