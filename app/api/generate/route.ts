@@ -87,7 +87,7 @@ async function generarYComponerConKontext(prompt: string, elementos: any[], aspe
 
   const kontextOutput: any = await replicate.run("black-forest-labs/flux-kontext-max", {
     input: {
-      prompt: `${prompt}. ${slotsDesc}. Seamlessly blend all characters into the scene — same faces, same outfits, matching cinematic lighting and color grading, no rectangular borders. Professional YouTube thumbnail. NO TEXT NO WORDS.`,
+      prompt: `Cinematic scene: ${prompt}. ${slotsDesc}. Blend all elements naturally into the background with matching lighting and color grading. No rectangular cutouts. Clean professional composition. NO TEXT.`,
       input_image: compUpload.secure_url,
       aspect_ratio: aspectRatio,
     }
