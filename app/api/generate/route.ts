@@ -132,22 +132,21 @@ export async function POST(request: Request) {
       generarYComponerConKontext(prompt2, elementos || [], aspectRatio),
     ]);
 
+    // Subir a Cloudinary primero para que las URLs no expiren
+    const [c1, c2] = await Promise.all([
+      cloudinary.uploader.upload(url1, { folder: "thumbslatam/fondos" }),
+      cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }),
+    ]);
+
     const conTitulo = tituloModo === "manual" && titulo;
-    let imageUrl1 = url1;
-    let imageUrl2 = url2;
+    let imageUrl1 = c1.secure_url;
+    let imageUrl2 = c2.secure_url;
 
     if (conTitulo) {
       [imageUrl1, imageUrl2] = await Promise.all([
-        agregarTituloSVG(url1, titulo, aspectRatio),
-        agregarTituloSVG(url2, titulo, aspectRatio),
+        agregarTituloSVG(c1.secure_url, titulo, aspectRatio),
+        agregarTituloSVG(c2.secure_url, titulo, aspectRatio),
       ]);
-    } else {
-      const [u1, u2] = await Promise.all([
-        cloudinary.uploader.upload(url1, { folder: "thumbslatam/fondos" }),
-        cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }),
-      ]);
-      imageUrl1 = u1.secure_url;
-      imageUrl2 = u2.secure_url;
     }
 
     return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
