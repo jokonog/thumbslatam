@@ -11,77 +11,69 @@ cloudinary.config({
 
 const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
 
-async function descargarImagen(url: string): Promise<Buffer> {
+async function descargarBuffer(url: string): Promise<Buffer> {
   const res = await fetch(url);
   return Buffer.from(await res.arrayBuffer());
 }
 
-async function componerElementos(elementos: any[], aspectRatio: string): Promise<string | null> {
-  const imagenesConUrl = elementos.filter((el: any) => el.imagen && el.imagen.startsWith("http"));
-  if (imagenesConUrl.length === 0) return null;
-
-  // Canvas base 1280x720 (16:9) o 720x1280 (9:16)
-  const esVertical = aspectRatio === "9:16";
-  const W = esVertical ? 720 : 1280;
-  const H = esVertical ? 1280 : 720;
-  const slotW = Math.floor(W / 3);
-
-  // Crear canvas negro base
-  let canvas = sharp({
-    create: { width: W, height: H, channels: 3, background: { r: 0, g: 0, b: 0 } }
-  }).jpeg();
-
-  // Componer cada imagen en su slot
-  const composites: sharp.OverlayOptions[] = [];
-  for (let i = 0; i < imagenesConUrl.length; i++) {
-    const el = imagenesConUrl[i];
-    const posIndex = elementos.indexOf(el);
-    const left = posIndex * slotW;
-    try {
-      const buf = await descargarImagen(el.imagen);
-      const resized = await sharp(buf)
-        .resize(slotW, H, { fit: "cover", position: "center" })
-        .jpeg()
-        .toBuffer();
-      composites.push({ input: resized, left, top: 0 });
-    } catch (e) {
-      console.log("Error descargando imagen elemento", i);
-    }
-  }
-
-  if (composites.length === 0) return null;
-
-  const baseBuf = await sharp({
-    create: { width: W, height: H, channels: 3, background: { r: 10, g: 10, b: 20 } }
-  }).jpeg().toBuffer();
-
-  const composed = await sharp(baseBuf).composite(composites).jpeg({ quality: 90 }).toBuffer();
-  const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
-  const uploaded = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-elementos" });
-  return uploaded.secure_url;
-}
-
-async function generarImagen(prompt: string, aspectRatio: string): Promise<string> {
+async function generarFondo(prompt: string, aspectRatio: string): Promise<string> {
   const output: any = await replicate.run(
     "black-forest-labs/flux-1.1-pro",
     {
       input: { prompt, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
     }
   );
-  const fluxUrl = String(output);
-  if (!fluxUrl || !fluxUrl.startsWith("http")) throw new Error("FLUX no genero imagen");
-  const uploaded = await cloudinary.uploader.upload(fluxUrl, { folder: "thumbslatam/fondos" });
-  return uploaded.secure_url;
+  const url = String(output);
+  if (!url || !url.startsWith("http")) throw new Error("FLUX no genero imagen");
+  return url;
 }
 
-async function generarConKontext(prompt: string, imagenRef: string, aspectRatio: string): Promise<string> {
-  const output: any = await replicate.run(
-    "black-forest-labs/flux-kontext-max",
-    { input: { prompt, input_image: imagenRef, aspect_ratio: aspectRatio } }
-  );
-  const url = String(output);
-  if (!url || !url.startsWith("http")) throw new Error("Kontext no genero imagen");
-  const uploaded = await cloudinary.uploader.upload(url, { folder: "thumbslatam/fondos" });
+async function componerSobreFondo(fondoUrl: string, elementos: any[], aspectRatio: string): Promise<string> {
+  const esVertical = aspectRatio === "9:16";
+  const W = esVertical ? 720 : 1280;
+  const H = esVertical ? 1280 : 720;
+
+  const fondoBuf = await descargarBuffer(fondoUrl);
+  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
+
+  const composites: sharp.OverlayOptions[] = [];
+
+  for (let i = 0; i < elementos.length; i++) {
+    const el = elementos[i];
+    if (!el.imagen || !el.imagen.startsWith("http")) continue;
+
+    try {
+      const buf = await descargarBuffer(el.imagen);
+      const elW = Math.floor(W * 0.28);
+      const elH = Math.floor(H * 0.75);
+
+      // Posicion segun slot
+      const leftMap = [
+        Math.floor(W * 0.02),           // izquierda
+        Math.floor(W * 0.36),           // centro
+        Math.floor(W * 0.70),           // derecha
+      ];
+      const top = Math.floor(H * 0.12);
+
+      const resized = await sharp(buf)
+        .resize(elW, elH, { fit: "cover", position: "center" })
+        .jpeg()
+        .toBuffer();
+
+      composites.push({ input: resized, left: leftMap[i], top });
+    } catch (e) {
+      console.log("Error componiendo elemento", i);
+    }
+  }
+
+  if (composites.length === 0) {
+    const uploaded = await cloudinary.uploader.upload(fondoUrl, { folder: "thumbslatam/fondos" });
+    return uploaded.secure_url;
+  }
+
+  const final = await sharp(fondo).composite(composites).jpeg({ quality: 92 }).toBuffer();
+  const base64 = `data:image/jpeg;base64,${final.toString("base64")}`;
+  const uploaded = await cloudinary.uploader.upload(base64, { folder: "thumbslatam/fondos" });
   return uploaded.secure_url;
 }
 
@@ -101,40 +93,42 @@ export async function POST(request: Request) {
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    // Construir descripcion de elementos
-    const posiciones = ["on the left side", "in the center", "on the right side"];
-    const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
-      if (el.usarAvatar) return `the main person (avatar) ${posiciones[i]}`;
-      if (el.imagen && el.descripcion) return `${el.descripcion} ${posiciones[i]}`;
-      if (el.imagen) return `the uploaded element ${posiciones[i]}`;
-      if (el.descripcion) return `${el.descripcion} ${posiciones[i]}`;
+    // Elementos solo con descripcion para el prompt del fondo
+    const elementosPrompt = elementos ? elementos.map((el: any, i: number) => {
+      const pos = i === 0 ? "left" : i === 1 ? "center" : "right";
+      if (el.descripcion && !el.imagen) return `leave space on the ${pos} for ${el.descripcion}`;
+      if (el.imagen) return `leave space on the ${pos} for a character or element`;
       return null;
     }).filter(Boolean).join(", ") : "";
 
     const tituloDesc = tituloModo === "ia"
-      ? `with epic bold title text integrated at the top`
+      ? `with space at top for epic bold title text`
       : tituloModo === "manual" && titulo
-      ? `with bold text saying "${titulo}" at the top`
-      : "no text, no words, no letters";
+      ? `with space at top for text "${titulo}"`
+      : "no text, no words";
 
-    const prompt1 = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, featuring ${elementosDesc}` : ""}, ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${tituloDesc}, no logos`;
-    const prompt2 = `Cinematic YouTube thumbnail, ${descripcion}${elementosDesc ? `, featuring ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dynamic composition, high contrast, vivid colors, ${tituloDesc}, no logos`;
+    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}, ${elementosPrompt ? `${elementosPrompt},` : ""} ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ${tituloDesc}, no logos, no people`;
+    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}, ${elementosPrompt ? `${elementosPrompt},` : ""} ${emocionEN} atmosphere, high contrast, vivid colors, ${tituloDesc}, no logos, no people`;
 
-    // Componer elementos si hay imagenes
-    const composicion = await componerElementos(elementos || [], aspectRatio);
-
-    if (composicion) {
-      const [imageUrl1, imageUrl2] = await Promise.all([
-        generarConKontext(prompt1, composicion, aspectRatio),
-        generarConKontext(prompt2, composicion, aspectRatio),
-      ]);
-      return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
-    }
-
-    const [imageUrl1, imageUrl2] = await Promise.all([
-      generarImagen(prompt1, aspectRatio),
-      generarImagen(prompt2, aspectRatio),
+    // Generar dos fondos en paralelo
+    const [fondo1, fondo2] = await Promise.all([
+      generarFondo(prompt1, aspectRatio),
+      generarFondo(prompt2, aspectRatio),
     ]);
+
+    // Componer elementos encima de cada fondo
+    const tieneImagenes = elementos && elementos.some((el: any) => el.imagen && el.imagen.startsWith("http"));
+
+    const [imageUrl1, imageUrl2] = tieneImagenes
+      ? await Promise.all([
+          componerSobreFondo(fondo1, elementos, aspectRatio),
+          componerSobreFondo(fondo2, elementos, aspectRatio),
+        ])
+      : await Promise.all([
+          cloudinary.uploader.upload(fondo1, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
+          cloudinary.uploader.upload(fondo2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
+        ]);
+
     return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
 
   } catch (error: any) {
