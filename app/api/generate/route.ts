@@ -59,7 +59,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     // Kontext Max integra todo con iluminacion y contexto
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-        prompt: `${promptRefinado}. CRITICAL: Keep all characters and elements EXACTLY as they appear — same face, same look, do not change them. Only add: matching cinematic lighting, shadows, color grading so everything blends naturally. If the prompt mentions a title or text, add it prominently at the top of the image with bold dramatic typography. Professional YouTube thumbnail result.`,
+        prompt: `${promptRefinado}. Preserve the appearance of all people and characters from the reference image. Enhance the scene with cinematic lighting, color grading and atmosphere so everything looks cohesive. If there is a title mentioned, display it with bold dramatic typography at the top. Professional YouTube thumbnail style.`,
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
