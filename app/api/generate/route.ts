@@ -34,8 +34,8 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
 
   const composites: sharp.OverlayOptions[] = [];
-  const leftMap = [Math.floor(W * 0.05), Math.floor(W * 0.36), Math.floor(W * 0.65)];
-  const elW = Math.floor(W * 0.30);
+  const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
+  const elW = Math.floor(W * 0.27);
   const elH = Math.floor(H * 0.75);
   const top = Math.floor(H * 0.12);
 
@@ -59,7 +59,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     // Kontext Max integra todo con iluminacion y contexto
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-        prompt: `Keep all characters and elements EXACTLY as they appear in the reference image — same face, same appearance, do not change or reimagine them. Only enhance the background integration: add matching lighting, shadows, and color grading so everything blends cinematically. The characters must remain faithful to the original. Professional YouTube thumbnail style.`,
+        prompt: `${promptRefinado}. CRITICAL: Keep all characters and elements EXACTLY as they appear — same face, same look, do not change them. Only add: matching cinematic lighting, shadows, color grading so everything blends naturally. If the prompt mentions a title or text, add it prominently at the top of the image with bold dramatic typography. Professional YouTube thumbnail result.`,
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
