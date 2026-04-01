@@ -114,7 +114,7 @@ async function agregarTituloSVG(imagenUrl: string, tituloTexto: string, aspectRa
     const texto = tituloTexto.toUpperCase().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
     const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
       <defs><filter id="s"><feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/></filter></defs>
-      <rect width="${W}" height="${padH}" fill="rgba(0,0,0,0.5)"/>
+
       <text x="${W/2}" y="${Math.floor(padH*0.73)}"
         font-family="Impact,Arial Black,sans-serif"
         font-size="${fontSize}"
