@@ -24,6 +24,9 @@ export default function Dashboard() {
   const [creditos, setCreditos] = useState<number | null>(null);
   const [plan, setPlan] = useState("gratis");
   const [codigo, setCodigo] = useState("");
+  const [fotoTemporal, setFotoTemporal] = useState<string | null>(null);
+  const [fotoTemporalFile, setFotoTemporalFile] = useState<File | null>(null);
+  const [dragOver, setDragOver] = useState(false);
   const [codigoMsg, setCodigoMsg] = useState("");
   const [canjeando, setCanjeando] = useState(false);
   const [miniaturas, setMiniaturas] = useState(0);
@@ -107,7 +110,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion }),
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -159,6 +162,26 @@ export default function Dashboard() {
     setVarSeleccionada(null);
     setConfirmando(false);
     generarVariaciones();
+  }
+
+  function handleFotoTemporal(file: File) {
+    if (!file.type.startsWith("image/")) return;
+    setFotoTemporalFile(file);
+    const reader = new FileReader();
+    reader.onload = (e) => setFotoTemporal(e.target?.result as string);
+    reader.readAsDataURL(file);
+  }
+
+  async function guardarFotoComoAvatar() {
+    if (!fotoTemporalFile || !userId) return;
+    const formData = new FormData();
+    formData.append("file", fotoTemporalFile);
+    formData.append("userId", userId);
+    await fetch("/api/avatar", { method: "POST", body: formData });
+    setAvatarUrl(fotoTemporal);
+    setTieneAvatar(true);
+    setFotoTemporal(null);
+    setFotoTemporalFile(null);
   }
 
   async function canjearCodigo() {
@@ -398,7 +421,37 @@ export default function Dashboard() {
             </button>
             <button onClick={() => tieneAvatar && !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"14px",borderRadius:"10px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:!tieneAvatar||sinCreditosCara?"not-allowed":"pointer",textAlign:"left",opacity:!tieneAvatar||sinCreditosCara?0.5:1}}>
               <div style={{fontSize:"0.88rem",fontWeight:"700",marginBottom:"4px"}}>Con mi cara</div>
-              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tú en la miniatura — evita pedir cascos, máscaras o cubrir la cara</div>
+              <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"8px"}}>Apareces tú en la miniatura — evita pedir cascos, mascaras o cubrir la cara</div>
+              {/* Drag & drop foto temporal */}
+              <div
+                onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if(f) handleFotoTemporal(f); }}
+                onClick={() => { const i = document.createElement("input"); i.type="file"; i.accept="image/*"; i.onchange=(e:any)=>handleFotoTemporal(e.target.files[0]); i.click(); }}
+                style={{border:`2px dashed ${dragOver ? "#FF4D00" : fotoTemporal ? "#06D6A0" : "#3A3D52"}`,borderRadius:"10px",padding:"12px",textAlign:"center",cursor:"pointer",marginBottom:"8px",transition:"border-color 0.2s",background:dragOver?"rgba(255,77,0,0.05)":"transparent"}}
+              >
+                {fotoTemporal ? (
+                  <div style={{display:"flex",alignItems:"center",gap:"10px",justifyContent:"center"}}>
+                    <img src={fotoTemporal} style={{width:"40px",height:"40px",borderRadius:"50%",objectFit:"cover",border:"2px solid #06D6A0"}} alt="foto" />
+                    <div style={{textAlign:"left"}}>
+                      <div style={{fontSize:"0.75rem",color:"#06D6A0",fontWeight:600}}>Foto cargada</div>
+                      <div style={{fontSize:"0.7rem",color:"#8B8FA8"}}>Se usara solo para esta generacion</div>
+                    </div>
+                    <button onClick={e => { e.stopPropagation(); setFotoTemporal(null); setFotoTemporalFile(null); }} style={{background:"none",border:"none",color:"#8B8FA8",cursor:"pointer",fontSize:"1rem",marginLeft:"4px"}}>✕</button>
+                  </div>
+                ) : (
+                  <div>
+                    <div style={{fontSize:"1.2rem",marginBottom:"4px"}}>📸</div>
+                    <div style={{fontSize:"0.75rem",color:"#8B8FA8"}}>Arrastra una foto o haz clic para seleccionar</div>
+                    <div style={{fontSize:"0.7rem",color:"#3A3D52",marginTop:"2px"}}>Opcional — si no subes, se usa tu avatar</div>
+                  </div>
+                )}
+              </div>
+              {fotoTemporal && fotoTemporalFile && (
+                <button onClick={e => { e.stopPropagation(); guardarFotoComoAvatar(); }} style={{width:"100%",background:"none",border:"1px solid #3A3D52",borderRadius:"8px",padding:"6px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer",marginBottom:"8px"}}>
+                  Guardar como mi avatar →
+                </button>
+              )}
               <div suppressHydrationWarning style={{fontSize:"0.72rem",color:!tieneAvatar?"#3A3D52":"#FF4D00"}}>
                 {!tieneAvatar ? "Requiere avatar — sube tus fotos primero" : "5 creditos"}
               </div>
