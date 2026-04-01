@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-export const maxDuration = 60;
 import Replicate from "replicate";
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
@@ -102,31 +101,6 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   return final.secure_url;
 }
 
-async function agregarTituloSVG(imagenUrl: string, tituloTexto: string, aspectRatio: string): Promise<string> {
-  try {
-    const esVert = aspectRatio === "9:16";
-    const W = esVert ? 720 : 1280;
-    const H = esVert ? 1280 : 720;
-    const imgBuf = await (await fetch(imagenUrl)).arrayBuffer().then(Buffer.from);
-    const base = await sharp(imgBuf).resize(W, H, { fit: "cover" }).png().toBuffer();
-    const fontSize = Math.floor(W * 0.082);
-    const padH = Math.floor(fontSize * 1.9);
-    const texto = tituloTexto.toUpperCase().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
-      <defs><filter id="s"><feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/></filter></defs>
-      <rect width="${W}" height="${padH}" fill="rgba(0,0,0,0.5)"/>
-      <text x="${W/2}" y="${Math.floor(padH*0.73)}" font-family="Impact,Arial Black,sans-serif" font-size="${fontSize}" font-weight="bold" fill="white" text-anchor="middle" filter="url(#s)">${texto}</text>
-    </svg>`;
-    const result = await sharp(base).composite([{ input: Buffer.from(svg), top: 0, left: 0 }]).jpeg({ quality: 95 }).toBuffer();
-    const uploaded = await cloudinary.uploader.upload(`data:image/jpeg;base64,${result.toString("base64")}`, { folder: "thumbslatam/fondos" });
-    return uploaded.secure_url;
-  } catch(e) {
-    console.log("Error titulo SVG:", e);
-    const uploaded = await cloudinary.uploader.upload(imagenUrl, { folder: "thumbslatam/fondos" });
-    return uploaded.secure_url;
-  }
-}
-
 export async function POST(request: Request) {
   try {
     const { descripcion, emocion, orientacion, elementos, titulo, tituloModo } = await request.json();
@@ -169,16 +143,7 @@ export async function POST(request: Request) {
         componerYRefinar(fondo1, elementos, aspectRatio, promptBase),
         componerYRefinar(fondo2, elementos, aspectRatio, promptBase),
       ]);
-      // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo) {
-      const [t1, t2] = await Promise.all([
-        agregarTituloSVG(imageUrl1, titulo, aspectRatio),
-        agregarTituloSVG(imageUrl2, titulo, aspectRatio),
-      ]);
-      return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
-    }
-
-    return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
+      return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
     }
 
     // Sin imagenes — solo FLUX
@@ -190,15 +155,6 @@ export async function POST(request: Request) {
       cloudinary.uploader.upload(url1, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
       cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
     ]);
-    // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo) {
-      const [t1, t2] = await Promise.all([
-        agregarTituloSVG(imageUrl1, titulo, aspectRatio),
-        agregarTituloSVG(imageUrl2, titulo, aspectRatio),
-      ]);
-      return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
-    }
-
     return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
 
   } catch (error: any) {
