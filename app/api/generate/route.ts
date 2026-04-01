@@ -32,7 +32,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const H = esVertical ? 1280 : 720;
 
   const fondoBuf = await descargarBuffer(fondoUrl);
-  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
+  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).jpeg({ quality: 95 }).toBuffer();
 
   const composites: sharp.OverlayOptions[] = [];
   const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
@@ -179,11 +179,13 @@ export async function POST(request: Request) {
         componerYRefinar(fondo2, elementos, aspectRatio, promptBase),
       ]);
       // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo) {
+    if (tituloModo === "manual" && titulo && titulo.trim()) {
+      console.log("Agregando titulo:", titulo);
       const [t1, t2] = await Promise.all([
         agregarTituloSVG(imageUrl1, titulo, aspectRatio),
         agregarTituloSVG(imageUrl2, titulo, aspectRatio),
       ]);
+      console.log("Titulo agregado:", t1);
       return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
     }
 
@@ -200,11 +202,13 @@ export async function POST(request: Request) {
       cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
     ]);
     // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo) {
+    if (tituloModo === "manual" && titulo && titulo.trim()) {
+      console.log("Agregando titulo:", titulo);
       const [t1, t2] = await Promise.all([
         agregarTituloSVG(imageUrl1, titulo, aspectRatio),
         agregarTituloSVG(imageUrl2, titulo, aspectRatio),
       ]);
+      console.log("Titulo agregado:", t1);
       return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
     }
 
