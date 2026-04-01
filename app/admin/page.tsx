@@ -24,6 +24,8 @@ export default function AdminPage() {
   const [codigoGenerado, setCodigoGenerado] = useState("");
   const [creando, setCreando] = useState(false);
   const [stats, setStats] = useState<any>(null);
+  const [health, setHealth] = useState<any[]>([]);
+  const [checkingHealth, setCheckingHealth] = useState(false);
   const [usuarios, setUsuarios] = useState<any[]>([]);
   const [buscarUsuario, setBuscarUsuario] = useState("");
   const [editandoId, setEditandoId] = useState<string | null>(null);
@@ -62,6 +64,7 @@ export default function AdminPage() {
       cargarCodigos();
       cargarStats();
       cargarUsuarios();
+      verificarHealth();
     } else {
       setError(data.error);
     }
@@ -84,6 +87,14 @@ export default function AdminPage() {
     setEditandoId(null);
     cargarUsuarios();
     setGuardando(false);
+  }
+
+  async function verificarHealth() {
+    setCheckingHealth(true);
+    const res = await fetch("/api/admin-health");
+    const data = await res.json();
+    setHealth(data.checks || []);
+    setCheckingHealth(false);
   }
 
   async function cargarStats() {
@@ -281,6 +292,29 @@ export default function AdminPage() {
         </div>
       </div>
       
+      {/* Health Check */}
+      <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}>
+          <h3 style={{fontSize:"0.95rem",fontWeight:700}}>Estado de servicios</h3>
+          <button onClick={verificarHealth} disabled={checkingHealth} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+            {checkingHealth ? "Verificando..." : "Verificar"}
+          </button>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(180px, 1fr))",gap:"10px"}}>
+          {health.map((h, i) => (
+            <div key={i} style={{background:"#060810",borderRadius:"10px",padding:"12px 16px",border:`1px solid ${h.ok ? "rgba(6,214,160,0.2)" : "rgba(239,68,68,0.2)"}`}}>
+              <div style={{display:"flex",alignItems:"center",gap:"8px"}}>
+                <div style={{width:"8px",height:"8px",borderRadius:"50%",background:h.ok?"#06D6A0":"#ef4444"}}></div>
+                <span style={{fontSize:"0.85rem",fontWeight:600,color:"white"}}>{h.name}</span>
+              </div>
+              <div style={{fontSize:"0.72rem",color:h.ok?"#06D6A0":"#ef4444",marginTop:"4px"}}>
+                {h.ok ? "Operacional" : "Error"}
+              </div>
+            </div>
+          ))}
+          {health.length === 0 && <p style={{color:"#8B8FA8",fontSize:"0.82rem"}}>Verificando...</p>}
+        </div>
+      </div>
       {/* Crear codigo */}
       <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",marginBottom:"24px"}}>
         <h3 style={{fontSize:"0.95rem",fontWeight:700,marginBottom:"16px"}}>Crear codigo de regalo</h3>
