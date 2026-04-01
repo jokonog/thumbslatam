@@ -25,7 +25,11 @@ async function agregarTituloSVG(imagenUrl: string, tituloTexto: string, aspectRa
   const base = await sharp(imgBuf).resize(W, H, { fit: "cover" }).png().toBuffer();
   const fontSize = Math.floor(W * 0.082);
   const padH = Math.floor(fontSize * 1.9);
-  const texto = tituloTexto.toUpperCase();
+  const texto = tituloTexto.toUpperCase()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
   const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
     <defs><filter id="s"><feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/></filter></defs>
     <rect width="${W}" height="${padH}" fill="rgba(0,0,0,0.5)"/>
@@ -58,8 +62,8 @@ async function generarYComponerConKontext(prompt: string, elementos: any[], aspe
   // Paso 2: Sharp compone elementos sobre el fondo
   const fondoBuf = await descargarBuffer(fondoUrl);
   const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).png().toBuffer();
-  const leftMap = [Math.floor(W * 0.04), Math.floor(W * 0.36), Math.floor(W * 0.63)];
-  const elW = Math.floor(W * 0.30);
+  const leftMap = [Math.floor(W * 0.02), Math.floor(W * 0.35), Math.floor(W * 0.65)];
+  const elW = Math.floor(W * 0.32);
   const elH = Math.floor(H * 0.78);
   const top = Math.floor(H * 0.10);
   const composites: sharp.OverlayOptions[] = [];
@@ -69,7 +73,7 @@ async function generarYComponerConKontext(prompt: string, elementos: any[], aspe
     if (!el.imagen || !el.imagen.startsWith("http")) continue;
     try {
       const buf = await descargarBuffer(el.imagen);
-      const resized = await sharp(buf).resize(elW, elH, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+      const resized = await sharp(buf).resize(elW, elH, { fit: "cover", position: "top" }).png().toBuffer();
       composites.push({ input: resized, left: leftMap[i], top, blend: "over" });
     } catch(e) { console.log("Error elemento", i); }
   }
