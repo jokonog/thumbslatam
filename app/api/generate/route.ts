@@ -34,10 +34,10 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
 
   const composites: sharp.OverlayOptions[] = [];
-  const leftMap = [Math.floor(W * 0.02), Math.floor(W * 0.36), Math.floor(W * 0.70)];
-  const elW = Math.floor(W * 0.28);
-  const elH = Math.floor(H * 0.80);
-  const top = Math.floor(H * 0.10);
+  const leftMap = [Math.floor(W * 0.05), Math.floor(W * 0.36), Math.floor(W * 0.65)];
+  const elW = Math.floor(W * 0.30);
+  const elH = Math.floor(H * 0.75);
+  const top = Math.floor(H * 0.12);
 
   for (let i = 0; i < elementos.length; i++) {
     const el = elementos[i];
@@ -59,7 +59,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     // Kontext Max integra todo con iluminacion y contexto
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-        prompt: `${promptRefinado}. Seamlessly integrate all characters and elements into the scene with matching lighting, shadows, color grading and cinematic atmosphere. Make it look like a professional YouTube thumbnail photo, not a collage.`,
+        prompt: `Keep all characters and elements EXACTLY as they appear in the reference image — same face, same appearance, do not change or reimagine them. Only enhance the background integration: add matching lighting, shadows, and color grading so everything blends cinematically. The characters must remain faithful to the original. Professional YouTube thumbnail style.`,
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
