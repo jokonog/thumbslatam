@@ -470,7 +470,69 @@ export default function Dashboard() {
         </div>
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>3. Describe tu miniatura</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>3. Elementos (hasta 3)</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px",marginBottom:"8px"}}>
+            {elementos.map((el, i) => (
+              <div key={i} style={{background:"#060810",border:"1px solid #3A3D52",borderRadius:"10px",padding:"10px"}}>
+                <div style={{fontSize:"0.7rem",color:"#8B8FA8",marginBottom:"6px",fontWeight:600}}>
+                  {i === 0 ? "Izquierda" : i === 1 ? "Centro" : "Derecha"}
+                </div>
+                {el.imagen ? (
+                  <div style={{position:"relative"}}>
+                    <img src={el.imagen} style={{width:"100%",aspectRatio:"1",objectFit:"cover",borderRadius:"6px"}} alt="" />
+                    <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:null}; setElementos(arr); }} style={{position:"absolute",top:"2px",right:"2px",background:"rgba(0,0,0,0.7)",border:"none",borderRadius:"50%",width:"20px",height:"20px",color:"white",cursor:"pointer",fontSize:"0.7rem"}}>✕</button>
+                  </div>
+                ) : (
+                  <div>
+                    <div
+                      onDragOver={e => e.preventDefault()}
+                      onDrop={e => { e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}}
+                      onClick={() => { const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=(e:any)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ const arr=[...elementos]; arr[i]={...arr[i],imagen:ev.target?.result as string,usarAvatar:false}; setElementos(arr); }; r.readAsDataURL(f); }}; inp.click(); }}
+                      style={{border:"2px dashed #3A3D52",borderRadius:"8px",padding:"10px",textAlign:"center",cursor:"pointer",marginBottom:"6px"}}
+                    >
+                      <div style={{fontSize:"1rem"}}>📎</div>
+                      <div style={{fontSize:"0.62rem",color:"#8B8FA8",marginTop:"2px"}}>Subir imagen</div>
+                    </div>
+                    {i === 0 && tieneAvatar && (
+                      <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:avatarUrl,usarAvatar:true}; setElementos(arr); }} style={{width:"100%",background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px",color:"#FF4D00",fontSize:"0.62rem",cursor:"pointer",marginBottom:"6px"}}>
+                        Usar mi avatar
+                      </button>
+                    )}
+                    <input
+                      placeholder="O describe... ej: un leon"
+                      value={el.descripcion}
+                      onChange={e => { const arr=[...elementos]; arr[i]={...arr[i],descripcion:e.target.value}; setElementos(arr); }}
+                      style={{width:"100%",background:"transparent",border:"none",borderTop:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.65rem",padding:"4px 0",boxSizing:"border-box"}}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{fontSize:"0.7rem",color:"#3A3D52"}}>Opcional — deja vacio si no quieres elementos adicionales</div>
+        </div>
+
+        <div style={{marginBottom:"20px"}}>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"8px"}}>4. Titulo (opcional)</div>
+          <div style={{display:"flex",gap:"6px",marginBottom:"8px"}}>
+            {([["ninguno","Sin titulo"],["ia","IA lo genera"],["manual","Lo escribo yo"]] as const).map(([val,label]) => (
+              <button key={val} onClick={() => setTituloModo(val)} style={{padding:"5px 10px",borderRadius:"999px",border:"none",fontSize:"0.72rem",cursor:"pointer",background:tituloModo===val?"#FF4D00":"#1f2937",color:tituloModo===val?"white":"#8B8FA8"}}>
+                {label}
+              </button>
+            ))}
+          </div>
+          {tituloModo === "manual" && (
+            <input placeholder="Ej: NUEVO KILLER VECNA" value={titulo} onChange={e => setTitulo(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}} />
+          )}
+          {tituloModo === "ia" && (
+            <div style={{fontSize:"0.72rem",color:"#8B8FA8",padding:"8px 12px",background:"rgba(255,255,255,0.03)",borderRadius:"8px",border:"1px solid #3A3D52"}}>
+              La IA generara un titulo epico basado en tu descripcion
+            </div>
+          )}
+        </div>
+
+        <div style={{marginBottom:"20px"}}>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Describe tu miniatura</div>
           <input type="text" placeholder="De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
           <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,255,255,0.03)",border:"1px solid #3A3D52",marginBottom:"8px"}}>
             <p style={{fontSize:"0.72rem",color:"#8B8FA8",margin:0,lineHeight:"1.5"}}>
