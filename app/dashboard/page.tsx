@@ -295,6 +295,9 @@ export default function Dashboard() {
   if (generando) return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
       <div style={{textAlign:"center",maxWidth:"420px",width:"100%"}}>
+        <div style={{marginBottom:"20px",pointerEvents:"none",userSelect:"none",display:"flex",justifyContent:"center"}}>
+          <Logo height={28} />
+        </div>
         <div style={{fontSize:"3rem",marginBottom:"24px"}}>🎨</div>
         <h2 style={{fontSize:"1.3rem",fontWeight:"800",marginBottom:"8px",letterSpacing:"-0.03em"}}>
           Generando tu miniatura...
