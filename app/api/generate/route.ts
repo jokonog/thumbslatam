@@ -173,11 +173,9 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    const tituloDesc = tituloModo === "manual" && titulo
-      ? "leave space at the top for title text, no text in the image"
-      : tituloModo === "manual" && !titulo
-      ? "leave space at the top for title text, no text in the image"
-      : "no text no words no letters";
+    const tituloDesc = tituloModo === "manual"
+      ? "leave empty dark space at the top 20% of the image, NO TEXT NO WORDS NO LETTERS anywhere in the image"
+      : "NO TEXT NO WORDS NO LETTERS anywhere in the image";
 
     const promptBase = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloDesc}, no logos`;
 
