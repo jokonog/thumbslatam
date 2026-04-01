@@ -44,8 +44,29 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     if (!el.imagen || !el.imagen.startsWith("http")) continue;
     try {
       const buf = await descargarBuffer(el.imagen);
-      const resized = await sharp(buf).resize(elW, elH, { fit: "cover", position: "center" }).jpeg().toBuffer();
-      composites.push({ input: resized, left: leftMap[i], top });
+      // Aplicar mascara de degradado suave en bordes para mejor integracion
+      const resized = await sharp(buf)
+        .resize(elW, elH, { fit: "cover", position: "center" })
+        .png()
+        .toBuffer();
+
+      // Crear mascara con bordes suaves
+      const mask = await sharp({
+        create: {
+          width: elW, height: elH, channels: 4,
+          background: { r: 255, g: 255, b: 255, alpha: 1 }
+        }
+      })
+      .png()
+      .toBuffer();
+
+      const withAlpha = await sharp(resized)
+        .ensureAlpha()
+        .blur(0.5)
+        .png()
+        .toBuffer();
+
+      composites.push({ input: withAlpha, left: leftMap[i], top, blend: "over" });
     } catch(e) { console.log("Error elemento", i); }
   }
 
