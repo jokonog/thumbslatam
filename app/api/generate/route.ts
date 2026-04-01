@@ -125,10 +125,10 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    const tituloDesc = tituloModo === "ia"
-      ? "with space at top for epic bold title"
-      : tituloModo === "manual" && titulo
+    const tituloDesc = tituloModo === "manual" && titulo
       ? `with bold text "${titulo}" at the top`
+      : tituloModo === "manual" && !titulo
+      ? "with an epic bold title related to the scene at the top"
       : "no text no words";
 
     const promptBase = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloDesc}, no logos`;
