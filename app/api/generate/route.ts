@@ -48,7 +48,7 @@ async function generarConKontext(prompt: string, imagenRef: string, aspectRatio:
 
 export async function POST(request: Request) {
   try {
-    const { descripcion, estilo, emocion, orientacion, elementos, titulo, tituloModo } = await request.json();
+    const { descripcion, estilo, emocion, orientacion, elementos, titulo, tituloModo, userId } = await request.json();
 
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense",
@@ -62,36 +62,39 @@ export async function POST(request: Request) {
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    // Elementos con imagen subida
-    const elementosConImagen = elementos ? elementos.filter((el: any) => el.imagen) : [];
+    // Separar elementos con avatar de los que tienen imagen subida o descripcion
+    const avatarElemento = elementos ? elementos.find((el: any) => el.usarAvatar && el.imagen) : null;
 
-    // Construir descripcion de elementos
+    // Construir descripcion de todos los elementos
+    const posiciones = ["left side", "center", "right side"];
     const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
-      const pos = i === 0 ? "left side" : i === 1 ? "center" : "right side";
-      if (el.imagen) return `the reference image element placed on the ${pos}`;
+      const pos = posiciones[i];
+      if (el.usarAvatar) return `the main person (reference photo) on the ${pos}`;
+      if (el.imagen && el.descripcion) return `${el.descripcion} on the ${pos}`;
+      if (el.imagen) return `a person or character from the reference on the ${pos}`;
       if (el.descripcion) return `${el.descripcion} on the ${pos}`;
       return null;
     }).filter(Boolean).join(", ") : "";
 
     const tituloDesc = tituloModo === "ia"
-      ? `epic bold title text related to the scene integrated in the image`
+      ? `with epic bold title text related to the scene`
       : tituloModo === "manual" && titulo
-      ? `bold text saying "${titulo}" integrated in the image`
-      : "NO TEXT, NO WORDS, NO LETTERS";
+      ? `with bold text saying "${titulo}" at the top`
+      : "no text, no words, no letters";
 
-    const prompt1 = `Epic dramatic thumbnail scene, ${descripcion}${elementosDesc ? `, featuring ${elementosDesc}` : ""}, ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${tituloDesc}, NO LOGOS`;
-    const prompt2 = `Cinematic thumbnail, ${descripcion}${elementosDesc ? `, featuring ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dynamic composition, high contrast, vivid colors, ${tituloDesc}, NO LOGOS`;
+    const prompt1 = `Epic dramatic YouTube thumbnail, ${descripcion}, ${elementosDesc ? `composition: ${elementosDesc},` : ""} ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${tituloDesc}, no logos`;
+    const prompt2 = `Cinematic YouTube thumbnail, ${descripcion}, ${elementosDesc ? `composition: ${elementosDesc},` : ""} ${emocionEN} atmosphere, dynamic composition, high contrast, vivid colors, ${tituloDesc}, no logos`;
 
-    // Si hay imagenes subidas usar Kontext Max
-    if (elementosConImagen.length > 0) {
-      const imagenRef = elementosConImagen[0].imagen;
+    // Si hay avatar usar Kontext Max
+    if (avatarElemento) {
       const [imageUrl1, imageUrl2] = await Promise.all([
-        generarConKontext(prompt1, imagenRef, aspectRatio),
-        generarConKontext(prompt2, imagenRef, aspectRatio),
+        generarConKontext(prompt1, avatarElemento.imagen, aspectRatio),
+        generarConKontext(prompt2, avatarElemento.imagen, aspectRatio),
       ]);
       return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
     }
 
+    // Sin avatar usar FLUX 1.1 Pro
     const [imageUrl1, imageUrl2] = await Promise.all([
       generarImagen(prompt1, aspectRatio),
       generarImagen(prompt2, aspectRatio),
