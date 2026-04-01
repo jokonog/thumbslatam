@@ -326,6 +326,36 @@ export default function Editor() {
     });
   }
 
+  // ─── Agregar imagen al canvas ──────────────────────────────────────────────
+  function agregarImagenCanvas() {
+    if (!fabricRef.current) return;
+    const inp = document.createElement("input");
+    inp.type = "file";
+    inp.accept = "image/*";
+    inp.onchange = (e: any) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) { alert("Maximo 2MB por imagen"); return; }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const url = ev.target?.result as string;
+        import("fabric").then(({ FabricImage }) => {
+          FabricImage.fromURL(url).then((img) => {
+            const { canvas } = fabricRef.current!;
+            const maxW = canvas.width! * 0.4;
+            if (img.width! > maxW) img.scaleToWidth(maxW);
+            img.set({ left: 100, top: 100 });
+            canvas.add(img);
+            canvas.setActiveObject(img);
+            canvas.renderAll();
+          });
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+    inp.click();
+  }
+
   // ─── Eliminar objeto seleccionado ───────────────────────────────────────────
   function eliminarSeleccion() {
     if (!fabricRef.current?.canvas) return;
@@ -494,7 +524,20 @@ export default function Editor() {
 
           {/* 4. Texto */}
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>4. Agregar texto</h3>
+            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>4. Agregar elementos</h3>
+            <div style={{display:"flex",gap:"6px",marginBottom:"12px"}}>
+              <div style={{flex:1,background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={() => {}}>
+                <div style={{fontSize:"1rem",marginBottom:"2px"}}>T</div>
+                <div style={{fontSize:"0.65rem",color:"#8B8FA8"}}>Texto</div>
+              </div>
+              <div style={{flex:1,background:"rgba(255,255,255,0.03)",border:"1px solid #3A3D52",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={agregarImagenCanvas}>
+                <div style={{fontSize:"1rem",marginBottom:"2px"}}>🖼</div>
+                <div style={{fontSize:"0.65rem",color:"#8B8FA8"}}>Imagen</div>
+              </div>
+            </div>
+            <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,165,0,0.06)",border:"1px solid rgba(255,165,0,0.2)",marginBottom:"10px"}}>
+              <p style={{fontSize:"0.7rem",color:"#FFA500",margin:0}}>Solo agrega objetos o personajes como imagen. Para texto usa el campo de abajo.</p>
+            </div>
             <input
               type="text"
               placeholder="Tu titulo aqui..."
