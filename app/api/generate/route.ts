@@ -17,18 +17,15 @@ async function descargarBuffer(url: string): Promise<Buffer> {
 }
 
 async function generarFondo(prompt: string, aspectRatio: string): Promise<string> {
-  const output: any = await replicate.run(
-    "black-forest-labs/flux-1.1-pro",
-    {
-      input: { prompt, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
-    }
-  );
+  const output: any = await replicate.run("black-forest-labs/flux-1.1-pro", {
+    input: { prompt, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
+  });
   const url = String(output);
-  if (!url || !url.startsWith("http")) throw new Error("FLUX no genero imagen");
+  if (!url.startsWith("http")) throw new Error("FLUX no genero imagen");
   return url;
 }
 
-async function componerSobreFondo(fondoUrl: string, elementos: any[], aspectRatio: string): Promise<string> {
+async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string): Promise<string> {
   const esVertical = aspectRatio === "9:16";
   const W = esVertical ? 720 : 1280;
   const H = esVertical ? 1280 : 720;
@@ -37,44 +34,44 @@ async function componerSobreFondo(fondoUrl: string, elementos: any[], aspectRati
   const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
 
   const composites: sharp.OverlayOptions[] = [];
+  const leftMap = [Math.floor(W * 0.02), Math.floor(W * 0.36), Math.floor(W * 0.70)];
+  const elW = Math.floor(W * 0.28);
+  const elH = Math.floor(H * 0.80);
+  const top = Math.floor(H * 0.10);
 
   for (let i = 0; i < elementos.length; i++) {
     const el = elementos[i];
     if (!el.imagen || !el.imagen.startsWith("http")) continue;
-
     try {
       const buf = await descargarBuffer(el.imagen);
-      const elW = Math.floor(W * 0.28);
-      const elH = Math.floor(H * 0.75);
-
-      // Posicion segun slot
-      const leftMap = [
-        Math.floor(W * 0.02),           // izquierda
-        Math.floor(W * 0.36),           // centro
-        Math.floor(W * 0.70),           // derecha
-      ];
-      const top = Math.floor(H * 0.12);
-
-      const resized = await sharp(buf)
-        .resize(elW, elH, { fit: "cover", position: "center" })
-        .jpeg()
-        .toBuffer();
-
+      const resized = await sharp(buf).resize(elW, elH, { fit: "cover", position: "center" }).jpeg().toBuffer();
       composites.push({ input: resized, left: leftMap[i], top });
-    } catch (e) {
-      console.log("Error componiendo elemento", i);
-    }
+    } catch(e) { console.log("Error elemento", i); }
   }
 
-  if (composites.length === 0) {
-    const uploaded = await cloudinary.uploader.upload(fondoUrl, { folder: "thumbslatam/fondos" });
-    return uploaded.secure_url;
+  let imagenBase: string;
+
+  if (composites.length > 0) {
+    const composed = await sharp(fondo).composite(composites).jpeg({ quality: 90 }).toBuffer();
+    const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
+    const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
+    
+    // Kontext Max integra todo con iluminacion y contexto
+    const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
+      input: {
+        prompt: `${promptRefinado}. Seamlessly integrate all characters and elements into the scene with matching lighting, shadows, color grading and cinematic atmosphere. Make it look like a professional YouTube thumbnail photo, not a collage.`,
+        input_image: uploadedComp.secure_url,
+        aspect_ratio: aspectRatio,
+      }
+    });
+    imagenBase = String(refinado);
+  } else {
+    imagenBase = fondoUrl;
   }
 
-  const final = await sharp(fondo).composite(composites).jpeg({ quality: 92 }).toBuffer();
-  const base64 = `data:image/jpeg;base64,${final.toString("base64")}`;
-  const uploaded = await cloudinary.uploader.upload(base64, { folder: "thumbslatam/fondos" });
-  return uploaded.secure_url;
+  if (!imagenBase.startsWith("http")) throw new Error("Error en refinado");
+  const final = await cloudinary.uploader.upload(imagenBase, { folder: "thumbslatam/fondos" });
+  return final.secure_url;
 }
 
 export async function POST(request: Request) {
@@ -93,42 +90,44 @@ export async function POST(request: Request) {
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    // Elementos solo con descripcion para el prompt del fondo
-    const elementosPrompt = elementos ? elementos.map((el: any, i: number) => {
+    const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
       const pos = i === 0 ? "left" : i === 1 ? "center" : "right";
-      if (el.descripcion && !el.imagen) return `leave space on the ${pos} for ${el.descripcion}`;
-      if (el.imagen) return `leave space on the ${pos} for a character or element`;
+      if (el.descripcion && !el.imagen) return `${el.descripcion} on the ${pos}`;
+      if (el.imagen && el.descripcion) return `${el.descripcion} on the ${pos}`;
       return null;
     }).filter(Boolean).join(", ") : "";
 
     const tituloDesc = tituloModo === "ia"
-      ? `with space at top for epic bold title text`
+      ? "with space at top for epic bold title"
       : tituloModo === "manual" && titulo
-      ? `with space at top for text "${titulo}"`
-      : "no text, no words";
+      ? `with bold text "${titulo}" at the top`
+      : "no text no words";
 
-    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}, ${elementosPrompt ? `${elementosPrompt},` : ""} ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ${tituloDesc}, no logos, no people`;
-    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}, ${elementosPrompt ? `${elementosPrompt},` : ""} ${emocionEN} atmosphere, high contrast, vivid colors, ${tituloDesc}, no logos, no people`;
+    const promptBase = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloDesc}, no logos`;
 
-    // Generar dos fondos en paralelo
-    const [fondo1, fondo2] = await Promise.all([
-      generarFondo(prompt1, aspectRatio),
-      generarFondo(prompt2, aspectRatio),
-    ]);
-
-    // Componer elementos encima de cada fondo
     const tieneImagenes = elementos && elementos.some((el: any) => el.imagen && el.imagen.startsWith("http"));
 
-    const [imageUrl1, imageUrl2] = tieneImagenes
-      ? await Promise.all([
-          componerSobreFondo(fondo1, elementos, aspectRatio),
-          componerSobreFondo(fondo2, elementos, aspectRatio),
-        ])
-      : await Promise.all([
-          cloudinary.uploader.upload(fondo1, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
-          cloudinary.uploader.upload(fondo2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
-        ]);
+    if (tieneImagenes) {
+      const [fondo1, fondo2] = await Promise.all([
+        generarFondo(`${promptBase}, background only, no characters`, aspectRatio),
+        generarFondo(`Cinematic version, ${promptBase}, background only, no characters`, aspectRatio),
+      ]);
+      const [imageUrl1, imageUrl2] = await Promise.all([
+        componerYRefinar(fondo1, elementos, aspectRatio, promptBase),
+        componerYRefinar(fondo2, elementos, aspectRatio, promptBase),
+      ]);
+      return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
+    }
 
+    // Sin imagenes — solo FLUX
+    const [url1, url2] = await Promise.all([
+      generarFondo(promptBase, aspectRatio),
+      generarFondo(`Cinematic version, ${promptBase}`, aspectRatio),
+    ]);
+    const [imageUrl1, imageUrl2] = await Promise.all([
+      cloudinary.uploader.upload(url1, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
+      cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
+    ]);
     return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
 
   } catch (error: any) {
