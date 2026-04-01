@@ -18,6 +18,15 @@ const supabaseAdmin = createClient(
 export async function POST(request: Request) {
   try {
     const { userId, descripcion, estilo, orientacion, emocion, avatarOverride } = await request.json();
+    const emocionMap: Record<string, string> = {
+      epico: "epic, powerful, intense",
+      emocionado: "excited, energetic, enthusiastic",
+      sorprendido: "surprised, shocked, amazed",
+      gracioso: "funny, playful, humorous",
+      misterioso: "mysterious, dark, enigmatic",
+      serio: "serious, focused, determined",
+    };
+    const emocionEN = emocionMap[emocion] || emocion;
 
     const { data: usuarioData } = await supabaseAdmin
       .from("usuarios")
@@ -38,7 +47,7 @@ export async function POST(request: Request) {
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `The reference person appears ONLY as the RIGHT SIDE character in this scene: ${descripcion}. Style: ${estilo}, mood: ${emocion}, cinematic dramatic lighting. IMPORTANT: any other character in the scene must look completely different — different face, different ethnicity, different hair, invented person, NO resemblance to the reference photo whatsoever. Only the right side character matches the reference photo exactly. Face of reference person clearly visible, no mask, no helmet. Natural hand anatomy, realistic fingers, hands properly gripping any objects, no deformed or extra fingers.`,
+          prompt: `The reference person appears ONLY as the RIGHT SIDE character in this scene: ${descripcion}. Style: ${estilo}, mood: ${emocionEN}, cinematic dramatic lighting. IMPORTANT: any other character in the scene must look completely different — different face, different ethnicity, different hair, invented person, NO resemblance to the reference photo whatsoever. Only the right side character matches the reference photo exactly. Face of reference person clearly visible, no mask, no helmet. Natural hand anatomy, realistic fingers, hands properly gripping any objects, no deformed or extra fingers.`,
           input_image: avatarFinal,
           aspect_ratio: aspectRatio,
         }

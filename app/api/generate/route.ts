@@ -32,11 +32,20 @@ async function generarImagen(prompt: string, aspectRatio: string): Promise<strin
 export async function POST(request: Request) {
   try {
     const { descripcion, estilo, emocion, orientacion } = await request.json();
+    const emocionMap: Record<string, string> = {
+      epico: "epic, powerful, intense",
+      emocionado: "excited, energetic, enthusiastic",
+      sorprendido: "surprised, shocked, amazed",
+      gracioso: "funny, playful, humorous",
+      misterioso: "mysterious, dark, enigmatic",
+      serio: "serious, focused, determined",
+    };
+    const emocionEN = emocionMap[emocion] || emocion;
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    const prompt1 = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocion} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
-    const prompt2 = `Cinematic ${descripcion}, ${estilo} aesthetic, ${emocion} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    const prompt1 = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    const prompt2 = `Cinematic ${descripcion}, ${estilo} aesthetic, ${emocionEN} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
 
     const [imageUrl1, imageUrl2] = await Promise.all([
       generarImagen(prompt1, aspectRatio),
