@@ -25,7 +25,7 @@ async function generarFondo(prompt: string, aspectRatio: string): Promise<string
   return url;
 }
 
-async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string, tituloTexto: string = "", esVertical: boolean = false): Promise<string> {
+async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string, tituloTexto: string = ""): Promise<string> {
   const esVertical = aspectRatio === "9:16";
   const W = esVertical ? 720 : 1280;
   const H = esVertical ? 1280 : 720;
@@ -141,8 +141,8 @@ export async function POST(request: Request) {
         generarFondo(`Cinematic version, ${promptBase}, background only, no characters`, aspectRatio),
       ]);
       const [imageUrl1, imageUrl2] = await Promise.all([
-        componerYRefinar(fondo1, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : "", esVertical),
-        componerYRefinar(fondo2, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : "", esVertical),
+        componerYRefinar(fondo1, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : ""),
+        componerYRefinar(fondo2, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : ""),
       ]);
       return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
     }
