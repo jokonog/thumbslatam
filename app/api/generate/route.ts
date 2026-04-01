@@ -115,7 +115,16 @@ async function agregarTituloSVG(imagenUrl: string, tituloTexto: string, aspectRa
     const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
       <defs><filter id="s"><feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/></filter></defs>
       <rect width="${W}" height="${padH}" fill="rgba(0,0,0,0.5)"/>
-      <text x="${W/2}" y="${Math.floor(padH*0.73)}" font-family="Impact,Arial Black,sans-serif" font-size="${fontSize}" font-weight="bold" fill="white" text-anchor="middle" filter="url(#s)">${texto}</text>
+      <text x="${W/2}" y="${Math.floor(padH*0.73)}"
+        font-family="Impact,Arial Black,sans-serif"
+        font-size="${fontSize}"
+        font-weight="bold"
+        fill="white"
+        text-anchor="middle"
+        textLength="${Math.floor(W*0.92)}"
+        lengthAdjust="spacingAndGlyphs"
+        filter="url(#s)"
+      >${texto}</text>
     </svg>`;
     const result = await sharp(base).composite([{ input: Buffer.from(svg), top: 0, left: 0 }]).jpeg({ quality: 95 }).toBuffer();
     const uploaded = await cloudinary.uploader.upload(`data:image/jpeg;base64,${result.toString("base64")}`, { folder: "thumbslatam/fondos" });
