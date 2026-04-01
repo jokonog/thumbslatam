@@ -59,7 +59,14 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
     // Kontext Max integra todo con iluminacion y contexto
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
-        prompt: `${promptRefinado}. The reference image shows the exact layout to follow: left character stays on the LEFT side, center element stays in the CENTER, right character stays on the RIGHT side. Do not move or reposition any element. Preserve the appearance of all people and characters exactly. Only enhance: cinematic lighting, color grading, background atmosphere so everything looks cohesive and professional. If there is a title mentioned, display it with bold dramatic typography at the top. Professional YouTube thumbnail result.`,
+        (() => {
+          const slotsOcupados = elementos.map((el: any, i: number) => {
+            const pos = i === 0 ? "LEFT" : i === 1 ? "CENTER" : "RIGHT";
+            if (el.imagen || el.descripcion) return `${pos} slot has a character/element`;
+            return `${pos} slot is EMPTY — do not add anything there`;
+          }).join(". ");
+          return `${promptRefinado}. Layout instructions: ${slotsOcupados}. Keep ALL characters EXACTLY as they appear in the reference — same face, same outfit, do not modify them. Only blend them into the background with cinematic lighting and color grading. Remove the rectangular box borders around each character and make them blend naturally into the scene. If a title is mentioned, display it at the top with bold dramatic typography. Do NOT invent new characters or elements in empty spaces.`;
+        })(),
         input_image: uploadedComp.secure_url,
         aspect_ratio: aspectRatio,
       }
