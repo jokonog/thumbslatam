@@ -25,7 +25,7 @@ async function generarFondo(prompt: string, aspectRatio: string): Promise<string
   return url;
 }
 
-async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string): Promise<string> {
+async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string, tituloTexto: string = "", esVertical: boolean = false): Promise<string> {
   const esVertical = aspectRatio === "9:16";
   const W = esVertical ? 720 : 1280;
   const H = esVertical ? 1280 : 720;
@@ -126,10 +126,10 @@ export async function POST(request: Request) {
     }).filter(Boolean).join(", ") : "";
 
     const tituloDesc = tituloModo === "manual" && titulo
-      ? `with bold text "${titulo}" at the top`
+      ? "leave space at the top for title text, no text in the image"
       : tituloModo === "manual" && !titulo
-      ? "with an epic bold title related to the scene at the top"
-      : "no text no words";
+      ? "leave space at the top for title text, no text in the image"
+      : "no text no words no letters";
 
     const promptBase = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloDesc}, no logos`;
 
@@ -141,8 +141,8 @@ export async function POST(request: Request) {
         generarFondo(`Cinematic version, ${promptBase}, background only, no characters`, aspectRatio),
       ]);
       const [imageUrl1, imageUrl2] = await Promise.all([
-        componerYRefinar(fondo1, elementos, aspectRatio, promptBase),
-        componerYRefinar(fondo2, elementos, aspectRatio, promptBase),
+        componerYRefinar(fondo1, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : "", esVertical),
+        componerYRefinar(fondo2, elementos, aspectRatio, promptBase, titulo && tituloModo === "manual" ? titulo : "", esVertical),
       ]);
       return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
     }
