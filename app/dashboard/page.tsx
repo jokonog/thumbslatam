@@ -27,10 +27,10 @@ export default function Dashboard() {
   const [fotoTemporal, setFotoTemporal] = useState<string | null>(null);
   const [fotoTemporalFile, setFotoTemporalFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
-  const [elementos, setElementos] = useState<{imagen: string | null, descripcion: string, usarAvatar: boolean}[]>([
-    {imagen: null, descripcion: "", usarAvatar: false},
-    {imagen: null, descripcion: "", usarAvatar: false},
-    {imagen: null, descripcion: "", usarAvatar: false},
+  const [elementos, setElementos] = useState<{imagen: string | null, descripcion: string, usarAvatar: boolean, tipo: string}[]>([
+    {imagen: null, descripcion: "", usarAvatar: false, tipo: "personaje"},
+    {imagen: null, descripcion: "", usarAvatar: false, tipo: "personaje"},
+    {imagen: null, descripcion: "", usarAvatar: false, tipo: "personaje"},
   ]);
   const [titulo, setTitulo] = useState("");
   const [tituloModo, setTituloModo] = useState<"ia" | "manual" | "ninguno">("ninguno");

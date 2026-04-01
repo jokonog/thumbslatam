@@ -119,6 +119,7 @@ export async function POST(request: Request) {
 
     const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
       const pos = i === 0 ? "left" : i === 1 ? "center" : "right";
+      const tipo = el.tipo || "personaje";
       if (el.descripcion && !el.imagen) return `${el.descripcion} on the ${pos}`;
       if (el.imagen && el.descripcion) return `${el.descripcion} on the ${pos}`;
       return null;
