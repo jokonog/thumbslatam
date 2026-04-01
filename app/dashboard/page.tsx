@@ -27,6 +27,13 @@ export default function Dashboard() {
   const [fotoTemporal, setFotoTemporal] = useState<string | null>(null);
   const [fotoTemporalFile, setFotoTemporalFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [elementos, setElementos] = useState<{imagen: string | null, descripcion: string, usarAvatar: boolean}[]>([
+    {imagen: null, descripcion: "", usarAvatar: false},
+    {imagen: null, descripcion: "", usarAvatar: false},
+    {imagen: null, descripcion: "", usarAvatar: false},
+  ]);
+  const [titulo, setTitulo] = useState("");
+  const [tituloModo, setTituloModo] = useState<"ia" | "manual" | "ninguno">("ninguno");
   const [codigoMsg, setCodigoMsg] = useState("");
   const [canjeando, setCanjeando] = useState(false);
   const [miniaturas, setMiniaturas] = useState(0);
@@ -127,7 +134,7 @@ export default function Dashboard() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion }),
+        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos, titulo, tituloModo }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -474,7 +481,7 @@ export default function Dashboard() {
         </div>
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>4. Emocion principal</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>6. Emocion principal</div>
           <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
             {[
               {id:"epico", label:"Epico"},

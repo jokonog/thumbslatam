@@ -31,7 +31,7 @@ async function generarImagen(prompt: string, aspectRatio: string): Promise<strin
 
 export async function POST(request: Request) {
   try {
-    const { descripcion, estilo, emocion, orientacion } = await request.json();
+    const { descripcion, estilo, emocion, orientacion, elementos, titulo, tituloModo } = await request.json();
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense",
       emocionado: "excited, energetic, enthusiastic",
@@ -44,8 +44,21 @@ export async function POST(request: Request) {
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
-    const prompt1 = `Epic dramatic scene, ${descripcion}, ${estilo} style, ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
-    const prompt2 = `Cinematic ${descripcion}, ${estilo} aesthetic, ${emocionEN} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, NO TEXT, NO WORDS, NO LETTERS, NO LOGOS, clean background only`;
+    // Construir descripcion de elementos
+    const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
+      const pos = i === 0 ? "left side" : i === 1 ? "center" : "right side";
+      if (el.descripcion) return `${el.descripcion} on the ${pos}`;
+      return null;
+    }).filter(Boolean).join(", ") : "";
+
+    const tituloDesc = tituloModo === "ia" 
+      ? `epic bold title text related to the scene integrated in the image`
+      : tituloModo === "manual" && titulo
+      ? `bold text saying "${titulo}" integrated in the image`
+      : "NO TEXT, NO WORDS, NO LETTERS";
+
+    const prompt1 = `Epic dramatic scene, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${estilo} style, ${emocionEN} mood, vibrant colors, dramatic cinematic lighting, ultra detailed, ${tituloDesc}, NO LOGOS`;
+    const prompt2 = `Cinematic ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${estilo} aesthetic, ${emocionEN} atmosphere, dynamic composition, professional photography, high contrast, vivid colors, ${tituloDesc}, NO LOGOS`;
 
     const [imageUrl1, imageUrl2] = await Promise.all([
       generarImagen(prompt1, aspectRatio),
