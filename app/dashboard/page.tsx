@@ -337,6 +337,13 @@ export default function Dashboard() {
     </main>
   );
 
+  async function borrarMini(id: string) {
+    if (!confirm("Eliminar esta miniatura?")) return;
+    await supabase.from("miniatura").delete().eq("id", id);
+    setListaMinis(prev => prev.filter((m: any) => m.id !== id));
+    setMiniaturas(prev => prev - 1);
+  }
+
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
 
