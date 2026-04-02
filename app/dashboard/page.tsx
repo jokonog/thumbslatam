@@ -128,7 +128,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal }),
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, elementos: elementosConUrl }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
