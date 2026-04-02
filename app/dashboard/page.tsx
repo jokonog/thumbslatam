@@ -94,10 +94,8 @@ export default function Dashboard() {
     cargarDatos();
     const handlePageShow = (e: PageTransitionEvent) => { cargarDatos(); };
     window.addEventListener("pageshow", handlePageShow);
-    window.addEventListener("focus", cargarDatos);
     return () => {
       window.removeEventListener("pageshow", handlePageShow);
-      window.removeEventListener("focus", cargarDatos);
     };
   }, []);
 
