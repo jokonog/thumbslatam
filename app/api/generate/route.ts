@@ -32,7 +32,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const H = esVertical ? 1280 : 720;
 
   const fondoBuf = await descargarBuffer(fondoUrl);
-  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).jpeg({ quality: 95 }).toBuffer();
+  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).jpeg({ quality: 95 }).toBuffer(); // fondo base
 
   const composites: sharp.OverlayOptions[] = [];
   const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
