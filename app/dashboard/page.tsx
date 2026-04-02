@@ -625,7 +625,7 @@ export default function Dashboard() {
                 style={{flex:1,padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontWeight:"600",fontSize:"0.85rem"}}>
                 Cancelar
               </button>
-              <button onClick={() => borrarMini(confirmarBorrar)}
+              <button onClick={() => confirmarBorrar !== null && borrarMini(confirmarBorrar)}
                 style={{flex:1,padding:"10px",borderRadius:"8px",background:"#ef4444",border:"none",color:"white",cursor:"pointer",fontWeight:"700",fontSize:"0.85rem"}}>
                 Eliminar
               </button>
