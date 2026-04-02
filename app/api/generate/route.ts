@@ -38,8 +38,7 @@ async function agregarTitulo(buf: Buffer, titulo: string, W: number, H: number):
   const gradiente = `<svg width="${W}" height="${boxH}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="black" stop-opacity="0.95"/>
-        <stop offset="45%" stop-color="black" stop-opacity="0.85"/>
+        <stop offset="0%" stop-color="black" stop-opacity="0.80"/>
         <stop offset="100%" stop-color="black" stop-opacity="0"/>
       </linearGradient>
     </defs>
