@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [codigoMsg, setCodigoMsg] = useState("");
   const [canjeando, setCanjeando] = useState(false);
   const [miniaturas, setMiniaturas] = useState(0);
+  const [confirmarBorrar, setConfirmarBorrar] = useState<number|null>(null);
   const [listaMinis, setListaMinis] = useState<{id:number, imagen_url:string, created_at:string}[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -338,10 +339,10 @@ export default function Dashboard() {
   );
 
   async function borrarMini(id: number) {
-    
-    const confirmar = window.confirm("Una vez borrada no podras recuperarla. Continuar?"); if (!confirmar) return; await supabase.from("miniatura").delete().eq("id", id);
+    await supabase.from("miniatura").delete().eq("id", id);
     setListaMinis(prev => prev.filter((m: any) => m.id !== id));
     setMiniaturas(prev => prev - 1);
+    setConfirmarBorrar(null);
   }
 
   return (
@@ -589,7 +590,7 @@ export default function Dashboard() {
           {listaMinis.map((mini, index) => (
             <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
               <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
-              <button onClick={e => { e.stopPropagation(); borrarMini(mini.id); }}
+              <button onClick={e => { e.stopPropagation(); setConfirmarBorrar(mini.id); }}
                 style={{position:"absolute",top:"6px",right:"6px",background:"rgba(239,68,68,0.9)",border:"none",borderRadius:"50%",width:"20px",height:"20px",cursor:"pointer",color:"white",fontSize:"11px",padding:0}}>
                 x
               </button>
@@ -608,6 +609,26 @@ export default function Dashboard() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {/* Modal confirmar borrar */}
+      {confirmarBorrar !== null && (
+        <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000}}>
+          <div style={{background:"#111827",borderRadius:"14px",padding:"28px 24px",maxWidth:"340px",width:"90%",border:"1px solid rgba(255,255,255,0.1)",textAlign:"center"}}>
+            <div style={{fontSize:"2rem",marginBottom:"12px"}}>🗑️</div>
+            <h3 style={{margin:"0 0 8px",fontSize:"1rem",fontWeight:"700"}}>Eliminar miniatura</h3>
+            <p style={{color:"#8B8FA8",fontSize:"0.85rem",margin:"0 0 20px",lineHeight:"1.5"}}>Una vez borrada no podras recuperarla.</p>
+            <div style={{display:"flex",gap:"10px"}}>
+              <button onClick={() => setConfirmarBorrar(null)}
+                style={{flex:1,padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontWeight:"600",fontSize:"0.85rem"}}>
+                Cancelar
+              </button>
+              <button onClick={() => borrarMini(confirmarBorrar)}
+                style={{flex:1,padding:"10px",borderRadius:"8px",background:"#ef4444",border:"none",color:"white",cursor:"pointer",fontWeight:"700",fontSize:"0.85rem"}}>
+                Eliminar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </main>
