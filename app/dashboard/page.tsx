@@ -335,8 +335,13 @@ export default function Dashboard() {
   );
 
   async function borrarMini(id: number) {
-    const { error } = await supabase.from("miniatura").delete().eq("id", id);
-    if (error) { console.error("Error borrando:", error.message); return; }
+    const res = await fetch("/api/delete-mini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, userId }),
+    });
+    const data = await res.json();
+    if (data.error) { console.error("Error borrando:", data.error); return; }
     setListaMinis(prev => prev.filter((m: any) => m.id !== id));
     setMiniaturas(prev => prev - 1);
     setConfirmarBorrar(null);
