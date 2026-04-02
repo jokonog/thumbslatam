@@ -529,25 +529,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"8px"}}>3. Titulo (opcional)</div>
-          <div style={{display:"flex",gap:"6px",marginBottom:"8px"}}>
-            {([["ninguno","Sin titulo"],["manual","Con titulo"]] as const).map(([val,label]) => (
-              <button key={val} onClick={() => setTituloModo(val)} style={{padding:"5px 14px",borderRadius:"999px",border:"none",fontSize:"0.72rem",cursor:"pointer",background:tituloModo===val?"#FF4D00":"#1f2937",color:tituloModo===val?"white":"#8B8FA8"}}>
-                {label}
-              </button>
-            ))}
-          </div>
-          {tituloModo === "manual" && (
-            <div>
-              <input placeholder="Escribe el titulo o dejalo vacio para que la IA lo genere" value={titulo} onChange={e => setTitulo(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box",marginBottom:"8px"}} />
-              {(plataforma === "tiktok" || plataforma === "story" || plataforma === "instagram") && (
-                <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,165,0,0.08)",border:"1px solid rgba(255,165,0,0.3)"}}>
-                  <p style={{fontSize:"0.72rem",color:"#FFA500",margin:0}}>
-                    En formatos verticales el titulo puede quedar cortado o solaparse con los personajes. Recomendamos usar titulos cortos de 1 a 3 palabras.
-                  </p>
-                </div>
-              )}
             </div>
           )}
         </div>

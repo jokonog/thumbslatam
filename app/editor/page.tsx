@@ -23,6 +23,9 @@ export default function Editor() {
   const [escalaVista, setEscalaVista] = useState(1);
   const [isMounted, setIsMounted] = useState(false);
   const [puedeArrastrar, setPuedeArrastrar] = useState(false);
+  const [fontFamily, setFontFamily] = useState("Impact, Arial Black, sans-serif");
+  const [efectoTexto, setEfectoTexto] = useState("sombra");
+  const [efectoTexto, setEfectoTexto] = useState("sombra");
 
   // ─── Créditos ───────────────────────────────────────────────────────────────
   const [creditos, setCreditos] = useState<number | null>(null);
@@ -308,17 +311,35 @@ export default function Editor() {
     if (!texto || !fabricRef.current) return;
     const { canvas } = fabricRef.current;
 
-    import("fabric").then(({ FabricText }) => {
-      const t = new FabricText(texto, {
-        left: 100,
-        top: 300,
+    import("fabric").then(({ FabricText, Shadow }) => {
+      const efectos: Record<string, any> = {
+        sombra: {
+          shadow: new Shadow({ color: "rgba(0,0,0,0.95)", blur: 12, offsetX: 4, offsetY: 4 }),
+          stroke: "rgba(0,0,0,0.6)", strokeWidth: 2,
+        },
+        stroke: {
+          shadow: new Shadow({ color: "rgba(0,0,0,1)", blur: 0, offsetX: 0, offsetY: 0 }),
+          stroke: "#000000", strokeWidth: Math.floor(fontSize * 0.08),
+        },
+        glow: {
+          shadow: new Shadow({ color: colorTexto, blur: 20, offsetX: 0, offsetY: 0 }),
+          stroke: "rgba(0,0,0,0.3)", strokeWidth: 1,
+        },
+        neon: {
+          shadow: new Shadow({ color: "#FF4D00", blur: 30, offsetX: 0, offsetY: 0 }),
+          stroke: "#FF4D00", strokeWidth: 2,
+        },
+      };
+      const ef = efectos[efectoTexto] || efectos.sombra;
+      const t = new FabricText(texto.toUpperCase(), {
+        left: Math.floor(canvas.width! / 2),
+        top: 60,
         fontSize: fontSize,
         fill: colorTexto,
         fontWeight: "bold",
-        fontFamily: "Impact, Arial Black, sans-serif",
-        shadow: new (require("fabric").Shadow)({ color: "rgba(0,0,0,0.9)", blur: 10, offsetX: 3, offsetY: 3 }),
-        stroke: "rgba(0,0,0,0.5)",
-        strokeWidth: 2,
+        fontFamily: fontFamily,
+        originX: "center",
+        ...ef,
       });
       canvas.add(t);
       canvas.setActiveObject(t);
@@ -541,14 +562,64 @@ export default function Editor() {
             <input
               type="text"
               placeholder="Tu titulo aqui..."
-              maxLength={40}
+              maxLength={50}
               value={texto}
               onChange={(e) => setTexto(e.target.value)}
               style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px",boxSizing:"border-box"}}
             />
+            <div style={{marginBottom:"8px"}}>
+              <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"6px"}}>Fuente:</label>
+              {[
+                {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null},
+                {name:"Bebas Neue", family:"'Bebas Neue', Impact, sans-serif", google:"Bebas+Neue"},
+                {name:"Bangers", family:"'Bangers', Impact, sans-serif", google:"Bangers"},
+                {name:"Black Ops", family:"'Black Ops One', Impact, sans-serif", google:"Black+Ops+One"},
+                {name:"Boogaloo", family:"'Boogaloo', sans-serif", google:"Boogaloo"},
+                {name:"Alfa Slab", family:"'Alfa Slab One', serif", google:"Alfa+Slab+One"},
+                {name:"Oswald", family:"'Oswald', sans-serif", google:"Oswald:wght@700"},
+                {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One"},
+              ].map(({name, family, google}) => {
+                if (google && typeof document !== "undefined") {
+                  const id = `gfont-${google}`;
+                  if (!document.getElementById(id)) {
+                    const link = document.createElement("link");
+                    link.id = id;
+                    link.rel = "stylesheet";
+                    link.href = `https://fonts.googleapis.com/css2?family=${google}&display=swap`;
+                    document.head.appendChild(link);
+                  }
+                }
+                return (
+                  <button key={name} onClick={() => setFontFamily(family)}
+                    style={{
+                      display:"block", width:"100%", marginBottom:"4px",
+                      padding:"8px 10px", borderRadius:"8px", textAlign:"left",
+                      border:`1px solid ${fontFamily===family?"#FF4D00":"#3A3D52"}`,
+                      background:fontFamily===family?"rgba(255,77,0,0.12)":"transparent",
+                      color:"white", cursor:"pointer",
+                      fontFamily:family, fontSize:"1rem", fontWeight:"bold",
+                    }}>
+                    {name}
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{marginBottom:"8px"}}>
+              <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"4px"}}>Efecto:</label>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4px"}}>
+                {[["sombra","Sombra"],["stroke","Borde"],["glow","Glow"],["neon","Neon"]].map(([val,label]) => (
+                  <button key={val} onClick={() => setEfectoTexto(val)}
+                    style={{padding:"6px",borderRadius:"6px",border:`1px solid ${efectoTexto===val?"#FF4D00":"#3A3D52"}`,
+                    background:efectoTexto===val?"rgba(255,77,0,0.15)":"transparent",color:efectoTexto===val?"#FF4D00":"#8B8FA8",
+                    cursor:"pointer",fontSize:"0.72rem",fontWeight:"600"}}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
               <label style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>Tamaño:</label>
-              <input type="range" min="20" max="150" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} style={{flex:1}}/>
+              <input type="range" min="20" max="200" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} style={{flex:1}}/>
               <span style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>{fontSize}px</span>
             </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
