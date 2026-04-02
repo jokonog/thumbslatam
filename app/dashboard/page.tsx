@@ -174,7 +174,10 @@ export default function Dashboard() {
 
   async function elegirVariacion() {
     if (!varSeleccionada) return;
-    if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: varSeleccionada });
+    if (userId) {
+      const { data: existe } = await supabase.from("miniatura").select("id").eq("usuario_id", userId).eq("imagen_url", varSeleccionada).single();
+      if (!existe) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: varSeleccionada });
+    }
     const params = new URLSearchParams({ plataforma, imageUrl: varSeleccionada });
     window.location.href = `/editor?${params.toString()}`;
   }
