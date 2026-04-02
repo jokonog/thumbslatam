@@ -150,7 +150,7 @@ async function componerYRefinar(
   const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
 
   // Kontext integra iluminacion — SIN texto, SIN titulo en el prompt
-  const promptKontext = `Blend the characters in this composite image into the background scene. Match lighting, shadows and color grading. Background: ${descripcion}. STRICT RULES: 1) Do NOT duplicate, clone or multiply any character — each person appears exactly ONCE. 2) Keep every face and outfit pixel-perfect as shown. 3) Remove rectangular borders around characters. 4) Output absolutely NO text, NO letters, NO words, NO symbols, NO numbers anywhere. 5) Do NOT add new characters or elements not already present.`;
+  const promptKontext = `Seamlessly integrate the characters into this scene: ${descripcion}. Apply cinematic lighting, color grading and shadows that match the background atmosphere. Each character must appear exactly ONCE — do not clone or duplicate. Blend them naturally so they feel part of the world. You may stylize lighting and color on the characters to match the scene, but preserve the face identity and outfit. Remove any rectangular cutout borders. Output NO text, NO letters, NO symbols anywhere in the image.`;
 
   const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
     input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
@@ -178,7 +178,8 @@ async function componerYRefinar(
     return upload.secure_url;
   }
 
-  const final = await cloudinary.uploader.upload(refinadoUrl, { folder: "thumbslatam/fondos" });
+  const finalBuf2 = await sharp(sinCaracteres).jpeg({ quality: 93 }).toBuffer();
+  const final = await cloudinary.uploader.upload(`data:image/jpeg;base64,${finalBuf2.toString("base64")}`, { folder: "thumbslatam/fondos" });
   return final.secure_url;
 }
 
