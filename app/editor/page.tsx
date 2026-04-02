@@ -31,7 +31,7 @@ export default function Editor() {
   const [degradadoDireccion, setDegradadoDireccion] = useState<'horizontal'|'vertical'|'diagonal'>('horizontal');
   const [fontDropdownOpen, setFontDropdownOpen] = useState(false);
   const [seccionTexto, setSeccionTexto] = useState(true);
-  const [seccionAjustes, setSeccionAjustes] = useState(true);
+  const [seccionAjustes, setSeccionAjustes] = useState(false);
   const [brillo, setBrillo] = useState(100);
   const [contraste, setContraste] = useState(100);
   const [saturacion, setSaturacion] = useState(100);
