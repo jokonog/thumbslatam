@@ -339,7 +339,7 @@ export default function Dashboard() {
 
   async function borrarMini(id: number) {
     
-    await supabase.from("miniatura").delete().eq("id", id);
+    const confirmar = window.confirm("Una vez borrada no podras recuperarla. Continuar?"); if (!confirmar) return; await supabase.from("miniatura").delete().eq("id", id);
     setListaMinis(prev => prev.filter((m: any) => m.id !== id));
     setMiniaturas(prev => prev - 1);
   }
