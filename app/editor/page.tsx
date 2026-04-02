@@ -583,36 +583,38 @@ export default function Editor() {
         <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"auto",maxHeight:"calc(100vh - 60px)",paddingRight:"4px"}}>
 
           {/* Plataforma + Volver */}
-          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",padding:"14px",border:"1px solid rgba(255,77,0,0.35)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
-            <div style={{display:"flex",alignItems:"center",gap:"6px",marginBottom:"10px"}}>
-              <span style={{fontSize:"0.7rem",color:"#FF4D00",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Plataforma</span>
+          <div style={{borderRadius:"12px",overflow:"hidden",boxShadow:"0 4px 20px rgba(0,0,0,0.5)"}}>
+            <div style={{background:"#FF4D00",padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.72rem",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase",color:"white"}}>Plataforma</span>
             </div>
-            <select value={plataforma} onChange={(e) => cambiarPlataforma(e.target.value)}
-              style={{width:"100%",padding:"8px 10px",borderRadius:"8px",background:"rgba(0,0,0,0.4)",border:"1px solid rgba(255,77,0,0.4)",color:"white",fontSize:"0.82rem",cursor:"pointer"}}>
-              <option value="youtube">▶ YouTube — 1280×720</option>
-              <option value="instagram">◻ Instagram Post — 1080×1080</option>
-              <option value="instagram_story">◻ Instagram Story — 1080×1920</option>
-              <option value="tiktok">♪ TikTok — 1080×1920</option>
-              <option value="twitter">✕ Twitter — 1200×675</option>
-            </select>
-            {orientacionIncompatible && (
-              <p style={{color:"#FFD166",fontSize:"0.72rem",margin:"8px 0 0",lineHeight:"1.4"}}>
-                ⚠️ Fondo {fondoEsVertical ? "vertical" : "horizontal"} — genera de nuevo en formato {esVertical ? "vertical" : "horizontal"}.
-              </p>
-            )}
-            <a href="/dashboard" style={{display:"block",textAlign:"center",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid rgba(255,255,255,0.08)",color:"#8B8FA8",fontSize:"0.78rem",textDecoration:"none",fontWeight:"600",marginTop:"10px"}}>
-              ← Nueva miniatura
-            </a>
+            <div style={{background:"#111827",padding:"12px",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px"}}>
+              <select value={plataforma} onChange={(e) => cambiarPlataforma(e.target.value)}
+                style={{width:"100%",padding:"8px 10px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",cursor:"pointer",marginBottom:"8px"}}>
+                <option value="youtube">YouTube — 1280x720</option>
+                <option value="instagram">Instagram Post — 1080x1080</option>
+                <option value="instagram_story">Instagram Story — 1080x1920</option>
+                <option value="tiktok">TikTok — 1080x1920</option>
+                <option value="twitter">X (Twitter) — 1200x675</option>
+              </select>
+              {orientacionIncompatible && (
+                <p style={{color:"#FFD166",fontSize:"0.72rem",margin:"0 0 8px",lineHeight:"1.4"}}>
+                  Fondo {fondoEsVertical ? "vertical" : "horizontal"} — genera de nuevo en formato {esVertical ? "vertical" : "horizontal"}.
+                </p>
+              )}
+              <a href="/dashboard" style={{display:"block",textAlign:"center",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.78rem",textDecoration:"none",fontWeight:"600"}}>
+                Nueva miniatura
+              </a>
+            </div>
           </div>
 
           {/* Texto */}
-          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
+          <div style={{borderRadius:"12px",overflow:"hidden",boxShadow:"0 4px 20px rgba(0,0,0,0.5)"}}>
             <button onClick={() => setSeccionTexto(v => !v)}
-              style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>✏️ Texto</span>
-              <span style={{color:"#8B8FA8",fontSize:"0.8rem"}}>{seccionTexto ? "▲" : "▼"}</span>
+              style={{width:"100%",padding:"10px 14px",background:"#FF4D00",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.72rem",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Texto</span>
+              <span style={{fontSize:"0.8rem",opacity:0.8}}>{seccionTexto ? "▲" : "▼"}</span>
             </button>
-            {seccionTexto && <div style={{padding:"0 14px 14px"}}>
+            {seccionTexto && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px"}}>
             <div style={{display:"flex",gap:"6px",marginBottom:"12px"}}>
               <div style={{flex:1,background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={() => {}}>
                 <div style={{fontSize:"1rem",marginBottom:"2px"}}>T</div>
@@ -761,7 +763,7 @@ export default function Editor() {
             </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
               <label style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>Tamaño:</label>
-              <input type="range" min="20" max="200" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} style={{flex:1}}/>
+              <input type="range" min="20" max="200" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} style={{flex:1,accentColor:"#FF4D00"}}/>
               <span style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>{fontSize}px</span>
             </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
@@ -782,14 +784,13 @@ export default function Editor() {
           </div>
 
           {/* Ajustes imagen */}
-          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
+          <div style={{borderRadius:"12px",overflow:"hidden",boxShadow:"0 4px 20px rgba(0,0,0,0.5)"}}>
             <button onClick={() => setSeccionAjustes(v => !v)}
-              style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>🎨 Ajustes de imagen</span>
-              <span style={{color:"#8B8FA8",fontSize:"0.8rem"}}>{seccionAjustes ? "▲" : "▼"}</span>
+              style={{width:"100%",padding:"10px 14px",background:"#FF4D00",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.72rem",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Ajustes de imagen</span>
+              <span style={{fontSize:"0.8rem",opacity:0.8}}>{seccionAjustes ? "▲" : "▼"}</span>
             </button>
-            {seccionAjustes && <div style={{padding:"0 14px 14px"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700",display:"none"}}>5. Ajustes de imagen</h3>
+            {seccionAjustes && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px"}}>
             {[
               {label:"☀️ Brillo", val:brillo, set:setBrillo},
               {label:"◑ Contraste", val:contraste, set:setContraste},
@@ -799,7 +800,7 @@ export default function Editor() {
                 <label style={{fontSize:"0.72rem",color:"#8B8FA8",whiteSpace:"nowrap",width:"90px"}}>{label}</label>
                 <input type="range" min="50" max="200" value={val}
                   onChange={(e) => { set(Number(e.target.value)); aplicarAjustesImagen(); }}
-                  style={{flex:1}}/>
+                  style={{flex:1,accentColor:"#FF4D00"}}/>
                 <span style={{fontSize:"0.7rem",color:"#8B8FA8",width:"35px"}}>{val}%</span>
               </div>
             ))}
