@@ -160,25 +160,18 @@ async function componerYRefinar(
   if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen");
 
   // Sharp agrega titulo AQUI — despues de Kontext, nunca antes
-  // Primero limpiar franja superior donde Kontext suele poner caracteres
   const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
   const bufKontext = await descargarBuffer(refinadoUrl);
-  const baseKontext = await sharp(bufKontext).resize(W, H, { fit: "cover" }).png().toBuffer();
-  // Cubrir franja superior con recorte del fondo original para borrar caracteres de Kontext
-  const franjaH = Math.floor(H * 0.22);
-  const fondoFranja = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).extract({ left: 0, top: 0, width: W, height: franjaH }).png().toBuffer();
-  const sinCaracteres = await sharp(baseKontext).composite([{ input: fondoFranja, top: 0, left: 0, blend: "over" }]).png().toBuffer();
+  const baseKontext = await sharp(bufKontext).resize(W, H, { fit: "fill" }).png().toBuffer();
   if (conTitulo) {
-    const resized = sinCaracteres;
-    const conTit = await agregarTitulo(resized, titulo, W, H);
+    const conTit = await agregarTitulo(baseKontext, titulo, W, H);
     const upload = await cloudinary.uploader.upload(
       `data:image/jpeg;base64,${conTit.toString("base64")}`,
       { folder: "thumbslatam/fondos" }
     );
     return upload.secure_url;
   }
-
-  const finalBuf2 = await sharp(sinCaracteres).jpeg({ quality: 93 }).toBuffer();
+  const finalBuf2 = await sharp(baseKontext).jpeg({ quality: 93 }).toBuffer();
   const final = await cloudinary.uploader.upload(`data:image/jpeg;base64,${finalBuf2.toString("base64")}`, { folder: "thumbslatam/fondos" });
   return final.secure_url;
 }
