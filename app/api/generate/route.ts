@@ -17,125 +17,6 @@ async function descargarBuffer(url: string): Promise<Buffer> {
   return Buffer.from(await res.arrayBuffer());
 }
 
-async function generarFondo(prompt: string, aspectRatio: string): Promise<string> {
-  const output: any = await replicate.run("black-forest-labs/flux-1.1-pro", {
-    input: { prompt, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
-  });
-  const url = String(output);
-  if (!url.startsWith("http")) throw new Error("FLUX no genero imagen");
-  return url;
-}
-
-async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio: string, promptRefinado: string): Promise<string> {
-  const esVertical = aspectRatio === "9:16";
-  const W = esVertical ? 720 : 1280;
-  const H = esVertical ? 1280 : 720;
-
-  const fondoBuf = await descargarBuffer(fondoUrl);
-  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).png().toBuffer();
-
-  const composites: sharp.OverlayOptions[] = [];
-  const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
-  const elW = Math.floor(W * 0.27);
-  const elH = Math.floor(H * 0.75);
-  const top = Math.floor(H * 0.18);
-
-  for (let i = 0; i < elementos.length; i++) {
-    const el = elementos[i];
-    if (!el.imagen || !el.imagen.startsWith("http")) continue;
-    try {
-      const buf = await descargarBuffer(el.imagen);
-      // Aplicar mascara de degradado suave en bordes para mejor integracion
-      const resized = await sharp(buf)
-        .resize(elW, elH, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
-        .png()
-        .toBuffer();
-
-      // Crear mascara con bordes suaves
-      const mask = await sharp({
-        create: {
-          width: elW, height: elH, channels: 4,
-          background: { r: 255, g: 255, b: 255, alpha: 1 }
-        }
-      })
-      .png()
-      .toBuffer();
-
-      const withAlpha = await sharp(resized)
-        .ensureAlpha()
-        .blur(0.5)
-        .png()
-        .toBuffer();
-
-      composites.push({ input: withAlpha, left: leftMap[i], top, blend: "over" });
-    } catch(e) { console.log("Error elemento", i); }
-  }
-
-  let imagenBase: string;
-
-  if (composites.length > 0) {
-    const composed = await sharp(fondo).composite(composites).jpeg({ quality: 92 }).toBuffer();
-    const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
-    const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
-    
-    // Kontext Max integra todo con iluminacion y contexto
-    const slotsOcupados = elementos.map((el: any, i: number) => {
-          const pos = i === 0 ? "LEFT" : i === 1 ? "CENTER" : "RIGHT";
-          if (el.imagen || el.descripcion) return `${pos} slot has a character/element`;
-          return `${pos} slot is EMPTY — do not add anything there`;
-        }).join(". ");
-        const promptKontext = `${promptRefinado}. ${slotsOcupados}. CRITICAL: Keep the face and appearance of ALL characters EXACTLY as shown — do not change faces, hair, skin or clothing. Only add cinematic lighting and blend naturally into the background scene. NO TEXT, NO WORDS, NO LETTERS, NO SYMBOLS anywhere. Do not invent new characters in empty spaces.`;
-    const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
-      input: {
-        prompt: promptKontext,
-        input_image: uploadedComp.secure_url,
-        aspect_ratio: aspectRatio,
-      }
-    });
-    imagenBase = String(refinado);
-  } else {
-    imagenBase = fondoUrl;
-  }
-
-  if (!imagenBase.startsWith("http")) throw new Error("Error en refinado");
-  const final = await cloudinary.uploader.upload(imagenBase, { folder: "thumbslatam/fondos" });
-  return final.secure_url;
-}
-
-async function agregarTituloSVG(imagenUrl: string, tituloTexto: string, aspectRatio: string): Promise<string> {
-  try {
-    const esVert = aspectRatio === "9:16";
-    const W = esVert ? 720 : 1280;
-    const H = esVert ? 1280 : 720;
-    const imgBuf = await (await fetch(imagenUrl)).arrayBuffer().then(Buffer.from);
-    const base = await sharp(imgBuf).resize(W, H, { fit: "cover" }).png().toBuffer();
-    const fontSize = Math.floor(W * 0.082);
-    const padH = Math.floor(fontSize * 1.9);
-    const texto = tituloTexto.toUpperCase().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
-      <defs><filter id="s"><feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/></filter></defs>
-
-      <text x="${W/2}" y="${Math.floor(padH*0.73)}"
-        font-family="Impact,Arial Black,sans-serif"
-        font-size="${fontSize}"
-        font-weight="bold"
-        fill="white"
-        text-anchor="middle"
-        textLength="${Math.floor(W*0.92)}"
-        lengthAdjust="spacingAndGlyphs"
-        filter="url(#s)"
-      >${texto}</text>
-    </svg>`;
-    const result = await sharp(base).composite([{ input: Buffer.from(svg), top: 0, left: 0 }]).jpeg({ quality: 95 }).toBuffer();
-    const uploaded = await cloudinary.uploader.upload(`data:image/jpeg;base64,${result.toString("base64")}`, { folder: "thumbslatam/fondos" });
-    return uploaded.secure_url;
-  } catch(e) {
-    console.log("Error titulo SVG:", e);
-    const uploaded = await cloudinary.uploader.upload(imagenUrl, { folder: "thumbslatam/fondos" });
-    return uploaded.secure_url;
-  }
-}
-
 export async function POST(request: Request) {
   try {
     const { descripcion, emocion, orientacion, elementos, titulo, tituloModo } = await request.json();
@@ -151,68 +32,127 @@ export async function POST(request: Request) {
     const emocionEN = emocionMap[emocion] || emocion;
     const esVertical = orientacion?.includes("vertical");
     const aspectRatio = esVertical ? "9:16" : "16:9";
+    const W = esVertical ? 720 : 1280;
+    const H = esVertical ? 1280 : 720;
 
     const elementosDesc = elementos ? elementos.map((el: any, i: number) => {
       const pos = i === 0 ? "left" : i === 1 ? "center" : "right";
-      if (el.descripcion && !el.imagen) return `${el.descripcion} on the ${pos}`;
-      if (el.imagen && el.descripcion) return `${el.descripcion} on the ${pos}`;
+      if (el.descripcion) return `${el.descripcion} on the ${pos}`;
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    const tituloDesc = tituloModo === "ia"
-      ? "with space at top for epic bold title"
-      : tituloModo === "manual" && titulo
-      ? `with bold text "${titulo}" at the top`
-      : "no text no words";
+    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic lighting, ultra detailed, NO TEXT NO WORDS NO LETTERS, no people`;
+    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, high contrast, vivid colors, NO TEXT NO WORDS NO LETTERS, no people`;
 
-    const promptBase = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloDesc}, no logos`;
+    // Paso 1: Generar 2 fondos con FLUX
+    const [out1, out2] = await Promise.all([
+      replicate.run("black-forest-labs/flux-1.1-pro", {
+        input: { prompt: prompt1, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
+      }),
+      replicate.run("black-forest-labs/flux-1.1-pro", {
+        input: { prompt: prompt2, aspect_ratio: aspectRatio, output_format: "jpg", output_quality: 95, safety_tolerance: 5 }
+      }),
+    ]);
 
+    const fondoUrl1 = String(out1);
+    const fondoUrl2 = String(out2);
+
+    // Paso 2: Componer elementos con Sharp si los hay
     const tieneImagenes = elementos && elementos.some((el: any) => el.imagen && el.imagen.startsWith("http"));
 
-    if (tieneImagenes) {
-      const [fondo1, fondo2] = await Promise.all([
-        generarFondo(`${promptBase}, background only, no characters`, aspectRatio),
-        generarFondo(`Cinematic version, ${promptBase}, background only, no characters`, aspectRatio),
-      ]);
-      const [imageUrl1, imageUrl2] = await Promise.all([
-        componerYRefinar(fondo1, elementos, aspectRatio, promptBase),
-        componerYRefinar(fondo2, elementos, aspectRatio, promptBase),
-      ]);
-      // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo && titulo.trim()) {
-      console.log("Agregando titulo:", titulo);
-      const [t1, t2] = await Promise.all([
-        agregarTituloSVG(imageUrl1, titulo, aspectRatio),
-        agregarTituloSVG(imageUrl2, titulo, aspectRatio),
-      ]);
-      console.log("Titulo agregado:", t1);
-      return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
+    async function procesarFondo(fondoUrl: string): Promise<Buffer> {
+      const fondoBuf = await descargarBuffer(fondoUrl);
+      const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).toBuffer();
+
+      if (!tieneImagenes) return fondo;
+
+      const leftMap = [Math.floor(W * 0.04), Math.floor(W * 0.37), Math.floor(W * 0.65)];
+      const elW = Math.floor(W * 0.30);
+      const elH = Math.floor(H * 0.80);
+      const top = Math.floor(H * 0.12);
+      const composites: sharp.OverlayOptions[] = [];
+
+      for (let i = 0; i < elementos.length; i++) {
+        const el = elementos[i];
+        if (!el.imagen || !el.imagen.startsWith("http")) continue;
+        try {
+          const buf = await descargarBuffer(el.imagen);
+          const meta = await sharp(buf).metadata();
+          const hasAlpha = meta.channels === 4 || meta.hasAlpha;
+
+          const resized = await sharp(buf)
+            .resize(elW, elH, {
+              fit: hasAlpha ? "contain" : "cover",
+              background: hasAlpha ? { r: 0, g: 0, b: 0, alpha: 0 } : undefined,
+            })
+            .png()
+            .toBuffer();
+
+          composites.push({ input: resized, left: leftMap[i], top, blend: "over" });
+        } catch(e) { console.log("Error elemento", i, e); }
+      }
+
+      if (composites.length === 0) return fondo;
+
+      const fondoPng = await sharp(fondo).png().toBuffer();
+      return await sharp(fondoPng).composite(composites).png().toBuffer();
     }
 
-    return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
+    // Paso 3: Agregar titulo SVG si hay
+    async function agregarTitulo(buf: Buffer): Promise<Buffer> {
+      if (tituloModo !== "manual" || !titulo || !titulo.trim()) return buf;
+
+      const fontSize = Math.floor(W * 0.082);
+      const padH = Math.floor(fontSize * 1.9);
+      const texto = titulo.toUpperCase()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+
+      const svg = `<svg width="${W}" height="${padH}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="s" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="3" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.95"/>
+          </filter>
+        </defs>
+        <text
+          x="${W / 2}"
+          y="${Math.floor(padH * 0.78)}"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="${fontSize}"
+          font-weight="bold"
+          fill="white"
+          text-anchor="middle"
+          textLength="${Math.floor(W * 0.90)}"
+          lengthAdjust="spacingAndGlyphs"
+          filter="url(#s)"
+        >${texto}</text>
+      </svg>`;
+
+      return await sharp(buf)
+        .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
+        .toBuffer();
     }
 
-    // Sin imagenes — solo FLUX
-    const [url1, url2] = await Promise.all([
-      generarFondo(promptBase, aspectRatio),
-      generarFondo(`Cinematic version, ${promptBase}`, aspectRatio),
+    // Procesar los dos fondos
+    const [buf1, buf2] = await Promise.all([
+      procesarFondo(fondoUrl1),
+      procesarFondo(fondoUrl2),
     ]);
-    const [imageUrl1, imageUrl2] = await Promise.all([
-      cloudinary.uploader.upload(url1, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
-      cloudinary.uploader.upload(url2, { folder: "thumbslatam/fondos" }).then(r => r.secure_url),
-    ]);
-    // Agregar titulo SVG si fue solicitado
-    if (tituloModo === "manual" && titulo && titulo.trim()) {
-      console.log("Agregando titulo:", titulo);
-      const [t1, t2] = await Promise.all([
-        agregarTituloSVG(imageUrl1, titulo, aspectRatio),
-        agregarTituloSVG(imageUrl2, titulo, aspectRatio),
-      ]);
-      console.log("Titulo agregado:", t1);
-      return NextResponse.json({ imageUrl: t1, variaciones: [t1, t2] });
-    }
 
-    return NextResponse.json({ imageUrl: imageUrl1, variaciones: [imageUrl1, imageUrl2] });
+    const [conTitulo1, conTitulo2] = await Promise.all([
+      agregarTitulo(buf1),
+      agregarTitulo(buf2),
+    ]);
+
+    // Subir a Cloudinary
+    const [u1, u2] = await Promise.all([
+      cloudinary.uploader.upload(`data:image/png;base64,${conTitulo1.toString("base64")}`, { folder: "thumbslatam/fondos" }),
+      cloudinary.uploader.upload(`data:image/png;base64,${conTitulo2.toString("base64")}`, { folder: "thumbslatam/fondos" }),
+    ]);
+
+    return NextResponse.json({ imageUrl: u1.secure_url, variaciones: [u1.secure_url, u2.secure_url] });
 
   } catch (error: any) {
     console.error("ERROR:", error.message);
