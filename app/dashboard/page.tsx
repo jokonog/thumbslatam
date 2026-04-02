@@ -590,7 +590,7 @@ export default function Dashboard() {
             <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
               <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
               <button onClick={e => { e.stopPropagation(); borrarMini(mini.id); }}
-                style={{position:"absolute",top:"6px",right:"6px",width:"20px",height:"20px",borderRadius:"50%",background:"rgba(239,68,68,0.85)",border:"none",color:"white",fontSize:"0.65rem",fontWeight:"800",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",lineHeight:1}}>
+                style={{position:"absolute",top:"6px",right:"6px",background:"rgba(239,68,68,0.9)",border:"none",borderRadius:"50%",width:"20px",height:"20px",cursor:"pointer",color:"white",fontSize:"11px",padding:0}}>
                 x
               </button>
               <div style={{padding:"8px 10px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
