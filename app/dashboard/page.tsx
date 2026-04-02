@@ -136,7 +136,7 @@ export default function Dashboard() {
         const nuevos = creditos - costo;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
         setCreditos(nuevos);
-        // No insertar aqui — se inserta cuando el usuario elige la variacion
+        if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: data.imageUrl });
         const params = new URLSearchParams({ plataforma, imageUrl: data.imageUrl });
         window.location.href = `/editor?${params.toString()}`;
         return;
