@@ -41,8 +41,8 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic lighting, ultra detailed, NO TEXT NO WORDS NO LETTERS, no people`;
-    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, high contrast, vivid colors, NO TEXT NO WORDS NO LETTERS, no people`;
+    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic lighting, ultra detailed, absolutely no text, no words, no letters, no watermarks, no signs, no titles, clean image only`;
+    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, high contrast, vivid colors, absolutely no text, no words, no letters, no watermarks, no signs, no titles, clean image only`;
 
     // Paso 1: Generar 2 fondos con FLUX
     const [out1, out2] = await Promise.all([
