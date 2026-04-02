@@ -28,6 +28,7 @@ export default function Editor() {
   const [efectos, setEfectos] = useState<string[]>(["sombra"]);
   const [colorTexto2, setColorTexto2] = useState("#FF4D00");
   const [usarDegradado, setUsarDegradado] = useState(false);
+  const [degradadoDireccion, setDegradadoDireccion] = useState<'horizontal'|'vertical'|'diagonal'>('horizontal');
   const [brillo, setBrillo] = useState(100);
   const [contraste, setContraste] = useState(100);
   const [saturacion, setSaturacion] = useState(100);
@@ -373,9 +374,15 @@ export default function Editor() {
 
       // Aplicar degradado si esta activado
       if (usarDegradado) {
+        const w = t.width || 200;
+        const h = t.height || 80;
+        const coords = degradadoDireccion === 'vertical'
+          ? { x1: 0, y1: 0, x2: 0, y2: h }
+          : degradadoDireccion === 'diagonal'
+          ? { x1: 0, y1: 0, x2: w, y2: h }
+          : { x1: 0, y1: 0, x2: w, y2: 0 };
         const grad = new Gradient({
-          type: "linear",
-          coords: { x1: 0, y1: 0, x2: t.width || 200, y2: 0 },
+          type: "linear", coords,
           colorStops: [
             { offset: 0, color: colorTexto },
             { offset: 1, color: colorTexto2 },
@@ -570,7 +577,7 @@ export default function Editor() {
       <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:"16px",alignItems:"start"}}>
 
         {/* ── Sidebar ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"12px"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"12px",overflowY:"auto",maxHeight:"calc(100vh - 80px)",paddingRight:"4px"}}>
 
           {/* 1. Plataforma */}
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,77,0,0.4)"}}>
@@ -691,13 +698,26 @@ export default function Editor() {
                   <label style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Color 1:</label>
                   <input type="color" value={colorTexto} onChange={(e) => setColorTexto(e.target.value)} style={{width:"32px",height:"28px",borderRadius:"6px",border:"none",cursor:"pointer"}}/>
                 </div>
-                {usarDegradado && (
+                {usarDegradado && (<>
                   <div style={{display:"flex",alignItems:"center",gap:"4px"}}>
                     <label style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Color 2:</label>
                     <input type="color" value={colorTexto2} onChange={(e) => setColorTexto2(e.target.value)} style={{width:"32px",height:"28px",borderRadius:"6px",border:"none",cursor:"pointer"}}/>
                   </div>
-                )}
+                </>)}
               </div>
+              {usarDegradado && (
+                <div style={{display:"flex",gap:"4px",marginTop:"6px"}}>
+                  {([["horizontal","→ H"],["vertical","↓ V"],["diagonal","↘ D"]] as const).map(([dir,label]) => (
+                    <button key={dir} onClick={() => setDegradadoDireccion(dir)}
+                      style={{flex:1,padding:"5px",borderRadius:"6px",fontSize:"0.7rem",fontWeight:"600",cursor:"pointer",
+                        border:`1px solid ${degradadoDireccion===dir?"#FF4D00":"#3A3D52"}`,
+                        background:degradadoDireccion===dir?"rgba(255,77,0,0.15)":"transparent",
+                        color:degradadoDireccion===dir?"#FF4D00":"#8B8FA8"}}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
               <label style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>Tamaño:</label>
@@ -750,7 +770,7 @@ export default function Editor() {
         {/* ── Panel canvas ── */}
         <div
           ref={panelRef}
-          style={{background:"#0a0f1e",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",minWidth:0,width:"100%"}}
+          style={{background:"#0a0f1e",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",minWidth:0,width:"100%",position:"sticky",top:"24px"}}
         >
           <p style={{color:"#3A3D52",fontSize:"0.75rem",margin:"0 0 8px",textAlign:"center"}}>
             {nombrePlataforma[plataforma]}
