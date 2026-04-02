@@ -203,9 +203,12 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    // Prompt fondo SIEMPRE sin titulo — Sharp lo agrega al final
-    const promptFondo = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, no text no words no letters no logos, background only no characters no people`;
-    const promptFondo2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dramatic shadows, no text no words no letters, background only no characters no people`;
+    // Titulo en FLUX para integracion cinematografica + Sharp lo refuerza al final
+    const tituloPrompt = tituloModo === "manual" && titulo && titulo.trim()
+      ? `with the bold dramatic title text "${titulo.toUpperCase()}" at the top in large epic typography`
+      : "no text no words no letters";
+    const promptFondo = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, ${tituloPrompt}, no logos, background only no characters no people`;
+    const promptFondo2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dramatic shadows, ${tituloPrompt}, no logos, background only no characters no people`;
 
     if (tieneImagenes) {
       const [fondo1, fondo2] = await Promise.all([
