@@ -640,24 +640,34 @@ export default function Editor() {
                 <span style={{fontSize:"0.7rem",color:"#8B8FA8"}}>{fontDropdownOpen ? "▲" : "▼"}</span>
               </button>
               {fontDropdownOpen && (
-                <div style={{position:"absolute",top:"100%",left:0,right:0,zIndex:100,background:"#0d1220",border:"1px solid rgba(255,255,255,0.12)",borderRadius:"10px",overflow:"auto",maxHeight:"280px",boxShadow:"0 8px 32px rgba(0,0,0,0.8)",marginTop:"4px"}}>
+                <div style={{position:"absolute",top:"100%",left:0,right:0,zIndex:200,
+                  background:"linear-gradient(180deg,#0a0f1e 0%,#0d1525 100%)",
+                  border:"1px solid rgba(255,77,0,0.25)",borderRadius:"12px",
+                  overflow:"hidden",maxHeight:"320px",overflowY:"auto",
+                  boxShadow:"0 16px 48px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,77,0,0.1)",
+                  marginTop:"6px"}}>
+                  {/* Header del dropdown */}
+                  <div style={{padding:"10px 14px 6px",background:"rgba(255,77,0,0.06)",borderBottom:"1px solid rgba(255,77,0,0.15)",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontSize:"0.62rem",color:"#FF4D00",fontWeight:"800",letterSpacing:"0.12em",textTransform:"uppercase"}}>Selecciona una fuente</span>
+                    <button onClick={() => setFontDropdownOpen(false)} style={{background:"none",border:"none",color:"#8B8FA8",cursor:"pointer",fontSize:"0.8rem",padding:"0"}}>✕</button>
+                  </div>
                   {[
-                    {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null, cat:"Gaming"},
-                    {name:"Bebas Neue", family:"'Bebas Neue', sans-serif", google:"Bebas+Neue", cat:"Gaming"},
-                    {name:"Bangers", family:"'Bangers', sans-serif", google:"Bangers", cat:"Gaming"},
-                    {name:"Black Ops One", family:"'Black Ops One', sans-serif", google:"Black+Ops+One", cat:"Gaming"},
-                    {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One", cat:"Gaming"},
-                    {name:"Oswald Bold", family:"'Oswald', sans-serif", google:"Oswald:wght@700", cat:"Gaming"},
-                    {name:"Faster One", family:"'Faster One', sans-serif", google:"Faster+One", cat:"Gaming"},
-                    {name:"Creepster", family:"'Creepster', sans-serif", google:"Creepster", cat:"Terror"},
-                    {name:"Nosifer", family:"'Nosifer', sans-serif", google:"Nosifer", cat:"Terror"},
-                    {name:"Butcherman", family:"'Butcherman', sans-serif", google:"Butcherman", cat:"Terror"},
-                    {name:"Arial", family:"Arial, sans-serif", google:null, cat:"Clasica"},
-                    {name:"Arial Black", family:"Arial Black, sans-serif", google:null, cat:"Clasica"},
-                    {name:"Times New Roman", family:"Times New Roman, serif", google:null, cat:"Clasica"},
-                    {name:"Georgia", family:"Georgia, serif", google:null, cat:"Clasica"},
-                    {name:"Verdana", family:"Verdana, sans-serif", google:null, cat:"Clasica"},
-                    {name:"Courier New", family:"Courier New, monospace", google:null, cat:"Clasica"},
+                    {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null, cat:"🎮 Gaming"},
+                    {name:"Bebas Neue", family:"'Bebas Neue', sans-serif", google:"Bebas+Neue", cat:"🎮 Gaming"},
+                    {name:"Bangers", family:"'Bangers', sans-serif", google:"Bangers", cat:"🎮 Gaming"},
+                    {name:"Black Ops One", family:"'Black Ops One', sans-serif", google:"Black+Ops+One", cat:"🎮 Gaming"},
+                    {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One", cat:"🎮 Gaming"},
+                    {name:"Oswald Bold", family:"'Oswald', sans-serif", google:"Oswald:wght@700", cat:"🎮 Gaming"},
+                    {name:"Faster One", family:"'Faster One', sans-serif", google:"Faster+One", cat:"🎮 Gaming"},
+                    {name:"Creepster", family:"'Creepster', sans-serif", google:"Creepster", cat:"💀 Terror"},
+                    {name:"Nosifer", family:"'Nosifer', sans-serif", google:"Nosifer", cat:"💀 Terror"},
+                    {name:"Butcherman", family:"'Butcherman', sans-serif", google:"Butcherman", cat:"💀 Terror"},
+                    {name:"Arial", family:"Arial, sans-serif", google:null, cat:"✏️ Clasica"},
+                    {name:"Arial Black", family:"Arial Black, sans-serif", google:null, cat:"✏️ Clasica"},
+                    {name:"Times New Roman", family:"Times New Roman, serif", google:null, cat:"✏️ Clasica"},
+                    {name:"Georgia", family:"Georgia, serif", google:null, cat:"✏️ Clasica"},
+                    {name:"Verdana", family:"Verdana, sans-serif", google:null, cat:"✏️ Clasica"},
+                    {name:"Courier New", family:"Courier New, monospace", google:null, cat:"✏️ Clasica"},
                   ].map(({name, family, google, cat}, idx, arr) => {
                     if (google && typeof document !== "undefined") {
                       const id = `gfont-${google}`;
@@ -669,18 +679,31 @@ export default function Editor() {
                       }
                     }
                     const prevCat = idx > 0 ? arr[idx-1].cat : null;
+                    const isSelected = fontFamily === family;
                     return (
                       <div key={name}>
                         {cat !== prevCat && (
-                          <div style={{padding:"6px 12px 3px",fontSize:"0.6rem",color:"#FF4D00",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase",background:"rgba(255,77,0,0.05)",borderTop: idx > 0 ? "1px solid rgba(255,255,255,0.05)" : "none"}}>
+                          <div style={{padding:"8px 14px 4px",fontSize:"0.58rem",color:"#FF4D00",fontWeight:"800",
+                            letterSpacing:"0.12em",textTransform:"uppercase",
+                            background:"rgba(255,77,0,0.04)",
+                            borderTop: idx > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                            borderBottom:"1px solid rgba(255,77,0,0.08)"}}>
                             {cat}
                           </div>
                         )}
                         <button onClick={() => { setFontFamily(family); setFontDropdownOpen(false); }}
-                          style={{width:"100%",padding:"10px 14px",background:fontFamily===family?"rgba(255,77,0,0.12)":"transparent",border:"none",
-                            color:"white",cursor:"pointer",textAlign:"left",fontFamily:family,fontSize:"1.05rem",fontWeight:"bold",
-                            borderLeft:fontFamily===family?"3px solid #FF4D00":"3px solid transparent"}}>
-                          {name}
+                          style={{width:"100%",padding:"0",background:isSelected?"rgba(255,77,0,0.08)":"transparent",
+                            border:"none",cursor:"pointer",textAlign:"left",
+                            borderLeft:isSelected?"3px solid #FF4D00":"3px solid transparent",
+                            transition:"background 0.15s"}}>
+                          <div style={{padding:"10px 14px",display:"flex",flexDirection:"column",gap:"2px"}}>
+                            <span style={{fontFamily:family,fontSize:"1.2rem",fontWeight:"bold",color:isSelected?"#FF4D00":"white",lineHeight:1.2}}>
+                              {name}
+                            </span>
+                            <span style={{fontFamily:family,fontSize:"0.72rem",color:"#8B8FA8",lineHeight:1}}>
+                              NUEVO KILLER
+                            </span>
+                          </div>
                         </button>
                       </div>
                     );
