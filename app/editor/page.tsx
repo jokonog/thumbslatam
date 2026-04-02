@@ -25,6 +25,12 @@ export default function Editor() {
   const [puedeArrastrar, setPuedeArrastrar] = useState(false);
   const [fontFamily, setFontFamily] = useState("Impact, Arial Black, sans-serif");
   const [efectoTexto, setEfectoTexto] = useState("sombra");
+  const [efectos, setEfectos] = useState<string[]>(["sombra"]);
+  const [colorTexto2, setColorTexto2] = useState("#FF4D00");
+  const [usarDegradado, setUsarDegradado] = useState(false);
+  const [brillo, setBrillo] = useState(100);
+  const [contraste, setContraste] = useState(100);
+  const [saturacion, setSaturacion] = useState(100);
 
   // ─── Créditos ───────────────────────────────────────────────────────────────
   const [creditos, setCreditos] = useState<number | null>(null);
@@ -310,26 +316,48 @@ export default function Editor() {
     if (!texto || !fabricRef.current) return;
     const { canvas } = fabricRef.current;
 
-    import("fabric").then(({ FabricText, Shadow }) => {
-      const efectos: Record<string, any> = {
-        sombra: {
-          shadow: new Shadow({ color: "rgba(0,0,0,0.95)", blur: 12, offsetX: 4, offsetY: 4 }),
-          stroke: "rgba(0,0,0,0.6)", strokeWidth: 2,
-        },
-        stroke: {
-          shadow: new Shadow({ color: "rgba(0,0,0,1)", blur: 0, offsetX: 0, offsetY: 0 }),
-          stroke: "#000000", strokeWidth: Math.floor(fontSize * 0.08),
-        },
-        glow: {
-          shadow: new Shadow({ color: colorTexto, blur: 20, offsetX: 0, offsetY: 0 }),
-          stroke: "rgba(0,0,0,0.3)", strokeWidth: 1,
-        },
-        neon: {
-          shadow: new Shadow({ color: "#FF4D00", blur: 30, offsetX: 0, offsetY: 0 }),
-          stroke: "#FF4D00", strokeWidth: 2,
-        },
-      };
-      const ef = efectos[efectoTexto] || efectos.sombra;
+    import("fabric").then(({ FabricText, Shadow, Gradient }) => {
+      // Combinar efectos seleccionados
+      let shadowColor = "rgba(0,0,0,0)";
+      let shadowBlur = 0;
+      let shadowOffsetX = 0;
+      let shadowOffsetY = 0;
+      let strokeColor = "transparent";
+      let strokeW = 0;
+
+      if (efectos.includes("sombra")) {
+        shadowColor = "rgba(0,0,0,0.95)";
+        shadowBlur = 15;
+        shadowOffsetX = 4;
+        shadowOffsetY = 4;
+      }
+      if (efectos.includes("glow")) {
+        shadowColor = colorTexto;
+        shadowBlur = Math.max(shadowBlur, 25);
+        shadowOffsetX = 0;
+        shadowOffsetY = 0;
+      }
+      if (efectos.includes("neon")) {
+        shadowColor = colorTexto2;
+        shadowBlur = Math.max(shadowBlur, 35);
+      }
+      if (efectos.includes("stroke")) {
+        strokeColor = "#000000";
+        strokeW = Math.max(2, Math.floor(fontSize * 0.07));
+      }
+      if (efectos.includes("fuego")) {
+        shadowColor = "#FF6B00";
+        shadowBlur = 30;
+        strokeColor = "#FF2200";
+        strokeW = Math.max(2, Math.floor(fontSize * 0.05));
+      }
+      if (efectos.includes("hielo")) {
+        shadowColor = "#00CFFF";
+        shadowBlur = 25;
+        strokeColor = "#0099CC";
+        strokeW = Math.max(2, Math.floor(fontSize * 0.05));
+      }
+
       const t = new FabricText(texto.toUpperCase(), {
         left: Math.floor(canvas.width! / 2),
         top: 60,
@@ -338,12 +366,44 @@ export default function Editor() {
         fontWeight: "bold",
         fontFamily: fontFamily,
         originX: "center",
-        ...ef,
+        shadow: new Shadow({ color: shadowColor, blur: shadowBlur, offsetX: shadowOffsetX, offsetY: shadowOffsetY }),
+        stroke: strokeColor,
+        strokeWidth: strokeW,
       });
+
+      // Aplicar degradado si esta activado
+      if (usarDegradado) {
+        const grad = new Gradient({
+          type: "linear",
+          coords: { x1: 0, y1: 0, x2: t.width || 200, y2: 0 },
+          colorStops: [
+            { offset: 0, color: colorTexto },
+            { offset: 1, color: colorTexto2 },
+          ],
+        });
+        t.set("fill", grad);
+      }
+
       canvas.add(t);
       canvas.setActiveObject(t);
       canvas.renderAll();
     });
+  }
+
+  function toggleEfecto(ef: string) {
+    setEfectos(prev => prev.includes(ef) ? prev.filter(e => e !== ef) : [...prev, ef]);
+  }
+
+  function aplicarAjustesImagen() {
+    if (!fabricRef.current?.canvas) return;
+    const { canvas } = fabricRef.current;
+    const el = canvas.getElement();
+    if (!el) return;
+    // Aplicar filtros CSS al canvas container
+    const container = el.parentElement;
+    if (container) {
+      container.style.filter = `brightness(${brillo}%) contrast(${contraste}%) saturate(${saturacion}%)`;
+    }
   }
 
   // ─── Agregar imagen al canvas ──────────────────────────────────────────────
@@ -566,54 +626,77 @@ export default function Editor() {
               onChange={(e) => setTexto(e.target.value)}
               style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px",boxSizing:"border-box"}}
             />
-            <div style={{marginBottom:"8px"}}>
+            {/* FUENTES */}
+            <div style={{marginBottom:"10px"}}>
               <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"6px"}}>Fuente:</label>
-              {[
-                {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null},
-                {name:"Bebas Neue", family:"'Bebas Neue', Impact, sans-serif", google:"Bebas+Neue"},
-                {name:"Bangers", family:"'Bangers', Impact, sans-serif", google:"Bangers"},
-                {name:"Black Ops", family:"'Black Ops One', Impact, sans-serif", google:"Black+Ops+One"},
-                {name:"Boogaloo", family:"'Boogaloo', sans-serif", google:"Boogaloo"},
-                {name:"Alfa Slab", family:"'Alfa Slab One', serif", google:"Alfa+Slab+One"},
-                {name:"Oswald", family:"'Oswald', sans-serif", google:"Oswald:wght@700"},
-                {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One"},
-              ].map(({name, family, google}) => {
-                if (google && typeof document !== "undefined") {
-                  const id = `gfont-${google}`;
-                  if (!document.getElementById(id)) {
-                    const link = document.createElement("link");
-                    link.id = id;
-                    link.rel = "stylesheet";
-                    link.href = `https://fonts.googleapis.com/css2?family=${google}&display=swap`;
-                    document.head.appendChild(link);
-                  }
-                }
-                return (
-                  <button key={name} onClick={() => setFontFamily(family)}
-                    style={{
-                      display:"block", width:"100%", marginBottom:"4px",
-                      padding:"8px 10px", borderRadius:"8px", textAlign:"left",
-                      border:`1px solid ${fontFamily===family?"#FF4D00":"#3A3D52"}`,
-                      background:fontFamily===family?"rgba(255,77,0,0.12)":"transparent",
-                      color:"white", cursor:"pointer",
-                      fontFamily:family, fontSize:"1rem", fontWeight:"bold",
-                    }}>
-                    {name}
-                  </button>
-                );
-              })}
-            </div>
-            <div style={{marginBottom:"8px"}}>
-              <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"4px"}}>Efecto:</label>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4px"}}>
-                {[["sombra","Sombra"],["stroke","Borde"],["glow","Glow"],["neon","Neon"]].map(([val,label]) => (
-                  <button key={val} onClick={() => setEfectoTexto(val)}
-                    style={{padding:"6px",borderRadius:"6px",border:`1px solid ${efectoTexto===val?"#FF4D00":"#3A3D52"}`,
-                    background:efectoTexto===val?"rgba(255,77,0,0.15)":"transparent",color:efectoTexto===val?"#FF4D00":"#8B8FA8",
-                    cursor:"pointer",fontSize:"0.72rem",fontWeight:"600"}}>
+                {[
+                  {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null},
+                  {name:"Bebas Neue", family:"'Bebas Neue', sans-serif", google:"Bebas+Neue"},
+                  {name:"Bangers", family:"'Bangers', sans-serif", google:"Bangers"},
+                  {name:"Black Ops", family:"'Black Ops One', sans-serif", google:"Black+Ops+One"},
+                  {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One"},
+                  {name:"Oswald", family:"'Oswald', sans-serif", google:"Oswald:wght@700"},
+                  {name:"Creepster", family:"'Creepster', sans-serif", google:"Creepster"},
+                  {name:"Nosifer", family:"'Nosifer', sans-serif", google:"Nosifer"},
+                  {name:"Butcherman", family:"'Butcherman', sans-serif", google:"Butcherman"},
+                  {name:"Faster One", family:"'Faster One', sans-serif", google:"Faster+One"},
+                ].map(({name, family, google}) => {
+                  if (google && typeof document !== "undefined") {
+                    const id = `gfont-${google}`;
+                    if (!document.getElementById(id)) {
+                      const link = document.createElement("link");
+                      link.id = id; link.rel = "stylesheet";
+                      link.href = `https://fonts.googleapis.com/css2?family=${google}&display=swap`;
+                      document.head.appendChild(link);
+                    }
+                  }
+                  return (
+                    <button key={name} onClick={() => setFontFamily(family)}
+                      style={{padding:"8px 6px",borderRadius:"8px",textAlign:"center",
+                        border:`1px solid ${fontFamily===family?"#FF4D00":"#3A3D52"}`,
+                        background:fontFamily===family?"rgba(255,77,0,0.15)":"transparent",
+                        color:"white",cursor:"pointer",fontFamily:family,
+                        fontSize:"0.95rem",fontWeight:"bold",whiteSpace:"nowrap",overflow:"hidden"}}>
+                      {name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* EFECTOS COMBINABLES */}
+            <div style={{marginBottom:"10px"}}>
+              <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"6px"}}>Efectos (combinables):</label>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"4px"}}>
+                {[["sombra","🌑 Sombra"],["stroke","✏️ Borde"],["glow","✨ Glow"],["neon","⚡ Neon"],["fuego","🔥 Fuego"],["hielo","❄️ Hielo"]].map(([val,label]) => (
+                  <button key={val} onClick={() => toggleEfecto(val)}
+                    style={{padding:"5px 3px",borderRadius:"6px",textAlign:"center",
+                      border:`1px solid ${efectos.includes(val)?"#FF4D00":"#3A3D52"}`,
+                      background:efectos.includes(val)?"rgba(255,77,0,0.15)":"transparent",
+                      color:efectos.includes(val)?"#FF4D00":"#8B8FA8",
+                      cursor:"pointer",fontSize:"0.65rem",fontWeight:"600"}}>
                     {label}
                   </button>
                 ))}
+              </div>
+            </div>
+            {/* DEGRADADO */}
+            <div style={{marginBottom:"10px"}}>
+              <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"6px"}}>
+                <input type="checkbox" checked={usarDegradado} onChange={e => setUsarDegradado(e.target.checked)} style={{cursor:"pointer"}}/>
+                <label style={{fontSize:"0.78rem",color:"#8B8FA8",cursor:"pointer"}} onClick={() => setUsarDegradado(v => !v)}>Degradado de color</label>
+              </div>
+              <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+                <div style={{display:"flex",alignItems:"center",gap:"4px"}}>
+                  <label style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Color 1:</label>
+                  <input type="color" value={colorTexto} onChange={(e) => setColorTexto(e.target.value)} style={{width:"32px",height:"28px",borderRadius:"6px",border:"none",cursor:"pointer"}}/>
+                </div>
+                {usarDegradado && (
+                  <div style={{display:"flex",alignItems:"center",gap:"4px"}}>
+                    <label style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Color 2:</label>
+                    <input type="color" value={colorTexto2} onChange={(e) => setColorTexto2(e.target.value)} style={{width:"32px",height:"28px",borderRadius:"6px",border:"none",cursor:"pointer"}}/>
+                  </div>
+                )}
               </div>
             </div>
             <div style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
@@ -637,6 +720,27 @@ export default function Editor() {
             </button>
           </div>
 
+          {/* Ajustes imagen */}
+          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
+            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>5. Ajustes de imagen</h3>
+            {[
+              {label:"☀️ Brillo", val:brillo, set:setBrillo},
+              {label:"◑ Contraste", val:contraste, set:setContraste},
+              {label:"🎨 Saturacion", val:saturacion, set:setSaturacion},
+            ].map(({label, val, set}) => (
+              <div key={label} style={{display:"flex",gap:"8px",marginBottom:"8px",alignItems:"center"}}>
+                <label style={{fontSize:"0.72rem",color:"#8B8FA8",whiteSpace:"nowrap",width:"90px"}}>{label}</label>
+                <input type="range" min="50" max="200" value={val}
+                  onChange={(e) => { set(Number(e.target.value)); aplicarAjustesImagen(); }}
+                  style={{flex:1}}/>
+                <span style={{fontSize:"0.7rem",color:"#8B8FA8",width:"35px"}}>{val}%</span>
+              </div>
+            ))}
+            <button onClick={() => { setBrillo(100); setContraste(100); setSaturacion(100); aplicarAjustesImagen(); }}
+              style={{width:"100%",padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.75rem"}}>
+              Resetear ajustes
+            </button>
+          </div>
           {/* Tip */}
           <div style={{background:"rgba(6,214,160,0.08)",borderRadius:"10px",padding:"12px",border:"1px solid rgba(6,214,160,0.2)"}}>
             <p style={{color:"#06D6A0",fontSize:"0.78rem",margin:0}}>Arrastra el texto para moverlo. Esquinas para cambiar tamaño.</p>
