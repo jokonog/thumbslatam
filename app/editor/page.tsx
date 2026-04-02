@@ -614,7 +614,7 @@ export default function Editor() {
               <span style={{fontSize:"0.72rem",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Texto</span>
               <span style={{fontSize:"0.8rem",opacity:0.8}}>{seccionTexto ? "▲" : "▼"}</span>
             </button>
-            {seccionTexto && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px",maxHeight:"60vh",overflowY:"auto",scrollbarWidth:"thin",scrollbarColor:"#FF4D00 #1f2937"}}>
+            {seccionTexto && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px",overflowY:"visible"}}>
             <div style={{display:"flex",gap:"6px",marginBottom:"12px"}}>
               <div style={{flex:1,background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={() => {}}>
                 <div style={{fontSize:"1rem",marginBottom:"2px"}}>T</div>
