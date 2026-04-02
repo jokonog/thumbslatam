@@ -34,40 +34,35 @@ async function agregarTitulo(buf: Buffer, titulo: string, W: number, H: number):
     Math.floor((W * 0.88) / (texto.length * 0.55))
   );
   const boxH = Math.floor(H * 0.22);
-
-  const gradiente = `<svg width="${W}" height="${boxH}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="black" stop-opacity="0.80"/>
-        <stop offset="100%" stop-color="black" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <rect width="${W}" height="${boxH}" fill="url(#g)"/>
-  </svg>`;
-
+  const strokeW = Math.floor(fontSize * 0.12);
   const textoSvg = `<svg width="${W}" height="${boxH}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="s">
-        <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="black" flood-opacity="1"/>
-      </filter>
-    </defs>
     <text
-      x="${W / 2}" y="${Math.floor(boxH * 0.60)}"
+      x="${W / 2}" y="${Math.floor(boxH * 0.65)}"
+      text-anchor="middle"
+      font-family="Arial Black, Arial, Impact, sans-serif"
+      font-weight="900"
+      font-size="${fontSize}"
+      fill="black"
+      stroke="black"
+      stroke-width="${strokeW * 3}"
+      stroke-linejoin="round"
+      letter-spacing="4"
+    >${texto.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}</text>
+    <text
+      x="${W / 2}" y="${Math.floor(boxH * 0.65)}"
       text-anchor="middle"
       font-family="Arial Black, Arial, Impact, sans-serif"
       font-weight="900"
       font-size="${fontSize}"
       fill="white"
-      filter="url(#s)"
+      stroke="black"
+      stroke-width="${strokeW}"
+      stroke-linejoin="round"
       letter-spacing="4"
     >${texto.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}</text>
   </svg>`;
-
   return sharp(buf)
-    .composite([
-      { input: Buffer.from(gradiente), top: 0, left: 0, blend: "over" },
-      { input: Buffer.from(textoSvg), top: 0, left: 0, blend: "over" },
-    ])
+    .composite([{ input: Buffer.from(textoSvg), top: 0, left: 0, blend: "over" }])
     .jpeg({ quality: 93 })
     .toBuffer();
 }
