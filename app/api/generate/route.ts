@@ -41,8 +41,11 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    const prompt1 = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic lighting, ultra detailed, absolutely no text, no words, no letters, no watermarks, no signs, no titles, clean image only`;
-    const prompt2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, high contrast, vivid colors, absolutely no text, no words, no letters, no watermarks, no signs, no titles, clean image only`;
+    const tituloPrompt = tituloModo === "manual" && titulo && titulo.trim()
+      ? `with the bold dramatic title text "${titulo.toUpperCase()}" at the top in large epic typography`
+      : "no text, no words, no letters";
+    const prompt1 = `Epic dramatic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic lighting, ultra detailed, ${tituloPrompt}, no watermarks, no logos`;
+    const prompt2 = `Cinematic YouTube thumbnail, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, high contrast, vivid colors, ${tituloPrompt}, no watermarks, no logos`;
 
     // Paso 1: Generar 2 fondos con FLUX
     const [out1, out2] = await Promise.all([
@@ -139,15 +142,10 @@ export async function POST(request: Request) {
       procesarFondo(fondoUrl2),
     ]);
 
-    const [conTitulo1, conTitulo2] = await Promise.all([
-      agregarTitulo(buf1),
-      agregarTitulo(buf2),
-    ]);
-
     // Subir a Cloudinary
     const [u1, u2] = await Promise.all([
-      cloudinary.uploader.upload(`data:image/png;base64,${conTitulo1.toString("base64")}`, { folder: "thumbslatam/fondos" }),
-      cloudinary.uploader.upload(`data:image/png;base64,${conTitulo2.toString("base64")}`, { folder: "thumbslatam/fondos" }),
+      cloudinary.uploader.upload(`data:image/png;base64,${buf1.toString("base64")}`, { folder: "thumbslatam/fondos" }),
+      cloudinary.uploader.upload(`data:image/png;base64,${buf2.toString("base64")}`, { folder: "thumbslatam/fondos" }),
     ]);
 
     return NextResponse.json({ imageUrl: u1.secure_url, variaciones: [u1.secure_url, u2.secure_url] });
