@@ -452,50 +452,17 @@ export default function Dashboard() {
         {/* PASO 2: Elementos */}
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. Elementos (opcional)</div>
-          {/* Opcion usar mi cara */}
-          {avatarUrl && (
-            <button
-              onClick={() => {
-                const arr = [...elementos];
-                const yaActivo = arr.some(e => e.usarAvatar);
-                if (yaActivo) {
-                  // Desactivar cara
-                  arr.forEach(e => { e.usarAvatar = false; });
-                  setModo("fondo");
-                } else {
-                  // Activar cara en slot 0
-                  arr[0] = { ...arr[0], usarAvatar: true, imagen: avatarUrl };
-                  setModo("cara");
-                }
-                setElementos(arr);
-              }}
-              style={{width:"100%",padding:"12px",borderRadius:"10px",marginBottom:"8px",
-                border:`1px solid ${elementos.some(e => e.usarAvatar) ? "#FF4D00" : "#3A3D52"}`,
-                background:elementos.some(e => e.usarAvatar) ? "rgba(255,77,0,0.08)" : "transparent",
-                color:"white",cursor:"pointer",display:"flex",alignItems:"center",gap:"10px"}}
-            >
-              <img src={avatarUrl} style={{width:"32px",height:"32px",borderRadius:"50%",objectFit:"cover",border:`2px solid ${elementos.some(e => e.usarAvatar) ? "#FF4D00" : "#3A3D52"}`}} alt="avatar"/>
-              <div style={{textAlign:"left",flex:1}}>
-                <div style={{fontSize:"0.85rem",fontWeight:"600"}}>Usar mi cara</div>
-                <div style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Genera con tu cara integrada — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
-              </div>
-              {elementos.some(e => e.usarAvatar) && <span style={{color:"#FF4D00",fontSize:"1rem"}}>✓</span>}
-            </button>
-          )}
-          {/* Distribuir otros elementos - solo si no usa cara o hay mas de 1 */}
-          {!elementos.some(e => e.usarAvatar) && (
-            <button
-              onClick={() => setModalElementos(true)}
-              style={{width:"100%",padding:"12px",borderRadius:"10px",border:"1px solid #3A3D52",background:"transparent",color:"white",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
-            >
-              <span style={{fontSize:"0.85rem"}}>
-                {elementos.some(e => e.imagen && !e.usarAvatar) ? `${elementos.filter(e => e.imagen && !e.usarAvatar).length} elemento(s) configurado(s)` : "Agregar elementos a la miniatura"}
-              </span>
-              <span style={{fontSize:"0.85rem",color:"#FF4D00"}}>+</span>
-            </button>
-          )}
+          <button
+            onClick={() => setModalElementos(true)}
+            style={{width:"100%",padding:"12px",borderRadius:"10px",border:`1px solid ${elementos.some(e => e.imagen) ? "#FF4D00" : "#3A3D52"}`,background:"transparent",color:"white",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
+          >
+            <span style={{fontSize:"0.85rem"}}>
+              {elementos.some(e => e.imagen) ? `${elementos.filter(e => e.imagen).length} elemento(s) configurado(s)` : "Distribuir elementos en la miniatura"}
+            </span>
+            <span style={{fontSize:"0.85rem",color:"#FF4D00"}}>+</span>
+          </button>
           <div style={{fontSize:"0.72rem",color:"#8B8FA8",marginTop:"6px"}}>
-            {elementos.some(e => e.usarAvatar) ? "Generacion con cara — 5 creditos" : "Solo fondo IA — 4 creditos"}
+            {elementos.some(e => e.usarAvatar) ? "Con mi cara — 5 creditos" : "Solo fondo IA — 4 creditos"}
           </div>
         </div>
 
@@ -537,9 +504,9 @@ export default function Dashboard() {
               <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px",marginBottom:"16px"}}>
                 {elementos.map((el, i) => (
                   <div key={i} style={{display:"flex",flexDirection:"column",gap:"4px"}}>
-                    {modo === "cara" && tieneAvatar && !el.imagen && (
-                      <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:avatarUrl,usarAvatar:true}; setElementos(arr); }} style={{background:"none",border:"1px solid #FF4D00",borderRadius:"6px",padding:"4px",color:"#FF4D00",fontSize:"0.62rem",cursor:"pointer"}}>
-                        Mi avatar
+                    {tieneAvatar && !el.imagen && (
+                      <button onClick={() => { const arr=[...elementos]; arr[i]={...arr[i],imagen:avatarUrl!,usarAvatar:true}; setElementos(arr); setModo("cara"); }} style={{background:"rgba(255,77,0,0.08)",border:"1px solid #FF4D00",borderRadius:"6px",padding:"5px",color:"#FF4D00",fontSize:"0.65rem",cursor:"pointer",fontWeight:"600"}}>
+                        Usar mi cara
                       </button>
                     )}
                     <input
