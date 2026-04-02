@@ -92,10 +92,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     cargarDatos();
-    const handlePageShow = (e: PageTransitionEvent) => { cargarDatos(); };
-    window.addEventListener("pageshow", handlePageShow);
     return () => {
-      window.removeEventListener("pageshow", handlePageShow);
     };
   }, []);
 
