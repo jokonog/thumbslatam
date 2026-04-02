@@ -606,7 +606,7 @@ export default function Editor() {
           </div>
 
           {/* Texto */}
-          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)",overflow:"hidden"}}>
+          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
             <button onClick={() => setSeccionTexto(v => !v)}
               style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
               <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>✏️ Texto</span>
@@ -782,7 +782,7 @@ export default function Editor() {
           </div>
 
           {/* Ajustes imagen */}
-          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)",overflow:"hidden"}}>
+          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
             <button onClick={() => setSeccionAjustes(v => !v)}
               style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
               <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>🎨 Ajustes de imagen</span>
