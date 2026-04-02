@@ -32,7 +32,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const H = esVertical ? 1280 : 720;
 
   const fondoBuf = await descargarBuffer(fondoUrl);
-  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).jpeg({ quality: 95 }).toBuffer(); // fondo base
+  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover", position: "center" }).png().toBuffer();
 
   const composites: sharp.OverlayOptions[] = [];
   const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
@@ -47,7 +47,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
       const buf = await descargarBuffer(el.imagen);
       // Aplicar mascara de degradado suave en bordes para mejor integracion
       const resized = await sharp(buf)
-        .resize(elW, elH, { fit: "cover", position: "center" })
+        .resize(elW, elH, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
         .png()
         .toBuffer();
 
@@ -74,7 +74,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   let imagenBase: string;
 
   if (composites.length > 0) {
-    const composed = await sharp(fondo).composite(composites).jpeg({ quality: 90 }).toBuffer();
+    const composed = await sharp(fondo).composite(composites).jpeg({ quality: 92 }).toBuffer();
     const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
     const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
     
