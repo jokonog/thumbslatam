@@ -582,6 +582,10 @@ export default function Dashboard() {
           {listaMinis.map((mini, index) => (
             <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
               <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
+              <button onClick={e => { e.stopPropagation(); borrarMini(mini.id); }}
+                style={{position:"absolute",top:"6px",right:"6px",width:"22px",height:"22px",borderRadius:"50%",background:"#ef4444",border:"2px solid white",color:"white",fontSize:"0.7rem",fontWeight:"800",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",lineHeight:1}}>
+                x
+              </button>
               <div style={{padding:"8px 10px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                 <span style={{fontSize:"0.72rem",color:"#8B8FA8"}}>
                   {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
