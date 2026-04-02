@@ -447,31 +447,56 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* PASO 2: Tipo */}
-        <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. Tipo de generacion</div>
-          <div style={{display:"flex",gap:"8px"}}>
-            <button onClick={() => setModo("fondo")} disabled={sinCreditos} suppressHydrationWarning style={{padding:"8px 16px",borderRadius:"999px",border:modo==="fondo"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="fondo"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditos?"not-allowed":"pointer",fontSize:"0.82rem",fontWeight:modo==="fondo"?"700":"400",opacity:sinCreditos?0.5:1}}>
-              Solo fondo IA <span style={{color:"#FF4D00",fontSize:"0.72rem",marginLeft:"4px"}}>4 creditos</span>
-            </button>
-            <button onClick={() => !sinCreditosCara && setModo("cara")} suppressHydrationWarning style={{padding:"8px 16px",borderRadius:"999px",border:modo==="cara"?"2px solid #FF4D00":"1px solid #3A3D52",background:modo==="cara"?"rgba(255,77,0,0.08)":"transparent",color:"white",cursor:sinCreditosCara?"not-allowed":"pointer",fontSize:"0.82rem",fontWeight:modo==="cara"?"700":"400",opacity:sinCreditosCara?0.5:1}}>
-              Con mi cara <span style={{color:"#FF4D00",fontSize:"0.72rem",marginLeft:"4px"}}>5 creditos</span>
-            </button>
-          </div>
-        </div>
 
-        {/* Boton distribuir elementos */}
+
+        {/* PASO 2: Elementos */}
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Elementos (opcional)</div>
-          <button
-            onClick={() => setModalElementos(true)}
-            style={{width:"100%",padding:"12px",borderRadius:"10px",border:"1px solid #3A3D52",background:"transparent",color:"white",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
-          >
-            <span style={{fontSize:"0.85rem"}}>
-              {elementos.some(e => e.imagen || e.descripcion) ? `${elementos.filter(e => e.imagen || e.descripcion).length} elemento(s) configurado(s)` : "Distribuir elementos en la miniatura"}
-            </span>
-            <span style={{fontSize:"0.85rem",color:"#FF4D00"}}>+</span>
-          </button>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>2. Elementos (opcional)</div>
+          {/* Opcion usar mi cara */}
+          {avatarUrl && (
+            <button
+              onClick={() => {
+                const arr = [...elementos];
+                const yaActivo = arr.some(e => e.usarAvatar);
+                if (yaActivo) {
+                  // Desactivar cara
+                  arr.forEach(e => { e.usarAvatar = false; });
+                  setModo("fondo");
+                } else {
+                  // Activar cara en slot 0
+                  arr[0] = { ...arr[0], usarAvatar: true, imagen: avatarUrl };
+                  setModo("cara");
+                }
+                setElementos(arr);
+              }}
+              style={{width:"100%",padding:"12px",borderRadius:"10px",marginBottom:"8px",
+                border:`1px solid ${elementos.some(e => e.usarAvatar) ? "#FF4D00" : "#3A3D52"}`,
+                background:elementos.some(e => e.usarAvatar) ? "rgba(255,77,0,0.08)" : "transparent",
+                color:"white",cursor:"pointer",display:"flex",alignItems:"center",gap:"10px"}}
+            >
+              <img src={avatarUrl} style={{width:"32px",height:"32px",borderRadius:"50%",objectFit:"cover",border:`2px solid ${elementos.some(e => e.usarAvatar) ? "#FF4D00" : "#3A3D52"}`}} alt="avatar"/>
+              <div style={{textAlign:"left",flex:1}}>
+                <div style={{fontSize:"0.85rem",fontWeight:"600"}}>Usar mi cara</div>
+                <div style={{fontSize:"0.72rem",color:"#8B8FA8"}}>Genera con tu cara integrada — <span style={{color:"#FF4D00"}}>5 creditos</span></div>
+              </div>
+              {elementos.some(e => e.usarAvatar) && <span style={{color:"#FF4D00",fontSize:"1rem"}}>✓</span>}
+            </button>
+          )}
+          {/* Distribuir otros elementos - solo si no usa cara o hay mas de 1 */}
+          {!elementos.some(e => e.usarAvatar) && (
+            <button
+              onClick={() => setModalElementos(true)}
+              style={{width:"100%",padding:"12px",borderRadius:"10px",border:"1px solid #3A3D52",background:"transparent",color:"white",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
+            >
+              <span style={{fontSize:"0.85rem"}}>
+                {elementos.some(e => e.imagen && !e.usarAvatar) ? `${elementos.filter(e => e.imagen && !e.usarAvatar).length} elemento(s) configurado(s)` : "Agregar elementos a la miniatura"}
+              </span>
+              <span style={{fontSize:"0.85rem",color:"#FF4D00"}}>+</span>
+            </button>
+          )}
+          <div style={{fontSize:"0.72rem",color:"#8B8FA8",marginTop:"6px"}}>
+            {elementos.some(e => e.usarAvatar) ? "Generacion con cara — 5 creditos" : "Solo fondo IA — 4 creditos"}
+          </div>
         </div>
 
         {/* Modal de distribucion */}
