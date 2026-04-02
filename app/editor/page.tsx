@@ -580,7 +580,7 @@ export default function Editor() {
       <div style={{display:"grid",gridTemplateColumns:"280px 1fr",gap:"16px",alignItems:"start"}}>
 
         {/* ── Sidebar ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"scroll",height:"calc(100vh - 120px)",paddingRight:"6px",scrollbarWidth:"thin",scrollbarColor:"#FF4D00 #111827"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
 
           {/* Plataforma + Volver */}
           <div style={{borderRadius:"12px",overflow:"hidden",boxShadow:"0 4px 20px rgba(0,0,0,0.5)"}}>
@@ -614,7 +614,7 @@ export default function Editor() {
               <span style={{fontSize:"0.72rem",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Texto</span>
               <span style={{fontSize:"0.8rem",opacity:0.8}}>{seccionTexto ? "▲" : "▼"}</span>
             </button>
-            {seccionTexto && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px"}}>
+            {seccionTexto && <div style={{padding:"12px",background:"#111827",border:"1px solid rgba(255,77,0,0.2)",borderTop:"none",borderRadius:"0 0 12px 12px",maxHeight:"60vh",overflowY:"auto",scrollbarWidth:"thin",scrollbarColor:"#FF4D00 #1f2937"}}>
             <div style={{display:"flex",gap:"6px",marginBottom:"12px"}}>
               <div style={{flex:1,background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={() => {}}>
                 <div style={{fontSize:"1rem",marginBottom:"2px"}}>T</div>
