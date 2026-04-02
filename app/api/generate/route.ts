@@ -38,7 +38,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
   const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
   const elW = Math.floor(W * 0.27);
   const elH = Math.floor(H * 0.75);
-  const top = Math.floor(H * 0.12);
+  const top = Math.floor(H * 0.18);
 
   for (let i = 0; i < elementos.length; i++) {
     const el = elementos[i];
@@ -84,7 +84,7 @@ async function componerYRefinar(fondoUrl: string, elementos: any[], aspectRatio:
           if (el.imagen || el.descripcion) return `${pos} slot has a character/element`;
           return `${pos} slot is EMPTY — do not add anything there`;
         }).join(". ");
-        const promptKontext = `${promptRefinado}. Layout instructions: ${slotsOcupados}. Keep ALL characters EXACTLY as they appear in the reference — same face, same outfit, do not modify them. Only blend them into the background with cinematic lighting and color grading. Remove the rectangular box borders around each character and make them blend naturally into the scene. If a title is mentioned, display it at the top with bold dramatic typography. Do NOT invent new characters or elements in empty spaces.`;
+        const promptKontext = `${promptRefinado}. ${slotsOcupados}. CRITICAL: Keep the face and appearance of ALL characters EXACTLY as shown — do not change faces, hair, skin or clothing. Only add cinematic lighting and blend naturally into the background scene. NO TEXT, NO WORDS, NO LETTERS, NO SYMBOLS anywhere. Do not invent new characters in empty spaces.`;
     const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
       input: {
         prompt: promptKontext,
