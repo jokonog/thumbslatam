@@ -128,7 +128,11 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, elementos: elementosConUrl }),
+(() => {
+            const avatarIdx = elementos.findIndex(el => el.usarAvatar);
+            const posicion = avatarIdx === 0 ? "left" : avatarIdx === 1 ? "center" : "right";
+            return JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: posicion });
+          })(),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
