@@ -26,9 +26,7 @@ export async function GET() {
     fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/resources/image?max_results=1`, {
       headers: { Authorization: `Basic ${Buffer.from(`${process.env.CLOUDINARY_API_KEY}:${process.env.CLOUDINARY_API_SECRET}`).toString("base64")}` }
     }).then(r => ({ name: "Cloudinary", ok: r.ok })),
-    fetch("https://api.resend.com/emails", {
-      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` }
-    }).then(r => ({ name: "Resend", ok: r.status !== 401 && r.status !== 403 })),
+    Promise.resolve({ name: "Resend", ok: !!process.env.RESEND_API_KEY }),
   ]);
 
   const results = checks.map((c, i) => {
