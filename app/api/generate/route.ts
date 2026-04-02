@@ -165,7 +165,7 @@ async function componerYRefinar(
   const bufKontext = await descargarBuffer(refinadoUrl);
   const baseKontext = await sharp(bufKontext).resize(W, H, { fit: "cover" }).png().toBuffer();
   // Cubrir franja superior con recorte del fondo original para borrar caracteres de Kontext
-  const franjaH = Math.floor(H * 0.07);
+  const franjaH = Math.floor(H * 0.22);
   const fondoFranja = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).extract({ left: 0, top: 0, width: W, height: franjaH }).png().toBuffer();
   const sinCaracteres = await sharp(baseKontext).composite([{ input: fondoFranja, top: 0, left: 0, blend: "over" }]).png().toBuffer();
   if (conTitulo) {
