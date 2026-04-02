@@ -124,8 +124,6 @@ export async function POST(request: Request) {
           font-weight="bold"
           fill="white"
           text-anchor="middle"
-          textLength="${Math.floor(W * 0.90)}"
-          lengthAdjust="spacingAndGlyphs"
           filter="url(#s)"
         >${texto}</text>
       </svg>`;
