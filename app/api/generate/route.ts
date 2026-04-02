@@ -98,20 +98,20 @@ async function componerYRefinar(
   if (total === 1) {
     // 1 elemento: ocupa el lado izquierdo grande
     leftMap = [Math.floor(W * 0.03)];
-    elW = Math.floor(W * 0.45);
-    elH = Math.floor(H * 0.90);
+    elW = Math.floor(W * 0.55);
+    elH = Math.floor(H * 0.95);
   } else if (total === 2) {
     // 2 elementos: izquierda y derecha, bien separados
     leftMap = [Math.floor(W * 0.01), Math.floor(W * 0.52)];
-    elW = Math.floor(W * 0.46);
-    elH = Math.floor(H * 0.90);
+    elW = Math.floor(W * 0.55);
+    elH = Math.floor(H * 0.95);
   } else {
     // 3 elementos
     leftMap = [Math.floor(W * 0.01), Math.floor(W * 0.36), Math.floor(W * 0.67)];
-    elW = Math.floor(W * 0.31);
-    elH = Math.floor(H * 0.88);
+    elW = Math.floor(W * 0.36);
+    elH = Math.floor(H * 0.95);
   }
-  const top = Math.floor(H * 0.08);
+  const top = Math.floor(H * 0.05);
 
   const composites: sharp.OverlayOptions[] = [];
   let idxPos = 0;
@@ -150,7 +150,7 @@ async function componerYRefinar(
   const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
 
   // Kontext integra iluminacion — SIN texto, SIN titulo en el prompt
-  const promptKontext = `You are given a composite image with characters placed on a background. Your task: blend each character naturally into the scene by matching the lighting, shadows, color grading and atmosphere of the background. The background shows: ${descripcion}. Remove any hard rectangular edges around characters. Keep every face and outfit EXACTLY as shown — do not alter, stylize or replace any face. Output NO text, NO words, NO letters, NO symbols anywhere in the image.`;
+  const promptKontext = `Blend the characters in this composite image into the background scene. Match lighting, shadows and color grading. Background: ${descripcion}. STRICT RULES: 1) Do NOT duplicate, clone or multiply any character — each person appears exactly ONCE. 2) Keep every face and outfit pixel-perfect as shown. 3) Remove rectangular borders around characters. 4) Output absolutely NO text, NO letters, NO words, NO symbols, NO numbers anywhere. 5) Do NOT add new characters or elements not already present.`;
 
   const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
     input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
@@ -160,10 +160,16 @@ async function componerYRefinar(
   if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen");
 
   // Sharp agrega titulo AQUI — despues de Kontext, nunca antes
+  // Primero limpiar franja superior donde Kontext suele poner caracteres
   const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
+  const bufKontext = await descargarBuffer(refinadoUrl);
+  const baseKontext = await sharp(bufKontext).resize(W, H, { fit: "cover" }).png().toBuffer();
+  // Cubrir franja superior con recorte del fondo original para borrar caracteres de Kontext
+  const franjaH = Math.floor(H * 0.07);
+  const fondoFranja = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).extract({ left: 0, top: 0, width: W, height: franjaH }).png().toBuffer();
+  const sinCaracteres = await sharp(baseKontext).composite([{ input: fondoFranja, top: 0, left: 0, blend: "over" }]).png().toBuffer();
   if (conTitulo) {
-    const buf = await descargarBuffer(refinadoUrl);
-    const resized = await sharp(buf).resize(W, H, { fit: "cover" }).png().toBuffer();
+    const resized = sinCaracteres;
     const conTit = await agregarTitulo(resized, titulo, W, H);
     const upload = await cloudinary.uploader.upload(
       `data:image/jpeg;base64,${conTit.toString("base64")}`,
