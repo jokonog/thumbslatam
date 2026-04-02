@@ -71,7 +71,7 @@ export default function Dashboard() {
       .from("usuarios")
       .select("creditos, plan, avatar_url")
       .eq("id", authData.user.id)
-      .single();
+      .maybeSingle();
 
     if (usuarioData) {
       setCreditos(usuarioData.creditos);
@@ -170,7 +170,7 @@ export default function Dashboard() {
   async function elegirVariacion() {
     if (!varSeleccionada) return;
     if (userId) {
-      const { data: existe } = await supabase.from("miniatura").select("id").eq("usuario_id", userId).eq("imagen_url", varSeleccionada).single();
+      const { data: existe } = await supabase.from("miniatura").select("id").eq("usuario_id", userId).eq("imagen_url", varSeleccionada).maybeSingle();
       if (!existe) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: varSeleccionada });
     }
     const params = new URLSearchParams({ plataforma, imageUrl: varSeleccionada });
