@@ -580,7 +580,7 @@ export default function Editor() {
       <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:"16px",alignItems:"start"}}>
 
         {/* ── Sidebar ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"auto",maxHeight:"calc(100vh - 100px)",paddingRight:"4px"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"auto",maxHeight:"calc(100vh - 60px)",paddingRight:"4px"}}>
 
           {/* Plataforma + Volver */}
           <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",padding:"14px",border:"1px solid rgba(255,77,0,0.35)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
