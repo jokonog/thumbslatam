@@ -447,6 +447,20 @@ export default function Editor() {
   }
 
   // ─── Eliminar objeto seleccionado ───────────────────────────────────────────
+  function voltearHorizontal() {
+    if (!fabricRef.current?.canvas) return;
+    const { canvas } = fabricRef.current;
+    const obj = canvas.getActiveObject();
+    if (obj) {
+      obj.set("flipX", !obj.flipX);
+      canvas.renderAll();
+    } else {
+      // Si no hay objeto seleccionado, voltear el fondo
+      const bg = canvas.backgroundImage as any;
+      if (bg) { bg.set("flipX", !bg.flipX); canvas.renderAll(); }
+    }
+  }
+
   function eliminarSeleccion() {
     if (!fabricRef.current?.canvas) return;
     const { canvas } = fabricRef.current;
@@ -774,9 +788,14 @@ export default function Editor() {
             <button onClick={agregarTexto} disabled={!texto} style={{width:"100%",padding:"9px",borderRadius:"8px",background:texto?"#FF4D00":"#3A3D52",border:"none",color:"white",fontWeight:"700",cursor:texto?"pointer":"not-allowed",fontSize:"0.82rem",marginBottom:"6px"}}>
               Agregar al canvas
             </button>
-            <button onClick={undo} style={{width:"100%",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.78rem",marginBottom:"6px"}}>
-              ↩ Deshacer (Ctrl+Z)
-            </button>
+            <div style={{display:"flex",gap:"6px",marginBottom:"6px"}}>
+              <button onClick={undo} style={{flex:1,padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.75rem"}}>
+                ↩ Deshacer
+              </button>
+              <button onClick={voltearHorizontal} style={{flex:1,padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.75rem"}}>
+                ↔ Voltear
+              </button>
+            </div>
             <button onClick={eliminarSeleccion} style={{width:"100%",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #ef4444",color:"#ef4444",cursor:"pointer",fontSize:"0.78rem"}}>
               Eliminar seleccionado
             </button>
