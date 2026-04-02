@@ -31,7 +31,7 @@ export default function Editor() {
   const [degradadoDireccion, setDegradadoDireccion] = useState<'horizontal'|'vertical'|'diagonal'>('horizontal');
   const [fontDropdownOpen, setFontDropdownOpen] = useState(false);
   const [seccionTexto, setSeccionTexto] = useState(true);
-  const [seccionAjustes, setSeccionAjustes] = useState(false);
+  const [seccionAjustes, setSeccionAjustes] = useState(true);
   const [brillo, setBrillo] = useState(100);
   const [contraste, setContraste] = useState(100);
   const [saturacion, setSaturacion] = useState(100);
@@ -577,10 +577,10 @@ export default function Editor() {
       </div>
 
       {/* Layout principal */}
-      <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:"16px",alignItems:"start"}}>
+      <div style={{display:"grid",gridTemplateColumns:"280px 1fr",gap:"16px",alignItems:"start"}}>
 
         {/* ── Sidebar ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"auto",maxHeight:"calc(100vh - 60px)",paddingRight:"4px"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"scroll",height:"calc(100vh - 80px)",paddingRight:"6px",scrollbarWidth:"thin",scrollbarColor:"#FF4D00 #111827"}}>
 
           {/* Plataforma + Volver */}
           <div style={{borderRadius:"12px",overflow:"hidden",boxShadow:"0 4px 20px rgba(0,0,0,0.5)"}}>
