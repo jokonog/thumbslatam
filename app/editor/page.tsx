@@ -25,7 +25,6 @@ export default function Editor() {
   const [puedeArrastrar, setPuedeArrastrar] = useState(false);
   const [fontFamily, setFontFamily] = useState("Impact, Arial Black, sans-serif");
   const [efectoTexto, setEfectoTexto] = useState("sombra");
-  const [efectoTexto, setEfectoTexto] = useState("sombra");
 
   // ─── Créditos ───────────────────────────────────────────────────────────────
   const [creditos, setCreditos] = useState<number | null>(null);

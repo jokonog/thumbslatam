@@ -529,9 +529,6 @@ export default function Dashboard() {
           </div>
         )}
 
-            </div>
-          )}
-        </div>
 
         <div style={{marginBottom:"20px"}}>
           <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>4. Describe la escena</div>
