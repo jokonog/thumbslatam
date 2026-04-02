@@ -14,6 +14,7 @@ const replicate = new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
 
 async function descargarBuffer(url: string): Promise<Buffer> {
   const res = await fetch(url);
+  if (!res.ok) throw new Error("Error descargando: " + res.status);
   return Buffer.from(await res.arrayBuffer());
 }
 
@@ -84,57 +85,84 @@ async function componerYRefinar(
   const H = esVertical ? 1280 : 720;
 
   const fondoBuf = await descargarBuffer(fondoUrl);
-  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).jpeg().toBuffer();
+  const fondo = await sharp(fondoBuf).resize(W, H, { fit: "cover" }).png().toBuffer();
+
+  const elementosConImagen = elementos.filter((el: any) => el.imagen && el.imagen.startsWith("http"));
+  const total = elementosConImagen.length;
+
+  // Posiciones dinamicas segun cantidad de elementos
+  let leftMap: number[];
+  let elW: number;
+  let elH: number;
+
+  if (total === 1) {
+    // 1 elemento: ocupa el lado izquierdo grande
+    leftMap = [Math.floor(W * 0.03)];
+    elW = Math.floor(W * 0.45);
+    elH = Math.floor(H * 0.90);
+  } else if (total === 2) {
+    // 2 elementos: izquierda y derecha, bien separados
+    leftMap = [Math.floor(W * 0.01), Math.floor(W * 0.52)];
+    elW = Math.floor(W * 0.46);
+    elH = Math.floor(H * 0.90);
+  } else {
+    // 3 elementos
+    leftMap = [Math.floor(W * 0.01), Math.floor(W * 0.36), Math.floor(W * 0.67)];
+    elW = Math.floor(W * 0.31);
+    elH = Math.floor(H * 0.88);
+  }
+  const top = Math.floor(H * 0.08);
 
   const composites: sharp.OverlayOptions[] = [];
-  const leftMap = [Math.floor(W * 0.08), Math.floor(W * 0.36), Math.floor(W * 0.62)];
-  const elW = Math.floor(W * 0.27);
-  const elH = Math.floor(H * 0.75);
-  const top = Math.floor(H * 0.12);
+  let idxPos = 0;
 
   for (let i = 0; i < elementos.length; i++) {
     const el = elementos[i];
     if (!el.imagen || !el.imagen.startsWith("http")) continue;
     try {
       const buf = await descargarBuffer(el.imagen);
+      const meta = await sharp(buf).metadata();
+
+      // contain siempre para no recortar caras
       const resized = await sharp(buf)
-        .resize(elW, elH, { fit: "cover", position: "center" })
+        .resize(elW, elH, {
+          fit: "contain",
+          position: "bottom",
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        })
+        .ensureAlpha()
         .png()
         .toBuffer();
-      const withAlpha = await sharp(resized).ensureAlpha().blur(0.5).png().toBuffer();
-      composites.push({ input: withAlpha, left: leftMap[i], top, blend: "over" });
-    } catch(e) { console.log("Error elemento", i); }
+
+      composites.push({ input: resized, left: leftMap[idxPos], top, blend: "over" });
+      idxPos++;
+    } catch(e) { console.log("Error elemento", i, e); }
   }
 
-  let imagenFinal: string;
-
-  if (composites.length > 0) {
-    const composed = await sharp(fondo).composite(composites).jpeg({ quality: 90 }).toBuffer();
-    const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
-    const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
-
-    const slotsOcupados = elementos.map((el: any, i: number) => {
-      const pos = i === 0 ? "LEFT" : i === 1 ? "CENTER" : "RIGHT";
-      if (el.imagen) return `${pos} slot has a character/element`;
-      return `${pos} slot is EMPTY do not add anything there`;
-    }).join(". ");
-
-    // CRITICO: prompt sin ninguna mencion de texto o titulo
-    const promptKontext = `Seamlessly blend the characters into the background scene: ${descripcion}. ${slotsOcupados}. Keep ALL characters EXACTLY as they appear — same face, same outfit, do not modify them. Match cinematic lighting, shadows and color grading. Remove rectangular borders around characters. Do NOT add text, words, letters or symbols anywhere. Do NOT invent new characters in empty spaces.`;
-
-    const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
-      input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
-    });
-    imagenFinal = String(refinado);
-    if (!imagenFinal.startsWith("http")) throw new Error("Kontext no genero imagen");
-  } else {
-    imagenFinal = fondoUrl;
+  if (composites.length === 0) {
+    const final = await cloudinary.uploader.upload(fondoUrl, { folder: "thumbslatam/fondos" });
+    return final.secure_url;
   }
 
-  // Sharp agrega el titulo AQUI — Kontext nunca lo vio
+  // Sharp compone elementos sobre fondo
+  const composed = await sharp(fondo).composite(composites).jpeg({ quality: 92 }).toBuffer();
+  const base64 = `data:image/jpeg;base64,${composed.toString("base64")}`;
+  const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
+
+  // Kontext integra iluminacion — SIN texto, SIN titulo en el prompt
+  const promptKontext = `You are given a composite image with characters placed on a background. Your task: blend each character naturally into the scene by matching the lighting, shadows, color grading and atmosphere of the background. The background shows: ${descripcion}. Remove any hard rectangular edges around characters. Keep every face and outfit EXACTLY as shown — do not alter, stylize or replace any face. Output NO text, NO words, NO letters, NO symbols anywhere in the image.`;
+
+  const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
+    input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
+  });
+
+  const refinadoUrl = String(refinado);
+  if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen");
+
+  // Sharp agrega titulo AQUI — despues de Kontext, nunca antes
   const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
   if (conTitulo) {
-    const buf = await descargarBuffer(imagenFinal);
+    const buf = await descargarBuffer(refinadoUrl);
     const resized = await sharp(buf).resize(W, H, { fit: "cover" }).png().toBuffer();
     const conTit = await agregarTitulo(resized, titulo, W, H);
     const upload = await cloudinary.uploader.upload(
@@ -144,7 +172,7 @@ async function componerYRefinar(
     return upload.secure_url;
   }
 
-  const final = await cloudinary.uploader.upload(imagenFinal, { folder: "thumbslatam/fondos" });
+  const final = await cloudinary.uploader.upload(refinadoUrl, { folder: "thumbslatam/fondos" });
   return final.secure_url;
 }
 
@@ -175,14 +203,14 @@ export async function POST(request: Request) {
       return null;
     }).filter(Boolean).join(", ") : "";
 
-    // Prompt del fondo SIEMPRE sin titulo — Sharp lo agrega al final
-    const promptFondo = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, no text no words no letters no logos`;
-    const promptFondo2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dramatic shadows, no text no words no letters`;
+    // Prompt fondo SIEMPRE sin titulo — Sharp lo agrega al final
+    const promptFondo = `Epic dramatic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} mood, cinematic dramatic lighting, ultra detailed, no text no words no letters no logos, background only no characters no people`;
+    const promptFondo2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dramatic shadows, no text no words no letters, background only no characters no people`;
 
     if (tieneImagenes) {
       const [fondo1, fondo2] = await Promise.all([
-        generarFondo(promptFondo + ", background only, no characters no people", aspectRatio),
-        generarFondo(promptFondo2 + ", background only, no characters no people", aspectRatio),
+        generarFondo(promptFondo, aspectRatio),
+        generarFondo(promptFondo2, aspectRatio),
       ]);
       const [imageUrl1, imageUrl2] = await Promise.all([
         componerYRefinar(fondo1, elementos, aspectRatio, descripcion, titulo, tituloModo),
