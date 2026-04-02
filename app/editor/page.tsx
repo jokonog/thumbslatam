@@ -29,6 +29,9 @@ export default function Editor() {
   const [colorTexto2, setColorTexto2] = useState("#FF4D00");
   const [usarDegradado, setUsarDegradado] = useState(false);
   const [degradadoDireccion, setDegradadoDireccion] = useState<'horizontal'|'vertical'|'diagonal'>('horizontal');
+  const [fontDropdownOpen, setFontDropdownOpen] = useState(false);
+  const [seccionTexto, setSeccionTexto] = useState(true);
+  const [seccionAjustes, setSeccionAjustes] = useState(true);
   const [brillo, setBrillo] = useState(100);
   const [contraste, setContraste] = useState(100);
   const [saturacion, setSaturacion] = useState(100);
@@ -577,41 +580,39 @@ export default function Editor() {
       <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:"16px",alignItems:"start"}}>
 
         {/* ── Sidebar ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"12px",overflowY:"auto",maxHeight:"calc(100vh - 80px)",paddingRight:"4px"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px",overflowY:"auto",maxHeight:"calc(100vh - 80px)",paddingRight:"4px"}}>
 
-          {/* 1. Plataforma */}
-          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,77,0,0.4)"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700",color:"#FF4D00"}}>1. Plataforma</h3>
-            <select
-              value={plataforma}
-              onChange={(e) => cambiarPlataforma(e.target.value)}
-              style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #FF4D00",color:"white",fontSize:"0.85rem"}}
-            >
-              <option value="youtube">YouTube — 1280×720</option>
-              <option value="instagram">Instagram Post — 1080×1080</option>
-              <option value="instagram_story">Instagram Story — 1080×1920</option>
-              <option value="tiktok">TikTok — 1080×1920</option>
-              <option value="twitter">X (Twitter) — 1200×675</option>
+          {/* Plataforma + Volver */}
+          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",padding:"14px",border:"1px solid rgba(255,77,0,0.35)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:"6px",marginBottom:"10px"}}>
+              <span style={{fontSize:"0.7rem",color:"#FF4D00",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase"}}>Plataforma</span>
+            </div>
+            <select value={plataforma} onChange={(e) => cambiarPlataforma(e.target.value)}
+              style={{width:"100%",padding:"8px 10px",borderRadius:"8px",background:"rgba(0,0,0,0.4)",border:"1px solid rgba(255,77,0,0.4)",color:"white",fontSize:"0.82rem",cursor:"pointer"}}>
+              <option value="youtube">▶ YouTube — 1280×720</option>
+              <option value="instagram">◻ Instagram Post — 1080×1080</option>
+              <option value="instagram_story">◻ Instagram Story — 1080×1920</option>
+              <option value="tiktok">♪ TikTok — 1080×1920</option>
+              <option value="twitter">✕ Twitter — 1200×675</option>
             </select>
             {orientacionIncompatible && (
-              <p style={{color:"#FFD166",fontSize:"0.75rem",margin:"8px 0 0",lineHeight:"1.4"}}>
-                ⚠️ Fondo {fondoEsVertical ? "vertical" : "horizontal"} — genera de nuevo en formato {esVertical ? "vertical" : "horizontal"} para mejor resultado.
+              <p style={{color:"#FFD166",fontSize:"0.72rem",margin:"8px 0 0",lineHeight:"1.4"}}>
+                ⚠️ Fondo {fondoEsVertical ? "vertical" : "horizontal"} — genera de nuevo en formato {esVertical ? "vertical" : "horizontal"}.
               </p>
             )}
-          </div>
-
-          {/* Volver a generar */}
-          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <h3 style={{margin:"0 0 8px",fontSize:"0.85rem",fontWeight:"700"}}>¿No te convence?</h3>
-            <p style={{fontSize:"0.75rem",color:"#8B8FA8",margin:"0 0 10px",lineHeight:"1.4"}}>Vuelve al inicio y genera una nueva miniatura con diferentes opciones.</p>
-            <a href="/dashboard" style={{display:"block",textAlign:"center",padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.82rem",textDecoration:"none",fontWeight:"600"}}>
-              ← Volver a generar
+            <a href="/dashboard" style={{display:"block",textAlign:"center",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid rgba(255,255,255,0.08)",color:"#8B8FA8",fontSize:"0.78rem",textDecoration:"none",fontWeight:"600",marginTop:"10px"}}>
+              ← Nueva miniatura
             </a>
           </div>
 
-          {/* 4. Texto */}
-          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>4. Agregar elementos</h3>
+          {/* Texto */}
+          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)",overflow:"hidden"}}>
+            <button onClick={() => setSeccionTexto(v => !v)}
+              style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>✏️ Texto</span>
+              <span style={{color:"#8B8FA8",fontSize:"0.8rem"}}>{seccionTexto ? "▲" : "▼"}</span>
+            </button>
+            {seccionTexto && <div style={{padding:"0 14px 14px"}}>
             <div style={{display:"flex",gap:"6px",marginBottom:"12px"}}>
               <div style={{flex:1,background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",borderRadius:"8px",padding:"8px",textAlign:"center",cursor:"pointer"}} onClick={() => {}}>
                 <div style={{fontSize:"1rem",marginBottom:"2px"}}>T</div>
@@ -622,9 +623,6 @@ export default function Editor() {
                 <div style={{fontSize:"0.65rem",color:"#8B8FA8"}}>Imagen</div>
               </div>
             </div>
-            <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,165,0,0.06)",border:"1px solid rgba(255,165,0,0.2)",marginBottom:"10px"}}>
-              <p style={{fontSize:"0.7rem",color:"#FFA500",margin:0}}>Solo agrega objetos o personajes como imagen. Para texto usa el campo de abajo.</p>
-            </div>
             <input
               type="text"
               placeholder="Tu titulo aqui..."
@@ -633,43 +631,62 @@ export default function Editor() {
               onChange={(e) => setTexto(e.target.value)}
               style={{width:"100%",padding:"9px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"8px",boxSizing:"border-box"}}
             />
-            {/* FUENTES */}
-            <div style={{marginBottom:"10px"}}>
-              <label style={{fontSize:"0.78rem",color:"#8B8FA8",display:"block",marginBottom:"6px"}}>Fuente:</label>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4px"}}>
-                {[
-                  {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null},
-                  {name:"Bebas Neue", family:"'Bebas Neue', sans-serif", google:"Bebas+Neue"},
-                  {name:"Bangers", family:"'Bangers', sans-serif", google:"Bangers"},
-                  {name:"Black Ops", family:"'Black Ops One', sans-serif", google:"Black+Ops+One"},
-                  {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One"},
-                  {name:"Oswald", family:"'Oswald', sans-serif", google:"Oswald:wght@700"},
-                  {name:"Creepster", family:"'Creepster', sans-serif", google:"Creepster"},
-                  {name:"Nosifer", family:"'Nosifer', sans-serif", google:"Nosifer"},
-                  {name:"Butcherman", family:"'Butcherman', sans-serif", google:"Butcherman"},
-                  {name:"Faster One", family:"'Faster One', sans-serif", google:"Faster+One"},
-                ].map(({name, family, google}) => {
-                  if (google && typeof document !== "undefined") {
-                    const id = `gfont-${google}`;
-                    if (!document.getElementById(id)) {
-                      const link = document.createElement("link");
-                      link.id = id; link.rel = "stylesheet";
-                      link.href = `https://fonts.googleapis.com/css2?family=${google}&display=swap`;
-                      document.head.appendChild(link);
+            {/* FUENTES DROPDOWN */}
+            <div style={{marginBottom:"10px",position:"relative"}}>
+              <label style={{fontSize:"0.72rem",color:"#8B8FA8",display:"block",marginBottom:"5px",letterSpacing:"0.05em",textTransform:"uppercase"}}>Fuente</label>
+              <button onClick={() => setFontDropdownOpen(v => !v)}
+                style={{width:"100%",padding:"9px 12px",borderRadius:"9px",background:"rgba(0,0,0,0.35)",border:"1px solid rgba(255,255,255,0.12)",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontFamily:fontFamily,fontSize:"1rem",fontWeight:"bold"}}>
+                <span>{fontFamily.split(",")[0].replace(/'/g,"")}</span>
+                <span style={{fontSize:"0.7rem",color:"#8B8FA8"}}>{fontDropdownOpen ? "▲" : "▼"}</span>
+              </button>
+              {fontDropdownOpen && (
+                <div style={{position:"absolute",top:"100%",left:0,right:0,zIndex:100,background:"#0d1220",border:"1px solid rgba(255,255,255,0.12)",borderRadius:"10px",overflow:"auto",maxHeight:"280px",boxShadow:"0 8px 32px rgba(0,0,0,0.8)",marginTop:"4px"}}>
+                  {[
+                    {name:"Impact", family:"Impact, Arial Black, sans-serif", google:null, cat:"Gaming"},
+                    {name:"Bebas Neue", family:"'Bebas Neue', sans-serif", google:"Bebas+Neue", cat:"Gaming"},
+                    {name:"Bangers", family:"'Bangers', sans-serif", google:"Bangers", cat:"Gaming"},
+                    {name:"Black Ops One", family:"'Black Ops One', sans-serif", google:"Black+Ops+One", cat:"Gaming"},
+                    {name:"Russo One", family:"'Russo One', sans-serif", google:"Russo+One", cat:"Gaming"},
+                    {name:"Oswald Bold", family:"'Oswald', sans-serif", google:"Oswald:wght@700", cat:"Gaming"},
+                    {name:"Faster One", family:"'Faster One', sans-serif", google:"Faster+One", cat:"Gaming"},
+                    {name:"Creepster", family:"'Creepster', sans-serif", google:"Creepster", cat:"Terror"},
+                    {name:"Nosifer", family:"'Nosifer', sans-serif", google:"Nosifer", cat:"Terror"},
+                    {name:"Butcherman", family:"'Butcherman', sans-serif", google:"Butcherman", cat:"Terror"},
+                    {name:"Arial", family:"Arial, sans-serif", google:null, cat:"Clasica"},
+                    {name:"Arial Black", family:"Arial Black, sans-serif", google:null, cat:"Clasica"},
+                    {name:"Times New Roman", family:"Times New Roman, serif", google:null, cat:"Clasica"},
+                    {name:"Georgia", family:"Georgia, serif", google:null, cat:"Clasica"},
+                    {name:"Verdana", family:"Verdana, sans-serif", google:null, cat:"Clasica"},
+                    {name:"Courier New", family:"Courier New, monospace", google:null, cat:"Clasica"},
+                  ].map(({name, family, google, cat}, idx, arr) => {
+                    if (google && typeof document !== "undefined") {
+                      const id = `gfont-${google}`;
+                      if (!document.getElementById(id)) {
+                        const link = document.createElement("link");
+                        link.id = id; link.rel = "stylesheet";
+                        link.href = `https://fonts.googleapis.com/css2?family=${google}&display=swap`;
+                        document.head.appendChild(link);
+                      }
                     }
-                  }
-                  return (
-                    <button key={name} onClick={() => setFontFamily(family)}
-                      style={{padding:"8px 6px",borderRadius:"8px",textAlign:"center",
-                        border:`1px solid ${fontFamily===family?"#FF4D00":"#3A3D52"}`,
-                        background:fontFamily===family?"rgba(255,77,0,0.15)":"transparent",
-                        color:"white",cursor:"pointer",fontFamily:family,
-                        fontSize:"0.95rem",fontWeight:"bold",whiteSpace:"nowrap",overflow:"hidden"}}>
-                      {name}
-                    </button>
-                  );
-                })}
-              </div>
+                    const prevCat = idx > 0 ? arr[idx-1].cat : null;
+                    return (
+                      <div key={name}>
+                        {cat !== prevCat && (
+                          <div style={{padding:"6px 12px 3px",fontSize:"0.6rem",color:"#FF4D00",fontWeight:"800",letterSpacing:"0.1em",textTransform:"uppercase",background:"rgba(255,77,0,0.05)",borderTop: idx > 0 ? "1px solid rgba(255,255,255,0.05)" : "none"}}>
+                            {cat}
+                          </div>
+                        )}
+                        <button onClick={() => { setFontFamily(family); setFontDropdownOpen(false); }}
+                          style={{width:"100%",padding:"10px 14px",background:fontFamily===family?"rgba(255,77,0,0.12)":"transparent",border:"none",
+                            color:"white",cursor:"pointer",textAlign:"left",fontFamily:family,fontSize:"1.05rem",fontWeight:"bold",
+                            borderLeft:fontFamily===family?"3px solid #FF4D00":"3px solid transparent"}}>
+                          {name}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             {/* EFECTOS COMBINABLES */}
             <div style={{marginBottom:"10px"}}>
@@ -738,11 +755,18 @@ export default function Editor() {
             <button onClick={eliminarSeleccion} style={{width:"100%",padding:"8px",borderRadius:"8px",background:"transparent",border:"1px solid #ef4444",color:"#ef4444",cursor:"pointer",fontSize:"0.78rem"}}>
               Eliminar seleccionado
             </button>
+            </div>}
           </div>
 
           {/* Ajustes imagen */}
-          <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)"}}>
-            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700"}}>5. Ajustes de imagen</h3>
+          <div style={{background:"linear-gradient(135deg,#0d1220 0%,#111827 100%)",borderRadius:"14px",border:"1px solid rgba(255,255,255,0.06)",boxShadow:"0 4px 24px rgba(0,0,0,0.4)",overflow:"hidden"}}>
+            <button onClick={() => setSeccionAjustes(v => !v)}
+              style={{width:"100%",padding:"14px 16px",background:"transparent",border:"none",color:"white",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontSize:"0.78rem",fontWeight:"800",letterSpacing:"0.08em",textTransform:"uppercase",color:"#FF4D00"}}>🎨 Ajustes de imagen</span>
+              <span style={{color:"#8B8FA8",fontSize:"0.8rem"}}>{seccionAjustes ? "▲" : "▼"}</span>
+            </button>
+            {seccionAjustes && <div style={{padding:"0 14px 14px"}}>
+            <h3 style={{margin:"0 0 10px",fontSize:"0.85rem",fontWeight:"700",display:"none"}}>5. Ajustes de imagen</h3>
             {[
               {label:"☀️ Brillo", val:brillo, set:setBrillo},
               {label:"◑ Contraste", val:contraste, set:setContraste},
@@ -760,10 +784,11 @@ export default function Editor() {
               style={{width:"100%",padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.75rem"}}>
               Resetear ajustes
             </button>
+            </div>}
           </div>
-          {/* Tip */}
-          <div style={{background:"rgba(6,214,160,0.08)",borderRadius:"10px",padding:"12px",border:"1px solid rgba(6,214,160,0.2)"}}>
-            <p style={{color:"#06D6A0",fontSize:"0.78rem",margin:0}}>Arrastra el texto para moverlo. Esquinas para cambiar tamaño.</p>
+          <div style={{background:"rgba(6,214,160,0.06)",borderRadius:"10px",padding:"10px 12px",border:"1px solid rgba(6,214,160,0.15)",display:"flex",gap:"8px",alignItems:"center"}}>
+            <span style={{fontSize:"1rem"}}>💡</span>
+            <p style={{color:"#06D6A0",fontSize:"0.72rem",margin:0,lineHeight:"1.5"}}>Arrastra el texto para moverlo. Esquinas para cambiar tamaño. Ctrl+Z para deshacer.</p>
           </div>
         </div>
 
