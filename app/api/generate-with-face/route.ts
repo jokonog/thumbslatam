@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting. Place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side. No text.`,
+          prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting. Place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side. Natural body proportions, realistic anatomy. No text.`,
           input_image: avatarFinal,
           aspect_ratio: aspectRatio,
         }
