@@ -148,8 +148,10 @@ export default function LegalPage() {
             </section>
 
             <section>
-              <h3 className="text-white font-medium mb-2">6. Cancelacion y reembolsos</h3>
-              <p>Puedes cancelar tu suscripcion en cualquier momento. No se ofrecen reembolsos por periodos parciales. Al cancelar, mantendras acceso al servicio hasta el fin del periodo pagado.</p>
+              <h3 className="text-white font-medium mb-2" id="reembolsos">6. Cancelacion y reembolsos</h3>
+              <p className="mb-3">Puedes cancelar tu suscripcion en cualquier momento desde tu panel de usuario. Al cancelar, mantendras acceso al servicio hasta el fin del periodo pagado.</p>
+              <p className="mb-3"><strong className="text-white">Politica de reembolsos:</strong> Ofrecemos reembolso completo dentro de los primeros 7 dias desde la compra, siempre que no hayas utilizado creditos del plan adquirido. Los creditos del plan gratuito no son reembolsables. Una vez utilizados los creditos, no se ofrecen reembolsos parciales.</p>
+              <p><strong className="text-white">Como solicitar un reembolso:</strong> Envia un email a soporte@thumbslatam.com con el asunto "Solicitud de reembolso" indicando tu email de registro y el motivo. Procesamos las solicitudes en un plazo de 3-5 dias habiles.</p>
             </section>
 
             <section>
