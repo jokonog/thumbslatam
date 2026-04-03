@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Environment, LogLevel, Paddle } from "@paddle/paddle-node-sdk";
 
 const paddle = new Paddle(process.env.PADDLE_API_KEY!, {
-  environment: Environment.Production,
+  environment: Environment.production,
   logLevel: LogLevel.None,
 });
 
