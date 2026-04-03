@@ -466,7 +466,7 @@ export default function Dashboard() {
               Te quedan {creditos} creditos — fondo cuesta 4, con tu cara cuesta 5.
             </div>
             <div style={{display:"flex",gap:"8px"}}>
-              <button onClick={() => abrirCheckout("pro")} onMouseEnter={e=>{e.currentTarget.style.background="#E64400"}} onMouseLeave={e=>{e.currentTarget.style.background="#FF4D00"}} style={{flex:1,padding:"7px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
+              <button onClick={() => abrirCheckout("pro")} onMouseEnter={e=>{e.currentTarget.style.background="#FF4D00";e.currentTarget.style.color="white";e.currentTarget.style.border="none"}} onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#FF4D00";e.currentTarget.style.border="1px solid #FF4D00"}} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #FF4D00",color:"#FF4D00",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
                 Pro $10/mes
               </button>
               <button onClick={() => abrirCheckout("studio")} onMouseEnter={e=>{e.currentTarget.style.background="#FF4D00";e.currentTarget.style.color="white";e.currentTarget.style.border="none"}} onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#FF4D00";e.currentTarget.style.border="1px solid #FF4D00"}} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #FF4D00",color:"#FF4D00",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
