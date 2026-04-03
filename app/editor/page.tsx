@@ -18,6 +18,7 @@ export default function Editor() {
   const [escena, setEscena] = useState("");
   const [estilo, setEstilo] = useState("gaming");
   const [plataforma, setPlataforma] = useState("youtube");
+  const [planSeleccionado, setPlanSeleccionado] = useState<"pro" | "studio">("pro");
   const [fondoGenerado, setFondoGenerado] = useState(false);
   const [fondoOrientacion, setFondoOrientacion] = useState("horizontal");
   const [escalaVista, setEscalaVista] = useState(1);
