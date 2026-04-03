@@ -27,6 +27,7 @@ export default function AdminPage() {
   const [health, setHealth] = useState<any[]>([]);
   const [checkingHealth, setCheckingHealth] = useState(false);
   const [usuarios, setUsuarios] = useState<any[]>([]);
+  const [confirmarBorrarUser, setConfirmarBorrarUser] = useState<{id:string,email:string}|null>(null);
   const [buscarUsuario, setBuscarUsuario] = useState("");
   const [editandoId, setEditandoId] = useState<string | null>(null);
   const [editCreditos, setEditCreditos] = useState(0);
@@ -77,14 +78,14 @@ export default function AdminPage() {
     setUsuarios(data.usuarios || []);
   }
 
-  async function borrarUsuario(id: string, email: string) {
-    if (!confirm(`Eliminar usuario ${email}? Esta accion no se puede deshacer.`)) return;
+  async function borrarUsuario(id: string) {
     await fetch("/api/admin-usuarios", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
     setUsuarios(prev => prev.filter(u => u.id !== id));
+    setConfirmarBorrarUser(null);
   }
 
   async function guardarUsuario(userId: string) {
@@ -293,7 +294,7 @@ export default function AdminPage() {
                         <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
                           Editar
                         </button>
-                        <button onClick={() => borrarUsuario(u.id, u.email)} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
+                        <button onClick={() => setConfirmarBorrarUser({id: u.id, email: u.email})} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
                           ✕
                         </button>
                       </div>
@@ -399,6 +400,26 @@ export default function AdminPage() {
           {codigos.length === 0 && <p style={{color:"#8B8FA8",textAlign:"center",padding:"20px"}}>No hay codigos aun</p>}
         </div>
       </div>
+      {confirmarBorrarUser !== null && (
+        <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000}}>
+          <div style={{background:"#111827",borderRadius:"14px",padding:"28px 24px",maxWidth:"340px",width:"90%",border:"1px solid rgba(255,255,255,0.1)",textAlign:"center"}}>
+            <div style={{fontSize:"2rem",marginBottom:"12px"}}>🗑️</div>
+            <h3 style={{margin:"0 0 8px",fontSize:"1rem",fontWeight:"700"}}>Eliminar usuario</h3>
+            <p style={{color:"#8B8FA8",fontSize:"0.85rem",margin:"0 0 6px",lineHeight:"1.5"}}>{confirmarBorrarUser.email}</p>
+            <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 20px",lineHeight:"1.5"}}>Esta accion no se puede deshacer.</p>
+            <div style={{display:"flex",gap:"10px"}}>
+              <button onClick={() => setConfirmarBorrarUser(null)}
+                style={{flex:1,padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontWeight:"600",fontSize:"0.85rem"}}>
+                Cancelar
+              </button>
+              <button onClick={() => borrarUsuario(confirmarBorrarUser.id)}
+                style={{flex:1,padding:"10px",borderRadius:"8px",background:"#ef4444",border:"none",color:"white",cursor:"pointer",fontWeight:"700",fontSize:"0.85rem"}}>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
