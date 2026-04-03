@@ -90,13 +90,14 @@ export default function Dashboard() {
           body: JSON.stringify({ tipo: "nuevo_usuario_admin", email: authData.user.email }),
         }).catch(() => {});
       }
-      // Email creditos bajos
-      if (usuarioData.creditos > 0 && usuarioData.creditos < 5) {
+      // Email creditos bajos — solo una vez
+      if (usuarioData.creditos > 0 && usuarioData.creditos < 5 && !usuarioData.email_creditos_bajos_enviado) {
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tipo: "creditos_bajos", email: authData.user.email }),
         }).catch(() => {});
+        supabase.from("usuarios").update({ email_creditos_bajos_enviado: true }).eq("id", authData.user.id).then(() => {});
       }
     }
 
