@@ -77,6 +77,16 @@ export default function AdminPage() {
     setUsuarios(data.usuarios || []);
   }
 
+  async function borrarUsuario(id: string, email: string) {
+    if (!confirm(`Eliminar usuario ${email}? Esta accion no se puede deshacer.`)) return;
+    await fetch("/api/admin-usuarios", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    setUsuarios(prev => prev.filter(u => u.id !== id));
+  }
+
   async function guardarUsuario(userId: string) {
     setGuardando(true);
     await fetch("/api/admin-usuarios", {
@@ -279,9 +289,14 @@ export default function AdminPage() {
                         </button>
                       </div>
                     ) : (
-                      <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
-                        Editar
-                      </button>
+                      <div style={{display:"flex",gap:"6px"}}>
+                        <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+                          Editar
+                        </button>
+                        <button onClick={() => borrarUsuario(u.id, u.email)} style={{background:"none",border:"1px solid #ef4444",borderRadius:"6px",padding:"4px 10px",color:"#ef4444",fontSize:"0.75rem",cursor:"pointer"}}>
+                          Borrar
+                        </button>
+                      </div>
                     )}
                   </td>
                 </tr>

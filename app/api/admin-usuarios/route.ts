@@ -57,3 +57,15 @@ export async function PATCH(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
 }
+
+export async function DELETE(request: Request) {
+  if (!await verificarAdmin()) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+  const { id } = await request.json();
+  // Borrar de la tabla usuarios
+  await supabaseAdmin.from("usuarios").delete().eq("id", id);
+  // Borrar de Supabase Auth
+  await supabaseAdmin.auth.admin.deleteUser(id);
+  return NextResponse.json({ ok: true });
+}
