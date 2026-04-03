@@ -289,12 +289,12 @@ export default function AdminPage() {
                         </button>
                       </div>
                     ) : (
-                      <div style={{display:"flex",gap:"6px"}}>
-                        <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 10px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+                      <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
+                        <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
                           Editar
                         </button>
-                        <button onClick={() => borrarUsuario(u.id, u.email)} style={{background:"none",border:"1px solid #ef4444",borderRadius:"6px",padding:"4px 10px",color:"#ef4444",fontSize:"0.75rem",cursor:"pointer"}}>
-                          Borrar
+                        <button onClick={() => borrarUsuario(u.id, u.email)} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
+                          ✕
                         </button>
                       </div>
                     )}
