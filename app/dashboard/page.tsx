@@ -363,6 +363,19 @@ export default function Dashboard() {
     </main>
   );
 
+  async function abrirCheckout(plan: "pro" | "studio") {
+    const priceId = plan === "pro"
+      ? process.env.NEXT_PUBLIC_PADDLE_PRICE_PRO
+      : process.env.NEXT_PUBLIC_PADDLE_PRICE_STUDIO;
+    const res = await fetch("/api/paddle", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priceId, email: (await supabase.auth.getUser()).data.user?.email, userId }),
+    });
+    const data = await res.json();
+    if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+  }
+
   async function borrarMini(id: number) {
     await supabase.from("miniatura").delete().eq("id", id);
     setListaMinis(prev => prev.filter((m: any) => m.id !== id));
@@ -444,7 +457,14 @@ export default function Dashboard() {
             <div style={{fontSize:"0.82rem",color:"#FF4D00",marginBottom:"8px"}}>
               Te quedan {creditos} creditos — fondo cuesta 4, con tu cara cuesta 5.
             </div>
-            <a href="/#pricing" target="_blank" style={{fontSize:"0.78rem",color:"#FF4D00",fontWeight:"700",textDecoration:"none"}}>Mejorar plan →</a>
+            <div style={{display:"flex",gap:"8px"}}>
+              <button onClick={() => abrirCheckout("pro")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
+                Pro $10/mes
+              </button>
+              <button onClick={() => abrirCheckout("studio")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #FF4D00",color:"#FF4D00",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
+                Studio $25/mes
+              </button>
+            </div>
           </div>
         ) : (
           <div style={{background:"#111827",borderRadius:"12px",padding:"16px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
