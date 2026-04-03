@@ -364,16 +364,23 @@ export default function Dashboard() {
   );
 
   async function abrirCheckout(plan: "pro" | "studio") {
-    const priceId = plan === "pro"
-      ? process.env.NEXT_PUBLIC_PADDLE_PRICE_PRO
-      : process.env.NEXT_PUBLIC_PADDLE_PRICE_STUDIO;
-    const res = await fetch("/api/paddle", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceId, email: (await supabase.auth.getUser()).data.user?.email, userId }),
+    console.log("abrirCheckout llamado", plan);
+    const isSandbox = process.env.NEXT_PUBLIC_PADDLE_ENV === "sandbox";
+    const priceId = isSandbox
+      ? (plan === "pro" ? process.env.NEXT_PUBLIC_PADDLE_SANDBOX_PRICE_PRO : process.env.NEXT_PUBLIC_PADDLE_SANDBOX_PRICE_STUDIO)
+      : (plan === "pro" ? process.env.NEXT_PUBLIC_PADDLE_PRICE_PRO : process.env.NEXT_PUBLIC_PADDLE_PRICE_STUDIO);
+
+    const { initializePaddle } = await import("@paddle/paddle-js");
+    const paddle = await initializePaddle({
+      environment: isSandbox ? "sandbox" : "production",
+      token: isSandbox ? process.env.NEXT_PUBLIC_PADDLE_SANDBOX_CLIENT_TOKEN! : process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
     });
-    const data = await res.json();
-    if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+    const userEmail = (await supabase.auth.getUser()).data.user?.email;
+    paddle?.Checkout.open({
+      items: [{ priceId: priceId!, quantity: 1 }],
+      customer: { email: userEmail! },
+      customData: { userId },
+    });
   }
 
   async function borrarMini(id: number) {
