@@ -77,6 +77,28 @@ export default function Dashboard() {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
       setAvatarUrl(usuarioData.avatar_url || null);
+      // Email bienvenida si es nuevo usuario (creditos = 10 y no ha generado antes)
+      if (usuarioData.creditos === 10) {
+        fetch("/api/email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo: "bienvenida", email: authData.user.email }),
+        }).catch(() => {});
+        // Notificar admin
+        fetch("/api/email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo: "nuevo_usuario_admin", email: authData.user.email }),
+        }).catch(() => {});
+      }
+      // Email creditos bajos
+      if (usuarioData.creditos > 0 && usuarioData.creditos < 5) {
+        fetch("/api/email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo: "creditos_bajos", email: authData.user.email }),
+        }).catch(() => {});
+      }
     }
 
     const { data: miniData, count } = await supabase
@@ -224,6 +246,12 @@ export default function Dashboard() {
         setCodigoMsg(`Canjeado — +${data.creditos} creditos. Total: ${data.nuevoTotal}`);
         setCreditos(data.nuevoTotal);
         setCodigo("");
+        // Email confirmacion codigo canjeado
+        fetch("/api/email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo: "codigo_canjeado", email: (await supabase.auth.getUser()).data.user?.email }),
+        }).catch(() => {});
       } else {
         setCodigoMsg(data.error || "Codigo no valido");
       }
