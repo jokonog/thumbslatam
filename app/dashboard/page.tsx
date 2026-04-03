@@ -78,7 +78,7 @@ export default function Dashboard() {
       setPlan(usuarioData.plan);
       setAvatarUrl(usuarioData.avatar_url || null);
       // Email bienvenida solo si es la primera vez (creditos = 10 y 0 miniaturas)
-      if (usuarioData.creditos === 10 && (count === 0 || count === null)) {
+      if (usuarioData.creditos === 10 && (miniCount === 0 || miniCount === null)) {
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -107,6 +107,7 @@ export default function Dashboard() {
       .order("created_at", { ascending: false })
       .limit(100);
 
+    const miniCount = count;
     setMiniaturas(count || 0);
     setListaMinis(miniData || []);
   }
