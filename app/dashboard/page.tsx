@@ -77,14 +77,13 @@ export default function Dashboard() {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
       setAvatarUrl(usuarioData.avatar_url || null);
-      // Email bienvenida si es nuevo usuario (creditos = 10 y no ha generado antes)
-      if (usuarioData.creditos === 10) {
+      // Email bienvenida solo si es la primera vez (creditos = 10 y 0 miniaturas)
+      if (usuarioData.creditos === 10 && (count === 0 || count === null)) {
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tipo: "bienvenida", email: authData.user.email }),
         }).catch(() => {});
-        // Notificar admin
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -178,12 +177,6 @@ export default function Dashboard() {
       setCreditos(nuevos);
 
       if (data.variaciones && data.variaciones.length > 1) {
-        // Insertar ambas variaciones al generar
-        if (userId) {
-          for (const url of data.variaciones) {
-            await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: url });
-          }
-        }
         setVariaciones(data.variaciones);
       } else {
         if (userId) await supabase.from("miniatura").insert({ usuario_id: userId, imagen_url: data.imageUrl });
