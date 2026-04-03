@@ -69,7 +69,7 @@ export default function Dashboard() {
 
     const { data: usuarioData } = await supabase
       .from("usuarios")
-      .select("creditos, plan, avatar_url")
+      .select("creditos, plan, avatar_url, email_creditos_bajos_enviado")
       .eq("id", authData.user.id)
       .maybeSingle();
 
