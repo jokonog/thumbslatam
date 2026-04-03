@@ -380,7 +380,7 @@ export default function Dashboard() {
     paddle?.Checkout.open({
       items: [{ priceId: priceId!, quantity: 1 }],
       customer: { email: userEmail! },
-      customData: { userId },
+      customData: { userId, plan },
     });
   }
 
