@@ -565,7 +565,7 @@ export default function Dashboard() {
         </div>
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>6. Emocion principal</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Emocion principal</div>
           <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
             {[
               {id:"epico", label:"Epico"},
