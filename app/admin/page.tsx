@@ -426,6 +426,7 @@ export default function AdminPage() {
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Creditos</th>
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Estado</th>
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Canjeado</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}></th>
               </tr>
             </thead>
             <tbody>
@@ -441,6 +442,11 @@ export default function AdminPage() {
                   </td>
                   <td style={{padding:"8px",color:"#8B8FA8",fontSize:"0.75rem"}}>
                     {c.usado_at ? new Date(c.usado_at).toLocaleDateString("es-ES") : "—"}
+                  </td>
+                  <td style={{padding:"8px"}}>
+                    <button onClick={() => navigator.clipboard.writeText(c.codigo)} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"3px 8px",color:"#8B8FA8",fontSize:"0.72rem",cursor:"pointer"}}>
+                      Copiar
+                    </button>
                   </td>
                 </tr>
               ))}
