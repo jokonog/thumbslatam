@@ -22,6 +22,10 @@ export default function AdminPage() {
   const [nombreNuevo, setNombreNuevo] = useState("");
   const [creditosNuevo, setCreditosNuevo] = useState(50);
   const [codigoGenerado, setCodigoGenerado] = useState("");
+  const [emailInvitacion, setEmailInvitacion] = useState("");
+  const [nombreInvitacion, setNombreInvitacion] = useState("");
+  const [enviandoInvitacion, setEnviandoInvitacion] = useState(false);
+  const [invitacionEnviada, setInvitacionEnviada] = useState(false);
   const [creando, setCreando] = useState(false);
   const [stats, setStats] = useState<any>(null);
   const [health, setHealth] = useState<any[]>([]);
@@ -138,6 +142,28 @@ export default function AdminPage() {
       cargarCodigos();
     }
     setCreando(false);
+  }
+
+  async function enviarInvitacion() {
+    if (!emailInvitacion.trim() || !nombreInvitacion.trim()) return;
+    setEnviandoInvitacion(true);
+    const res = await fetch("/api/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tipo: "invitacion_codigo",
+        email: emailInvitacion,
+        nombre: nombreInvitacion,
+        codigo: codigoGenerado,
+      }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setInvitacionEnviada(true);
+      setEmailInvitacion("");
+      setNombreInvitacion("");
+    }
+    setEnviandoInvitacion(false);
   }
 
   const inputStyle = {
@@ -357,6 +383,27 @@ export default function AdminPage() {
             <button onClick={() => navigator.clipboard.writeText(codigoGenerado)} style={{background:"none",border:"1px solid #06D6A0",borderRadius:"6px",padding:"4px 10px",color:"#06D6A0",fontSize:"0.75rem",cursor:"pointer"}}>
               Copiar
             </button>
+          </div>
+          <div style={{marginTop:"16px",borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:"16px"}}>
+            <p style={{fontSize:"0.8rem",color:"#8B8FA8",marginBottom:"10px"}}>Enviar invitacion por email</p>
+            <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
+              <input
+                placeholder="Nombre (ej: Yoly)"
+                value={nombreInvitacion}
+                onChange={e => { setNombreInvitacion(e.target.value); setInvitacionEnviada(false); }}
+                style={{flex:1,minWidth:"140px",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem"}}
+              />
+              <input
+                placeholder="Email del creador"
+                value={emailInvitacion}
+                onChange={e => { setEmailInvitacion(e.target.value); setInvitacionEnviada(false); }}
+                style={{flex:2,minWidth:"200px",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem"}}
+              />
+              <button onClick={enviarInvitacion} disabled={enviandoInvitacion || !emailInvitacion || !nombreInvitacion} style={{background:"#FF4D00",border:"none",borderRadius:"8px",padding:"8px 16px",color:"white",fontWeight:700,fontSize:"0.82rem",cursor:"pointer",opacity:(!emailInvitacion||!nombreInvitacion)?0.5:1}}>
+                {enviandoInvitacion ? "..." : "Enviar"}
+              </button>
+            </div>
+            {invitacionEnviada && <p style={{color:"#06D6A0",fontSize:"0.8rem",marginTop:"8px"}}>Invitacion enviada correctamente</p>}
           </div>
         )}
       </div>
