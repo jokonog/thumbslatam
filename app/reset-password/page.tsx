@@ -8,13 +8,23 @@ export default function ResetPassword() {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
   const [listo, setListo] = useState(false);
+  const [sessionLista, setSessionLista] = useState(false);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        // Supabase maneja el token automáticamente
+    const hash = window.location.hash;
+    if (hash) {
+      const params = new URLSearchParams(hash.substring(1));
+      const access_token = params.get("access_token");
+      const refresh_token = params.get("refresh_token");
+      if (access_token && refresh_token) {
+        supabase.auth.setSession({ access_token, refresh_token }).then(({ error }) => {
+          if (!error) setSessionLista(true);
+          else setError("Link invalido o expirado. Solicita uno nuevo.");
+        });
+      } else {
+        setError("Link invalido o expirado. Solicita uno nuevo.");
       }
-    });
+    }
   }, []);
 
   async function cambiarPassword() {
