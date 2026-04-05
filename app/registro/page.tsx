@@ -52,6 +52,11 @@ const [progreso, setProgreso] = useState(0);
         <button onClick={iniciarSesion} disabled={cargando} style={{width:"100%",padding:"13px",borderRadius:"10px",background:"transparent",border:"1px solid #3A3D52",color:"white",fontSize:"0.95rem",fontWeight:"500",cursor:"pointer"}}>
           Iniciar sesión
         </button>
+        <p style={{textAlign:"center",marginTop:"16px",fontSize:"0.82rem"}}>
+          <a href="/forgot-password" style={{color:"#8B8FA8",textDecoration:"none"}} onMouseEnter={e=>(e.currentTarget.style.color="#FF4D00")} onMouseLeave={e=>(e.currentTarget.style.color="#8B8FA8")}>
+            ¿Olvidaste tu contraseña?
+          </a>
+        </p>
       </div>
     </main>
   );
