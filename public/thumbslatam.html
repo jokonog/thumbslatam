@@ -1440,6 +1440,12 @@
     .hero-stats { gap: 10px; }
   }
 </style>
+
+<script>
+  if (window.location.hash && window.location.hash.includes('type=recovery')) {
+    window.location.href = '/reset-password' + window.location.hash;
+  }
+</script>
 </head>
 <body>
 
