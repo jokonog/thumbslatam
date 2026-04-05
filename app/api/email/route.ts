@@ -81,6 +81,14 @@ export async function POST(request: Request) {
           <a href="https://www.thumbslatam.com/registro" style="display:inline-block;padding:14px 28px;background:#FF4D00;color:white;border-radius:8px;font-weight:700;text-decoration:none;font-size:0.95rem">
             Canjear mi código →
           </a>
+          <div style="margin-top:24px;padding:16px;background:#0D1020;border-radius:8px;border-left:3px solid #3A3D52">
+            <p style="color:#8B8FA8;font-size:0.82rem;margin:0 0 8px;line-height:1.6">
+              <strong style="color:white">¿Eres nuevo en ThumbsLatam?</strong> Crea tu cuenta gratis en <a href="https://www.thumbslatam.com/registro" style="color:#FF4D00;text-decoration:none">thumbslatam.com/registro</a> e ingresa tu código al momento del registro.
+            </p>
+            <p style="color:#8B8FA8;font-size:0.82rem;margin:0;line-height:1.6">
+              <strong style="color:white">¿Ya eres parte de la comunidad?</strong> Entra a tu dashboard y canjea tu código en el apartado de canje de créditos.
+            </p>
+          </div>
           <p style="color:#3A3D52;font-size:0.78rem;margin-top:32px">ThumbsLatam — Miniaturas para streamers latinos · <a href="https://www.thumbslatam.com" style="color:#3A3D52">thumbslatam.com</a></p>
         </div>
       `;
