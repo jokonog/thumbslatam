@@ -378,6 +378,7 @@ export default function AdminPage() {
           </button>
         </div>
         {codigoGenerado && (
+          <div>
           <div style={{marginTop:"12px",background:"rgba(6,214,160,0.08)",border:"1px solid rgba(6,214,160,0.25)",borderRadius:"8px",padding:"12px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <span style={{fontFamily:"monospace",fontSize:"1rem",color:"#06D6A0"}}>{codigoGenerado}</span>
             <button onClick={() => navigator.clipboard.writeText(codigoGenerado)} style={{background:"none",border:"1px solid #06D6A0",borderRadius:"6px",padding:"4px 10px",color:"#06D6A0",fontSize:"0.75rem",cursor:"pointer"}}>
@@ -404,6 +405,7 @@ export default function AdminPage() {
               </button>
             </div>
             {invitacionEnviada && <p style={{color:"#06D6A0",fontSize:"0.8rem",marginTop:"8px"}}>Invitacion enviada correctamente</p>}
+          </div>
           </div>
         )}
       </div>
