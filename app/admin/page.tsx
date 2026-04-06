@@ -152,6 +152,17 @@ export default function AdminPage() {
     setCreando(false);
   }
 
+  async function enviarEncuesta(email: string, nombre: string) {
+    const res = await fetch("/api/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tipo: "encuesta", email, nombre }),
+    });
+    const data = await res.json();
+    if (data.ok) alert(`Encuesta enviada a ${email}`);
+    else alert("Error al enviar la encuesta");
+  }
+
   async function cargarMiniaturasUsuario(userId: string) {
     setCargandoMinis(true);
     const res = await fetch(`/api/admin-miniaturas?userId=${userId}`);
@@ -360,6 +371,9 @@ export default function AdminPage() {
                         </button>
                         <button onClick={() => { setVisorUsuario({id:u.id,email:u.email}); cargarMiniaturasUsuario(u.id); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
                           Minis
+                        </button>
+                        <button onClick={() => enviarEncuesta(u.email, u.nombre || u.email.split("@")[0])} style={{background:"none",border:"1px solid #7F77DD",borderRadius:"6px",padding:"4px 8px",color:"#7F77DD",fontSize:"0.75rem",cursor:"pointer"}}>
+                          Encuesta
                         </button>
                         <button onClick={() => setConfirmarBorrarUser({id: u.id, email: u.email})} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
                           ✕

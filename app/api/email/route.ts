@@ -94,6 +94,26 @@ export async function POST(request: Request) {
       `;
     }
 
+    if (tipo === "encuesta") {
+      subject = "Tu opinion nos importa — ThumbsLatam";
+      html = `
+        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#060810;color:white;padding:32px;border-radius:12px">
+          <img src="https://www.thumbslatam.com/logo.png" alt="ThumbsLatam" style="height:36px;margin-bottom:24px"/>
+          <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 12px">Hola ${nombre}, ¿como va todo? 👋</h1>
+          <p style="color:#8B8FA8;line-height:1.6;margin:0 0 20px">
+            Llevamos un tiempo juntos y nos gustaria saber tu opinion. Toma 2 minutos y ayudanos a mejorar ThumbsLatam para ti y toda la comunidad.
+          </p>
+          <a href="https://www.thumbslatam.com/feedback?email=${email}" style="display:inline-block;padding:14px 28px;background:#FF4D00;color:white;border-radius:8px;font-weight:700;text-decoration:none;font-size:0.95rem">
+            Compartir mi opinion →
+          </a>
+          <p style="color:#8B8FA8;font-size:0.82rem;margin-top:24px;line-height:1.6">
+            Son solo 5 preguntas rapidas. Tu feedback es lo que nos permite seguir mejorando.
+          </p>
+          <p style="color:#3A3D52;font-size:0.78rem;margin-top:32px">ThumbsLatam — Miniaturas para streamers latinos · <a href="https://www.thumbslatam.com" style="color:#3A3D52">thumbslatam.com</a></p>
+        </div>
+      `;
+    }
+
     if (tipo === "nuevo_usuario_admin") {
       subject = `Nuevo usuario registrado: ${email}`;
       html = `
