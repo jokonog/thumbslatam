@@ -42,6 +42,9 @@ export default function AdminPage() {
   const [editCreditos, setEditCreditos] = useState(0);
   const [editPlan, setEditPlan] = useState("");
   const [guardando, setGuardando] = useState(false);
+  const [visorUsuario, setVisorUsuario] = useState<{id:string,email:string}|null>(null);
+  const [miniaturasUsuario, setMiniaturasUsuario] = useState<any[]>([]);
+  const [cargandoMinis, setCargandoMinis] = useState(false);
 
   async function login() {
     setCargando(true);
@@ -147,6 +150,14 @@ export default function AdminPage() {
       cargarCodigos();
     }
     setCreando(false);
+  }
+
+  async function cargarMiniaturasUsuario(userId: string) {
+    setCargandoMinis(true);
+    const res = await fetch(`/api/admin-miniaturas?userId=${userId}`);
+    const data = await res.json();
+    setMiniaturasUsuario(data.miniaturas || []);
+    setCargandoMinis(false);
   }
 
   async function enviarDesdeModal() {
@@ -508,6 +519,38 @@ export default function AdminPage() {
                   <button onClick={enviarDesdeModal} disabled={enviandoModal||!emailModal||!nombreModal} style={{flex:1,padding:"10px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:700,cursor:"pointer",fontSize:"0.85rem",opacity:(!emailModal||!nombreModal)?0.5:1}}>
                     {enviandoModal ? "..." : "Enviar"}
                   </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+      {visorUsuario && (
+        <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.85)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"20px"}}>
+          <div style={{background:"#111827",borderRadius:"14px",padding:"24px",maxWidth:"800px",width:"100%",border:"1px solid rgba(255,255,255,0.1)",maxHeight:"90vh",overflowY:"auto"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}>
+              <div>
+                <h3 style={{margin:"0 0 4px",fontSize:"1rem",fontWeight:"700"}}>Miniaturas generadas</h3>
+                <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:0}}>{visorUsuario.email}</p>
+              </div>
+              <button onClick={() => { setVisorUsuario(null); setMiniaturasUsuario([]); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"6px 12px",color:"#8B8FA8",cursor:"pointer",fontSize:"0.82rem"}}>Cerrar</button>
+            </div>
+            {cargandoMinis ? (
+              <p style={{color:"#8B8FA8",textAlign:"center",padding:"40px"}}>Cargando...</p>
+            ) : miniaturasUsuario.length === 0 ? (
+              <p style={{color:"#8B8FA8",textAlign:"center",padding:"40px"}}>Este usuario no ha generado miniaturas aun</p>
+            ) : (
+              <>
+                <p style={{color:"#8B8FA8",fontSize:"0.8rem",marginBottom:"12px"}}>{miniaturasUsuario.length} miniaturas generadas</p>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:"10px"}}>
+                  {miniaturasUsuario.map((m:any, i:number) => (
+                    <div key={i} style={{borderRadius:"8px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)"}}>
+                      <img src={m.imagen_url} alt="miniatura" style={{width:"100%",aspectRatio:"16/9",objectFit:"cover",display:"block"}}/>
+                      <div style={{padding:"6px 8px",background:"#0D1020"}}>
+                        <p style={{color:"#8B8FA8",fontSize:"0.72rem",margin:0}}>{m.created_at ? new Date(m.created_at).toLocaleDateString("es-ES") : "—"}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </>
             )}
