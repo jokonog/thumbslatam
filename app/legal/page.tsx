@@ -143,8 +143,11 @@ export default function LegalPage() {
             </section>
 
             <section>
-              <h3 className="text-white font-medium mb-2">5. Uso aceptable</h3>
-              <p>Queda prohibido usar ThumbsLatam para generar contenido ilegal, ofensivo, discriminatorio, que infrinja derechos de terceros, o que promueva violencia. ThumbsLatam se reserva el derecho de suspender cuentas que violen esta politica.</p>
+              <h3 className="text-white font-medium mb-2">5. Uso aceptable y propiedad intelectual</h3>
+              <p className="mb-3">Queda prohibido usar ThumbsLatam para generar contenido ilegal, ofensivo, discriminatorio, que infrinja derechos de terceros, o que promueva violencia. ThumbsLatam se reserva el derecho de suspender cuentas que violen esta politica.</p>
+              <p className="mb-3"><strong className="text-white">Responsabilidad del usuario:</strong> El usuario es el unico responsable del contenido que genera mediante ThumbsLatam. Queda expresamente prohibido usar la plataforma para generar imagenes que reproduzcan marcas registradas, logotipos, personajes con derechos de autor, rostros de personas publicas o privadas sin su consentimiento, o cualquier otro contenido que infrinja derechos de propiedad intelectual de terceros.</p>
+              <p className="mb-3"><strong className="text-white">Exoneracion de responsabilidad por copyright:</strong> ThumbsLatam no se hace responsable por reclamaciones de terceros derivadas del contenido generado por sus usuarios. En caso de recibir una reclamacion valida de copyright o propiedad intelectual relacionada con el contenido de un usuario, ThumbsLatam cooperara con los titulares de derechos y podra eliminar el contenido en cuestion y suspender la cuenta involucrada.</p>
+              <p><strong className="text-white">Moderacion de contenido:</strong> ThumbsLatam se reserva el derecho de revisar el contenido generado en la plataforma con el unico proposito de verificar el cumplimiento de estas politicas de uso aceptable. Esta revision se realizara de forma excepcional y solo cuando exista una razon justificada, como una reclamacion de terceros o sospecha de uso indebido.</p>
             </section>
 
             <section>
