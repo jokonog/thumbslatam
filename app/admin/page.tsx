@@ -26,6 +26,11 @@ export default function AdminPage() {
   const [nombreInvitacion, setNombreInvitacion] = useState("");
   const [enviandoInvitacion, setEnviandoInvitacion] = useState(false);
   const [invitacionEnviada, setInvitacionEnviada] = useState(false);
+  const [modalEnvio, setModalEnvio] = useState<{codigo:string,creador:string}|null>(null);
+  const [emailModal, setEmailModal] = useState("");
+  const [nombreModal, setNombreModal] = useState("");
+  const [enviandoModal, setEnviandoModal] = useState(false);
+  const [enviadoModal, setEnviadoModal] = useState(false);
   const [creando, setCreando] = useState(false);
   const [stats, setStats] = useState<any>(null);
   const [health, setHealth] = useState<any[]>([]);
@@ -142,6 +147,28 @@ export default function AdminPage() {
       cargarCodigos();
     }
     setCreando(false);
+  }
+
+  async function enviarDesdeModal() {
+    if (!emailModal.trim() || !nombreModal.trim()) return;
+    setEnviandoModal(true);
+    const res = await fetch("/api/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tipo: "invitacion_codigo",
+        email: emailModal,
+        nombre: nombreModal,
+        codigo: modalEnvio?.codigo,
+      }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setEnviadoModal(true);
+      setEmailModal("");
+      setNombreModal("");
+    }
+    setEnviandoModal(false);
   }
 
   async function enviarInvitacion() {
@@ -444,9 +471,16 @@ export default function AdminPage() {
                     {c.usado_at ? new Date(c.usado_at).toLocaleDateString("es-ES") : "—"}
                   </td>
                   <td style={{padding:"8px"}}>
-                    <button onClick={() => navigator.clipboard.writeText(c.codigo)} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"3px 8px",color:"#8B8FA8",fontSize:"0.72rem",cursor:"pointer"}}>
-                      Copiar
-                    </button>
+                    <div style={{display:"flex",gap:"6px"}}>
+                      <button onClick={() => navigator.clipboard.writeText(c.codigo)} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"3px 8px",color:"#8B8FA8",fontSize:"0.72rem",cursor:"pointer"}}>
+                        Copiar
+                      </button>
+                      {!c.usado && (
+                        <button onClick={() => { setModalEnvio({codigo:c.codigo,creador:c.creador_nombre}); setEnviadoModal(false); setEmailModal(""); setNombreModal(""); }} style={{background:"none",border:"1px solid #FF4D00",borderRadius:"6px",padding:"3px 8px",color:"#FF4D00",fontSize:"0.72rem",cursor:"pointer"}}>
+                          Enviar
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -455,6 +489,31 @@ export default function AdminPage() {
           {codigos.length === 0 && <p style={{color:"#8B8FA8",textAlign:"center",padding:"20px"}}>No hay codigos aun</p>}
         </div>
       </div>
+      {modalEnvio && (
+        <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000}}>
+          <div style={{background:"#111827",borderRadius:"14px",padding:"28px 24px",maxWidth:"380px",width:"90%",border:"1px solid rgba(255,255,255,0.1)"}}>
+            <h3 style={{margin:"0 0 4px",fontSize:"1rem",fontWeight:"700"}}>Enviar invitacion</h3>
+            <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 16px",fontFamily:"monospace"}}>{modalEnvio.codigo}</p>
+            {enviadoModal ? (
+              <>
+                <p style={{color:"#06D6A0",fontSize:"0.88rem",marginBottom:"16px"}}>Invitacion enviada correctamente</p>
+                <button onClick={() => setModalEnvio(null)} style={{width:"100%",padding:"10px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:700,cursor:"pointer"}}>Cerrar</button>
+              </>
+            ) : (
+              <>
+                <input placeholder="Nombre del influencer" value={nombreModal} onChange={e => setNombreModal(e.target.value)} style={{width:"100%",padding:"10px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"10px",boxSizing:"border-box"}}/>
+                <input placeholder="Email del influencer" value={emailModal} onChange={e => setEmailModal(e.target.value)} style={{width:"100%",padding:"10px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"16px",boxSizing:"border-box"}}/>
+                <div style={{display:"flex",gap:"10px"}}>
+                  <button onClick={() => setModalEnvio(null)} style={{flex:1,padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>Cancelar</button>
+                  <button onClick={enviarDesdeModal} disabled={enviandoModal||!emailModal||!nombreModal} style={{flex:1,padding:"10px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:700,cursor:"pointer",fontSize:"0.85rem",opacity:(!emailModal||!nombreModal)?0.5:1}}>
+                    {enviandoModal ? "..." : "Enviar"}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
       {confirmarBorrarUser !== null && (
         <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000}}>
           <div style={{background:"#111827",borderRadius:"14px",padding:"28px 24px",maxWidth:"340px",width:"90%",border:"1px solid rgba(255,255,255,0.1)",textAlign:"center"}}>
