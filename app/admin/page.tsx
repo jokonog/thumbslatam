@@ -358,6 +358,9 @@ export default function AdminPage() {
                         <button onClick={() => { setEditandoId(u.id); setEditCreditos(u.creditos); setEditPlan(u.plan || "gratis"); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
                           Editar
                         </button>
+                        <button onClick={() => { setVisorUsuario({id:u.id,email:u.email}); cargarMiniaturasUsuario(u.id); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
+                          Minis
+                        </button>
                         <button onClick={() => setConfirmarBorrarUser({id: u.id, email: u.email})} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
                           ✕
                         </button>
