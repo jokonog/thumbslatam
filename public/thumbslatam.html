@@ -1438,7 +1438,15 @@
     .testi-card { padding: 20px 16px; }
     .feature-card { padding: 20px 16px; }
     .hero-stats { gap: 10px; }
-  }
+  } 
+  @keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
 </style>
 
 <script>
@@ -1867,6 +1875,58 @@
   </div>
 </section>
 
+<!-- GALERIA -->
+<section style="padding:80px 0;overflow:hidden;">
+  <div style="text-align:center;margin-bottom:48px;">
+    <div class="section-tag">🎨 Galería</div>
+    <h2 class="section-title">Creado con ThumbsLatam</h2>
+    <p style="color:var(--c-muted);max-width:500px;margin:16px auto 0;">Miniaturas cinematográficas generadas con IA por nuestra comunidad</p>
+  </div>
+  <div style="overflow:hidden;width:100%;mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);">
+    <div style="display:flex;gap:16px;width:max-content;animation:scrollLeft 40s linear infinite;">
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ep7dn9loipzbtrsin7lp.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ji9z3lykdtz1irhipe4q.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/v0wdhx4ekwnlekbkuwzi.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ksezs7sth3iq7zu74zzz.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oz3asccfb1vc9hwak5yo.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/sc47fyiwkft1tkzbnfbg.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/pfpiitc22vopko6qhz13.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/uklrdh4ui0ww5mscmlix.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/vqfltazje94l5y5qzkfy.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/jgrrdninawm1nqydupjg.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/s0mjosxy7eo1zghodrzb.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/b6q0m5oqywmmceeqyjah.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oopdpvwvhl5jibjtgbfs.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ep7dn9loipzbtrsin7lp.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ji9z3lykdtz1irhipe4q.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/v0wdhx4ekwnlekbkuwzi.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ksezs7sth3iq7zu74zzz.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+    </div>
+  </div>
+  <div style="overflow:hidden;width:100%;margin-top:16px;mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);">
+    <div style="display:flex;gap:16px;width:max-content;animation:scrollRight 45s linear infinite;">
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oopdpvwvhl5jibjtgbfs.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/b6q0m5oqywmmceeqyjah.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/s0mjosxy7eo1zghodrzb.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/jgrrdninawm1nqydupjg.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/vqfltazje94l5y5qzkfy.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/uklrdh4ui0ww5mscmlix.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/pfpiitc22vopko6qhz13.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/sc47fyiwkft1tkzbnfbg.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oz3asccfb1vc9hwak5yo.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ksezs7sth3iq7zu74zzz.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/v0wdhx4ekwnlekbkuwzi.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ji9z3lykdtz1irhipe4q.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/ep7dn9loipzbtrsin7lp.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oopdpvwvhl5jibjtgbfs.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/b6q0m5oqywmmceeqyjah.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/s0mjosxy7eo1zghodrzb.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+      <img src="https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/jgrrdninawm1nqydupjg.jpg" style="height:200px;width:356px;object-fit:cover;border-radius:12px;flex-shrink:0;"/>
+    </div>
+  </div>
+</section>
 
 <!-- FAQ -->
 <section class="faq-section" id="faq">
