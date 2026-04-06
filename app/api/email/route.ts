@@ -11,13 +11,13 @@ export async function POST(request: Request) {
     let html = "";
 
     if (tipo === "bienvenida") {
-      subject = "Bienvenido a ThumbsLatam — tus 10 creditos te esperan";
+      subject = "Bienvenido a ThumbsLatam — tus 5 creditos te esperan";
       html = `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#060810;color:white;padding:32px;border-radius:12px">
           <img src="https://www.thumbslatam.com/logo.png" alt="ThumbsLatam" style="height:36px;margin-bottom:24px"/>
           <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 12px">Bienvenido a ThumbsLatam 🎉</h1>
           <p style="color:#8B8FA8;line-height:1.6;margin:0 0 20px">
-            Tu cuenta esta lista. Te hemos cargado <strong style="color:#FF4D00">10 creditos gratis</strong> para que empieces a crear miniaturas cinematograficas ahora mismo.
+            Tu cuenta esta lista. Te hemos cargado <strong style="color:#FF4D00">5 creditos gratis</strong> para que empieces a crear miniaturas cinematograficas ahora mismo.
           </p>
           <a href="https://www.thumbslatam.com/dashboard" style="display:inline-block;padding:12px 24px;background:#FF4D00;color:white;border-radius:8px;font-weight:700;text-decoration:none;font-size:0.95rem">
             Ir al dashboard →

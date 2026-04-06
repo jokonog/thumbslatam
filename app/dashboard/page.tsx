@@ -78,8 +78,8 @@ export default function Dashboard() {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
       setAvatarUrl(usuarioData.avatar_url || null);
-      // Email bienvenida solo si es la primera vez (creditos = 10 y 0 miniaturas)
-      if (usuarioData.creditos === 10) {
+      // Email bienvenida solo si es la primera vez (creditos = 5 y 0 miniaturas)
+      if (usuarioData.creditos === 5) {
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

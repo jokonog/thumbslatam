@@ -12,11 +12,11 @@ const faqs = [
   },
   {
     q: "¿Como funcionan los creditos?",
-    a: "Cada generacion consume creditos segun el tipo: Solo fondo IA consume 4 creditos e incluye 2 variaciones para elegir la mejor. Con mi cara consume 5 creditos. El plan gratuito incluye 10 creditos unicos al registrarte. Los creditos de planes pagos se renuevan cada mes.",
+    a: "Cada generacion consume creditos segun el tipo: Solo fondo IA consume 4 creditos e incluye 2 variaciones para elegir la mejor. Con mi cara consume 5 creditos. El plan gratuito incluye 5 creditos unicos al registrarte. Los creditos de planes pagos se renuevan cada mes.",
   },
   {
     q: "¿Cuantas miniaturas puedo generar con cada plan?",
-    a: "Plan Gratis (10 creditos unicos al registrarte): hasta 2 generaciones de fondo (4 creditos c/u) o 2 con tu cara (5 creditos c/u). No se renuevan. Plan Creador Pro ($10/mes, 100 creditos): hasta 25 generaciones de fondo o 20 con tu cara. Plan Studio ($25/mes, 300 creditos): hasta 75 generaciones de fondo o 60 con tu cara. Puedes combinar ambos tipos en cada plan.",
+    a: "Plan Gratis (5 creditos unicos al registrarte): hasta 2 generaciones de fondo (4 creditos c/u) o 2 con tu cara (5 creditos c/u). No se renuevan. Plan Creador Pro ($10/mes, 100 creditos): hasta 25 generaciones de fondo o 20 con tu cara. Plan Studio ($25/mes, 300 creditos): hasta 75 generaciones de fondo o 60 con tu cara. Puedes combinar ambos tipos en cada plan.",
   },
   {
     q: "¿Los creditos se acumulan mes a mes?",
@@ -134,7 +134,7 @@ export default function LegalPage() {
 
             <section>
               <h3 className="text-white font-medium mb-2">3. Creditos y planes</h3>
-              <p>Los creditos son la unidad de consumo del servicio. El plan gratuito otorga 10 creditos unicos al momento del registro y no se renuevan. Los planes pagos incluyen creditos que se renuevan mensualmente. En todos los casos, los creditos no utilizados no se acumulan ni se reembolsan.</p>
+              <p>Los creditos son la unidad de consumo del servicio. El plan gratuito otorga 5 creditos unicos al momento del registro y no se renuevan. Los planes pagos incluyen creditos que se renuevan mensualmente. En todos los casos, los creditos no utilizados no se acumulan ni se reembolsan.</p>
             </section>
 
             <section>
