@@ -174,6 +174,16 @@ export default function AdminPage() {
     setCargandoMinis(false);
   }
 
+  async function borrarCodigo(id: string) {
+    if (!confirm("¿Eliminar este codigo?")) return;
+    await fetch("/api/admin-codigos", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    cargarCodigos();
+  }
+
   async function enviarDesdeModal() {
     if (!emailModal.trim() || !nombreModal.trim()) return;
     setEnviandoModal(true);
@@ -516,6 +526,9 @@ export default function AdminPage() {
                           Enviar
                         </button>
                       )}
+                      <button onClick={() => borrarCodigo(c.id)} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"6px",padding:"3px 8px",color:"#ef4444",fontSize:"0.72rem",cursor:"pointer"}}>
+                        ✕
+                      </button>
                     </div>
                   </td>
                 </tr>
