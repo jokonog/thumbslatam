@@ -28,6 +28,7 @@ export default function AdminPage() {
   const [invitacionEnviada, setInvitacionEnviada] = useState(false);
   const [modalEnvio, setModalEnvio] = useState<{codigo:string,creador:string}|null>(null);
   const [emailModal, setEmailModal] = useState("");
+  const [mensajeModal, setMensajeModal] = useState("");
   const [nombreModal, setNombreModal] = useState("");
   const [enviandoModal, setEnviandoModal] = useState(false);
   const [enviadoModal, setEnviadoModal] = useState(false);
@@ -183,6 +184,7 @@ export default function AdminPage() {
         email: emailModal,
         nombre: nombreModal,
         codigo: modalEnvio?.codigo,
+        mensaje: mensajeModal,
       }),
     });
     const data = await res.json();
@@ -505,7 +507,7 @@ export default function AdminPage() {
                         Copiar
                       </button>
                       {!c.usado && (
-                        <button onClick={() => { setModalEnvio({codigo:c.codigo,creador:c.creador_nombre}); setEnviadoModal(false); setEmailModal(""); setNombreModal(""); }} style={{background:"none",border:"1px solid #FF4D00",borderRadius:"6px",padding:"3px 8px",color:"#FF4D00",fontSize:"0.72rem",cursor:"pointer"}}>
+                        <button onClick={() => { setModalEnvio({codigo:c.codigo,creador:c.creador_nombre}); setEnviadoModal(false); setEmailModal(""); setNombreModal(""); setMensajeModal(""); }} style={{background:"none",border:"1px solid #FF4D00",borderRadius:"6px",padding:"3px 8px",color:"#FF4D00",fontSize:"0.72rem",cursor:"pointer"}}>
                           Enviar
                         </button>
                       )}
@@ -531,6 +533,7 @@ export default function AdminPage() {
             ) : (
               <>
                 <input placeholder="Nombre del influencer" value={nombreModal} onChange={e => setNombreModal(e.target.value)} style={{width:"100%",padding:"10px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"10px",boxSizing:"border-box"}}/>
+                <textarea placeholder="Mensaje personalizado (opcional) — aparece como introducción antes del código" value={mensajeModal} onChange={e => setMensajeModal(e.target.value)} rows={3} style={{width:"100%",padding:"10px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginBottom:"10px",boxSizing:"border-box",resize:"vertical"}}/>
                 <input placeholder="Email del influencer" value={emailModal} onChange={e => setEmailModal(e.target.value)} style={{width:"100%",padding:"10px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"16px",boxSizing:"border-box"}}/>
                 <div style={{display:"flex",gap:"10px"}}>
                   <button onClick={() => setModalEnvio(null)} style={{flex:1,padding:"10px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>Cancelar</button>

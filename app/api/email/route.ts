@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { tipo, email, nombre, codigo } = await request.json();
+    const { tipo, email, nombre, codigo, mensaje } = await request.json();
 
     let subject = "";
     let html = "";
