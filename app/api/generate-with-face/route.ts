@@ -19,7 +19,7 @@ const supabaseAdmin = createClient(
 
 export async function POST(request: Request) {
   try {
-    const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar } = await request.json();
+    const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia } = await request.json();
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense",
       emocionado: "excited, energetic, enthusiastic",
@@ -45,12 +45,18 @@ export async function POST(request: Request) {
     const aspectRatio = esVertical ? "9:16" : "16:9";
 
     // PASO 1: Kontext Max genera la escena con el personaje
+    const referenciaPrompt = imagenReferencia
+      ? ` Inspired by the visual style, color palette and atmosphere of the reference scene, but create an original composition.`
+      : "";
+    const inputImageKontext = imagenReferencia
+      ? (await cloudinary.uploader.upload(imagenReferencia, { folder: "thumbslatam-temp" })).secure_url
+      : avatarFinal;
     const kontextOutput: any = await replicate.run(
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting. Place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side. Natural body proportions, realistic anatomy. No text.`,
-          input_image: avatarFinal,
+          prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting.${referenciaPrompt} Place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side. Natural body proportions, realistic anatomy. No text.`,
+          input_image: inputImageKontext,
           aspect_ratio: aspectRatio,
         }
       }
