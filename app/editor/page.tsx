@@ -140,27 +140,6 @@ export default function Editor() {
       canvas.on("object:modified", guardarEstado);
       canvas.on("object:removed", guardarEstado);
 
-      const { Rect } = await import("fabric");
-      const cw = canvas.width!;
-      const ch = canvas.height!;
-      const margen = Math.floor(cw * 0.05);
-      const guia = new Rect({
-        left: margen,
-        top: margen,
-        width: cw - margen * 2,
-        height: ch - margen * 2,
-        fill: "transparent",
-        stroke: "rgba(255,255,255,0.3)",
-        strokeWidth: 1,
-        strokeDashArray: [6, 4],
-        selectable: false,
-        evented: false,
-        excludeFromExport: true,
-        name: "guia-margenes",
-      });
-      canvas.add(guia);
-      canvas.sendObjectToBack(guia);
-
       if (mounted) fabricRef.current = { canvas };
     }
 
@@ -248,6 +227,21 @@ export default function Editor() {
 
     setPuedeArrastrar(necesitaCrop);
     canvas.renderAll();
+
+    canvas.getObjects().filter((o) => (o as any).name === 'guia-margenes').forEach((o) => canvas.remove(o));
+    import('fabric').then(({ Rect }) => {
+      const margen = Math.floor(np.w * 0.05);
+      const guia = new Rect({
+        left: margen, top: margen,
+        width: np.w - margen * 2, height: np.h - margen * 2,
+        fill: 'transparent', stroke: 'rgba(255,255,255,0.3)',
+        strokeWidth: 1, strokeDashArray: [6, 4],
+        selectable: false, evented: false,
+        excludeFromExport: true, name: 'guia-margenes',
+      });
+      canvas.add(guia);
+      canvas.renderAll();
+    });
   }
 
   // ─── Cambiar plataforma ─────────────────────────────────────────────────────

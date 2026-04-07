@@ -160,7 +160,19 @@ async function componerYRefinar(
     refinadoUrl = String(refinado);
     if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen valida");
   } catch (kontextError: any) {
-    console.error("Kontext fallo:", kontextError.message);
+    const errMsg = kontextError.message || "";
+    console.error("Kontext fallo:", errMsg);
+    const esCopyright = errMsg.toLowerCase().includes("copyright") || 
+                        errMsg.toLowerCase().includes("safety") ||
+                        errMsg.toLowerCase().includes("content policy") ||
+                        errMsg.toLowerCase().includes("nsfw") ||
+                        errMsg.toLowerCase().includes("restricted");
+    if (esCopyright) {
+      return NextResponse.json({ 
+        error: "La imagen de fondo fue rechazada por contener contenido con derechos de autor o restricciones de uso. Por favor usa una imagen propia o generada con IA.",
+        codigo: "COPYRIGHT"
+      }, { status: 422 });
+    }
     const compFallback = await cloudinary.uploader.upload(uploadedComp.secure_url, { folder: "thumbslatam/fondos" });
     refinadoUrl = compFallback.secure_url;
   }
