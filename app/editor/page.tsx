@@ -546,7 +546,13 @@ export default function Editor() {
     setGuardando(true);
     try {
       const { canvas } = fabricRef.current;
+      // Ocultar guia antes de exportar
+      const guias = canvas.getObjects().filter((o: any) => o.name === "guia-margenes");
+      guias.forEach((o: any) => o.set("visible", false));
+      canvas.renderAll();
       const dataUrl = canvas.toDataURL({ format: "png", multiplier: 1 });
+      guias.forEach((o: any) => o.set("visible", true));
+      canvas.renderAll();
       const res = await fetch("/api/guardar-miniatura", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -567,7 +573,12 @@ export default function Editor() {
     const { canvas } = fabricRef.current;
     const link = document.createElement("a");
     link.download = "miniatura-thumbslatam.png";
+    const guias2 = canvas.getObjects().filter((o: any) => o.name === "guia-margenes");
+    guias2.forEach((o: any) => o.set("visible", false));
+    canvas.renderAll();
     link.href = canvas.toDataURL({ format: "png", multiplier: 1 });
+    guias2.forEach((o: any) => o.set("visible", true));
+    canvas.renderAll();
     link.click();
   }
 

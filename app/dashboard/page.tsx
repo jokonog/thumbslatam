@@ -172,7 +172,12 @@ export default function Dashboard() {
         body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo }),
       });
       const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      if (data.error) {
+        if (data.codigo === "COPYRIGHT") {
+          throw new Error("⚠️ La imagen fue rechazada por contener contenido con derechos de autor. Por favor usa una imagen propia o genera el fondo con IA.");
+        }
+        throw new Error(data.error);
+      }
 
       // Descontar creditos al generar
       const nuevos = creditos - costo;
