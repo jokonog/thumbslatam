@@ -28,7 +28,7 @@ export default function Avatar() {
   // Cropper state
   const [fotoParaCropear, setFotoParaCropear] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.7);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
   const [fotosProcessadas, setFotosProcessadas] = useState<string[]>([]);
   const [fotoActualIndex, setFotoActualIndex] = useState(0);
@@ -187,7 +187,7 @@ export default function Avatar() {
           </div>
           <p style={{fontSize:"0.78rem",color:"#8B8FA8",margin:"0 0 12px"}}>Mueve y haz zoom para centrar tu cara</p>
 
-          <div style={{position:"relative",width:"100%",height:"300px",borderRadius:"10px",overflow:"hidden",marginBottom:"16px"}}>
+          <div style={{position:"relative",width:"100%",height:"380px",borderRadius:"10px",overflow:"hidden",marginBottom:"16px"}}>
             <Cropper
               image={fotoParaCropear}
               crop={crop}
@@ -203,7 +203,7 @@ export default function Avatar() {
 
           <div style={{display:"flex",alignItems:"center",gap:"12px",marginBottom:"16px"}}>
             <span style={{fontSize:"0.78rem",color:"#8B8FA8",whiteSpace:"nowrap"}}>Zoom:</span>
-            <input type="range" min={1} max={3} step={0.1} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} style={{flex:1}}/>
+            <input type="range" min={0.5} max={3} step={0.1} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} style={{flex:1}}/>
           </div>
 
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>

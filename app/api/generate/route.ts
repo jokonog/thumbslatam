@@ -150,7 +150,7 @@ async function componerYRefinar(
   const uploadedComp = await cloudinary.uploader.upload(base64, { folder: "thumbslatam-temp" });
 
   // Kontext integra iluminacion — SIN texto, SIN titulo en el prompt
-  const promptKontext = `Seamlessly integrate the characters into this scene: ${descripcion}. Apply cinematic lighting, color grading and shadows that match the background atmosphere. Each character must appear exactly ONCE — do not clone or duplicate. Blend them naturally so they feel part of the world. You may stylize lighting and color on the characters to match the scene, but preserve the face identity and outfit. Remove any rectangular cutout borders. Output NO text, NO letters, NO symbols anywhere in the image.`;
+  const promptKontext = `Seamlessly composite the person into this background scene: ${descripcion}. The person must be fully blended into the scene with no visible cutout edges, no rectangular borders, no white halos, no black backgrounds around them. Apply matching cinematic lighting, color grading and shadows. The person appears exactly ONCE. Preserve face identity and outfit details. Make it look like a professional movie poster. Output NO text, NO letters, NO symbols anywhere in the image.`;
 
   const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
     input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
