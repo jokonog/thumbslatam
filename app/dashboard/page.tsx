@@ -597,7 +597,27 @@ export default function Dashboard() {
               Prompts cortos y directos dan mejores resultados. Ej: "Ejecutivo caminando en ciudad moderna, iluminacion cinematografica". Evita terror extremo, violencia grafica o personajes reales.
             </p>
           </div>
-          <input type="text" placeholder="Escena (opcional): explosion de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box"}}/>
+          <input type="text" placeholder="Escena (opcional): explosion de lava, personaje corriendo..." value={escena} onChange={(e)=>setEscena(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",boxSizing:"border-box",marginBottom:"8px"}}/>
+          <div style={{marginTop:"8px"}}>
+            <div style={{fontSize:"0.75rem",color:"#8B8FA8",marginBottom:"6px"}}>Imagen de referencia (opcional)</div>
+            {imagenReferencia ? (
+              <div style={{position:"relative",display:"inline-block"}}>
+                <img src={imagenReferencia} style={{height:"80px",borderRadius:"8px",objectFit:"cover",border:"1px solid #3A3D52"}}/>
+                <button onClick={() => setImagenReferencia(null)} style={{position:"absolute",top:"-6px",right:"-6px",background:"#ef4444",border:"none",borderRadius:"50%",width:"18px",height:"18px",color:"white",fontSize:"0.7rem",cursor:"pointer",padding:0}}>✕</button>
+              </div>
+            ) : (
+              <label style={{display:"flex",alignItems:"center",gap:"8px",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px dashed #3A3D52",cursor:"pointer",fontSize:"0.8rem",color:"#8B8FA8"}}>
+                <span>+ Subir imagen de referencia</span>
+                <input type="file" accept="image/*" style={{display:"none"}} onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  const reader = new FileReader();
+                  reader.onload = (ev) => setImagenReferencia(ev.target?.result as string);
+                  reader.readAsDataURL(file);
+                }}/>
+              </label>
+            )}
+          </div>
         </div>
 
         <div style={{marginBottom:"20px"}}>
