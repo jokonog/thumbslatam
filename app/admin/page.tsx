@@ -42,6 +42,8 @@ export default function AdminPage() {
   const [editCreditos, setEditCreditos] = useState(0);
   const [editPlan, setEditPlan] = useState("");
   const [guardando, setGuardando] = useState(false);
+  const [encuestasEnviadas, setEncuestasEnviadas] = useState<Set<string>>(new Set());
+  const [encuestasEnviadas, setEncuestasEnviadas] = useState<Set<string>>(new Set());
   const [visorUsuario, setVisorUsuario] = useState<{id:string,email:string}|null>(null);
   const [miniaturasUsuario, setMiniaturasUsuario] = useState<any[]>([]);
   const [cargandoMinis, setCargandoMinis] = useState(false);
@@ -159,7 +161,7 @@ export default function AdminPage() {
       body: JSON.stringify({ tipo: "encuesta", email, nombre }),
     });
     const data = await res.json();
-    if (data.ok) alert(`Encuesta enviada a ${email}`);
+    if (data.ok) setEncuestasEnviadas(prev => new Set(prev).add(email));
     else alert("Error al enviar la encuesta");
   }
 
@@ -372,8 +374,8 @@ export default function AdminPage() {
                         <button onClick={() => { setVisorUsuario({id:u.id,email:u.email}); cargarMiniaturasUsuario(u.id); }} style={{background:"none",border:"1px solid #3A3D52",borderRadius:"6px",padding:"4px 8px",color:"#8B8FA8",fontSize:"0.75rem",cursor:"pointer"}}>
                           Minis
                         </button>
-                        <button onClick={() => enviarEncuesta(u.email, u.nombre || u.email.split("@")[0])} style={{background:"none",border:"1px solid #7F77DD",borderRadius:"6px",padding:"4px 8px",color:"#7F77DD",fontSize:"0.75rem",cursor:"pointer"}}>
-                          Encuesta
+                        <button onClick={() => !encuestasEnviadas.has(u.email) && enviarEncuesta(u.email, u.nombre || u.email.split("@")[0])} style={{background:encuestasEnviadas.has(u.email)?"rgba(6,214,160,0.1)":"none",border:`1px solid ${encuestasEnviadas.has(u.email)?"#06D6A0":"#7F77DD"}`,borderRadius:"6px",padding:"4px 8px",color:encuestasEnviadas.has(u.email)?"#06D6A0":"#7F77DD",fontSize:"0.75rem",cursor:encuestasEnviadas.has(u.email)?"default":"pointer"}}>
+                          {encuestasEnviadas.has(u.email) ? "Enviada ✓" : "Encuesta"}
                         </button>
                         <button onClick={() => setConfirmarBorrarUser({id: u.id, email: u.email})} style={{background:"rgba(239,68,68,0.1)",border:"none",borderRadius:"50%",width:"22px",height:"22px",color:"#ef4444",fontSize:"0.8rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,flexShrink:0}}>
                           ✕
