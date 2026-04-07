@@ -43,7 +43,6 @@ export default function AdminPage() {
   const [editPlan, setEditPlan] = useState("");
   const [guardando, setGuardando] = useState(false);
   const [encuestasEnviadas, setEncuestasEnviadas] = useState<Set<string>>(new Set());
-  const [encuestasEnviadas, setEncuestasEnviadas] = useState<Set<string>>(new Set());
   const [visorUsuario, setVisorUsuario] = useState<{id:string,email:string}|null>(null);
   const [miniaturasUsuario, setMiniaturasUsuario] = useState<any[]>([]);
   const [cargandoMinis, setCargandoMinis] = useState(false);
