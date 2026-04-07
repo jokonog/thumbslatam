@@ -204,6 +204,7 @@ export default function AdminPage() {
       setEnviadoModal(true);
       setEmailModal("");
       setNombreModal("");
+      setMensajeModal("");
     }
     setEnviandoModal(false);
   }
@@ -227,6 +228,7 @@ export default function AdminPage() {
       setInvitacionEnviada(true);
       setEmailInvitacion("");
       setNombreInvitacion("");
+      setMensajeInvitacion("");
     }
     setEnviandoInvitacion(false);
   }
