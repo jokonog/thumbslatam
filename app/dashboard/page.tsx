@@ -606,7 +606,7 @@ export default function Dashboard() {
                 <button onClick={() => setImagenReferencia(null)} style={{position:"absolute",top:"-6px",right:"-6px",background:"#ef4444",border:"none",borderRadius:"50%",width:"18px",height:"18px",color:"white",fontSize:"0.7rem",cursor:"pointer",padding:0}}>✕</button>
               </div>
             ) : (
-              <label style={{display:"flex",alignItems:"center",gap:"8px",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px dashed #3A3D52",cursor:"pointer",fontSize:"0.8rem",color:"#8B8FA8"}}>
+              <label style={{display:"inline-flex",alignItems:"center",gap:"6px",padding:"5px 10px",borderRadius:"6px",background:"transparent",border:"1px dashed #FF4D00",cursor:"pointer",fontSize:"0.75rem",color:"#FF4D00"}}>
                 <span>+ Subir imagen de referencia</span>
                 <input type="file" accept="image/*" style={{display:"none"}} onChange={(e) => {
                   const file = e.target.files?.[0];
