@@ -47,6 +47,8 @@ export default function Editor() {
   const COSTO_GENERAR = 3;
   const COSTO_CARA = 5;
   const [modo, setModo] = useState("fondo");
+  const [guardando, setGuardando] = useState(false);
+  const [guardadoOk, setGuardadoOk] = useState(false);
 
   const plataformas: Record<string, { w: number; h: number }> = {
     youtube: { w: 1280, h: 720 },
@@ -137,6 +139,25 @@ export default function Editor() {
       canvas.on("object:added", guardarEstado);
       canvas.on("object:modified", guardarEstado);
       canvas.on("object:removed", guardarEstado);
+
+      const { Rect } = await import("fabric");
+      const margen = Math.floor(p.w * 0.05);
+      const guia = new Rect({
+        left: margen,
+        top: margen,
+        width: p.w - margen * 2,
+        height: p.h - margen * 2,
+        fill: "transparent",
+        stroke: "rgba(255,255,255,0.3)",
+        strokeWidth: 1,
+        strokeDashArray: [6, 4],
+        selectable: false,
+        evented: false,
+        excludeFromExport: true,
+        name: "guia-margenes",
+      });
+      canvas.add(guia);
+      canvas.sendObjectToBack(guia);
 
       if (mounted) fabricRef.current = { canvas };
     }
@@ -321,7 +342,7 @@ export default function Editor() {
     if (!texto || !fabricRef.current) return;
     const { canvas } = fabricRef.current;
 
-    import("fabric").then(({ FabricText, Shadow, Gradient }) => {
+    import("fabric").then(({ Textbox, Shadow, Gradient }) => {
       // Combinar efectos seleccionados
       let shadowColor = "rgba(0,0,0,0)";
       let shadowBlur = 0;
@@ -363,14 +384,18 @@ export default function Editor() {
         strokeW = Math.max(2, Math.floor(fontSize * 0.05));
       }
 
-      const t = new FabricText(texto.toUpperCase(), {
+      const t = new Textbox(texto, {
         left: Math.floor(canvas.width! / 2),
         top: 60,
+        width: Math.floor(canvas.width! * 0.8),
         fontSize: fontSize,
         fill: colorTexto,
         fontWeight: "bold",
         fontFamily: fontFamily,
         originX: "center",
+        textAlign: "center",
+        splitByGrapheme: false,
+        editable: true,
         shadow: new Shadow({ color: shadowColor, blur: shadowBlur, offsetX: shadowOffsetX, offsetY: shadowOffsetY }),
         stroke: strokeColor,
         strokeWidth: strokeW,
@@ -519,6 +544,27 @@ export default function Editor() {
     canvas.renderAll();
   }
 
+  // ─── Guardar miniatura editada ─────────────────────────────────────────────
+  async function guardarMiniatura() {
+    if (!fabricRef.current?.canvas || !userId) return;
+    setGuardando(true);
+    try {
+      const { canvas } = fabricRef.current;
+      const dataUrl = canvas.toDataURL({ format: "png", multiplier: 1 });
+      const res = await fetch("/api/guardar-miniatura", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dataUrl, userId }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setGuardadoOk(true);
+        setTimeout(() => setGuardadoOk(false), 3000);
+      }
+    } catch(e) { console.error(e); }
+    setGuardando(false);
+  }
+
   // ─── Descargar ──────────────────────────────────────────────────────────────
   function descargar() {
     if (!fabricRef.current?.canvas) return;
@@ -583,10 +629,17 @@ export default function Editor() {
             {creditos === null ? "..." : `${creditos} créditos`}
           </div>
           <button
-            onClick={descargar}
-            style={{padding:"10px 20px",borderRadius:"8px",background:"#06D6A0",border:"none",color:"#060810",fontWeight:"700",cursor:"pointer",fontSize:"0.9rem"}}
+            onClick={guardarMiniatura}
+            disabled={guardando}
+            style={{padding:"10px 20px",borderRadius:"8px",background:guardadoOk?"#06D6A0":"#FF4D00",border:"none",color:"white",fontWeight:"700",cursor:"pointer",fontSize:"0.9rem"}}
           >
-            Descargar miniatura
+            {guardando ? "Guardando..." : guardadoOk ? "Guardado ✓" : "Guardar miniatura"}
+          </button>
+          <button
+            onClick={descargar}
+            style={{padding:"10px 20px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontWeight:"700",cursor:"pointer",fontSize:"0.9rem"}}
+          >
+            Descargar
           </button>
         </div>
       </div>
