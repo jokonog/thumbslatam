@@ -48,15 +48,12 @@ export async function POST(request: Request) {
     const referenciaPrompt = imagenReferencia
       ? ` Inspired by the visual style, color palette and atmosphere of the reference scene, but create an original composition.`
       : "";
-    const inputImageKontext = imagenReferencia
-      ? (await cloudinary.uploader.upload(imagenReferencia, { folder: "thumbslatam-temp" })).secure_url
-      : avatarFinal;
     const kontextOutput: any = await replicate.run(
       "black-forest-labs/flux-kontext-max",
       {
         input: {
           prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting.${referenciaPrompt} Place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side. Natural body proportions, realistic anatomy. No text.`,
-          input_image: inputImageKontext,
+          input_image: avatarFinal,
           aspect_ratio: aspectRatio,
         }
       }
@@ -64,6 +61,11 @@ export async function POST(request: Request) {
 
     const escenaUrl = String(kontextOutput);
     if (!escenaUrl || !escenaUrl.startsWith("http")) {
+      const errStr = JSON.stringify(kontextOutput || "").toLowerCase();
+      const esCopyright = errStr.includes("copyright") || errStr.includes("safety") || errStr.includes("content policy") || errStr.includes("nsfw") || errStr.includes("restricted") || errStr.includes("error generating");
+      if (esCopyright) {
+        return NextResponse.json({ error: "⚠️ La imagen fue rechazada. Si usaste una imagen de referencia con copyright, intenta sin ella o usa un prompt de texto.", codigo: "COPYRIGHT" }, { status: 422 });
+      }
       return NextResponse.json({ error: "Error generando la escena. Intenta de nuevo." }, { status: 500 });
     }
 

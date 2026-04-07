@@ -156,7 +156,12 @@ export default function Dashboard() {
           body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right", imagenReferencia }),
         });
         const data = await res.json();
-        if (data.error) throw new Error(data.error);
+        if (data.error) {
+          if (data.codigo === "COPYRIGHT") {
+            throw new Error("⚠️ La imagen fue rechazada. Si usaste una imagen de referencia con copyright, intenta sin ella o usa un prompt de texto.");
+          }
+          throw new Error(data.error);
+        }
         // Cara solo genera 1 por el costo
         const nuevos = creditos - costo;
         await supabase.from("usuarios").update({ creditos: nuevos }).eq("id", userId);
