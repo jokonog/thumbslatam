@@ -546,12 +546,18 @@ export default function Editor() {
     setGuardando(true);
     try {
       const { canvas } = fabricRef.current;
-      // Ocultar guia antes de exportar
+      // Remover guia antes de exportar
       const guias = canvas.getObjects().filter((o: any) => o.name === "guia-margenes");
-      guias.forEach((o: any) => o.set("visible", false));
+      guias.forEach((o: any) => canvas.remove(o));
       canvas.renderAll();
       const dataUrl = canvas.toDataURL({ format: "png", multiplier: 1 });
-      guias.forEach((o: any) => o.set("visible", true));
+      // Restaurar guia
+      const { Rect } = await import("fabric");
+      const cw = canvas.width!;
+      const ch = canvas.height!;
+      const mg = Math.floor(cw * 0.05);
+      const guiaNew = new Rect({ left: mg, top: mg, width: cw - mg*2, height: ch - mg*2, fill: "transparent", stroke: "rgba(255,255,255,0.3)", strokeWidth: 1, strokeDashArray: [6,4], selectable: false, evented: false, excludeFromExport: true, name: "guia-margenes" });
+      canvas.add(guiaNew);
       canvas.renderAll();
       const res = await fetch("/api/guardar-miniatura", {
         method: "POST",
@@ -574,11 +580,17 @@ export default function Editor() {
     const link = document.createElement("a");
     link.download = "miniatura-thumbslatam.png";
     const guias2 = canvas.getObjects().filter((o: any) => o.name === "guia-margenes");
-    guias2.forEach((o: any) => o.set("visible", false));
+    guias2.forEach((o: any) => canvas.remove(o));
     canvas.renderAll();
     link.href = canvas.toDataURL({ format: "png", multiplier: 1 });
-    guias2.forEach((o: any) => o.set("visible", true));
-    canvas.renderAll();
+    import("fabric").then(({ Rect }) => {
+      const cw2 = canvas.width!;
+      const ch2 = canvas.height!;
+      const mg2 = Math.floor(cw2 * 0.05);
+      const g = new Rect({ left: mg2, top: mg2, width: cw2-mg2*2, height: ch2-mg2*2, fill: "transparent", stroke: "rgba(255,255,255,0.3)", strokeWidth: 1, strokeDashArray: [6,4], selectable: false, evented: false, excludeFromExport: true, name: "guia-margenes" });
+      canvas.add(g);
+      canvas.renderAll();
+    });
     link.click();
   }
 
