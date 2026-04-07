@@ -141,12 +141,14 @@ export default function Editor() {
       canvas.on("object:removed", guardarEstado);
 
       const { Rect } = await import("fabric");
-      const margen = Math.floor(p.w * 0.05);
+      const cw = canvas.width!;
+      const ch = canvas.height!;
+      const margen = Math.floor(cw * 0.05);
       const guia = new Rect({
         left: margen,
         top: margen,
-        width: p.w - margen * 2,
-        height: p.h - margen * 2,
+        width: cw - margen * 2,
+        height: ch - margen * 2,
         fill: "transparent",
         stroke: "rgba(255,255,255,0.3)",
         strokeWidth: 1,
