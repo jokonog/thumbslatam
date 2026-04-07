@@ -130,7 +130,7 @@ export async function POST(request: Request) {
           input: {
             image: imagenParaUpscale,
             scale: 2,
-            face_enhance: true,
+            face_enhance: false,
           }
         }
       );
