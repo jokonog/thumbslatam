@@ -26,6 +26,7 @@ export default function AdminPage() {
   const [nombreInvitacion, setNombreInvitacion] = useState("");
   const [enviandoInvitacion, setEnviandoInvitacion] = useState(false);
   const [invitacionEnviada, setInvitacionEnviada] = useState(false);
+  const [mensajeInvitacion, setMensajeInvitacion] = useState("");
   const [modalEnvio, setModalEnvio] = useState<{codigo:string,creador:string}|null>(null);
   const [emailModal, setEmailModal] = useState("");
   const [mensajeModal, setMensajeModal] = useState("");
@@ -207,6 +208,7 @@ export default function AdminPage() {
         email: emailInvitacion,
         nombre: nombreInvitacion,
         codigo: codigoGenerado,
+        mensaje: mensajeInvitacion,
       }),
     });
     const data = await res.json();
@@ -458,6 +460,9 @@ export default function AdminPage() {
                 onChange={e => { setEmailInvitacion(e.target.value); setInvitacionEnviada(false); }}
                 style={{flex:2,minWidth:"200px",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem"}}
               />
+            </div>
+            <textarea placeholder="Mensaje personalizado (opcional)" value={mensajeInvitacion} onChange={e => { setMensajeInvitacion(e.target.value); setInvitacionEnviada(false); }} rows={2} style={{width:"100%",padding:"8px 12px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.82rem",marginTop:"8px",boxSizing:"border-box",resize:"vertical"}}/>
+            <div style={{display:"flex",gap:"8px",marginTop:"8px"}}>
               <button onClick={enviarInvitacion} disabled={enviandoInvitacion || !emailInvitacion || !nombreInvitacion} style={{background:"#FF4D00",border:"none",borderRadius:"8px",padding:"8px 16px",color:"white",fontWeight:700,fontSize:"0.82rem",cursor:"pointer",opacity:(!emailInvitacion||!nombreInvitacion)?0.5:1}}>
                 {enviandoInvitacion ? "..." : "Enviar"}
               </button>
