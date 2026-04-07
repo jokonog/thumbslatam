@@ -152,12 +152,18 @@ async function componerYRefinar(
   // Kontext integra iluminacion — SIN texto, SIN titulo en el prompt
   const promptKontext = `Seamlessly composite the person into this background scene: ${descripcion}. The person must be fully blended into the scene with no visible cutout edges, no rectangular borders, no white halos, no black backgrounds around them. Apply matching cinematic lighting, color grading and shadows. The person appears exactly ONCE. Preserve face identity and outfit details. Make it look like a professional movie poster. Output NO text, NO letters, NO symbols anywhere in the image.`;
 
-  const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
-    input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
-  });
-
-  const refinadoUrl = String(refinado);
-  if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen");
+  let refinadoUrl: string = "";
+  try {
+    const refinado: any = await replicate.run("black-forest-labs/flux-kontext-max", {
+      input: { prompt: promptKontext, input_image: uploadedComp.secure_url, aspect_ratio: aspectRatio }
+    });
+    refinadoUrl = String(refinado);
+    if (!refinadoUrl.startsWith("http")) throw new Error("Kontext no genero imagen valida");
+  } catch (kontextError: any) {
+    console.error("Kontext fallo:", kontextError.message);
+    const compFallback = await cloudinary.uploader.upload(uploadedComp.secure_url, { folder: "thumbslatam/fondos" });
+    refinadoUrl = compFallback.secure_url;
+  }
 
   // Sharp agrega titulo AQUI — despues de Kontext, nunca antes
   const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
