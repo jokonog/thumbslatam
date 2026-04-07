@@ -193,7 +193,7 @@ async function componerYRefinar(
 
 export async function POST(request: Request) {
   try {
-    const { descripcion, emocion, orientacion, elementos, titulo, tituloModo } = await request.json();
+    const { descripcion, emocion, orientacion, elementos, titulo, tituloModo, imagenReferencia } = await request.json();
 
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense",
@@ -226,10 +226,18 @@ export async function POST(request: Request) {
     const promptFondo2 = `Cinematic YouTube thumbnail background, ${descripcion}${elementosDesc ? `, ${elementosDesc}` : ""}, ${emocionEN} atmosphere, dramatic shadows, ${tituloPrompt}, no logos, background only no characters no people`;
 
     if (tieneImagenes) {
-      const [fondo1, fondo2] = await Promise.all([
-        generarFondo(promptFondo, aspectRatio),
-        generarFondo(promptFondo2, aspectRatio),
-      ]);
+      let fondo1: string;
+      let fondo2: string;
+      if (imagenReferencia) {
+        const refUpload = await cloudinary.uploader.upload(imagenReferencia, { folder: "thumbslatam-temp" });
+        fondo1 = refUpload.secure_url;
+        fondo2 = refUpload.secure_url;
+      } else {
+        [fondo1, fondo2] = await Promise.all([
+          generarFondo(promptFondo, aspectRatio),
+          generarFondo(promptFondo2, aspectRatio),
+        ]);
+      }
       const [imageUrl1, imageUrl2] = await Promise.all([
         componerYRefinar(fondo1, elementos, aspectRatio, descripcion, titulo, tituloModo),
         componerYRefinar(fondo2, elementos, aspectRatio, descripcion, titulo, tituloModo),
@@ -238,10 +246,18 @@ export async function POST(request: Request) {
     }
 
     // Sin imagenes — FLUX directo, titulo con Sharp al final
-    const [url1, url2] = await Promise.all([
-      generarFondo(promptFondo, aspectRatio),
-      generarFondo(promptFondo2, aspectRatio),
-    ]);
+    let url1: string;
+    let url2: string;
+    if (imagenReferencia) {
+      const refUpload = await cloudinary.uploader.upload(imagenReferencia, { folder: "thumbslatam-temp" });
+      url1 = refUpload.secure_url;
+      url2 = refUpload.secure_url;
+    } else {
+      [url1, url2] = await Promise.all([
+        generarFondo(promptFondo, aspectRatio),
+        generarFondo(promptFondo2, aspectRatio),
+      ]);
+    }
 
     const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
 

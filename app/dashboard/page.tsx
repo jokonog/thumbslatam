@@ -46,6 +46,7 @@ export default function Dashboard() {
   
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
   const [tema, setTema] = useState("");
+  const [imagenReferencia, setImagenReferencia] = useState<string | null>(null);
   const [escena, setEscena] = useState("");
   const [emocion, setEmocion] = useState("epico");
   const [generando, setGenerando] = useState(false);
@@ -152,7 +153,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right" }),
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right", imagenReferencia }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -169,7 +170,7 @@ export default function Dashboard() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo }),
+        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo, imagenReferencia }),
       });
       const data = await res.json();
       if (data.error) {
