@@ -68,6 +68,7 @@ export async function POST(request: Request) {
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#060810;color:white;padding:32px;border-radius:12px">
           <img src="https://www.thumbslatam.com/logo.png" alt="ThumbsLatam" style="height:36px;margin-bottom:24px"/>
           <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 12px">Hola ${nombre}, te lo ganaste 🏆</h1>
+          ${mensaje ? `<div style="background:#0D1020;border-left:3px solid #FF4D00;border-radius:0 8px 8px 0;padding:14px 16px;margin:0 0 20px"><p style="color:#e0e0e0;line-height:1.7;margin:0;font-size:0.92rem">${mensaje}</p></div>` : ""}
           <p style="color:#8B8FA8;line-height:1.6;margin:0 0 16px">
             Notamos tu trabajo y quisimos reconocerlo. Te hemos reservado acceso <strong style="color:#FF4D00">completamente gratis</strong> a ThumbsLatam — la herramienta que están usando creadores en LatAm para generar miniaturas profesionales con IA.
           </p>
