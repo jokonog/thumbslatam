@@ -595,7 +595,7 @@ export default function Dashboard() {
 
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>4. Describe la escena</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>3. Describe la escena</div>
           <input type="text" placeholder="De que es tu video? Ej: Minecraft survival en el nether" value={tema} onChange={(e)=>setTema(e.target.value)} style={{width:"100%",padding:"10px 14px",borderRadius:"8px",background:"#060810",border:"1px solid #3A3D52",color:"white",fontSize:"0.85rem",marginBottom:"8px",boxSizing:"border-box"}}/>
           <div style={{padding:"8px 12px",borderRadius:"8px",background:"rgba(255,255,255,0.03)",border:"1px solid #3A3D52",marginBottom:"8px"}}>
             <p style={{fontSize:"0.72rem",color:"#8B8FA8",margin:0,lineHeight:"1.5"}}>
@@ -626,7 +626,7 @@ export default function Dashboard() {
         </div>
 
         <div style={{marginBottom:"20px"}}>
-          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>5. Emocion principal</div>
+          <div style={{fontSize:"0.78rem",color:"#8B8FA8",marginBottom:"10px"}}>4. Emocion principal</div>
           <div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>
             {[
               {id:"epico", label:"Epico"},
