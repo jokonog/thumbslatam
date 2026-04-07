@@ -168,10 +168,7 @@ async function componerYRefinar(
                         errMsg.toLowerCase().includes("nsfw") ||
                         errMsg.toLowerCase().includes("restricted");
     if (esCopyright) {
-      return NextResponse.json({ 
-        error: "La imagen de fondo fue rechazada por contener contenido con derechos de autor o restricciones de uso. Por favor usa una imagen propia o generada con IA.",
-        codigo: "COPYRIGHT"
-      }, { status: 422 });
+      throw new Error("COPYRIGHT: La imagen fue rechazada por contener contenido con derechos de autor. Por favor usa una imagen propia o generada con IA.");
     }
     const compFallback = await cloudinary.uploader.upload(uploadedComp.secure_url, { folder: "thumbslatam/fondos" });
     refinadoUrl = compFallback.secure_url;
