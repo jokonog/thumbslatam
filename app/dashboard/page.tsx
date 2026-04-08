@@ -408,7 +408,7 @@ export default function Dashboard() {
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
         <Logo height={32} />
         <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
-          <a href="/ayuda" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>¿Ayuda?</a>
+          <a href="/help" target="_blank" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>¿Ayuda?</a>
           <button onClick={() => supabase.auth.signOut().then(() => { window.location.replace("/registro"); })} style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
             Cerrar sesion
           </button>
