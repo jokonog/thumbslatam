@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+export const dynamic = "force-dynamic";
 import { readFileSync } from "fs";
 import { join } from "path";
 
