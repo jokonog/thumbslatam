@@ -1538,40 +1538,40 @@
         <!-- Header -->
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <span style="font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:white;">Thumbs<span style="color:#FF4D00">Latam</span></span>
-          <span style="font-size:0.7rem;color:#3A3D52;border:1px solid #3A3D52;padding:4px 10px;border-radius:6px;">Cerrar sesion</span>
+          <span style="font-size:0.7rem;color:#3A3D52;border:1px solid #3A3D52;padding:4px 10px;border-radius:6px;" data-i18n="mock_logout">Cerrar sesion</span>
         </div>
         <!-- Stats -->
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
           <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
             <div style="font-size:1.2rem;font-weight:800;color:#FF4D00;">100</div>
-            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Creditos</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;" data-i18n="mock_credits">Creditos</div>
           </div>
           <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
             <div style="font-size:1.2rem;font-weight:800;color:white;">12</div>
-            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Miniaturas</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;" data-i18n="mock_thumbs">Miniaturas</div>
           </div>
           <div style="background:#111827;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07);">
             <div style="font-size:0.75rem;font-weight:700;color:#06D6A0;">Pro</div>
-            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;">Plan actual</div>
+            <div style="color:#8B8FA8;font-size:0.65rem;margin-top:2px;" data-i18n="mock_plan">Plan actual</div>
           </div>
         </div>
         <!-- Plataformas -->
-        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;">1. Elige la plataforma</div>
+        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;" data-i18n="mock_step1">1. Elige la plataforma</div>
         <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
           <span style="background:#FF4D00;color:white;font-size:0.6rem;font-weight:700;padding:4px 8px;border-radius:6px;">YouTube 16:9</span>
           <span style="background:#111827;color:#8B8FA8;font-size:0.6rem;padding:4px 8px;border-radius:6px;border:1px solid #3A3D52;">Instagram 1:1</span>
           <span style="background:#111827;color:#8B8FA8;font-size:0.6rem;padding:4px 8px;border-radius:6px;border:1px solid #3A3D52;">TikTok 9:16</span>
         </div>
         <!-- Modo -->
-        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;">2. Como quieres generarla</div>
+        <div style="font-size:0.65rem;color:#8B8FA8;margin-bottom:6px;" data-i18n="mock_step2">2. Como quieres generarla</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
           <div style="background:#111827;border:1px solid #FF4D00;border-radius:8px;padding:8px;">
-            <div style="font-size:0.7rem;font-weight:700;color:white;">Solo fondo IA</div>
+            <div style="font-size:0.7rem;font-weight:700;color:white;" data-i18n="mock_bg">Solo fondo IA</div>
             <div style="font-size:0.6rem;color:#8B8FA8;margin-top:2px;">2 variaciones</div>
             <div style="font-size:0.6rem;color:#FF4D00;margin-top:4px;">4 creditos</div>
           </div>
           <div style="background:#111827;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px;">
-            <div style="font-size:0.7rem;font-weight:700;color:white;">Con mi cara</div>
+            <div style="font-size:0.7rem;font-weight:700;color:white;" data-i18n="mock_face">Con mi cara</div>
             <div style="font-size:0.6rem;color:#8B8FA8;margin-top:2px;">Tu rostro en escena</div>
             <div style="font-size:0.6rem;color:#FF4D00;margin-top:4px;">5 creditos</div>
           </div>
@@ -1582,7 +1582,7 @@
         </div>
         <!-- Generar -->
         <div style="background:#FF4D00;border-radius:8px;padding:8px;text-align:center;font-size:0.7rem;font-weight:700;color:white;">
-          Generar — 4 creditos →
+          <span data-i18n="mock_generate">Generar — 4 creditos →</span>
         </div>
       </div>
     </div>
@@ -1799,8 +1799,8 @@
 
       <!-- FREE -->
       <div class="plan-card">
-        <div class="plan-name">Gratis</div>
-        <div class="plan-desc">Para comenzar a explorar sin gastar nada</div>
+        <div class="plan-name" data-i18n="plan_free">Gratis</div>
+        <div class="plan-desc" data-i18n="plan_free_desc">Para comenzar a explorar sin gastar nada</div>
         <div class="plan-price">
           <span class="price-usd-sym">$</span>
           <span class="price-usd">0</span>
@@ -1821,8 +1821,8 @@
       <!-- PRO -->
       <div class="plan-card popular">
         <div class="plan-popular-badge">⚡ Más popular</div>
-        <div class="plan-name">Creador Pro</div>
-        <div class="plan-desc">Para youtubers y streamers que suben contenido regularmente</div>
+        <div class="plan-name" data-i18n="plan_pro">Creador Pro</div>
+        <div class="plan-desc" data-i18n="plan_pro_desc">Para youtubers y streamers que suben contenido regularmente</div>
         <div class="plan-price">
           <span class="price-usd-sym">$</span>
           <span class="price-usd" style="color:var(--c-accent)">10</span>
@@ -1844,8 +1844,8 @@
 
       <!-- STUDIO -->
       <div class="plan-card">
-        <div class="plan-name">Studio</div>
-        <div class="plan-desc">Para agencias y creadores con múltiples canales</div>
+        <div class="plan-name" data-i18n="plan_studio">Studio</div>
+        <div class="plan-desc" data-i18n="plan_studio_desc">Para agencias y creadores con múltiples canales</div>
         <div class="plan-price">
           <span class="price-usd-sym">$</span>
           <span class="price-usd">25</span>
@@ -2134,6 +2134,15 @@ const translations = {
     nav_login: "Iniciar sesión",
     nav_start: "Empezar gratis →",
     // HERO
+    mock_logout: "Cerrar sesion",
+    mock_credits: "Creditos",
+    mock_thumbs: "Miniaturas",
+    mock_plan: "Plan actual",
+    mock_step1: "1. Elige la plataforma",
+    mock_step2: "2. Como quieres generarla",
+    mock_bg: "Solo fondo IA",
+    mock_face: "Con mi cara",
+    mock_generate: "Generar — 4 creditos →",
     hero_badge: "Made for Latin American creators",
     hero_h1: "AI Thumbnails<br>that <em>explode clicks</em><br>from $10 USD/month",
     hero_sub: "Create professional thumbnails in seconds using artificial intelligence. Designed for Latin streamers and YouTubers, with real prices for our region.",
@@ -2248,6 +2257,7 @@ const translations = {
     cta_title: "Start creating<br>professional thumbnails today",
     cta_sub: "Join the first Latin American creators using AI to dominate the YouTube algorithm.",
     cta_btn: "Start free →",
+    cta_tagline: "✓ No credit card · ✓ Free plan forever · ✓ Cancel anytime",
     // FOOTER
     footer_desc: "The AI thumbnail tool made for Latin American content creators.",
     footer_col1: "Product",
@@ -2266,6 +2276,24 @@ const translations = {
     nav_faq: "FAQ",
     nav_login: "Sign in",
     nav_start: "Start free →",
+    mock_logout: "Cerrar sesion",
+    mock_credits: "Creditos",
+    mock_thumbs: "Miniaturas",
+    mock_plan: "Plan actual",
+    mock_step1: "1. Elige la plataforma",
+    mock_step2: "2. Como quieres generarla",
+    mock_bg: "Solo fondo IA",
+    mock_face: "Con mi cara",
+    mock_generate: "Generar — 4 creditos →",
+    mock_logout: "Sign out",
+    mock_credits: "Credits",
+    mock_thumbs: "Thumbnails",
+    mock_plan: "Current plan",
+    mock_step1: "1. Choose platform",
+    mock_step2: "2. How to generate",
+    mock_bg: "AI background only",
+    mock_face: "With my face",
+    mock_generate: "Generate — 4 credits →",
     hero_badge: "Made for Latin American creators",
     hero_h1: "AI Thumbnails<br>that <em>explode clicks</em><br>from $10 USD/month",
     hero_sub: "Create professional thumbnails in seconds using artificial intelligence. Designed for Latin streamers and YouTubers, with real prices for our region.",
@@ -2362,6 +2390,7 @@ const translations = {
     cta_title: "Start creating<br>professional thumbnails today",
     cta_sub: "Join the first Latin American creators using AI to dominate the YouTube algorithm.",
     cta_btn: "Start free →",
+    cta_tagline: "✓ No credit card · ✓ Free plan forever · ✓ Cancel anytime",
     footer_desc: "The AI thumbnail tool made for Latin American content creators.",
     footer_col1: "Product",
     footer_link1: "Features",
@@ -2385,9 +2414,10 @@ function applyTranslations(lang) {
       el.innerHTML = t[key];
     }
   });
-  // Update toggle button
-  const btn = document.getElementById('lang-toggle');
-  if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
+  const btnEs = document.getElementById('btn-es');
+  const btnEn = document.getElementById('btn-en');
+  if (btnEs) { btnEs.style.background = lang === 'es' ? '#FF4D00' : 'transparent'; btnEs.style.color = lang === 'es' ? 'white' : '#8B8FA8'; }
+  if (btnEn) { btnEn.style.background = lang === 'en' ? '#FF4D00' : 'transparent'; btnEn.style.color = lang === 'en' ? 'white' : '#8B8FA8'; }
   currentLang = lang;
   localStorage.setItem('thumbslatam_lang', lang);
 }
