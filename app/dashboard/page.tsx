@@ -638,6 +638,12 @@ export default function Dashboard() {
               {id:"gracioso", label:"Gracioso"},
               {id:"misterioso", label:"Misterioso"},
               {id:"serio", label:"Serio"},
+              {id:"sonriente", label:"Sonriente"},
+              {id:"feliz", label:"Feliz"},
+              {id:"preocupado", label:"Preocupado"},
+              {id:"pensativo", label:"Pensativo"},
+              {id:"curioso", label:"Curioso"},
+              {id:"triste", label:"Triste"},
             ].map((e) => (
               <button key={e.id} onClick={() => setEmocion(e.id)} suppressHydrationWarning style={{padding:"7px 14px",borderRadius:"999px",border:"none",fontSize:"0.78rem",cursor:"pointer",background:emocion===e.id?"#FF4D00":"#1f2937",color:emocion===e.id?"white":"#8B8FA8",fontWeight:emocion===e.id?"700":"400"}}>
                 {e.label}

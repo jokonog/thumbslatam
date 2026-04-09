@@ -21,12 +21,18 @@ export async function POST(request: Request) {
   try {
     const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia } = await request.json();
     const emocionMap: Record<string, string> = {
-      epico: "epic, powerful, intense",
-      emocionado: "excited, energetic, enthusiastic",
-      sorprendido: "surprised, shocked, amazed",
-      gracioso: "funny, playful, humorous",
-      misterioso: "mysterious, dark, enigmatic",
-      serio: "serious, focused, determined",
+      epico: "epic, powerful, intense, dramatic cinematic lighting",
+      emocionado: "excited, energetic, enthusiastic, vibrant warm colors",
+      sorprendido: "surprised, shocked, amazed, wide dramatic lighting",
+      gracioso: "fun, playful, colorful bright lighting, cheerful atmosphere",
+      misterioso: "mysterious, dark, enigmatic, moody shadows",
+      serio: "serious, focused, determined, sharp contrast lighting",
+      sonriente: "warm, friendly, smiling, soft golden lighting",
+      feliz: "happy, joyful, uplifting, bright warm sunshine",
+      preocupado: "worried, tense, anxious, cold desaturated tones",
+      pensativo: "thoughtful, reflective, calm, soft blue hour lighting",
+      curioso: "curious, wondering, exploratory, soft diffused light",
+      triste: "melancholic, emotional, sad, rain soft grey tones",
     };
     const emocionEN = emocionMap[emocion] || emocion;
 
