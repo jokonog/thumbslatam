@@ -2106,7 +2106,8 @@
       if (btnIniciar) {
         btnIniciar.setAttribute('data-i18n-orig', btnIniciar.getAttribute('data-i18n') || '');
         btnIniciar.removeAttribute('data-i18n');
-        btnIniciar.textContent = 'Mi dashboard';
+        var savedLang = localStorage.getItem('tl_lang') || 'es';
+        btnIniciar.textContent = savedLang === 'en' ? 'My dashboard' : 'Mi dashboard';
         btnIniciar.href = '/dashboard';
         btnIniciar.target = '_top';
       }
