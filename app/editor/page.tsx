@@ -172,6 +172,28 @@ export default function Editor() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // ─── Actualizar fontSize del objeto activo ─────────────────────────────────
+  useEffect(() => {
+    if (!fabricRef.current?.canvas) return;
+    const canvas = fabricRef.current.canvas;
+    const obj = canvas.getActiveObject() as any;
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+      obj.set({ fontSize });
+      canvas.renderAll();
+    }
+  }, [fontSize]);
+
+  // ─── Actualizar fontSize del objeto activo ─────────────────────────────────
+  useEffect(() => {
+    if (!fabricRef.current?.canvas) return;
+    const canvas = fabricRef.current.canvas;
+    const obj = canvas.getActiveObject() as any;
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+      obj.set({ fontSize });
+      canvas.renderAll();
+    }
+  }, [fontSize]);
+
   // ─── Aplicar imagen al canvas con crop inteligente ──────────────────────────
   function aplicarImagenAlCanvas(img: any, np: { w: number; h: number }, allowCrop: boolean) {
     const { canvas } = fabricRef.current;
