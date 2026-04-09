@@ -2287,6 +2287,7 @@ function setLang(l) {
   const en = document.getElementById('btn-en');
   if(es){ es.style.background = l==='es'?'#FF4D00':'transparent'; es.style.color = l==='es'?'white':'#8B8FA8'; }
   if(en){ en.style.background = l==='en'?'#FF4D00':'transparent'; en.style.color = l==='en'?'white':'#8B8FA8'; }
+  if(window.__dashboardBtn) { window.__dashboardBtn.textContent = l==='en'?'My dashboard':'Mi dashboard'; }
 }
 
 document.addEventListener('DOMContentLoaded', () => setLang(lang));
