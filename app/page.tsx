@@ -5,8 +5,8 @@ import { join } from "path";
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const allCookies = cookieStore.getAll();
-  const loggedIn = allCookies.some(c => c.name.startsWith("sb-") && c.value.length > 10);
+  const authCookie = cookieStore.get("thumbslatam-auth");
+  const loggedIn = !!(authCookie && authCookie.value.length > 10);
 
   const html = readFileSync(join(process.cwd(), "public/thumbslatam.html"), "utf-8");
   

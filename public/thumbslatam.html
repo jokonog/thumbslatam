@@ -2101,17 +2101,13 @@
 <script>
   function aplicarSesion() {
     var loggedIn = window.__LOGGED_IN__ === true;
-    var btnIniciar = document.querySelector('.nav-cta a.btn-ghost');
+    var btnIniciar = document.querySelector('.nav-cta a[href="/registro"]') || document.querySelector('.nav-cta a[data-i18n="nav_login"]');
     if (loggedIn) {
       if (btnIniciar) {
+        btnIniciar.setAttribute('data-i18n-orig', btnIniciar.getAttribute('data-i18n') || '');
+        btnIniciar.removeAttribute('data-i18n');
         btnIniciar.textContent = 'Mi dashboard';
         btnIniciar.href = '/dashboard';
-        btnIniciar.target = '_top';
-      }
-    } else {
-      if (btnIniciar) {
-        btnIniciar.textContent = 'Iniciar sesión';
-        btnIniciar.href = '/registro';
         btnIniciar.target = '_top';
       }
     }
