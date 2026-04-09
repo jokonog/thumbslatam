@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       "black-forest-labs/flux-kontext-max",
       {
         input: {
-          prompt: `${descripcion}, ${emocionEN} mood, cinematic lighting.${referenciaPrompt} ONE person only: place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side of the scene. Only ONE character visible. Natural body proportions, realistic anatomy. No other people. No text.`,
+          prompt: `Cinematic scene: ${descripcion}. Mood: ${emocionEN}, dramatic cinematic lighting.${referenciaPrompt} ONE person only: place the person from the reference photo on the ${posicionAvatar === "left" ? "left" : posicionAvatar === "center" ? "center" : "right"} side of the scene. Only ONE character visible. Natural body proportions, realistic anatomy. No other people. No text. No words. No letters. No captions.`,
           input_image: avatarFinal,
           aspect_ratio: aspectRatio,
         }
