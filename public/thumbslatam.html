@@ -2108,6 +2108,7 @@
         btnIniciar.removeAttribute('data-i18n');
         var savedLang = localStorage.getItem('tl_lang') || 'es';
         btnIniciar.textContent = savedLang === 'en' ? 'My dashboard' : 'Mi dashboard';
+        window.__dashboardBtn = btnIniciar;
         btnIniciar.href = '/dashboard';
         btnIniciar.target = '_top';
       }
