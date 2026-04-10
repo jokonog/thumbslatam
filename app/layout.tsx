@@ -33,6 +33,15 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          id="fsc-api"
+          src="https://sbl.onfastspring.com/sbl/1.0.7/fastspring-builder.min.js"
+          type="text/javascript"
+          data-storefront="thumbslatam.test.onfastspring.com/popup-thumbslatam-pro"
+          async
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
