@@ -49,7 +49,7 @@ const modos = [
     titulo: "Con mi cara",
     creditos: "5 créditos",
     color: "#FF4D00",
-    desc: "Usa tu avatar para integrarte en la escena con IA. Genera 1 resultado con face swap y upscaling.",
+    desc: "Usa tu avatar para integrarte en la escena con IA. Genera 1 resultado con composición IA y upscaling.",
     ideal: "Youtubers y streamers que quieren aparecer en sus miniaturas",
     imagen: "https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg"
   },

@@ -85,7 +85,7 @@ export async function POST(request: Request) {
       folder: "thumbslatam-temp"
     });
 
-    // PASO 2: Face swap para pegar la cara correcta
+    // PASO 2: Composición facial para integrar el avatar
     let imagenParaUpscale = escenaUpload.secure_url;
 
     try {
@@ -118,12 +118,12 @@ export async function POST(request: Request) {
           { folder: "thumbslatam-temp" }
         );
         imagenParaUpscale = swapUpload.secure_url;
-        console.log("Face swap exitoso");
+        console.log("Composición exitosa");
       } else {
-        console.log("Face swap sin resultado — usando Kontext directo");
+        console.log("Composición sin resultado — usando Kontext directo");
       }
     } catch (swapError: any) {
-      console.log("Face swap fallo:", swapError.message, "— usando Kontext directo");
+      console.log("Composición fallo:", swapError.message, "— usando Kontext directo");
     }
 
     // PASO 3: Upscaler real-esrgan x4 para recuperar calidad completa

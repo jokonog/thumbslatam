@@ -15,7 +15,7 @@ const content = {
     ],
     modos: [
       { titulo:"Solo fondo IA", creditos:"4 creditos", color:"#1D9E75", desc:"Genera 2 variaciones de fondo cinematografico. Puedes agregar hasta 3 elementos.", ideal:"Miniaturas de gaming, vlogs, contenido general", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oz3asccfb1vc9hwak5yo.jpg" },
-      { titulo:"Con mi cara", creditos:"5 creditos", color:"#FF4D00", desc:"Usa tu avatar para integrarte en la escena con IA. Genera 1 resultado con face swap y upscaling.", ideal:"Youtubers y streamers que quieren aparecer en sus miniaturas", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" },
+      { titulo:"Con mi cara", creditos:"5 creditos", color:"#FF4D00", desc:"Usa tu avatar para integrarte en la escena con IA. Genera 1 resultado con composición IA y upscaling.", ideal:"Youtubers y streamers que quieren aparecer en sus miniaturas", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" },
     ],
     limitaciones: [
       { icon:"⚠️", titulo:"Copyright", desc:"No uses imagenes de juegos, peliculas o series (RE, Marvel, GTA, etc.). Seran rechazadas automaticamente." },
@@ -50,7 +50,7 @@ const content = {
     ],
     modos: [
       { titulo:"AI background only", creditos:"4 credits", color:"#1D9E75", desc:"Generates 2 cinematic background variations. You can add up to 3 elements.", ideal:"Gaming thumbnails, vlogs, general content", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/oz3asccfb1vc9hwak5yo.jpg" },
-      { titulo:"With my face", creditos:"5 credits", color:"#FF4D00", desc:"Uses your avatar to integrate you into the scene with AI. Generates 1 result with face swap and upscaling.", ideal:"YouTubers and streamers who want to appear in their thumbnails", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" },
+      { titulo:"With my face", creditos:"5 credits", color:"#FF4D00", desc:"Uses your avatar to integrate you into the scene with AI. Generates 1 result with AI composition and upscaling.", ideal:"YouTubers and streamers who want to appear in their thumbnails", imagen:"https://res.cloudinary.com/dgzlajqex/image/upload/thumbslatam/fondos/rnzbfivhr9t00v37pog1.jpg" },
     ],
     limitaciones: [
       { icon:"⚠️", titulo:"Copyright", desc:"Do not use images from games, movies or series (RE, Marvel, GTA, etc.). They will be automatically rejected." },
