@@ -198,7 +198,12 @@ export default function Dashboard() {
         window.location.href = `/editor?${params.toString()}`;
       }
     } catch (err: any) {
-      setErrorGen("Error generando: " + err.message);
+      const msg = err.message || "";
+      if (msg.includes("Contenido no permitido") || msg.includes("Content not allowed")) {
+        setErrorGen("⚠️ Contenido no permitido / Content not allowed — Tu descripción contiene términos que violan nuestras políticas de uso. No se descontaron créditos. / Your description contains terms that violate our usage policies. No credits were deducted.");
+      } else {
+        setErrorGen("Error generando: " + msg);
+      }
     }
     setGenerando(false);
   }
