@@ -5,6 +5,21 @@ import Replicate from "replicate";
 import { v2 as cloudinary } from "cloudinary";
 import { createClient } from "@supabase/supabase-js";
 
+
+const PALABRAS_PROHIBIDAS = [
+  "nude", "naked", "porn", "sex", "explicit", "nsfw", "erotic", "adult content",
+  "violence", "gore", "blood", "kill", "murder", "terrorist", "weapon", "gun",
+  "desnudo", "desnuda", "pornografia", "sexo", "explicito", "violencia", "sangre",
+  "matar", "arma", "menor", "child", "minor", "underage", "lolita",
+  "deepfake", "non-consensual", "rape", "assault"
+];
+
+function contienePalabraProhibida(texto: string): boolean {
+  const textoLower = texto.toLowerCase();
+  return PALABRAS_PROHIBIDAS.some(palabra => textoLower.includes(palabra));
+}
+
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -20,6 +35,10 @@ const supabaseAdmin = createClient(
 export async function POST(request: Request) {
   try {
     const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia } = await request.json();
+
+    if (contienePalabraProhibida(descripcion || "")) {
+      return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam." }, { status: 400 });
+    }
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense, dramatic cinematic lighting",
       emocionado: "excited, energetic, enthusiastic, vibrant warm colors",

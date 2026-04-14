@@ -191,9 +191,27 @@ async function componerYRefinar(
   return final.secure_url;
 }
 
+
+const PALABRAS_PROHIBIDAS = [
+  "nude", "naked", "porn", "sex", "explicit", "nsfw", "erotic", "adult content",
+  "violence", "gore", "blood", "kill", "murder", "terrorist", "weapon", "gun",
+  "desnudo", "desnuda", "pornografia", "sexo", "explicito", "violencia", "sangre",
+  "matar", "arma", "menor", "child", "minor", "underage", "lolita",
+  "deepfake", "non-consensual", "rape", "assault"
+];
+
+function contienePalabraProhibida(texto: string): boolean {
+  const textoLower = texto.toLowerCase();
+  return PALABRAS_PROHIBIDAS.some(palabra => textoLower.includes(palabra));
+}
+
 export async function POST(request: Request) {
   try {
     const { descripcion, emocion, orientacion, elementos, titulo, tituloModo, imagenReferencia } = await request.json();
+
+    if (contienePalabraProhibida(descripcion || "") || contienePalabraProhibida(titulo || "")) {
+      return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam." }, { status: 400 });
+    }
 
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense, dramatic cinematic lighting",
