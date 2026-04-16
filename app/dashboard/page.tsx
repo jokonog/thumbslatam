@@ -486,10 +486,10 @@ export default function Dashboard() {
             </div>
             <div style={{display:"flex",gap:"8px"}}>
               <button onClick={() => alert("Planes disponibles muy pronto. Mientras tanto disfruta tus creditos gratuitos.")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontWeight:"700",fontSize:"0.75rem",cursor:"not-allowed"}}>
-                Pro $10/mes — Próximamente
+                Pro $10/mes →
               </button>
               <button onClick={() => alert("Planes disponibles muy pronto. Mientras tanto disfruta tus creditos gratuitos.")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontWeight:"700",fontSize:"0.75rem",cursor:"not-allowed"}}>
-                Studio $25/mes — Próximamente
+                Studio $25/mes →
               </button>
             </div>
           </div>
