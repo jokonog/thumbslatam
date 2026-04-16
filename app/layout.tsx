@@ -33,6 +33,9 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
     >
+      <head>
+        <script src="https://gumroad.com/js/gumroad.js" async></script>
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

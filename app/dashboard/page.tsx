@@ -385,7 +385,13 @@ export default function Dashboard() {
       pro: "https://thumbslatam.gumroad.com/l/thumbslatam-pro",
       studio: "https://thumbslatam.gumroad.com/l/thumbslatam-studio",
     };
-    window.location.href = urls[plan];
+    const a = document.createElement("a");
+    a.href = urls[plan];
+    a.setAttribute("data-gumroad-overlay-checkout", "true");
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => document.body.removeChild(a), 500);
   }
 
   async function borrarMini(id: number) {
