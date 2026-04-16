@@ -385,7 +385,7 @@ export default function Dashboard() {
       pro: "https://thumbslatam.gumroad.com/l/thumbslatam-pro",
       studio: "https://thumbslatam.gumroad.com/l/thumbslatam-studio",
     };
-    window.open(urls[plan], "_blank");
+    window.location.href = urls[plan];
   }
 
   async function borrarMini(id: number) {
