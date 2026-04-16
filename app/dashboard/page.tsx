@@ -385,27 +385,7 @@ export default function Dashboard() {
       pro: "https://thumbslatam.gumroad.com/l/thumbslatam-pro",
       studio: "https://thumbslatam.gumroad.com/l/thumbslatam-studio",
     };
-    const url = urls[plan];
-    const script = document.getElementById("gumroad-script");
-    const doOpen = () => {
-      const a = document.createElement("a");
-      a.href = url;
-      a.setAttribute("data-gumroad-overlay-checkout", "true");
-      a.style.display = "none";
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => document.body.removeChild(a), 500);
-    };
-    if (!script) {
-      const s = document.createElement("script");
-      s.id = "gumroad-script";
-      s.src = "https://gumroad.com/js/gumroad.js";
-      s.onload = doOpen;
-      document.head.appendChild(s);
-    } else {
-      doOpen();
-    }
-  }
+    window.location.href = urls[plan];
   }
 
   async function borrarMini(id: number) {
