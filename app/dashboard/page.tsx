@@ -387,6 +387,7 @@ export default function Dashboard() {
     };
     const a = document.createElement("a");
     a.href = urls[plan];
+    a.className = "gumroad-button";
     a.setAttribute("data-gumroad-overlay-checkout", "true");
     a.style.display = "none";
     document.body.appendChild(a);
