@@ -485,10 +485,10 @@ export default function Dashboard() {
               Te quedan {creditos} creditos — fondo cuesta 4, con tu cara cuesta 5.
             </div>
             <div style={{display:"flex",gap:"8px"}}>
-              <button onClick={() => alert("Planes disponibles muy pronto. Mientras tanto disfruta tus creditos gratuitos.")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontWeight:"700",fontSize:"0.75rem",cursor:"not-allowed"}}>
+              <button onClick={() => abrirCheckout("pro")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
                 Pro $10/mes →
               </button>
-              <button onClick={() => alert("Planes disponibles muy pronto. Mientras tanto disfruta tus creditos gratuitos.")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontWeight:"700",fontSize:"0.75rem",cursor:"not-allowed"}}>
+              <button onClick={() => abrirCheckout("studio")} style={{flex:1,padding:"7px",borderRadius:"8px",background:"transparent",border:"1px solid #FF4D00",color:"#FF4D00",fontWeight:"700",fontSize:"0.75rem",cursor:"pointer"}}>
                 Studio $25/mes →
               </button>
             </div>
