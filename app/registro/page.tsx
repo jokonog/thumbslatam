@@ -39,16 +39,15 @@ export default function Registro() {
   }, []);
 
   const txt = t[lang];
-
   async function registrar() {
     setCargando(true);
     const { error: errReg } = await supabase.auth.signUp({ email, password });
     if (errReg) {
       const m = errReg.message.toLowerCase();
       if (m.includes("rate limit") || m.includes("load failed")) {
-        setMensaje("Has solicitado demasiados emails. Espera 60 minutos. / Too many requests. Wait 60 minutes.");
+        setMensaje(lang === "es" ? "Has solicitado demasiados emails. Espera 60 minutos." : "Too many requests. Please wait 60 minutes.");
       } else if (m.includes("already registered") || m.includes("already exists")) {
-        setMensaje("Este email ya tiene cuenta. Inicia sesion. / Email already registered.");
+        setMensaje(lang === "es" ? "Este email ya tiene cuenta. Inicia sesion." : "Email already registered. Try signing in.");
       } else {
         setMensaje("Error: " + errReg.message);
       }
@@ -56,17 +55,18 @@ export default function Registro() {
       setMensaje(txt.confirm);
     }
     setCargando(false);
+  }
   async function iniciarSesion() {
     setCargando(true);
     const { error: errLogin } = await supabase.auth.signInWithPassword({ email, password });
     if (errLogin) {
       const m = errLogin.message.toLowerCase();
       if (m.includes("invalid login") || m.includes("invalid credentials") || m.includes("wrong password")) {
-        setMensaje("Email o contrasena incorrectos. / Incorrect email or password.");
+        setMensaje(lang === "es" ? "Email o contrasena incorrectos." : "Incorrect email or password.");
       } else if (m.includes("email not confirmed")) {
-        setMensaje("Debes confirmar tu email antes de iniciar sesion. / Please confirm your email.");
+        setMensaje(lang === "es" ? "Debes confirmar tu email antes de iniciar sesion." : "Please confirm your email before signing in.");
       } else if (m.includes("too many") || m.includes("rate limit") || m.includes("load failed")) {
-        setMensaje("Demasiados intentos. Espera unos minutos. / Too many attempts. Wait a few minutes.");
+        setMensaje(lang === "es" ? "Demasiados intentos. Espera unos minutos." : "Too many attempts. Please wait a few minutes.");
       } else {
         setMensaje("Error: " + errLogin.message);
       }
@@ -75,25 +75,6 @@ export default function Registro() {
     }
     setCargando(false);
   }
-
-  async function iniciarSesion() {
-    setCargando(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    const msg2 = error.message.toLowerCase();
-    if (msg2.includes("invalid login") || msg2.includes("invalid credentials") || msg2.includes("wrong password")) {
-      setMensaje("Email o contraseña incorrectos. Por favor verifica tus datos. / Incorrect email or password.");
-    } else if (msg2.includes("email not confirmed")) {
-      setMensaje("Debes confirmar tu email antes de iniciar sesión. Revisa tu bandeja de entrada. / Please confirm your email before signing in.");
-    } else if (msg2.includes("too many requests") || msg2.includes("rate limit") || msg2.includes("load failed")) {
-      setMensaje("Demasiados intentos. Por favor espera unos minutos antes de intentarlo de nuevo. / Too many attempts. Please wait a few minutes.");
-    } else {
-      setMensaje("Error: " + error.message);
-    }
-  }
-    else { window.location.replace("/dashboard"); }
-    setCargando(false);
-  }
-
   return (
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"sans-serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"24px"}}>
       <div style={{width:"100%",maxWidth:"400px",background:"#111827",borderRadius:"16px",padding:"40px 32px",border:"1px solid rgba(255,255,255,0.07)"}}>
