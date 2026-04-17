@@ -44,15 +44,35 @@ export default function Registro() {
     setCargando(true);
     const { error: errReg } = await supabase.auth.signUp({ email, password });
     if (errReg) {
-      const msg1 = errReg.message.toLowerCase();
-      if (msg1.includes("rate limit") || msg1.includes("load failed")) {
+      const m = errReg.message.toLowerCase();
+      if (m.includes("rate limit") || m.includes("load failed")) {
         setMensaje("Has solicitado demasiados emails. Espera 60 minutos. / Too many requests. Wait 60 minutes.");
-      } else if (msg1.includes("already registered") || msg1.includes("already exists")) {
-        setMensaje("Este email ya tiene cuenta. Intenta iniciar sesión. / Email already registered. Try signing in.");
+      } else if (m.includes("already registered") || m.includes("already exists")) {
+        setMensaje("Este email ya tiene cuenta. Inicia sesion. / Email already registered.");
       } else {
         setMensaje("Error: " + errReg.message);
       }
-    } else { setMensaje(txt.confirm); }
+    } else {
+      setMensaje(txt.confirm);
+    }
+    setCargando(false);
+  async function iniciarSesion() {
+    setCargando(true);
+    const { error: errLogin } = await supabase.auth.signInWithPassword({ email, password });
+    if (errLogin) {
+      const m = errLogin.message.toLowerCase();
+      if (m.includes("invalid login") || m.includes("invalid credentials") || m.includes("wrong password")) {
+        setMensaje("Email o contrasena incorrectos. / Incorrect email or password.");
+      } else if (m.includes("email not confirmed")) {
+        setMensaje("Debes confirmar tu email antes de iniciar sesion. / Please confirm your email.");
+      } else if (m.includes("too many") || m.includes("rate limit") || m.includes("load failed")) {
+        setMensaje("Demasiados intentos. Espera unos minutos. / Too many attempts. Wait a few minutes.");
+      } else {
+        setMensaje("Error: " + errLogin.message);
+      }
+    } else {
+      window.location.replace("/dashboard");
+    }
     setCargando(false);
   }
 
