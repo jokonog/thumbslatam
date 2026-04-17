@@ -42,17 +42,17 @@ export default function Registro() {
 
   async function registrar() {
     setCargando(true);
-    const { error } = await supabase.auth.signUp({ email, password });
-    const msg1 = error.message.toLowerCase();
-    if (msg1.includes("rate limit") || msg1.includes("email rate limit") || msg1.includes("load failed")) {
-      setMensaje("Has solicitado demasiados emails. Por favor espera 60 minutos antes de intentarlo de nuevo. / Too many email requests. Please wait 60 minutes before trying again.");
-    } else if (msg1.includes("already registered") || msg1.includes("already exists")) {
-      setMensaje("Este email ya tiene una cuenta. Intenta iniciar sesión. / This email already has an account. Try signing in.");
-    } else {
-      setMensaje("Error: " + error.message);
-    }
-  }
-    else { setMensaje(txt.confirm); }
+    const { error: errReg } = await supabase.auth.signUp({ email, password });
+    if (errReg) {
+      const msg1 = errReg.message.toLowerCase();
+      if (msg1.includes("rate limit") || msg1.includes("load failed")) {
+        setMensaje("Has solicitado demasiados emails. Espera 60 minutos. / Too many requests. Wait 60 minutes.");
+      } else if (msg1.includes("already registered") || msg1.includes("already exists")) {
+        setMensaje("Este email ya tiene cuenta. Intenta iniciar sesión. / Email already registered. Try signing in.");
+      } else {
+        setMensaje("Error: " + errReg.message);
+      }
+    } else { setMensaje(txt.confirm); }
     setCargando(false);
   }
 
