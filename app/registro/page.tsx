@@ -43,7 +43,15 @@ export default function Registro() {
   async function registrar() {
     setCargando(true);
     const { error } = await supabase.auth.signUp({ email, password });
-    if (error) { setMensaje("Error: " + error.message); }
+    const msg1 = error.message.toLowerCase();
+    if (msg1.includes("rate limit") || msg1.includes("email rate limit") || msg1.includes("load failed")) {
+      setMensaje("Has solicitado demasiados emails. Por favor espera 60 minutos antes de intentarlo de nuevo. / Too many email requests. Please wait 60 minutes before trying again.");
+    } else if (msg1.includes("already registered") || msg1.includes("already exists")) {
+      setMensaje("Este email ya tiene una cuenta. Intenta iniciar sesión. / This email already has an account. Try signing in.");
+    } else {
+      setMensaje("Error: " + error.message);
+    }
+  }
     else { setMensaje(txt.confirm); }
     setCargando(false);
   }
@@ -51,7 +59,17 @@ export default function Registro() {
   async function iniciarSesion() {
     setCargando(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { setMensaje("Error: " + error.message); }
+    const msg2 = error.message.toLowerCase();
+    if (msg2.includes("invalid login") || msg2.includes("invalid credentials") || msg2.includes("wrong password")) {
+      setMensaje("Email o contraseña incorrectos. Por favor verifica tus datos. / Incorrect email or password.");
+    } else if (msg2.includes("email not confirmed")) {
+      setMensaje("Debes confirmar tu email antes de iniciar sesión. Revisa tu bandeja de entrada. / Please confirm your email before signing in.");
+    } else if (msg2.includes("too many requests") || msg2.includes("rate limit") || msg2.includes("load failed")) {
+      setMensaje("Demasiados intentos. Por favor espera unos minutos antes de intentarlo de nuevo. / Too many attempts. Please wait a few minutes.");
+    } else {
+      setMensaje("Error: " + error.message);
+    }
+  }
     else { window.location.replace("/dashboard"); }
     setCargando(false);
   }
