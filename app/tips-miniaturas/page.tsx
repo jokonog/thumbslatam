@@ -109,12 +109,13 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
         <div
           style={{
             fontSize: "clamp(6rem, 18vw, 14rem)",
-            fontWeight: 900,
+            fontWeight: 800,
             color: tip.color,
             lineHeight: 0.8,
             letterSpacing: "-0.02em",
             textShadow: "0 0 80px " + tip.color + "40",
             userSelect: "none",
+            fontFamily: "'Syne', sans-serif",
           }}
         >
           {tip.numero}
@@ -146,11 +147,12 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
           <h2
             style={{
               fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
-              fontWeight: 800,
+              fontWeight: 700,
               color: "#fff",
               marginBottom: "0.75rem",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
+              fontFamily: "'Syne', sans-serif",
             }}
           >
             {tip.titulo}
@@ -159,9 +161,10 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
             style={{
               fontSize: "1.1rem",
               color: tip.color,
-              fontWeight: 600,
+              fontWeight: 500,
               marginBottom: "1.5rem",
               fontStyle: "italic",
+              fontFamily: "'DM Sans', sans-serif",
             }}
           >
             {tip.resumen}
@@ -172,6 +175,7 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
               color: "rgba(255,255,255,0.75)",
               lineHeight: 1.7,
               marginBottom: "1.5rem",
+              fontFamily: "'DM Sans', sans-serif",
             }}
           >
             {tip.contenido}
@@ -191,11 +195,12 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
                 color: tip.color,
                 letterSpacing: "0.1em",
                 marginBottom: "0.5rem",
+                fontFamily: "'DM Sans', sans-serif",
               }}
             >
               TIP PRACTICO
             </div>
-            <p style={{ color: "rgba(255,255,255,0.9)", fontSize: "1rem", lineHeight: 1.6, margin: 0 }}>
+            <p style={{ color: "rgba(255,255,255,0.9)", fontSize: "1rem", lineHeight: 1.6, margin: 0, fontFamily: "'DM Sans', sans-serif" }}>
               {tip.tip}
             </p>
           </div>
@@ -207,6 +212,7 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
 
 export default function TipsMiniaturas() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [hoverButton, setHoverButton] = useState<"pro" | "studio" | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -219,242 +225,120 @@ export default function TipsMiniaturas() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const proBg = hoverButton === "pro" ? "#FF4D00" : hoverButton === "studio" ? "transparent" : "#FF4D00";
+  const proColor = "#fff";
+  const proBorder = hoverButton === "studio" ? "1px solid rgba(255,255,255,0.3)" : "1px solid #FF4D00";
+
+  const studioBg = hoverButton === "studio" ? "#FF4D00" : "transparent";
+  const studioColor = "#fff";
+  const studioBorder = hoverButton === "studio" ? "1px solid #FF4D00" : "1px solid rgba(255,255,255,0.3)";
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #0A0E27 0%, #050816 100%)",
-        position: "relative",
-        overflow: "hidden",
-        color: "#fff",
-      }}
-    >
+    <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
       <div
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          pointerEvents: "none",
-          zIndex: 0,
+          minHeight: "100vh",
+          background: "linear-gradient(180deg, #0A0E27 0%, #050816 100%)",
+          position: "relative",
+          overflow: "hidden",
+          color: "#fff",
+          fontFamily: "'DM Sans', sans-serif",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            top: "10%",
-            left: "10%",
-            width: "500px",
-            height: "500px",
-            background: "radial-gradient(circle, rgba(255,77,0,0.15) 0%, transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "20%",
-            right: "5%",
-            width: "600px",
-            height: "600px",
-            background: "radial-gradient(circle, rgba(6,214,160,0.08) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
-      </div>
-
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "3px",
-          background: "rgba(255,255,255,0.05)",
-          zIndex: 100,
-        }}
-      >
-        <div
-          style={{
-            width: scrollProgress + "%",
-            height: "100%",
-            background: "linear-gradient(90deg, #FF4D00, #FFD60A)",
-            transition: "width 0.1s",
-          }}
-        />
-      </div>
-
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <header
-          style={{
-            padding: "2rem 3rem",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <Logo />
-          <Link
-            href="/"
-            style={{
-              color: "rgba(255,255,255,0.7)",
-              textDecoration: "none",
-              fontSize: "0.95rem",
-              fontWeight: 500,
-            }}
-          >
-            Volver al inicio
-          </Link>
-        </header>
-
-        <section
-          style={{
-            minHeight: "70vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "4rem 2rem",
-            textAlign: "center",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            pointerEvents: "none",
+            zIndex: 0,
           }}
         >
           <div
             style={{
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              color: "#FF4D00",
-              letterSpacing: "0.2em",
-              marginBottom: "1.5rem",
-              textTransform: "uppercase",
+              position: "absolute",
+              top: "10%",
+              left: "10%",
+              width: "500px",
+              height: "500px",
+              background: "radial-gradient(circle, rgba(255,77,0,0.15) 0%, transparent 70%)",
+              filter: "blur(60px)",
             }}
-          >
-            Guia gratuita
-          </div>
-          <h1
-            style={{
-              fontSize: "clamp(2.5rem, 7vw, 6rem)",
-              fontWeight: 900,
-              lineHeight: 0.95,
-              letterSpacing: "-0.03em",
-              marginBottom: "2rem",
-              maxWidth: "1000px",
-            }}
-          >
-            MINIATURAS QUE
-            <br />
-            <span style={{ color: "#FF4D00" }}>GENERAN CLICS</span>
-          </h1>
-          <p
-            style={{
-              fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
-              color: "rgba(255,255,255,0.7)",
-              maxWidth: "700px",
-              lineHeight: 1.5,
-              marginBottom: "3rem",
-            }}
-          >
-            8 principios fundamentales respaldados por YouTube oficial y miles de canales LATAM que los aplican todos los dias.
-          </p>
-
+          />
           <div
             style={{
+              position: "absolute",
+              bottom: "20%",
+              right: "5%",
+              width: "600px",
+              height: "600px",
+              background: "radial-gradient(circle, rgba(6,214,160,0.08) 0%, transparent 70%)",
+              filter: "blur(80px)",
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "3px",
+            background: "rgba(255,255,255,0.05)",
+            zIndex: 100,
+          }}
+        >
+          <div
+            style={{
+              width: scrollProgress + "%",
+              height: "100%",
+              background: "linear-gradient(90deg, #FF4D00, #FFD60A)",
+              transition: "width 0.1s",
+            }}
+          />
+        </div>
+
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <header
+            style={{
+              padding: "2rem 3rem",
               display: "flex",
-              gap: "1rem",
+              justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
+            <Logo />
+            <Link
+              href="/"
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                textDecoration: "none",
+                fontSize: "0.95rem",
+                fontWeight: 500,
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              Volver al inicio
+            </Link>
+          </header>
+
+          <section
+            style={{
+              minHeight: "70vh",
+              display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                padding: "0.75rem 1.5rem",
-                background: "rgba(255,77,0,0.1)",
-                border: "1px solid rgba(255,77,0,0.3)",
-                borderRadius: "999px",
-                fontSize: "0.9rem",
-                color: "#FF4D00",
-                fontWeight: 600,
-              }}
-            >
-              8 min de lectura
-            </div>
-            <div
-              style={{
-                padding: "0.75rem 1.5rem",
-                background: "rgba(6,214,160,0.1)",
-                border: "1px solid rgba(6,214,160,0.3)",
-                borderRadius: "999px",
-                fontSize: "0.9rem",
-                color: "#06D6A0",
-                fontWeight: 600,
-              }}
-            >
-              Basado en datos oficiales
-            </div>
-          </div>
-        </section>
-
-        <section
-          style={{
-            maxWidth: "900px",
-            margin: "0 auto",
-            padding: "4rem 2rem",
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "clamp(1.1rem, 1.8vw, 1.3rem)",
-              color: "rgba(255,255,255,0.8)",
-              lineHeight: 1.7,
-              fontWeight: 300,
-            }}
-          >
-            El <strong style={{ color: "#FF4D00", fontWeight: 700 }}>CTR (Click-Through Rate)</strong> es lo que decide si tu video despega o muere. YouTube puede mostrarte a 100,000 personas, pero si solo 1,000 hacen clic, el algoritmo lo interpreta como que tu contenido no interesa y deja de mostrarlo.
-          </p>
-          <p
-            style={{
-              fontSize: "clamp(1.1rem, 1.8vw, 1.3rem)",
-              color: "rgba(255,255,255,0.8)",
-              lineHeight: 1.7,
-              marginTop: "1.5rem",
-              fontWeight: 300,
-            }}
-          >
-            La miniatura es el <strong style={{ color: "#FFD60A", fontWeight: 700 }}>80 por ciento de ese CTR</strong>. El titulo es el 20 por ciento.
-          </p>
-        </section>
-
-        <section
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "4rem 2rem",
-          }}
-        >
-          {tips.map((tip, i) => (
-            <TipCard key={i} tip={tip} index={i} />
-          ))}
-        </section>
-
-        <section
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "6rem 2rem",
-          }}
-        >
-          <div
-            style={{
-              background: "linear-gradient(135deg, rgba(255,77,0,0.15) 0%, rgba(255,214,10,0.05) 100%)",
-              border: "1px solid rgba(255,77,0,0.3)",
-              borderRadius: "32px",
-              padding: "clamp(2rem, 5vw, 5rem)",
-              position: "relative",
-              overflow: "hidden",
+              alignItems: "center",
+              padding: "4rem 2rem",
               textAlign: "center",
             }}
           >
@@ -466,139 +350,294 @@ export default function TipsMiniaturas() {
                 letterSpacing: "0.2em",
                 marginBottom: "1.5rem",
                 textTransform: "uppercase",
+                fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              Contenido exclusivo Pro
+              Guia gratuita
             </div>
-            <h2
+            <h1
               style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontWeight: 900,
-                lineHeight: 1,
-                marginBottom: "1.5rem",
+                fontSize: "clamp(2.5rem, 7vw, 6rem)",
+                fontWeight: 800,
+                lineHeight: 0.95,
+                letterSpacing: "-0.03em",
+                marginBottom: "2rem",
+                maxWidth: "1000px",
+                fontFamily: "'Syne', sans-serif",
               }}
             >
-              Quieres las tecnicas que usan
+              MINIATURAS QUE
               <br />
-              <span style={{ color: "#FF4D00" }}>los canales con mas de 100K suscriptores?</span>
-            </h2>
+              <span style={{ color: "#FF4D00" }}>GENERAN CLICS</span>
+            </h1>
             <p
               style={{
-                fontSize: "clamp(1rem, 1.8vw, 1.2rem)",
+                fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
                 color: "rgba(255,255,255,0.7)",
                 maxWidth: "700px",
-                margin: "0 auto 3rem",
-                lineHeight: 1.6,
+                lineHeight: 1.5,
+                marginBottom: "3rem",
+                fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              En nuestra <strong style={{ color: "#fff" }}>Guia Avanzada</strong> exclusiva para miembros Pro y Studio te ensenamos:
+              8 principios fundamentales respaldados por YouTube oficial y miles de canales LATAM que los aplican todos los dias.
             </p>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                gap: "1rem",
-                maxWidth: "900px",
-                margin: "0 auto 3rem",
-              }}
-            >
-              {[
-                "Psicologia del color por nicho",
-                "Framework AIDA aplicado",
-                "A/B testing que realmente funciona",
-                "Benchmarks por categoria LATAM",
-                "Prompts optimizados para ThumbsLatam",
-                "Casos reales con numeros",
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "rgba(0,0,0,0.3)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "12px",
-                    padding: "1rem 1.25rem",
-                    fontSize: "0.95rem",
-                    color: "rgba(255,255,255,0.85)",
-                    textAlign: "left",
-                  }}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
 
             <div
               style={{
                 display: "flex",
                 gap: "1rem",
-                justifyContent: "center",
+                alignItems: "center",
                 flexWrap: "wrap",
+                justifyContent: "center",
               }}
             >
-              
-              <a href="/#pricing"
-                target="_blank"
-                rel="noopener noreferrer"
+              <div
                 style={{
-                  padding: "1rem 2rem",
-                  background: "#FF4D00",
-                  color: "#fff",
+                  padding: "0.75rem 1.5rem",
+                  background: "rgba(255,77,0,0.1)",
+                  border: "1px solid rgba(255,77,0,0.3)",
                   borderRadius: "999px",
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  textDecoration: "none",
-                  boxShadow: "0 8px 30px rgba(255,77,0,0.3)",
+                  fontSize: "0.9rem",
+                  color: "#FF4D00",
+                  fontWeight: 600,
+                  fontFamily: "'DM Sans', sans-serif",
                 }}
               >
-                Comenzar Pro - 10 USD/mes
-              </a>
-              
-              <a href="/#pricing"
-                target="_blank"
-                rel="noopener noreferrer"
+                8 min de lectura
+              </div>
+              <div
                 style={{
-                  padding: "1rem 2rem",
-                  background: "transparent",
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.3)",
+                  padding: "0.75rem 1.5rem",
+                  background: "rgba(6,214,160,0.1)",
+                  border: "1px solid rgba(6,214,160,0.3)",
                   borderRadius: "999px",
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  color: "#06D6A0",
+                  fontWeight: 600,
+                  fontFamily: "'DM Sans', sans-serif",
                 }}
               >
-                Ver plan Studio - 25 USD/mes
-              </a>
+                Basado en datos oficiales
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <footer
-          style={{
-            padding: "3rem 2rem",
-            textAlign: "center",
-            borderTop: "1px solid rgba(255,255,255,0.05)",
-            color: "rgba(255,255,255,0.4)",
-            fontSize: "0.9rem",
-          }}
-        >
-          <p style={{ marginBottom: "0.5rem" }}>
-            ThumbsLatam - Miniaturas con IA para creadores latinoamericanos
-          </p>
-          <p>
-            <Link href="/" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>
-              Inicio
-            </Link>
-            <Link href="/dashboard" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>
-              Dashboard
-            </Link>
-            <Link href="/legal" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}>
-              Legal
-            </Link>
-          </p>
-        </footer>
+          <section
+            style={{
+              maxWidth: "900px",
+              margin: "0 auto",
+              padding: "4rem 2rem",
+              textAlign: "center",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "clamp(1.1rem, 1.8vw, 1.3rem)",
+                color: "rgba(255,255,255,0.8)",
+                lineHeight: 1.7,
+                fontWeight: 300,
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              El <strong style={{ color: "#FF4D00", fontWeight: 700 }}>CTR (Click-Through Rate)</strong> es lo que decide si tu video despega o muere. YouTube puede mostrarte a 100,000 personas, pero si solo 1,000 hacen clic, el algoritmo lo interpreta como que tu contenido no interesa y deja de mostrarlo.
+            </p>
+            <p
+              style={{
+                fontSize: "clamp(1.1rem, 1.8vw, 1.3rem)",
+                color: "rgba(255,255,255,0.8)",
+                lineHeight: 1.7,
+                marginTop: "1.5rem",
+                fontWeight: 300,
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              La miniatura es el <strong style={{ color: "#FFD60A", fontWeight: 700 }}>80 por ciento de ese CTR</strong>. El titulo es el 20 por ciento.
+            </p>
+          </section>
+
+          <section
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              padding: "4rem 2rem",
+            }}
+          >
+            {tips.map((tip, i) => (
+              <TipCard key={i} tip={tip} index={i} />
+            ))}
+          </section>
+
+          <section
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              padding: "6rem 2rem",
+            }}
+          >
+            <div
+              style={{
+                background: "linear-gradient(135deg, rgba(255,77,0,0.15) 0%, rgba(255,214,10,0.05) 100%)",
+                border: "1px solid rgba(255,77,0,0.3)",
+                borderRadius: "32px",
+                padding: "clamp(2rem, 5vw, 5rem)",
+                position: "relative",
+                overflow: "hidden",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  color: "#FF4D00",
+                  letterSpacing: "0.2em",
+                  marginBottom: "1.5rem",
+                  textTransform: "uppercase",
+                  fontFamily: "'DM Sans', sans-serif",
+                }}
+              >
+                Contenido exclusivo Pro
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                  fontWeight: 800,
+                  lineHeight: 1,
+                  marginBottom: "1.5rem",
+                  fontFamily: "'Syne', sans-serif",
+                }}
+              >
+                Quieres las tecnicas que usan
+                <br />
+                <span style={{ color: "#FF4D00" }}>los canales con mas de 100K suscriptores?</span>
+              </h2>
+              <p
+                style={{
+                  fontSize: "clamp(1rem, 1.8vw, 1.2rem)",
+                  color: "rgba(255,255,255,0.7)",
+                  maxWidth: "700px",
+                  margin: "0 auto 3rem",
+                  lineHeight: 1.6,
+                  fontFamily: "'DM Sans', sans-serif",
+                }}
+              >
+                En nuestra <strong style={{ color: "#fff" }}>Guia Avanzada</strong> exclusiva para miembros Pro y Studio te ensenamos:
+              </p>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                  gap: "1rem",
+                  maxWidth: "900px",
+                  margin: "0 auto 3rem",
+                }}
+              >
+                {[
+                  "Psicologia del color por nicho",
+                  "Framework AIDA aplicado",
+                  "A/B testing que realmente funciona",
+                  "Benchmarks por categoria LATAM",
+                  "Prompts optimizados para ThumbsLatam",
+                  "Casos reales con numeros",
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "12px",
+                      padding: "1rem 1.25rem",
+                      fontSize: "0.95rem",
+                      color: "rgba(255,255,255,0.85)",
+                      textAlign: "left",
+                      fontFamily: "'DM Sans', sans-serif",
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                
+                  href="/#pricing"
+                  onMouseEnter={() => setHoverButton("pro")}
+                  onMouseLeave={() => setHoverButton(null)}
+                  style={{
+                    padding: "1rem 2rem",
+                    background: proBg,
+                    color: proColor,
+                    border: proBorder,
+                    borderRadius: "999px",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    boxShadow: hoverButton === "pro" ? "0 8px 30px rgba(255,77,0,0.5)" : "0 8px 30px rgba(255,77,0,0.2)",
+                    transition: "all 0.3s ease",
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}
+                >
+                  Comenzar Pro - 10 USD/mes
+                </a>
+                
+                  href="/#pricing"
+                  onMouseEnter={() => setHoverButton("studio")}
+                  onMouseLeave={() => setHoverButton(null)}
+                  style={{
+                    padding: "1rem 2rem",
+                    background: studioBg,
+                    color: studioColor,
+                    border: studioBorder,
+                    borderRadius: "999px",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    transition: "all 0.3s ease",
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}
+                >
+                  Ver plan Studio - 25 USD/mes
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <footer
+            style={{
+              padding: "3rem 2rem",
+              textAlign: "center",
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+              color: "rgba(255,255,255,0.4)",
+              fontSize: "0.9rem",
+              fontFamily: "'DM Sans', sans-serif",
+            }}
+          >
+            <p style={{ marginBottom: "0.5rem" }}>
+              ThumbsLatam - Miniaturas con IA para creadores latinoamericanos
+            </p>
+            <p>
+              <Link href="/" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>
+                Inicio
+              </Link>
+              <Link href="/dashboard" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>
+                Dashboard
+              </Link>
+              <Link href="/legal" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}>
+                Legal
+              </Link>
+            </p>
+          </footer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
