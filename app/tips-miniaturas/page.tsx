@@ -306,9 +306,9 @@ export default function TipsMiniaturas() {
                   EN
                 </button>
               </div>
-              <Link href="/" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>
+              <a href="/" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>
                 {t.volverInicio}
-              </Link>
+              </a>
             </div>
           </header>
           <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "4rem 2rem", textAlign: "center" }}>
@@ -372,7 +372,7 @@ export default function TipsMiniaturas() {
           <footer style={{ padding: "3rem 2rem", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", fontFamily: "'DM Sans', sans-serif" }}>
             <p style={{ marginBottom: "0.5rem" }}>{t.footerText}</p>
             <p>
-              <Link href="/" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>{t.footerInicio}</Link>
+              <a href="/" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>{t.footerInicio}</a>
               <Link href="/dashboard" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", marginRight: "1.5rem" }}>{t.footerDashboard}</Link>
               <Link href="/legal" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}>{t.footerLegal}</Link>
             </p>
