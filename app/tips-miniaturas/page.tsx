@@ -537,7 +537,7 @@ export default function TipsMiniaturas() {
               }}
             >
               
-              <a href="https://thumbslatam.gumroad.com/l/thumbslatam-pro"
+              <a href="/#pricing"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -554,7 +554,7 @@ export default function TipsMiniaturas() {
                 Comenzar Pro - 10 USD/mes
               </a>
               
-              <a href="https://thumbslatam.gumroad.com/l/thumbslatam-studio"
+              <a href="/#pricing"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
