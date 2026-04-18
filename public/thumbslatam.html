@@ -1471,14 +1471,14 @@
     <a href="/registro" target="_top" data-i18n="nav_login" style="color:white;font-size:0.9rem;text-decoration:none;padding:8px 16px;white-space:nowrap;border:1px solid rgba(255,255,255,0.3);border-radius:8px;">Iniciar sesión</a>
     <a href="#pricing" class="btn-primary" style="white-space:nowrap;" data-i18n="nav_start">Empezar gratis →</a>
   </div>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <button class="hamburger" onclick="toggleMenu(event)" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#features" onclick="toggleMenu()" data-i18n="nav_features">Funciones</a>
   <a href="#compare" onclick="toggleMenu()" data-i18n="nav_compare">Comparar</a>
-  <a href="/registro" target="_top" onclick="toggleMenu()" data-i18n="nav_pricing">Precios</a>
+  <a href="#pricing" onclick="toggleMenu()" data-i18n="nav_pricing">Precios</a>
   <a href="/tips-miniaturas" onclick="toggleMenu()" data-i18n="nav_tips">Tips</a>
   <a href="#faq" onclick="toggleMenu()" data-i18n="nav_faq">FAQ</a>
   <a href="/registro" target="_top" onclick="toggleMenu()" data-i18n="nav_login" style="color:var(--c-muted)">Iniciar sesión</a>
@@ -2069,22 +2069,17 @@
   });
 
   // Mobile menu toggle
-  function toggleMenu() {
+  function toggleMenu(e) {
+    if (e) e.stopPropagation();
     const menu = document.getElementById('mobileMenu');
-    if (menu.style.display === 'flex') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'flex';
-      menu.style.flexDirection = 'column';
-    }
+    menu.classList.toggle('open');
   }
-
   // Close menu when clicking outside
   document.addEventListener('click', function(e) {
     const menu = document.getElementById('mobileMenu');
     const hamburger = document.querySelector('.hamburger');
-    if (menu && hamburger && !menu.contains(e.target) && !hamburger.contains(e.target)) {
-      menu.style.display = 'none';
+    if (menu && hamburger && menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+      menu.classList.remove('open');
     }
   });
 </script>
