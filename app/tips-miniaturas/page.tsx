@@ -294,7 +294,7 @@ export default function TipsMiniaturas() {
           <div style={{ width: scrollProgress + "%", height: "100%", background: "linear-gradient(90deg, #FF4D00, #FFD60A)", transition: "width 0.1s" }} />
         </div>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <header style={{ padding: "2rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <header style={{ padding: "1.5rem clamp(1rem, 4vw, 3rem)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
             <Logo />
             <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
               <div style={{ display: "flex", gap: 0, border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px", overflow: "hidden" }}>
