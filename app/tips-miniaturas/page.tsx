@@ -569,7 +569,7 @@ export default function TipsMiniaturas() {
                 }}
               >
                 
-                  href="/#pricing"
+                <a href="/#pricing"
                   onMouseEnter={() => setHoverButton("pro")}
                   onMouseLeave={() => setHoverButton(null)}
                   style={{
@@ -589,7 +589,7 @@ export default function TipsMiniaturas() {
                   Comenzar Pro - 10 USD/mes
                 </a>
                 
-                  href="/#pricing"
+                <a href="/#pricing"
                   onMouseEnter={() => setHoverButton("studio")}
                   onMouseLeave={() => setHoverButton(null)}
                   style={{
