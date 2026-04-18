@@ -315,7 +315,7 @@ export default function TipsMiniaturas() {
             <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1.5rem", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>
               {t.guiaGratuita}
             </div>
-            <h1 style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem", maxWidth: "1000px", fontFamily: "'Syne', sans-serif" }}>
+            <h1 style={{ fontSize: "clamp(1.75rem, 6vw, 6rem)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem", maxWidth: "100%", wordBreak: "break-word", fontFamily: "'Syne', sans-serif" }}>
               {t.heroTitle1}<br /><span style={{ color: "#FF4D00" }}>{t.heroTitle2}</span>
             </h1>
             <p style={{ fontSize: "clamp(1rem, 1.8vw, 1.3rem)", color: "rgba(255,255,255,0.7)", maxWidth: "700px", lineHeight: 1.5, marginBottom: "3rem", fontFamily: "'DM Sans', sans-serif" }}>
