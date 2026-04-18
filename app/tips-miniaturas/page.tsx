@@ -30,7 +30,7 @@ const tips = [
   },
   {
     numero: "04",
-    titulo: "Maximo 3-5 palabras de texto",
+    titulo: "Maximo 3 a 5 palabras de texto",
     resumen: "La miniatura no es el titulo. Es el gancho.",
     contenido: "Tu titulo ya esta debajo. La miniatura es para complementar, no repetir. Si metes mas de 5 palabras, nadie las lee en un telefono. Usa palabras con peso emocional: EPICO, PELIGROSO, NO LO CREI, POR FIN. Lo que genera curiosidad o urgencia.",
     tip: "Si tu texto de miniatura tiene articulos (el, la, los), probablemente sobran palabras.",
@@ -41,14 +41,14 @@ const tips = [
     titulo: "Coherencia con el titulo",
     resumen: "YouTube penaliza el desajuste de expectativas.",
     contenido: "Segun YouTube oficial, cuando la miniatura promete algo que el video no entrega, la retencion cae, y con ella tu alcance. El algoritmo mide viewer satisfaction y te deprioriza. El clickbait funciona una vez; la honestidad escala un canal.",
-    tip: "Preguntate: un espectador que haga clic esperando esto va a quedarse satisfecho? Si la respuesta es no, cambia la miniatura o el video.",
+    tip: "Preguntate si un espectador que haga clic esperando esto va a quedarse satisfecho. Si la respuesta es no, cambia la miniatura o el video.",
     color: "#FFD60A",
   },
   {
     numero: "06",
     titulo: "Consistencia visual entre videos",
     resumen: "Tu canal debe verse como una marca, no como un collage.",
-    contenido: "YouTube recomienda crear un estilo de titulo y miniatura consistente para que las audiencias reconozcan tu contenido al instante en el feed de sugeridos. Usa siempre los mismos 2-3 colores, la misma tipografia, el mismo tipo de composicion. La coherencia multiplica el CTR en videos sugeridos.",
+    contenido: "YouTube recomienda crear un estilo de titulo y miniatura consistente para que las audiencias reconozcan tu contenido al instante en el feed de sugeridos. Usa siempre los mismos 2 o 3 colores, la misma tipografia, el mismo tipo de composicion. La coherencia multiplica el CTR en videos sugeridos.",
     tip: "Mira las miniaturas de tus ultimos 10 videos juntas. Si no parecen del mismo canal, ahi esta tu problema.",
     color: "#06D6A0",
   },
@@ -56,7 +56,7 @@ const tips = [
     numero: "07",
     titulo: "Piensa en movil, no en desktop",
     resumen: "El 70 por ciento de YouTube se ve en telefonos. Disena para eso.",
-    contenido: "Una miniatura se ve a 320x180 pixeles en movil. Cualquier detalle menor a eso desaparece. Si tu miniatura tiene texto pequeno, bordes sutiles o expresiones faciales matizadas, en movil no se ven. Disena para el tamano mas pequeno primero.",
+    contenido: "Una miniatura se ve a 320 por 180 pixeles en movil. Cualquier detalle menor a eso desaparece. Si tu miniatura tiene texto pequeno, bordes sutiles o expresiones faciales matizadas, en movil no se ven. Disena para el tamano mas pequeno primero.",
     tip: "Reduce tu miniatura al 20 por ciento de su tamano original. Si sigue siendo clara, funcionara en movil.",
     color: "#FF4D00",
   },
@@ -64,7 +64,7 @@ const tips = [
     numero: "08",
     titulo: "Errores que matan tu CTR",
     resumen: "Lo que NO debes hacer, por experiencia de miles de canales.",
-    contenido: "Demasiados elementos compitiendo por atencion. Texto largo que nadie lee. Fondos que son foto literal del video sin edicion. Colores que se mezclan con el fondo de YouTube (gris, blanco sucio). Flechas rojas y circulos amarillos exagerados que ya huelen a spam. Logos enormes que ocupan el centro.",
+    contenido: "Demasiados elementos compitiendo por atencion. Texto largo que nadie lee. Fondos que son foto literal del video sin edicion. Colores que se mezclan con el fondo de YouTube como gris o blanco sucio. Flechas rojas y circulos amarillos exagerados que ya huelen a spam. Logos enormes que ocupan el centro.",
     tip: "Si tu miniatura tiene flechas rojas senalando algo, probablemente necesitas redisenarla. Eso funcionaba en 2015.",
     color: "#FFD60A",
   },
@@ -113,7 +113,7 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
             color: tip.color,
             lineHeight: 0.8,
             letterSpacing: "-0.02em",
-            textShadow: `0 0 80px ${tip.color}40`,
+            textShadow: "0 0 80px " + tip.color + "40",
             userSelect: "none",
           }}
         >
@@ -126,7 +126,7 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
           style={{
             background: "rgba(255,255,255,0.03)",
             backdropFilter: "blur(12px)",
-            border: `1px solid ${tip.color}30`,
+            border: "1px solid " + tip.color + "30",
             borderRadius: "24px",
             padding: "2.5rem",
             position: "relative",
@@ -179,7 +179,7 @@ function TipCard({ tip, index }: { tip: typeof tips[0]; index: number }) {
           <div
             style={{
               background: "rgba(0,0,0,0.4)",
-              borderLeft: `3px solid ${tip.color}`,
+              borderLeft: "3px solid " + tip.color,
               padding: "1rem 1.25rem",
               borderRadius: "0 12px 12px 0",
             }}
@@ -277,7 +277,7 @@ export default function TipsMiniaturas() {
       >
         <div
           style={{
-            width: `${scrollProgress}%`,
+            width: scrollProgress + "%",
             height: "100%",
             background: "linear-gradient(90deg, #FF4D00, #FFD60A)",
             transition: "width 0.1s",
@@ -343,7 +343,8 @@ export default function TipsMiniaturas() {
               maxWidth: "1000px",
             }}
           >
-            MINIATURAS QUE<br />
+            MINIATURAS QUE
+            <br />
             <span style={{ color: "#FF4D00" }}>GENERAN CLICS</span>
           </h1>
           <p
@@ -477,7 +478,8 @@ export default function TipsMiniaturas() {
                 marginBottom: "1.5rem",
               }}
             >
-              Quieres las tecnicas que usan<br />
+              Quieres las tecnicas que usan
+              <br />
               <span style={{ color: "#FF4D00" }}>los canales con mas de 100K suscriptores?</span>
             </h2>
             <p
