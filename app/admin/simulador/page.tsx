@@ -20,12 +20,13 @@ export default function SimuladorPage() {
   const [costoCloudinary] = useState(0);
 
   useEffect(() => {
-    const cookies = document.cookie.split(";");
-    const adminSession = cookies.find(c => c.trim().startsWith("admin-session="));
-    if (adminSession && adminSession.split("=")[1].trim().length > 5) {
-      setAutorizado(true);
-    }
-    setVerificando(false);
+    fetch("/api/admin-check")
+      .then(r => r.json())
+      .then(data => {
+        if (data.autorizado) setAutorizado(true);
+        setVerificando(false);
+      })
+      .catch(() => setVerificando(false));
   }, []);
 
   const precioPro = 10;
