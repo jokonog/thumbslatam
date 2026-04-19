@@ -278,7 +278,7 @@ export default function AdminPage() {
         <Logo height={32} />
         <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
           <span style={{fontSize:"0.8rem",color:"#8B8FA8",background:"#111827",padding:"6px 12px",borderRadius:"8px",border:"1px solid #3A3D52"}}>Admin Panel</span>
-          <button onClick={() => { document.cookie = "admin-session=; maxAge=0; path=/"; setStep("login"); }} style={{fontSize:"0.8rem",color:"#8B8FA8",background:"none",border:"1px solid #3A3D52",padding:"6px 12px",borderRadius:"8px",cursor:"pointer"}}>Cerrar sesion</button>
+          <a href="/admin/simulador" style={{fontSize:"0.8rem",color:"#FF4D00",background:"rgba(255,77,0,0.08)",border:"1px solid rgba(255,77,0,0.3)",padding:"6px 12px",borderRadius:"8px",cursor:"pointer",textDecoration:"none",marginRight:"8px",fontWeight:600}}>Simulador</a><button onClick={() => { document.cookie = "admin-session=; maxAge=0; path=/"; setStep("login"); }} style={{fontSize:"0.8rem",color:"#8B8FA8",background:"none",border:"1px solid #3A3D52",padding:"6px 12px",borderRadius:"8px",cursor:"pointer"}}>Cerrar sesion</button>
         </div>
       </div>
 
