@@ -614,12 +614,12 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
         <div style={{
           display: "inline-block",
           padding: "0.4rem 1rem",
-          background: plan === "studio" ? "rgba(6,214,160,0.15)" : "rgba(255,77,0,0.15)",
-          border: "1px solid " + (plan === "studio" ? "rgba(6,214,160,0.4)" : "rgba(255,77,0,0.4)"),
+          background: "rgba(6,214,160,0.15)",
+          border: "1px solid rgba(6,214,160,0.5)",
           borderRadius: "999px",
           fontSize: "0.75rem",
           fontWeight: 700,
-          color: plan === "studio" ? "#06D6A0" : "#FF4D00",
+          color: "#06D6A0",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           marginBottom: "1.5rem",
@@ -630,7 +630,7 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
         <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1rem", textTransform: "uppercase" }}>
           {t.badgePro}
         </div>
-        <h1 style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)", fontWeight: 800, fontFamily: "'Syne', sans-serif", lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "1.5rem", wordBreak: "break-word" }}>
+        <h1 style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 800, fontFamily: "'Syne', sans-serif", lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "1.5rem", wordBreak: "break-word" }}>
           {t.heroTitle1}
           <br />
           <span style={{ color: "#FF4D00" }}>{t.heroTitle2}</span>
