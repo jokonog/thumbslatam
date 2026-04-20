@@ -408,7 +408,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"12px",marginBottom:"24px",alignItems:"stretch"}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))",gap:"12px",marginBottom:"24px",alignItems:"stretch"}}>
         <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
           <div style={{fontSize:"2rem",fontWeight:"800",color:"#FF4D00"}}>{creditos === null ? "..." : creditos}</div>
           <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Creditos disponibles</div>
@@ -421,6 +421,26 @@ export default function Dashboard() {
           <div style={{fontSize:"1rem",fontWeight:"700",color:"#06D6A0",textTransform:"capitalize"}}>{plan}</div>
           <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Plan actual</div>
         </div>
+        <a href="/tips-miniaturas-pro" style={{
+          background: plan === "studio" ? "linear-gradient(135deg, rgba(6,214,160,0.15) 0%, rgba(6,214,160,0.05) 100%)" : plan === "pro" ? "linear-gradient(135deg, rgba(255,77,0,0.15) 0%, rgba(255,77,0,0.05) 100%)" : "#111827",
+          borderRadius:"12px",
+          padding:"20px",
+          border: "1px solid " + (plan === "studio" ? "rgba(6,214,160,0.4)" : plan === "pro" ? "rgba(255,77,0,0.4)" : "rgba(255,255,255,0.07)"),
+          textDecoration:"none",
+          color:"inherit",
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:"center",
+          transition:"all 0.2s ease",
+          cursor:"pointer"
+        }} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = "#FF4D00"; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = plan === "studio" ? "rgba(6,214,160,0.4)" : plan === "pro" ? "rgba(255,77,0,0.4)" : "rgba(255,255,255,0.07)"; }}>
+          <div style={{fontSize:"1rem",fontWeight:"700",color: plan === "gratis" ? "#8B8FA8" : plan === "studio" ? "#06D6A0" : "#FF4D00", display:"flex",alignItems:"center",gap:"6px"}}>
+            {plan === "gratis" ? "🔒" : "★"} {plan === "studio" ? "Guia Pro + Bonus" : "Guia Pro"}
+          </div>
+          <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>
+            {plan === "gratis" ? "Suscribete para acceder →" : "Acceder ahora →"}
+          </div>
+        </a>
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"12px",marginBottom:"24px"}}>
