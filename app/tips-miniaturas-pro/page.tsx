@@ -7,118 +7,118 @@ type Plan = "gratis" | "pro" | "studio" | null;
 const translations = {
   es: {
     verificando: "Verificando tu plan...",
-    badgePro: "Guia avanzada Pro",
-    heroTitle1: "TECNICAS",
+    badgePro: "Guía avanzada Pro",
+    heroTitle1: "TÉCNICAS",
     heroTitle2: "PROFESIONALES",
-    heroDesc: "12 principios avanzados usados por canales con mas de 100K suscriptores. Alineados con las politicas oficiales de YouTube y disenados para resultados sostenibles a largo plazo.",
+    heroDesc: "12 principios avanzados usados por canales con más de 100K suscriptores. Alineados con las políticas oficiales de YouTube y diseñados para resultados sostenibles a largo plazo.",
     volverDashboard: "Volver al dashboard",
-    introParrafo1: "Esta guia no es sobre trucos ni clickbait.",
-    introParrafo2: "Es sobre entender como piensa el algoritmo de YouTube en 2026 y disenar miniaturas que generen clics honestos, retencion alta y crecimiento compuesto.",
-    introCaja: "Todo lo que leeras aqui esta alineado con las politicas oficiales de YouTube y con nuestros terminos de uso.",
+    introParrafo1: "Esta guía no es sobre trucos ni clickbait.",
+    introParrafo2: "Es sobre entender cómo piensa el algoritmo de YouTube en 2026 y diseñar miniaturas que generen clics honestos, retención alta y crecimiento compuesto.",
+    introCaja: "Todo lo que leerás aquí está alineado con las políticas oficiales de YouTube y con nuestros términos de uso.",
     paywallTag: "Contenido exclusivo",
-    paywallTitle: "Esta guia es solo para miembros Pro y Studio",
-    paywallDesc: "12 tecnicas avanzadas con simuladores interactivos, infografias y ejemplos. Todo respaldado por datos oficiales de YouTube y miles de canales LATAM.",
+    paywallTitle: "Esta guía es solo para miembros Pro y Studio",
+    paywallDesc: "12 técnicas avanzadas con simuladores interactivos, infografías y ejemplos. Todo respaldado por datos oficiales de YouTube y miles de canales LATAM.",
     paywallIncluye: "Lo que incluye:",
     paywallItems: [
-      "12 tecnicas profesionales con visuales interactivos",
+      "12 técnicas profesionales con visuales interactivos",
       "Simuladores que demuestran los conceptos en vivo",
       "Framework AIDA aplicado paso a paso",
-      "Psicologia del color por nicho",
-      "Analisis del algoritmo YouTube 2026",
-      "Benchmarks de CTR por categoria LATAM",
-      "Checklist pre-publicacion de 7 puntos",
+      "Psicología del color por nicho",
+      "Análisis del algoritmo YouTube 2026",
+      "Benchmarks de CTR por categoría LATAM",
+      "Checklist pre-publicación de 7 puntos",
       "Prompts optimizados para ThumbsLatam",
       "+3 bonus exclusivos para miembros Studio",
     ],
     paywallBtnPro: "Suscribirme a Pro - $10/mes",
     paywallBtnStudio: "Suscribirme a Studio - $25/mes",
-    paywallOrLogin: "Ya tienes plan Pro o Studio?",
-    paywallLogin: "Inicia sesion",
+    paywallOrLogin: "¿Ya tienes plan Pro o Studio?",
+    paywallLogin: "Inicia sesión",
     planBadgePro: "Plan Pro activo",
     planBadgeStudio: "Plan Studio activo",
 
     t01num: "01", t01categoria: "Fundamentos del algoritmo",
-    t01titulo: "Como YouTube mide el exito",
-    t01subtitulo: "No es solo el CTR. Es retencion + satisfaccion.",
-    t01parrafo1: "El algoritmo de YouTube evalua dos senales en cada video: si lograste que hicieran clic (CTR) y si se quedaron viendo (retencion).",
-    t01parrafo2: "Un CTR del 10 por ciento con retencion del 20 por ciento vale menos que un CTR del 5 por ciento con retencion del 60 por ciento.",
+    t01titulo: "Cómo YouTube mide el éxito",
+    t01subtitulo: "No es solo el CTR. Es retención + satisfacción.",
+    t01parrafo1: "El algoritmo de YouTube evalúa dos señales en cada video: si lograste que hicieran clic (CTR) y si se quedaron viendo (retención).",
+    t01parrafo2: "Un CTR del 10 por ciento con retención del 20 por ciento vale menos que un CTR del 5 por ciento con retención del 60 por ciento.",
     t01simTitulo: "Simula el impacto real",
-    t01simCtr: "Tu CTR", t01simRet: "Tu retencion", t01simImpr: "Impresiones mensuales",
+    t01simCtr: "Tu CTR", t01simRet: "Tu retención", t01simImpr: "Impresiones mensuales",
     t01simResClicks: "Clicks generados", t01simResMin: "Minutos vistos totales", t01simResScore: "Score combinado",
-    t01simResLabel: "El algoritmo premia retencion sobre CTR.",
+    t01simResLabel: "El algoritmo premia retención sobre CTR.",
     t01tipTitulo: "Tip accionable",
-    t01tip: "Revisa tus ultimos 10 videos en YouTube Studio. Los que tienen retencion mayor a 50 por ciento son tu plantilla.",
+    t01tip: "Revisa tus últimos 10 videos en YouTube Studio. Los que tienen retención mayor a 50 por ciento son tu plantilla.",
 
     t02num: "02", t02categoria: "Fundamentos del algoritmo",
-    t02titulo: "Las 3 fuentes de trafico",
-    t02subtitulo: "Ve como se comporta cada contexto en vivo.",
-    t02parrafo1: "Los espectadores encuentran tu video de 3 formas: Busqueda, Sugeridos y Home. Cada contexto cambia completamente que miniatura gana.",
-    t02parrafo2: "Esta demostracion te muestra exactamente como se ve la competencia visual en cada uno de los 3 contextos. Haz clic en cada tab.",
-    t02tabBusqueda: "Busqueda",
+    t02titulo: "Las 3 fuentes de tráfico",
+    t02subtitulo: "Ve cómo se comporta cada contexto en vivo.",
+    t02parrafo1: "Los espectadores encuentran tu video de 3 formas: Búsqueda, Sugeridos y Home. Cada contexto cambia completamente qué miniatura gana.",
+    t02parrafo2: "Esta demostración te muestra exactamente cómo se ve la competencia visual en cada uno de los 3 contextos. Haz clic en cada tab.",
+    t02tabBusqueda: "Búsqueda",
     t02tabSugeridos: "Sugeridos",
     t02tabHome: "Home",
-    t02busquedaTitulo: "Resultado de busqueda simulado",
+    t02busquedaTitulo: "Resultado de búsqueda simulado",
     t02busquedaQuery: "tutorial photoshop",
-    t02busquedaInsight: "Aqui el usuario YA SABE que quiere. Las miniaturas que ganan son las que prometen la respuesta exacta: texto directo, resultado final visible, numero concreto.",
+    t02busquedaInsight: "Aquí el usuario YA SABE qué quiere. Las miniaturas que ganan son las que prometen la respuesta exacta: texto directo, resultado final visible, número concreto.",
     t02sugeridosTitulo: "Panel de sugeridos simulado",
-    t02sugeridosInsight: "El usuario esta viendo un video. Las miniaturas que ganan en sugeridos son las que mantienen coherencia visual pero ofrecen algo complementario.",
+    t02sugeridosInsight: "El usuario está viendo un video. Las miniaturas que ganan en sugeridos son las que mantienen coherencia visual pero ofrecen algo complementario.",
     t02homeTitulo: "Feed de inicio simulado",
-    t02homeInsight: "El usuario no busca nada. Scrollea. Solo las miniaturas con CONTRASTE EXTREMO o emocion fuerte detienen el scroll.",
+    t02homeInsight: "El usuario no busca nada. Scrollea. Solo las miniaturas con CONTRASTE EXTREMO o emoción fuerte detienen el scroll.",
     t02tipTitulo: "Tip accionable",
-    t02tip: "Revisa en YouTube Studio > Analytics > Fuentes de trafico de donde viene tu trafico. Adapta tu estrategia visual a donde te descubren mas.",
+    t02tip: "Revisa en YouTube Studio > Analytics > Fuentes de tráfico de dónde viene tu tráfico. Adapta tu estrategia visual a dónde te descubren más.",
 
     t03num: "03", t03categoria: "Fundamentos del algoritmo",
-    t03titulo: "Por que el clickbait te destruye",
-    t03subtitulo: "YouTube mide cuantos se quedan, no cuantos llegan.",
-    t03parrafo1: "Desde mediados de 2025, YouTube renombro su politica a Inauthentic Content Policy. La plataforma evalua el canal completo.",
-    t03parrafo2: "Si tus miniaturas prometen algo que tus videos no entregan, el algoritmo detecta el patron y reduce tu alcance permanentemente.",
-    t03simTitulo: "Proyeccion a 90 dias",
+    t03titulo: "Por qué el clickbait te destruye",
+    t03subtitulo: "YouTube mide cuántos se quedan, no cuántos llegan.",
+    t03parrafo1: "Desde mediados de 2025, YouTube renombró su política a Inauthentic Content Policy. La plataforma evalúa el canal completo.",
+    t03parrafo2: "Si tus miniaturas prometen algo que tus videos no entregan, el algoritmo detecta el patrón y reduce tu alcance permanentemente.",
+    t03simTitulo: "Proyección a 90 días",
     t03simHonesta: "Canal honesto", t03simClick: "Canal clickbait",
     t03simMes1: "Mes 1", t03simMes2: "Mes 2", t03simMes3: "Mes 3",
     t03simResLabel: "El clickbait genera picos iniciales. Pero el algoritmo aprende y te penaliza.",
-    t03tipTitulo: "Regla practica",
-    t03tip: "Antes de publicar, preguntate: si alguien hace clic esperando esto, estara satisfecho al minuto 2?",
-    t03nota: "Nota: Los filtros de ThumbsLatam bloquean prompts que busquen miniaturas enganosas.",
+    t03tipTitulo: "Regla práctica",
+    t03tip: "Antes de publicar, pregúntate: si alguien hace clic esperando esto, ¿estará satisfecho al minuto 2?",
+    t03nota: "Nota: Los filtros de ThumbsLatam bloquean prompts que busquen miniaturas engañosas.",
 
-    t04num: "04", t04categoria: "Diseno profesional",
-    t04titulo: "Psicologia del color por nicho",
+    t04num: "04", t04categoria: "Diseño profesional",
+    t04titulo: "Psicología del color por nicho",
     t04subtitulo: "Cada industria tiene su paleta ganadora.",
-    t04parrafo1: "El color no es decoracion. Es el primer filtro visual que tu cerebro usa para clasificar contenido en 50 milisegundos.",
+    t04parrafo1: "El color no es decoración. Es el primer filtro visual que tu cerebro usa para clasificar contenido en 50 milisegundos.",
     t04parrafo2: "Los canales ganadores por nicho convergen en paletas similares porque funcionan.",
     t04nichoTitulo: "Selecciona un nicho",
     t04nichos: [
-      { nombre: "Gaming", desc: "Alta saturacion, contraste brutal, accion", colores: ["#FF0040", "#00E5FF", "#FFD60A", "#000000"] },
+      { nombre: "Gaming", desc: "Alta saturación, contraste brutal, acción", colores: ["#FF0040", "#00E5FF", "#FFD60A", "#000000"] },
       { nombre: "Beauty", desc: "Rosados, nudes, dorados. Limpieza visual", colores: ["#FFB6C1", "#F4C2C2", "#D4AF37", "#FFFFFF"] },
       { nombre: "Tech", desc: "Azules profundos, naranjas de acento", colores: ["#0A192F", "#FF4D00", "#64FFDA", "#CCD6F6"] },
       { nombre: "Finanzas", desc: "Verdes, azules serios, dorados de autoridad", colores: ["#0D4F3C", "#1E3A5F", "#D4AF37", "#F5F5F5"] },
       { nombre: "Lifestyle", desc: "Pasteles, tierra, luz natural", colores: ["#F4E4C1", "#C9A27E", "#8B7355", "#F9F6F1"] },
     ],
     t04tipTitulo: "Tip accionable",
-    t04tip: "Mira los 10 canales mas grandes de tu nicho. Toma nota de sus 3 colores mas repetidos.",
+    t04tip: "Mira los 10 canales más grandes de tu nicho. Toma nota de sus 3 colores más repetidos.",
 
-    t05num: "05", t05categoria: "Diseno profesional",
+    t05num: "05", t05categoria: "Diseño profesional",
     t05titulo: "Framework AIDA aplicado",
     t05subtitulo: "Construye una miniatura paso a paso, capa por capa.",
-    t05parrafo1: "AIDA (Atencion, Interes, Deseo, Accion) es un framework de 1898 que sigue funcionando porque se basa en como procesa informacion el cerebro humano.",
-    t05parrafo2: "Observa como se transforma una miniatura vacia cuando agregas cada capa. Al final, veras la diferencia entre una miniatura sin AIDA y una con las 4 capas completas.",
-    t05vacia: "Miniatura vacia",
+    t05parrafo1: "AIDA (Atención, Interés, Deseo, Acción) es un framework de 1898 que sigue funcionando porque se basa en cómo procesa información el cerebro humano.",
+    t05parrafo2: "Observa cómo se transforma una miniatura vacía cuando agregas cada capa. Al final, verás la diferencia entre una miniatura sin AIDA y una con las 4 capas completas.",
+    t05vacia: "Miniatura vacía",
     t05activas: "Capas activas",
     t05verTodas: "Activar las 4 capas",
     t05quitarTodas: "Reiniciar",
     t05layers: [
-      { letra: "A", nombre: "Atencion", desc: "Contraste extremo, rostro con emocion. Rompe el scroll." },
-      { letra: "I", nombre: "Interes", desc: "Elemento misterioso que genera curiosidad." },
+      { letra: "A", nombre: "Atención", desc: "Contraste extremo, rostro con emoción. Rompe el scroll." },
+      { letra: "I", nombre: "Interés", desc: "Elemento misterioso que genera curiosidad." },
       { letra: "D", nombre: "Deseo", desc: "Promesa de beneficio concreto." },
-      { letra: "A", nombre: "Accion", desc: "Flecha o senal visual que invita al clic." },
+      { letra: "A", nombre: "Acción", desc: "Flecha o señal visual que invita al clic." },
     ],
     t05tipTitulo: "Tip accionable",
     t05tip: "Antes de exportar una miniatura, verifica que tenga las 4 capas. Si falta alguna, tu miniatura pierde contra las que tienen las 4.",
 
-    t06num: "06", t06categoria: "Diseno profesional",
-    t06titulo: "Tipografia en contexto",
-    t06subtitulo: "Escribe y ve como funciona en miniatura real.",
-    t06parrafo1: "La tipografia no es decoracion. Es lenguaje emocional silencioso que cambia segun el contexto del nicho.",
-    t06parrafo2: "Escribe tu texto y cambia el nicho. Veras que la misma palabra se lee diferente segun el contexto visual.",
+    t06num: "06", t06categoria: "Diseño profesional",
+    t06titulo: "Tipografía en contexto",
+    t06subtitulo: "Escribe y ve cómo funciona en miniatura real.",
+    t06parrafo1: "La tipografía no es decoración. Es lenguaje emocional silencioso que cambia según el contexto del nicho.",
+    t06parrafo2: "Escribe tu texto y cambia el nicho. Verás que la misma palabra se lee diferente según el contexto visual.",
     t06inputLabel: "Escribe tu texto de miniatura",
     t06inputPlaceholder: "Ej: EL SECRETO",
     t06contextoLabel: "Cambia el nicho",
@@ -133,19 +133,19 @@ const translations = {
     t06recomendadaSerif: "Serif es la recomendada para este nicho",
     t06recomendadaSans: "Sans-serif es la recomendada para este nicho",
     t06tipTitulo: "Tip accionable",
-    t06tip: "Finanzas, educacion y lujo funcionan mejor con serif. Gaming, tech y fitness funcionan mejor con sans-serif.",
+    t06tip: "Finanzas, educación y lujo funcionan mejor con serif. Gaming, tech y fitness funcionan mejor con sans-serif.",
 
     proximamenteTag: "Continuará",
-    proximamenteTitulo: "Las 4 tecnicas restantes + bonus Studio",
-    proximamenteDesc: "Las siguientes tecnicas se publicaran proximamente:",
+    proximamenteTitulo: "Las 4 técnicas restantes + bonus Studio",
+    proximamenteDesc: "Las siguientes técnicas se publicarán próximamente:",
     proximamenteItems: [
-      "07. Composicion: zona de mirada del espectador",
+      "07. Composición: zona de mirada del espectador",
       "08. A/B testing simulado en vivo",
       "09. Consistencia visual del canal",
       "10. Shorts vs videos largos",
       "11. Prompts optimizados para ThumbsLatam",
-      "12. Checklist pre-publicacion de 7 puntos",
-      "Bonus Studio: Analisis competitivo, calendario editorial, biblioteca de prompts",
+      "12. Checklist pre-publicación de 7 puntos",
+      "Bonus Studio: Análisis competitivo, calendario editorial, biblioteca de prompts",
     ],
   },
   en: {
@@ -336,9 +336,6 @@ function SimuladorCtr({ t }: { t: typeof translations.es }) {
   );
 }
 
-// ============================================================
-// T02 REDISEÑADA: Simulador de YouTube
-// ============================================================
 function YouTubeSimulator({ t }: { t: typeof translations.es }) {
   const [tab, setTab] = useState<"busqueda" | "sugeridos" | "home">("busqueda");
 
@@ -363,6 +360,7 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
   ];
 
   const colorActual = tabs.find(x => x.id === tab)?.color || "#FF4D00";
+  const isES = t.t02tabBusqueda === "Búsqueda";
 
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -383,7 +381,6 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
         ))}
       </div>
 
-      {/* MARCO DE NAVEGADOR */}
       <div style={{ background: "#0f0f10", borderRadius: "12px", border: "1px solid " + colorActual + "40", overflow: "hidden", boxShadow: "0 0 40px " + colorActual + "20" }}>
         <div style={{ background: "#1a1a1c", padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <div style={{ display: "flex", gap: "0.4rem" }}>
@@ -396,7 +393,6 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
           </div>
         </div>
 
-        {/* VISTA BÚSQUEDA */}
         {tab === "busqueda" && (
           <div style={{ padding: "1.25rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.25rem", background: "#1a1a1c", borderRadius: "999px", padding: "0.5rem 1rem", border: "1px solid rgba(255,77,0,0.3)" }}>
@@ -405,10 +401,10 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
             </div>
             <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.75rem" }}>{t.t02busquedaTitulo}</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
-              <MiniFake texto="COMO EN 2 MIN" bg="linear-gradient(135deg, #FF4D00 0%, #000000 100%)" acento="#fff" ganadora razon="Texto directo + tiempo concreto" />
-              <MiniFake texto="PHOTOSHOP" bg="linear-gradient(135deg, #1a1a2e 0%, #0a0a1e 100%)" acento="#8B8FA8" razon="Muy generico" />
-              <MiniFake texto="TUTORIAL #1" bg="linear-gradient(135deg, #3a1a5e 0%, #1a0a3e 100%)" acento="#CCC" razon="No dice que aprenderas" />
-              <MiniFake texto="PASO A PASO 2026" bg="linear-gradient(135deg, #0D4F3C 0%, #064028 100%)" acento="#FFD60A" ganadora razon="Promesa de estructura + ano" />
+              <MiniFake texto={isES ? "CÓMO EN 2 MIN" : "HOW IN 2 MIN"} bg="linear-gradient(135deg, #FF4D00 0%, #000000 100%)" acento="#fff" ganadora razon={isES ? "Texto directo + tiempo concreto" : "Direct text + concrete time"} />
+              <MiniFake texto="PHOTOSHOP" bg="linear-gradient(135deg, #1a1a2e 0%, #0a0a1e 100%)" acento="#8B8FA8" razon={isES ? "Muy genérico" : "Too generic"} />
+              <MiniFake texto={isES ? "TUTORIAL #1" : "TUTORIAL #1"} bg="linear-gradient(135deg, #3a1a5e 0%, #1a0a3e 100%)" acento="#CCC" razon={isES ? "No dice qué aprenderás" : "Does not say what you learn"} />
+              <MiniFake texto={isES ? "PASO A PASO 2026" : "STEP BY STEP 2026"} bg="linear-gradient(135deg, #0D4F3C 0%, #064028 100%)" acento="#FFD60A" ganadora razon={isES ? "Promesa de estructura + año" : "Structure promise + year"} />
             </div>
             <div style={{ marginTop: "1.25rem", background: "rgba(255,77,0,0.08)", borderLeft: "3px solid #FF4D00", borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
               💡 {t.t02busquedaInsight}
@@ -416,22 +412,21 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
           </div>
         )}
 
-        {/* VISTA SUGERIDOS */}
         {tab === "sugeridos" && (
           <div style={{ padding: "1.25rem" }}>
             <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem" }}>
               <div>
-                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>Viendo ahora</div>
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>{isES ? "Viendo ahora" : "Watching now"}</div>
                 <div style={{ aspectRatio: "16/9", background: "linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <div style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.3rem)", fontWeight: 900, color: "#000", fontFamily: "'Syne', sans-serif", textShadow: "1px 1px 0 rgba(255,255,255,0.3)" }}>VIDEO ACTUAL</div>
+                  <div style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.3rem)", fontWeight: 900, color: "#000", fontFamily: "'Syne', sans-serif", textShadow: "1px 1px 0 rgba(255,255,255,0.3)" }}>{isES ? "VIDEO ACTUAL" : "CURRENT VIDEO"}</div>
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>{t.t02sugeridosTitulo}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <MiniFake texto="PARTE 2" bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon="Misma paleta" />
-                  <MiniFake texto="AVANZADO" bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon="Variacion coherente" />
-                  <MiniFake texto="OTRO TEMA" bg="linear-gradient(135deg, #1a1a3e 0%, #000 100%)" acento="#64FFDA" razon="Paleta distinta" />
+                  <MiniFake texto={isES ? "PARTE 2" : "PART 2"} bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon={isES ? "Misma paleta" : "Same palette"} />
+                  <MiniFake texto={isES ? "AVANZADO" : "ADVANCED"} bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon={isES ? "Variación coherente" : "Coherent variation"} />
+                  <MiniFake texto={isES ? "OTRO TEMA" : "OTHER TOPIC"} bg="linear-gradient(135deg, #1a1a3e 0%, #000 100%)" acento="#64FFDA" razon={isES ? "Paleta distinta" : "Different palette"} />
                 </div>
               </div>
             </div>
@@ -441,17 +436,16 @@ function YouTubeSimulator({ t }: { t: typeof translations.es }) {
           </div>
         )}
 
-        {/* VISTA HOME */}
         {tab === "home" && (
           <div style={{ padding: "1.25rem" }}>
             <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.75rem" }}>{t.t02homeTitulo}</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.6rem" }}>
-              <MiniFake texto="SIN EMOCION" bg="linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%)" acento="#8B8FA8" razon="Pasa desapercibida" />
-              <MiniFake texto="!SHOCK!" bg="linear-gradient(135deg, #FF0040 0%, #000 100%)" acento="#FFD60A" ganadora razon="Contraste brutal" />
-              <MiniFake texto="video #47" bg="linear-gradient(135deg, #1a3a2a 0%, #0a2a1a 100%)" acento="#8B8FA8" razon="Aburrida" />
-              <MiniFake texto="EPICO" bg="linear-gradient(135deg, #00E5FF 0%, #0050FF 100%)" acento="#FFD60A" ganadora razon="Color inesperado" />
-              <MiniFake texto="contenido" bg="linear-gradient(135deg, #333 0%, #111 100%)" acento="#666" razon="Gris anodino" />
-              <MiniFake texto="!POR FIN!" bg="linear-gradient(135deg, #FF4D00 0%, #FFD60A 100%)" acento="#000" ganadora razon="Emocion clara" />
+              <MiniFake texto={isES ? "SIN EMOCIÓN" : "NO EMOTION"} bg="linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%)" acento="#8B8FA8" razon={isES ? "Pasa desapercibida" : "Goes unnoticed"} />
+              <MiniFake texto="¡SHOCK!" bg="linear-gradient(135deg, #FF0040 0%, #000 100%)" acento="#FFD60A" ganadora razon={isES ? "Contraste brutal" : "Brutal contrast"} />
+              <MiniFake texto={isES ? "video #47" : "video #47"} bg="linear-gradient(135deg, #1a3a2a 0%, #0a2a1a 100%)" acento="#8B8FA8" razon={isES ? "Aburrida" : "Boring"} />
+              <MiniFake texto={isES ? "ÉPICO" : "EPIC"} bg="linear-gradient(135deg, #00E5FF 0%, #0050FF 100%)" acento="#FFD60A" ganadora razon={isES ? "Color inesperado" : "Unexpected color"} />
+              <MiniFake texto={isES ? "contenido" : "content"} bg="linear-gradient(135deg, #333 0%, #111 100%)" acento="#666" razon={isES ? "Gris anodino" : "Bland gray"} />
+              <MiniFake texto={isES ? "¡POR FIN!" : "FINALLY!"} bg="linear-gradient(135deg, #FF4D00 0%, #FFD60A 100%)" acento="#000" ganadora razon={isES ? "Emoción clara" : "Clear emotion"} />
             </div>
             <div style={{ marginTop: "1.25rem", background: "rgba(6,214,160,0.08)", borderLeft: "3px solid #06D6A0", borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
               💡 {t.t02homeInsight}
@@ -535,12 +529,10 @@ function SelectorColor({ t }: { t: typeof translations.es }) {
   );
 }
 
-// ============================================================
-// T05 REDISEÑADA: AIDA paso a paso
-// ============================================================
 function AIDABuilder({ t }: { t: typeof translations.es }) {
   const [activas, setActivas] = useState<boolean[]>([false, false, false, false]);
   const colores = ["#FF4D00", "#FFD60A", "#06D6A0", "#7F77DD"];
+  const isES = t.t05vacia === "Miniatura vacía";
 
   const toggle = (i: number) => {
     const n = [...activas];
@@ -553,37 +545,25 @@ function AIDABuilder({ t }: { t: typeof translations.es }) {
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      {/* MINIATURA DEMO */}
       <div style={{ position: "relative", maxWidth: "560px", margin: "0 auto 1.5rem", aspectRatio: "16/9", background: activas[0] ? "linear-gradient(135deg, #FF4D00 0%, #000000 100%)" : "linear-gradient(135deg, #1a1a2e 0%, #0a0a1a 100%)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.1)", overflow: "hidden", transition: "background 0.5s ease" }}>
-        {/* ATENCION - cambia el fondo cuando activa */}
-
-        {/* INTERES - simbolo de interrogacion misterioso */}
         {activas[1] && (
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "80px", height: "80px", borderRadius: "50%", border: "3px dashed #FFD60A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", fontWeight: 900, color: "#FFD60A", fontFamily: "'Syne', sans-serif", animation: "pulse 2s infinite" }}>?</div>
         )}
-
-        {/* DESEO - texto de beneficio */}
         {activas[2] && (
-          <div style={{ position: "absolute", top: "10%", right: "5%", background: "#06D6A0", color: "#000", padding: "0.4rem 0.8rem", borderRadius: "6px", fontSize: "0.85rem", fontWeight: 900, fontFamily: "'Syne', sans-serif", letterSpacing: "-0.01em", boxShadow: "0 4px 12px rgba(6,214,160,0.4)" }}>+50% MAS</div>
+          <div style={{ position: "absolute", top: "10%", right: "5%", background: "#06D6A0", color: "#000", padding: "0.4rem 0.8rem", borderRadius: "6px", fontSize: "0.85rem", fontWeight: 900, fontFamily: "'Syne', sans-serif", letterSpacing: "-0.01em", boxShadow: "0 4px 12px rgba(6,214,160,0.4)" }}>{isES ? "+50% MÁS" : "+50% MORE"}</div>
         )}
-
-        {/* ACCION - flecha */}
         {activas[3] && (
           <div style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)", fontSize: "2.5rem", color: "#fff", textShadow: "0 0 20px #7F77DD", animation: "bounce 1.5s infinite" }}>▶</div>
         )}
-
-        {/* Estado visual */}
         {totalActivas === 0 && (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", fontStyle: "italic" }}>{t.t05vacia}</div>
         )}
       </div>
 
-      {/* ESTADO */}
       <div style={{ textAlign: "center", marginBottom: "1.5rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>
         {t.t05activas}: <span style={{ color: totalActivas === 4 ? "#06D6A0" : "#FFD60A", fontWeight: 700, fontSize: "1.1rem" }}>{totalActivas}/4</span>
       </div>
 
-      {/* CONTROLES */}
       <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
         <button onClick={activarTodas} style={{ padding: "0.6rem 1.2rem", background: "#FF4D00", color: "#fff", border: "none", borderRadius: "999px", cursor: "pointer", fontSize: "0.85rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>
           {t.t05verTodas}
@@ -593,7 +573,6 @@ function AIDABuilder({ t }: { t: typeof translations.es }) {
         </button>
       </div>
 
-      {/* CARDS TOGGLE */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
         {t.t05layers.map((capa, i) => {
           const activa = activas[i];
@@ -621,19 +600,16 @@ function AIDABuilder({ t }: { t: typeof translations.es }) {
   );
 }
 
-// ============================================================
-// T06 REDISEÑADA: Tipografía en contexto de miniatura
-// ============================================================
 function TipografiaContexto({ t }: { t: typeof translations.es }) {
   const [texto, setTexto] = useState("");
   const [ctx, setCtx] = useState(0);
   const contexto = t.t06contextos[ctx];
   const textoMostrar = (texto || t.t06inputPlaceholder).toUpperCase();
   const recomendaSerif = contexto.recomendada === "serif";
+  const isES = t.t06inputLabel === "Escribe tu texto de miniatura";
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      {/* INPUT */}
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.25rem", marginBottom: "1rem" }}>
         <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.5rem", display: "block" }}>{t.t06inputLabel}</label>
         <input type="text" value={texto} onChange={(e) => setTexto(e.target.value.slice(0, 20))} placeholder={t.t06inputPlaceholder} style={{
@@ -643,7 +619,6 @@ function TipografiaContexto({ t }: { t: typeof translations.es }) {
         }} />
       </div>
 
-      {/* CONTEXTO */}
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.25rem", marginBottom: "1.5rem" }}>
         <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem", display: "block" }}>{t.t06contextoLabel}</label>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.5rem" }}>
@@ -659,12 +634,10 @@ function TipografiaContexto({ t }: { t: typeof translations.es }) {
         </div>
       </div>
 
-      {/* 2 MINIATURAS */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-        {/* SERIF */}
         <div style={{ position: "relative" }}>
           {recomendaSerif && (
-            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>★ RECOMENDADA</div>
+            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>{isES ? "★ RECOMENDADA" : "★ RECOMMENDED"}</div>
           )}
           <div style={{ aspectRatio: "16/9", background: contexto.fondo, borderRadius: "12px", border: recomendaSerif ? "2px solid #06D6A0" : "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem", overflow: "hidden", boxShadow: recomendaSerif ? "0 0 20px rgba(6,214,160,0.3)" : "none", transition: "all 0.3s ease" }}>
             <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "clamp(1.4rem, 4vw, 2.4rem)", fontWeight: 800, color: contexto.acento, letterSpacing: "-0.01em", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.5)", wordBreak: "break-word", lineHeight: 1 }}>{textoMostrar}</div>
@@ -677,10 +650,9 @@ function TipografiaContexto({ t }: { t: typeof translations.es }) {
           )}
         </div>
 
-        {/* SANS */}
         <div style={{ position: "relative" }}>
           {!recomendaSerif && (
-            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>★ RECOMENDADA</div>
+            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>{isES ? "★ RECOMENDADA" : "★ RECOMMENDED"}</div>
           )}
           <div style={{ aspectRatio: "16/9", background: contexto.fondo, borderRadius: "12px", border: !recomendaSerif ? "2px solid #06D6A0" : "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem", overflow: "hidden", boxShadow: !recomendaSerif ? "0 0 20px rgba(6,214,160,0.3)" : "none", transition: "all 0.3s ease" }}>
             <div style={{ fontFamily: "'Syne', 'Arial Black', sans-serif", fontSize: "clamp(1.4rem, 4vw, 2.4rem)", fontWeight: 900, color: contexto.acento, letterSpacing: "-0.03em", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.5)", wordBreak: "break-word", lineHeight: 1 }}>{textoMostrar}</div>
