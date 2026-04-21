@@ -14,16 +14,16 @@ const translations = {
     volverDashboard: "Volver al dashboard",
     introParrafo1: "Esta guia no es sobre trucos ni clickbait.",
     introParrafo2: "Es sobre entender como piensa el algoritmo de YouTube en 2026 y disenar miniaturas que generen clics honestos, retencion alta y crecimiento compuesto.",
-    introCaja: "Todo lo que leeras aqui esta alineado con las politicas oficiales de YouTube y con nuestros terminos de uso. Apostamos por herramientas que construyen canales sostenibles, no por tacticas de corto plazo que YouTube penaliza.",
+    introCaja: "Todo lo que leeras aqui esta alineado con las politicas oficiales de YouTube y con nuestros terminos de uso.",
     paywallTag: "Contenido exclusivo",
     paywallTitle: "Esta guia es solo para miembros Pro y Studio",
     paywallDesc: "12 tecnicas avanzadas con simuladores interactivos, infografias y ejemplos. Todo respaldado por datos oficiales de YouTube y miles de canales LATAM.",
     paywallIncluye: "Lo que incluye:",
     paywallItems: [
-      "12 tecnicas profesionales con visuales detallados",
-      "Simuladores interactivos que calculan en tiempo real",
-      "Framework AIDA aplicado a miniaturas",
-      "Psicologia del color por nicho (gaming, beauty, tech, etc)",
+      "12 tecnicas profesionales con visuales interactivos",
+      "Simuladores que demuestran los conceptos en vivo",
+      "Framework AIDA aplicado paso a paso",
+      "Psicologia del color por nicho",
       "Analisis del algoritmo YouTube 2026",
       "Benchmarks de CTR por categoria LATAM",
       "Checklist pre-publicacion de 7 puntos",
@@ -37,135 +37,110 @@ const translations = {
     planBadgePro: "Plan Pro activo",
     planBadgeStudio: "Plan Studio activo",
 
-    t01num: "01",
-    t01categoria: "Fundamentos del algoritmo",
+    t01num: "01", t01categoria: "Fundamentos del algoritmo",
     t01titulo: "Como YouTube mide el exito",
     t01subtitulo: "No es solo el CTR. Es retencion + satisfaccion.",
     t01parrafo1: "El algoritmo de YouTube evalua dos senales en cada video: si lograste que hicieran clic (CTR) y si se quedaron viendo (retencion).",
-    t01parrafo2: "Un CTR del 10 por ciento con retencion del 20 por ciento vale menos que un CTR del 5 por ciento con retencion del 60 por ciento. El algoritmo prioriza el segundo siempre.",
+    t01parrafo2: "Un CTR del 10 por ciento con retencion del 20 por ciento vale menos que un CTR del 5 por ciento con retencion del 60 por ciento.",
     t01simTitulo: "Simula el impacto real",
-    t01simCtr: "Tu CTR",
-    t01simRet: "Tu retencion",
-    t01simImpr: "Impresiones mensuales",
-    t01simResClicks: "Clicks generados",
-    t01simResMin: "Minutos vistos totales",
-    t01simResScore: "Score combinado",
-    t01simResLabel: "El algoritmo premia retencion sobre CTR. Un 60 por ciento de retencion multiplica tu alcance futuro exponencialmente.",
+    t01simCtr: "Tu CTR", t01simRet: "Tu retencion", t01simImpr: "Impresiones mensuales",
+    t01simResClicks: "Clicks generados", t01simResMin: "Minutos vistos totales", t01simResScore: "Score combinado",
+    t01simResLabel: "El algoritmo premia retencion sobre CTR.",
     t01tipTitulo: "Tip accionable",
-    t01tip: "Revisa tus ultimos 10 videos en YouTube Studio. Los que tienen retencion mayor a 50 por ciento son tu plantilla. Los que estan debajo del 30 por ciento son aviso de clickbait encubierto.",
+    t01tip: "Revisa tus ultimos 10 videos en YouTube Studio. Los que tienen retencion mayor a 50 por ciento son tu plantilla.",
 
-    t02num: "02",
-    t02categoria: "Fundamentos del algoritmo",
+    t02num: "02", t02categoria: "Fundamentos del algoritmo",
     t02titulo: "Las 3 fuentes de trafico",
-    t02subtitulo: "Una miniatura para cada contexto. Haz clic para explorar cada una.",
-    t02parrafo1: "Los espectadores encuentran tu video de 3 formas principales: Busqueda (buscan algo especifico), Sugeridos (estaban viendo otro video parecido) y Home (estan navegando sin rumbo).",
-    t02parrafo2: "Cada contexto requiere una estrategia visual diferente. La misma miniatura no puede ganar en los 3.",
-    t02fuentes: [
-      { titulo: "Busqueda", desc: "El usuario ya sabe que quiere. Tu miniatura debe prometer la respuesta exacta.", icono: "🔍", color: "#FF4D00", ejemplos: ["Texto grande y directo", "Resultado final visible", "Numero o dato concreto"], ejemploVisual: "COMO X EN 2 MIN" },
-      { titulo: "Sugeridos", desc: "Ya vio algo parecido. Tu miniatura debe verse relacionada pero diferente.", icono: "▶", color: "#FFD60A", ejemplos: ["Misma paleta del canal", "Rostro reconocible", "Variacion del tema"], ejemploVisual: "PARTE 2 · NUEVA VARIACION" },
-      { titulo: "Home", desc: "El usuario esta en piloto automatico. Debes detener el scroll.", icono: "🏠", color: "#06D6A0", ejemplos: ["Contraste extremo", "Emocion facial intensa", "Elemento inesperado"], ejemploVisual: "!NO LO CREERAS!" },
-    ],
+    t02subtitulo: "Ve como se comporta cada contexto en vivo.",
+    t02parrafo1: "Los espectadores encuentran tu video de 3 formas: Busqueda, Sugeridos y Home. Cada contexto cambia completamente que miniatura gana.",
+    t02parrafo2: "Esta demostracion te muestra exactamente como se ve la competencia visual en cada uno de los 3 contextos. Haz clic en cada tab.",
+    t02tabBusqueda: "Busqueda",
+    t02tabSugeridos: "Sugeridos",
+    t02tabHome: "Home",
+    t02busquedaTitulo: "Resultado de busqueda simulado",
+    t02busquedaQuery: "tutorial photoshop",
+    t02busquedaInsight: "Aqui el usuario YA SABE que quiere. Las miniaturas que ganan son las que prometen la respuesta exacta: texto directo, resultado final visible, numero concreto.",
+    t02sugeridosTitulo: "Panel de sugeridos simulado",
+    t02sugeridosInsight: "El usuario esta viendo un video. Las miniaturas que ganan en sugeridos son las que mantienen coherencia visual pero ofrecen algo complementario.",
+    t02homeTitulo: "Feed de inicio simulado",
+    t02homeInsight: "El usuario no busca nada. Scrollea. Solo las miniaturas con CONTRASTE EXTREMO o emocion fuerte detienen el scroll.",
     t02tipTitulo: "Tip accionable",
-    t02tip: "En YouTube Studio, revisa de donde viene tu trafico en Analytics > Fuentes de trafico. Si la mayoria viene de Busqueda, optimiza miniaturas tipo Busqueda. Si viene de Sugeridos, consistencia visual. Si viene de Home, impacto maximo.",
+    t02tip: "Revisa en YouTube Studio > Analytics > Fuentes de trafico de donde viene tu trafico. Adapta tu estrategia visual a donde te descubren mas.",
 
-    t03num: "03",
-    t03categoria: "Fundamentos del algoritmo",
+    t03num: "03", t03categoria: "Fundamentos del algoritmo",
     t03titulo: "Por que el clickbait te destruye",
     t03subtitulo: "YouTube mide cuantos se quedan, no cuantos llegan.",
-    t03parrafo1: "Desde mediados de 2025, YouTube renombro su politica a Inauthentic Content Policy. La plataforma evalua el canal completo, no solo video por video.",
-    t03parrafo2: "Si tus miniaturas prometen algo que tus videos no entregan, el algoritmo detecta el patron y reduce tu alcance permanentemente. Ningun recupero organico te salva.",
+    t03parrafo1: "Desde mediados de 2025, YouTube renombro su politica a Inauthentic Content Policy. La plataforma evalua el canal completo.",
+    t03parrafo2: "Si tus miniaturas prometen algo que tus videos no entregan, el algoritmo detecta el patron y reduce tu alcance permanentemente.",
     t03simTitulo: "Proyeccion a 90 dias",
-    t03simHonesta: "Canal honesto",
-    t03simClick: "Canal clickbait",
-    t03simMes1: "Mes 1",
-    t03simMes2: "Mes 2",
-    t03simMes3: "Mes 3",
-    t03simResLabel: "El clickbait genera picos iniciales. Pero el algoritmo aprende y te penaliza. El canal honesto crece compuesto.",
+    t03simHonesta: "Canal honesto", t03simClick: "Canal clickbait",
+    t03simMes1: "Mes 1", t03simMes2: "Mes 2", t03simMes3: "Mes 3",
+    t03simResLabel: "El clickbait genera picos iniciales. Pero el algoritmo aprende y te penaliza.",
     t03tipTitulo: "Regla practica",
-    t03tip: "Antes de publicar, preguntate: si alguien hace clic esperando esto, estara satisfecho al minuto 2 del video? Si la respuesta es no, cambia la miniatura o cambia el video.",
-    t03nota: "Nota: Los filtros de moderacion de ThumbsLatam bloquean prompts que buscan generar miniaturas enganosas o que infrinjan derechos. Parte de nuestra filosofia de sostenibilidad a largo plazo.",
+    t03tip: "Antes de publicar, preguntate: si alguien hace clic esperando esto, estara satisfecho al minuto 2?",
+    t03nota: "Nota: Los filtros de ThumbsLatam bloquean prompts que busquen miniaturas enganosas.",
 
-    t04num: "04",
-    t04categoria: "Diseno profesional",
+    t04num: "04", t04categoria: "Diseno profesional",
     t04titulo: "Psicologia del color por nicho",
     t04subtitulo: "Cada industria tiene su paleta ganadora.",
     t04parrafo1: "El color no es decoracion. Es el primer filtro visual que tu cerebro usa para clasificar contenido en 50 milisegundos.",
-    t04parrafo2: "Los canales ganadores por nicho convergen en paletas similares porque funcionan. Conocerlas te da ventaja competitiva inmediata.",
+    t04parrafo2: "Los canales ganadores por nicho convergen en paletas similares porque funcionan.",
     t04nichoTitulo: "Selecciona un nicho",
     t04nichos: [
       { nombre: "Gaming", desc: "Alta saturacion, contraste brutal, accion", colores: ["#FF0040", "#00E5FF", "#FFD60A", "#000000"] },
       { nombre: "Beauty", desc: "Rosados, nudes, dorados. Limpieza visual", colores: ["#FFB6C1", "#F4C2C2", "#D4AF37", "#FFFFFF"] },
-      { nombre: "Tech", desc: "Azules profundos, naranjas de acento, minimalismo", colores: ["#0A192F", "#FF4D00", "#64FFDA", "#CCD6F6"] },
+      { nombre: "Tech", desc: "Azules profundos, naranjas de acento", colores: ["#0A192F", "#FF4D00", "#64FFDA", "#CCD6F6"] },
       { nombre: "Finanzas", desc: "Verdes, azules serios, dorados de autoridad", colores: ["#0D4F3C", "#1E3A5F", "#D4AF37", "#F5F5F5"] },
       { nombre: "Lifestyle", desc: "Pasteles, tierra, luz natural", colores: ["#F4E4C1", "#C9A27E", "#8B7355", "#F9F6F1"] },
     ],
     t04tipTitulo: "Tip accionable",
-    t04tip: "Mira los 10 canales mas grandes de tu nicho. Toma nota de sus 3 colores mas repetidos. Esa es tu paleta base de competencia. Luego elige 1 color de ruptura que te diferencie sin salirte del esquema.",
+    t04tip: "Mira los 10 canales mas grandes de tu nicho. Toma nota de sus 3 colores mas repetidos.",
 
-    t05num: "05",
-    t05categoria: "Diseno profesional",
+    t05num: "05", t05categoria: "Diseno profesional",
     t05titulo: "Framework AIDA aplicado",
-    t05subtitulo: "4 capas psicologicas en 320 por 180 pixeles. Pasa el cursor sobre cada letra.",
-    t05parrafo1: "AIDA (Atencion, Interes, Deseo, Accion) es un framework de publicidad de 1898 que sigue funcionando porque se basa en como procesa informacion el cerebro humano, no en modas.",
-    t05parrafo2: "Una miniatura profesional tiene las 4 capas simultaneamente. Cada una ocupa una zona visual diferente y juntas construyen la decision de clic en menos de 2 segundos.",
-    t05aidaTitulo: "Interactua con la anatomia AIDA",
-    t05aida: [
-      { letra: "A", nombre: "Atencion", desc: "Contraste extremo, rostro con emocion, o movimiento sugerido. Rompe el scroll.", zona: "Zona central superior" },
-      { letra: "I", nombre: "Interes", desc: "Elemento misterioso o incompleto que genera curiosidad. Algo que el ojo quiere resolver.", zona: "Zona central inferior" },
-      { letra: "D", nombre: "Deseo", desc: "Promesa de beneficio concreto. Texto que responde que gano yo viendo esto.", zona: "Esquina superior o inferior" },
-      { letra: "A", nombre: "Accion", desc: "Senal visual que invita al clic: flecha sutil, contorno de play, direccion de mirada.", zona: "Elementos dirigidos al centro" },
+    t05subtitulo: "Construye una miniatura paso a paso, capa por capa.",
+    t05parrafo1: "AIDA (Atencion, Interes, Deseo, Accion) es un framework de 1898 que sigue funcionando porque se basa en como procesa informacion el cerebro humano.",
+    t05parrafo2: "Observa como se transforma una miniatura vacia cuando agregas cada capa. Al final, veras la diferencia entre una miniatura sin AIDA y una con las 4 capas completas.",
+    t05vacia: "Miniatura vacia",
+    t05activas: "Capas activas",
+    t05verTodas: "Activar las 4 capas",
+    t05quitarTodas: "Reiniciar",
+    t05layers: [
+      { letra: "A", nombre: "Atencion", desc: "Contraste extremo, rostro con emocion. Rompe el scroll." },
+      { letra: "I", nombre: "Interes", desc: "Elemento misterioso que genera curiosidad." },
+      { letra: "D", nombre: "Deseo", desc: "Promesa de beneficio concreto." },
+      { letra: "A", nombre: "Accion", desc: "Flecha o senal visual que invita al clic." },
     ],
     t05tipTitulo: "Tip accionable",
-    t05tip: "Antes de exportar tu miniatura, cubre con tu dedo cada una de las 4 zonas y pregunta: que capa falta? Si no puedes identificar las 4, tu miniatura solo tiene 1 o 2 capas y pierde contra las que tienen las 4.",
+    t05tip: "Antes de exportar una miniatura, verifica que tenga las 4 capas. Si falta alguna, tu miniatura pierde contra las que tienen las 4.",
 
-    t06num: "06",
-    t06categoria: "Diseno profesional",
-    t06titulo: "Tipografia: serif o sans-serif",
-    t06subtitulo: "Escribe algo y compara en vivo.",
-    t06parrafo1: "La tipografia no es solo legibilidad. Es lenguaje emocional silencioso. Un mismo texto en Times New Roman vs en Impact comunica cosas radicalmente distintas.",
-    t06parrafo2: "Los canales profesionales eligen su familia tipografica estrategicamente segun la emocion que quieren asociar con su marca. No es decoracion, es posicionamiento.",
-    t06inputLabel: "Escribe tu texto aqui",
-    t06inputPlaceholder: "Ej: EPICO",
-    t06serif: "Serif",
-    t06serifDesc: "Elegante, tradicional, con autoridad.",
-    t06serifUsos: ["Finanzas", "Documentales", "Educacion", "Lujo"],
-    t06sans: "Sans-serif",
-    t06sansDesc: "Moderno, directo, energico.",
-    t06sansUsos: ["Gaming", "Tech", "Fitness", "Videos virales"],
-    t06tipTitulo: "Tip accionable",
-    t06tip: "Elige 1 tipografia para titulo y 1 para texto secundario. Usala en el 100 por ciento de tus miniaturas. La consistencia tipografica es lo que diferencia canales amateur de profesionales.",
-
-    t07num: "07",
-    t07categoria: "Diseno profesional",
-    t07titulo: "Composicion: regla de tercios",
-    t07subtitulo: "Mueve el punto de fuerza y activa el grid para ver.",
-    t07parrafo1: "Si divides tu miniatura en 9 cuadrantes (3x3), los 4 puntos donde las lineas se cruzan son los zonas donde el ojo humano va naturalmente primero.",
-    t07parrafo2: "Las miniaturas amateur ponen todo en el centro. Las profesionales colocan el elemento principal en uno de los 4 puntos de fuerza para generar tension visual y movimiento.",
-    t07toggleGrid: "Mostrar grid de tercios",
-    t07puntoLabel: "Elige un punto de fuerza",
-    t07puntos: ["Superior izquierdo", "Superior derecho", "Inferior izquierdo", "Inferior derecho", "Centrado (amateur)"],
-    t07tipTitulo: "Tip accionable",
-    t07tip: "Pon el rostro o elemento clave en el tercio izquierdo o derecho (no centrado). Deja el tercio opuesto para texto o espacio negativo. Esto crea el balance visual que usan todos los canales grandes.",
-
-    t08num: "08",
-    t08categoria: "Estrategia avanzada",
-    t08titulo: "A/B testing que funciona",
-    t08subtitulo: "Haz clic en cada variante para ver su hipotesis.",
-    t08parrafo1: "Desde 2024 YouTube permite hacer test A/B nativos de hasta 3 miniaturas. El algoritmo reparte impresiones entre las opciones, mide retencion y elige la ganadora automaticamente.",
-    t08parrafo2: "Pero la mayoria lo usa mal. Hacer 3 versiones casi iguales no ensena nada. El test funciona cuando cada variante prueba una hipotesis diferente.",
-    t08abTitulo: "Haz clic en cada variante",
-    t08variantes: [
-      { label: "Version A", titulo: "Version control", desc: "Tu estilo habitual.", hipotesis: "Partimos de tu linea base para medir contra ella. No esperamos que gane, es la referencia.", ctr: 4.2, retencion: 38, veredicto: "Linea base", color: "#8B8FA8" },
-      { label: "Version B", titulo: "Cambio de emocion", desc: "Misma estructura, diferente expresion facial.", hipotesis: "Cambiar la emocion principal del rostro (de neutral a sorpresa, por ejemplo) genera mas clicks sin afectar retencion.", ctr: 6.8, retencion: 42, veredicto: "GANADORA +62% CTR", color: "#06D6A0" },
-      { label: "Version C", titulo: "Cambio de promesa", desc: "Diferente angulo del contenido.", hipotesis: "Cambiar el angulo (de educativo a entretenimiento, por ejemplo) atrae otro tipo de espectador con retencion distinta.", ctr: 5.1, retencion: 31, veredicto: "Mas clicks, peor retencion", color: "#FFD60A" },
+    t06num: "06", t06categoria: "Diseno profesional",
+    t06titulo: "Tipografia en contexto",
+    t06subtitulo: "Escribe y ve como funciona en miniatura real.",
+    t06parrafo1: "La tipografia no es decoracion. Es lenguaje emocional silencioso que cambia segun el contexto del nicho.",
+    t06parrafo2: "Escribe tu texto y cambia el nicho. Veras que la misma palabra se lee diferente segun el contexto visual.",
+    t06inputLabel: "Escribe tu texto de miniatura",
+    t06inputPlaceholder: "Ej: EL SECRETO",
+    t06contextoLabel: "Cambia el nicho",
+    t06contextos: [
+      { nombre: "Finanzas", fondo: "linear-gradient(135deg, #0D4F3C 0%, #1E3A5F 100%)", acento: "#D4AF37", recomendada: "serif" },
+      { nombre: "Gaming", fondo: "linear-gradient(135deg, #FF0040 0%, #000000 100%)", acento: "#FFD60A", recomendada: "sans" },
+      { nombre: "Lifestyle", fondo: "linear-gradient(135deg, #F4E4C1 0%, #C9A27E 100%)", acento: "#8B7355", recomendada: "serif" },
+      { nombre: "Tech", fondo: "linear-gradient(135deg, #0A192F 0%, #1a3a5a 100%)", acento: "#FF4D00", recomendada: "sans" },
     ],
-    t08tipTitulo: "Tip accionable",
-    t08tip: "Nunca pruebes 3 variantes de color o tipografia. Esas diferencias son muy pequenas para que el algoritmo las detecte con datos significativos. Prueba diferencias radicales de emocion, angulo o promesa.",
+    t06serif: "Serif (Georgia)",
+    t06sans: "Sans-serif (Syne)",
+    t06recomendadaSerif: "Serif es la recomendada para este nicho",
+    t06recomendadaSans: "Sans-serif es la recomendada para este nicho",
+    t06tipTitulo: "Tip accionable",
+    t06tip: "Finanzas, educacion y lujo funcionan mejor con serif. Gaming, tech y fitness funcionan mejor con sans-serif.",
 
     proximamenteTag: "Continuará",
     proximamenteTitulo: "Las 4 tecnicas restantes + bonus Studio",
-    proximamenteDesc: "Esta guia se completa en partes. Las primeras 8 tecnicas ya estan listas. Las siguientes se publicaran proximamente:",
+    proximamenteDesc: "Las siguientes tecnicas se publicaran proximamente:",
     proximamenteItems: [
+      "07. Composicion: zona de mirada del espectador",
+      "08. A/B testing simulado en vivo",
       "09. Consistencia visual del canal",
       "10. Shorts vs videos largos",
       "11. Prompts optimizados para ThumbsLatam",
@@ -178,20 +153,20 @@ const translations = {
     badgePro: "Advanced Pro guide",
     heroTitle1: "PROFESSIONAL",
     heroTitle2: "TECHNIQUES",
-    heroDesc: "12 advanced principles used by channels with 100K+ subscribers. Aligned with official YouTube policies and designed for sustainable long-term results.",
+    heroDesc: "12 advanced principles used by channels with 100K+ subscribers. Aligned with official YouTube policies.",
     volverDashboard: "Back to dashboard",
     introParrafo1: "This guide is not about tricks or clickbait.",
-    introParrafo2: "It is about understanding how the YouTube algorithm thinks in 2026 and designing thumbnails that generate honest clicks, high retention and compound growth.",
-    introCaja: "Everything you will read here is aligned with official YouTube policies and with our terms of use. We bet on tools that build sustainable channels, not short-term tactics that YouTube penalizes.",
+    introParrafo2: "It is about understanding how the YouTube algorithm thinks in 2026.",
+    introCaja: "Everything you will read here is aligned with official YouTube policies and our terms of use.",
     paywallTag: "Exclusive content",
     paywallTitle: "This guide is only for Pro and Studio members",
-    paywallDesc: "12 advanced techniques with interactive simulators, infographics and examples. All backed by official YouTube data and thousands of LATAM channels.",
+    paywallDesc: "12 advanced techniques with interactive simulators.",
     paywallIncluye: "What it includes:",
     paywallItems: [
-      "12 professional techniques with detailed visuals",
-      "Interactive simulators that calculate in real time",
-      "AIDA Framework applied to thumbnails",
-      "Color psychology by niche (gaming, beauty, tech, etc)",
+      "12 professional techniques with interactive visuals",
+      "Simulators that demonstrate concepts live",
+      "AIDA Framework step by step",
+      "Color psychology by niche",
       "2026 YouTube algorithm analysis",
       "CTR benchmarks by LATAM category",
       "Pre-publication 7-point checklist",
@@ -200,140 +175,115 @@ const translations = {
     ],
     paywallBtnPro: "Subscribe to Pro - $10/month",
     paywallBtnStudio: "Subscribe to Studio - $25/month",
-    paywallOrLogin: "Already have Pro or Studio plan?",
+    paywallOrLogin: "Already have Pro or Studio?",
     paywallLogin: "Sign in",
     planBadgePro: "Pro plan active",
     planBadgeStudio: "Studio plan active",
 
-    t01num: "01",
-    t01categoria: "Algorithm fundamentals",
+    t01num: "01", t01categoria: "Algorithm fundamentals",
     t01titulo: "How YouTube measures success",
-    t01subtitulo: "It is not just CTR. It is retention + satisfaction.",
-    t01parrafo1: "The YouTube algorithm evaluates two signals in each video: whether you got them to click (CTR) and whether they stayed watching (retention).",
-    t01parrafo2: "A 10 percent CTR with 20 percent retention is worth less than a 5 percent CTR with 60 percent retention. The algorithm always prioritizes the second.",
+    t01subtitulo: "Not just CTR. Retention + satisfaction.",
+    t01parrafo1: "YouTube evaluates two signals: if you got the click (CTR) and if they stayed (retention).",
+    t01parrafo2: "A 10% CTR with 20% retention is worth less than 5% CTR with 60% retention.",
     t01simTitulo: "Simulate the real impact",
-    t01simCtr: "Your CTR",
-    t01simRet: "Your retention",
-    t01simImpr: "Monthly impressions",
-    t01simResClicks: "Clicks generated",
-    t01simResMin: "Total minutes watched",
-    t01simResScore: "Combined score",
-    t01simResLabel: "The algorithm rewards retention over CTR. 60 percent retention exponentially multiplies your future reach.",
+    t01simCtr: "Your CTR", t01simRet: "Your retention", t01simImpr: "Monthly impressions",
+    t01simResClicks: "Clicks generated", t01simResMin: "Total minutes watched", t01simResScore: "Combined score",
+    t01simResLabel: "The algorithm rewards retention over CTR.",
     t01tipTitulo: "Actionable tip",
-    t01tip: "Review your last 10 videos in YouTube Studio. Those with retention above 50 percent are your template. Those below 30 percent are a warning of hidden clickbait.",
+    t01tip: "Review your last 10 videos in YouTube Studio. Those with retention above 50% are your template.",
 
-    t02num: "02",
-    t02categoria: "Algorithm fundamentals",
+    t02num: "02", t02categoria: "Algorithm fundamentals",
     t02titulo: "The 3 traffic sources",
-    t02subtitulo: "One thumbnail for each context. Click to explore each.",
-    t02parrafo1: "Viewers find your video in 3 main ways: Search (they look for something specific), Suggested (they were watching a similar video) and Home (they are browsing aimlessly).",
-    t02parrafo2: "Each context requires a different visual strategy. The same thumbnail cannot win in all 3.",
-    t02fuentes: [
-      { titulo: "Search", desc: "The user already knows what they want. Your thumbnail must promise the exact answer.", icono: "🔍", color: "#FF4D00", ejemplos: ["Large direct text", "Visible final result", "Concrete number or data"], ejemploVisual: "HOW TO X IN 2 MIN" },
-      { titulo: "Suggested", desc: "They already saw something similar. Your thumbnail must look related but different.", icono: "▶", color: "#FFD60A", ejemplos: ["Same channel palette", "Recognizable face", "Topic variation"], ejemploVisual: "PART 2 · NEW VARIATION" },
-      { titulo: "Home", desc: "The user is on autopilot. You must stop the scroll.", icono: "🏠", color: "#06D6A0", ejemplos: ["Extreme contrast", "Intense facial emotion", "Unexpected element"], ejemploVisual: "YOU WON'T BELIEVE IT" },
-    ],
+    t02subtitulo: "See how each context behaves live.",
+    t02parrafo1: "Viewers find your video in 3 ways: Search, Suggested and Home. Each context completely changes which thumbnail wins.",
+    t02parrafo2: "This demo shows you exactly how visual competition looks in each of the 3 contexts. Click each tab.",
+    t02tabBusqueda: "Search",
+    t02tabSugeridos: "Suggested",
+    t02tabHome: "Home",
+    t02busquedaTitulo: "Simulated search results",
+    t02busquedaQuery: "photoshop tutorial",
+    t02busquedaInsight: "Here the user ALREADY knows what they want. Winning thumbnails promise the exact answer: direct text, visible final result, concrete number.",
+    t02sugeridosTitulo: "Simulated suggested panel",
+    t02sugeridosInsight: "The user is watching a video. Winning thumbnails in suggested maintain visual coherence but offer something complementary.",
+    t02homeTitulo: "Simulated home feed",
+    t02homeInsight: "The user is not searching. They scroll. Only thumbnails with EXTREME CONTRAST or strong emotion stop the scroll.",
     t02tipTitulo: "Actionable tip",
-    t02tip: "In YouTube Studio, review where your traffic comes from in Analytics > Traffic sources. If most comes from Search, optimize Search-style thumbnails. If it comes from Suggested, visual consistency. If it comes from Home, maximum impact.",
+    t02tip: "Review in YouTube Studio > Analytics > Traffic sources where your traffic comes from. Adapt your visual strategy.",
 
-    t03num: "03",
-    t03categoria: "Algorithm fundamentals",
+    t03num: "03", t03categoria: "Algorithm fundamentals",
     t03titulo: "Why clickbait destroys you",
     t03subtitulo: "YouTube measures who stays, not who arrives.",
-    t03parrafo1: "Since mid-2025, YouTube renamed its policy to Inauthentic Content Policy. The platform evaluates the entire channel, not just video by video.",
-    t03parrafo2: "If your thumbnails promise something your videos do not deliver, the algorithm detects the pattern and permanently reduces your reach. No organic comeback saves you.",
+    t03parrafo1: "Since mid-2025, YouTube renamed its policy to Inauthentic Content Policy.",
+    t03parrafo2: "If your thumbnails promise what videos do not deliver, the algorithm detects the pattern.",
     t03simTitulo: "90-day projection",
-    t03simHonesta: "Honest channel",
-    t03simClick: "Clickbait channel",
-    t03simMes1: "Month 1",
-    t03simMes2: "Month 2",
-    t03simMes3: "Month 3",
-    t03simResLabel: "Clickbait generates initial spikes. But the algorithm learns and penalizes you. The honest channel grows compounded.",
+    t03simHonesta: "Honest channel", t03simClick: "Clickbait channel",
+    t03simMes1: "Month 1", t03simMes2: "Month 2", t03simMes3: "Month 3",
+    t03simResLabel: "Clickbait generates initial spikes. The algorithm learns and penalizes.",
     t03tipTitulo: "Practical rule",
-    t03tip: "Before publishing, ask yourself: if someone clicks expecting this, will they be satisfied at minute 2 of the video? If the answer is no, change the thumbnail or change the video.",
-    t03nota: "Note: ThumbsLatam moderation filters block prompts that seek to generate misleading or rights-infringing thumbnails. Part of our long-term sustainability philosophy.",
+    t03tip: "Before publishing ask: will a viewer clicking expecting this be satisfied at minute 2?",
+    t03nota: "Note: ThumbsLatam filters block prompts seeking misleading thumbnails.",
 
-    t04num: "04",
-    t04categoria: "Professional design",
+    t04num: "04", t04categoria: "Professional design",
     t04titulo: "Color psychology by niche",
     t04subtitulo: "Each industry has its winning palette.",
-    t04parrafo1: "Color is not decoration. It is the first visual filter your brain uses to classify content in 50 milliseconds.",
-    t04parrafo2: "Winning channels by niche converge on similar palettes because they work. Knowing them gives you immediate competitive advantage.",
+    t04parrafo1: "Color is not decoration. It is the first visual filter your brain uses in 50 milliseconds.",
+    t04parrafo2: "Winning channels by niche converge on similar palettes.",
     t04nichoTitulo: "Select a niche",
     t04nichos: [
       { nombre: "Gaming", desc: "High saturation, brutal contrast, action", colores: ["#FF0040", "#00E5FF", "#FFD60A", "#000000"] },
       { nombre: "Beauty", desc: "Pinks, nudes, golds. Visual cleanliness", colores: ["#FFB6C1", "#F4C2C2", "#D4AF37", "#FFFFFF"] },
-      { nombre: "Tech", desc: "Deep blues, accent oranges, minimalism", colores: ["#0A192F", "#FF4D00", "#64FFDA", "#CCD6F6"] },
+      { nombre: "Tech", desc: "Deep blues, accent oranges", colores: ["#0A192F", "#FF4D00", "#64FFDA", "#CCD6F6"] },
       { nombre: "Finance", desc: "Greens, serious blues, authority golds", colores: ["#0D4F3C", "#1E3A5F", "#D4AF37", "#F5F5F5"] },
       { nombre: "Lifestyle", desc: "Pastels, earth tones, natural light", colores: ["#F4E4C1", "#C9A27E", "#8B7355", "#F9F6F1"] },
     ],
     t04tipTitulo: "Actionable tip",
-    t04tip: "Look at the 10 biggest channels in your niche. Take note of their 3 most repeated colors. That is your competitive base palette. Then choose 1 breaking color that differentiates you without leaving the scheme.",
+    t04tip: "Look at the 10 biggest channels in your niche. Note their 3 most repeated colors.",
 
-    t05num: "05",
-    t05categoria: "Professional design",
+    t05num: "05", t05categoria: "Professional design",
     t05titulo: "AIDA Framework applied",
-    t05subtitulo: "4 psychological layers in 320 by 180 pixels. Hover over each letter.",
-    t05parrafo1: "AIDA (Attention, Interest, Desire, Action) is an 1898 advertising framework that still works because it is based on how the human brain processes information, not on trends.",
-    t05parrafo2: "A professional thumbnail has all 4 layers simultaneously. Each occupies a different visual zone and together they build the click decision in under 2 seconds.",
-    t05aidaTitulo: "Interact with AIDA anatomy",
-    t05aida: [
-      { letra: "A", nombre: "Attention", desc: "Extreme contrast, emotional face, or suggested movement. Break the scroll.", zona: "Upper center zone" },
-      { letra: "I", nombre: "Interest", desc: "Mysterious or incomplete element that generates curiosity.", zona: "Lower center zone" },
-      { letra: "D", nombre: "Desire", desc: "Promise of concrete benefit. Text that answers what do I gain.", zona: "Upper or lower corner" },
-      { letra: "A", nombre: "Action", desc: "Visual signal that invites the click: subtle arrow, play outline, gaze.", zona: "Elements directed to center" },
+    t05subtitulo: "Build a thumbnail step by step, layer by layer.",
+    t05parrafo1: "AIDA is an 1898 framework that still works because it is based on how the human brain processes information.",
+    t05parrafo2: "Watch how an empty thumbnail transforms as you add each layer. See the difference between a thumbnail without AIDA and one with all 4 layers.",
+    t05vacia: "Empty thumbnail",
+    t05activas: "Active layers",
+    t05verTodas: "Activate all 4 layers",
+    t05quitarTodas: "Reset",
+    t05layers: [
+      { letra: "A", nombre: "Attention", desc: "Extreme contrast, emotional face. Breaks the scroll." },
+      { letra: "I", nombre: "Interest", desc: "Mysterious element that generates curiosity." },
+      { letra: "D", nombre: "Desire", desc: "Promise of concrete benefit." },
+      { letra: "A", nombre: "Action", desc: "Arrow or visual signal that invites the click." },
     ],
     t05tipTitulo: "Actionable tip",
-    t05tip: "Before exporting your thumbnail, cover with your finger each of the 4 zones and ask: which layer is missing? If you cannot identify all 4, your thumbnail only has 1 or 2 layers and loses against those with all 4.",
+    t05tip: "Before exporting a thumbnail, verify it has all 4 layers. If any is missing, yours loses against those with all 4.",
 
-    t06num: "06",
-    t06categoria: "Professional design",
-    t06titulo: "Typography: serif or sans-serif",
-    t06subtitulo: "Write something and compare live.",
-    t06parrafo1: "Typography is not just legibility. It is silent emotional language. The same text in Times New Roman vs Impact communicates radically different things.",
-    t06parrafo2: "Professional channels strategically choose their typographic family according to the emotion they want to associate with their brand. It is not decoration, it is positioning.",
-    t06inputLabel: "Write your text here",
-    t06inputPlaceholder: "Ex: EPIC",
-    t06serif: "Serif",
-    t06serifDesc: "Elegant, traditional, with authority.",
-    t06serifUsos: ["Finance", "Documentaries", "Education", "Luxury"],
-    t06sans: "Sans-serif",
-    t06sansDesc: "Modern, direct, energetic.",
-    t06sansUsos: ["Gaming", "Tech", "Fitness", "Viral videos"],
-    t06tipTitulo: "Actionable tip",
-    t06tip: "Choose 1 typography for titles and 1 for secondary text. Use it in 100 percent of your thumbnails. Typographic consistency is what differentiates amateur from professional channels.",
-
-    t07num: "07",
-    t07categoria: "Professional design",
-    t07titulo: "Composition: rule of thirds",
-    t07subtitulo: "Move the power point and toggle the grid to see.",
-    t07parrafo1: "If you divide your thumbnail into 9 quadrants (3x3), the 4 points where the lines intersect are the zones where the human eye naturally goes first.",
-    t07parrafo2: "Amateur thumbnails put everything in the center. Professional ones place the main element at one of the 4 power points to generate visual tension and movement.",
-    t07toggleGrid: "Show thirds grid",
-    t07puntoLabel: "Choose a power point",
-    t07puntos: ["Upper left", "Upper right", "Lower left", "Lower right", "Centered (amateur)"],
-    t07tipTitulo: "Actionable tip",
-    t07tip: "Place the face or key element in the left or right third (not centered). Leave the opposite third for text or negative space. This creates the visual balance used by all big channels.",
-
-    t08num: "08",
-    t08categoria: "Advanced strategy",
-    t08titulo: "A/B testing that works",
-    t08subtitulo: "Click each variant to see its hypothesis.",
-    t08parrafo1: "Since 2024 YouTube allows native A/B testing of up to 3 thumbnails. The algorithm distributes impressions among the options, measures retention and automatically picks the winner.",
-    t08parrafo2: "But most people use it wrong. Making 3 nearly identical versions teaches nothing. The test works when each variant tests a different hypothesis.",
-    t08abTitulo: "Click each variant",
-    t08variantes: [
-      { label: "Version A", titulo: "Control version", desc: "Your usual style.", hipotesis: "We start from your baseline to measure against. Not expected to win, it is the reference.", ctr: 4.2, retencion: 38, veredicto: "Baseline", color: "#8B8FA8" },
-      { label: "Version B", titulo: "Emotion change", desc: "Same structure, different facial expression.", hipotesis: "Changing the main face emotion (neutral to surprise, for example) generates more clicks without affecting retention.", ctr: 6.8, retencion: 42, veredicto: "WINNER +62% CTR", color: "#06D6A0" },
-      { label: "Version C", titulo: "Promise change", desc: "Different content angle.", hipotesis: "Changing the angle (educational to entertainment, for example) attracts another type of viewer with different retention.", ctr: 5.1, retencion: 31, veredicto: "More clicks, worse retention", color: "#FFD60A" },
+    t06num: "06", t06categoria: "Professional design",
+    t06titulo: "Typography in context",
+    t06subtitulo: "Write and see how it works in real thumbnail.",
+    t06parrafo1: "Typography is not decoration. It is silent emotional language that changes according to niche context.",
+    t06parrafo2: "Write your text and change the niche. The same word reads differently depending on the visual context.",
+    t06inputLabel: "Write your thumbnail text",
+    t06inputPlaceholder: "Ex: THE SECRET",
+    t06contextoLabel: "Change the niche",
+    t06contextos: [
+      { nombre: "Finance", fondo: "linear-gradient(135deg, #0D4F3C 0%, #1E3A5F 100%)", acento: "#D4AF37", recomendada: "serif" },
+      { nombre: "Gaming", fondo: "linear-gradient(135deg, #FF0040 0%, #000000 100%)", acento: "#FFD60A", recomendada: "sans" },
+      { nombre: "Lifestyle", fondo: "linear-gradient(135deg, #F4E4C1 0%, #C9A27E 100%)", acento: "#8B7355", recomendada: "serif" },
+      { nombre: "Tech", fondo: "linear-gradient(135deg, #0A192F 0%, #1a3a5a 100%)", acento: "#FF4D00", recomendada: "sans" },
     ],
-    t08tipTitulo: "Actionable tip",
-    t08tip: "Never test 3 color or typography variants. Those differences are too small for the algorithm to detect with significant data. Test radical differences in emotion, angle or promise.",
+    t06serif: "Serif (Georgia)",
+    t06sans: "Sans-serif (Syne)",
+    t06recomendadaSerif: "Serif is recommended for this niche",
+    t06recomendadaSans: "Sans-serif is recommended for this niche",
+    t06tipTitulo: "Actionable tip",
+    t06tip: "Finance, education and luxury work better with serif. Gaming, tech and fitness work better with sans-serif.",
 
-    proximamenteTag: "Continued",
-    proximamenteTitulo: "The remaining 4 techniques + Studio bonus",
-    proximamenteDesc: "This guide is completed in parts. The first 8 techniques are ready. The following will be published soon:",
+    proximamenteTag: "To be continued",
+    proximamenteTitulo: "Remaining 4 techniques + Studio bonus",
+    proximamenteDesc: "The following techniques will be published soon:",
     proximamenteItems: [
+      "07. Composition: viewer gaze zone",
+      "08. Live A/B testing simulation",
       "09. Visual channel consistency",
       "10. Shorts vs long videos",
       "11. Optimized prompts for ThumbsLatam",
@@ -348,8 +298,7 @@ function SimuladorCtr({ t }: { t: typeof translations.es }) {
   const [retencion, setRetencion] = useState(40);
   const [impresiones, setImpresiones] = useState(10000);
   const clicks = Math.round(impresiones * (ctr / 100));
-  const duracionMedia = 6;
-  const minutosVistos = Math.round(clicks * duracionMedia * (retencion / 100));
+  const minutosVistos = Math.round(clicks * 6 * (retencion / 100));
   const scoreCombinado = Math.round((ctr * retencion) / 10);
 
   return (
@@ -357,82 +306,158 @@ function SimuladorCtr({ t }: { t: typeof translations.es }) {
       <h3 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "0.5rem", fontFamily: "'Syne', sans-serif" }}>{t.t01simTitulo}</h3>
       <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.9rem", marginBottom: "2rem" }}>{t.t01simResLabel}</p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-            <span style={{ fontSize: "0.9rem" }}>{t.t01simCtr}</span>
-            <span style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FF4D00", fontFamily: "'Syne', sans-serif" }}>{ctr}%</span>
+        {[
+          { label: t.t01simCtr, value: ctr + "%", min: 1, max: 20, step: 1, set: setCtr, raw: ctr },
+          { label: t.t01simRet, value: retencion + "%", min: 10, max: 90, step: 1, set: setRetencion, raw: retencion },
+          { label: t.t01simImpr, value: impresiones.toLocaleString(), min: 1000, max: 100000, step: 1000, set: setImpresiones, raw: impresiones },
+        ].map((s, i) => (
+          <div key={i}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+              <span style={{ fontSize: "0.9rem" }}>{s.label}</span>
+              <span style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FF4D00", fontFamily: "'Syne', sans-serif" }}>{s.value}</span>
+            </div>
+            <input type="range" min={s.min} max={s.max} step={s.step} value={s.raw} onChange={(e) => s.set(Number(e.target.value))} className="simSlider" />
           </div>
-          <input type="range" min="1" max="20" value={ctr} onChange={(e) => setCtr(Number(e.target.value))} className="simSlider" />
-        </div>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-            <span style={{ fontSize: "0.9rem" }}>{t.t01simRet}</span>
-            <span style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FF4D00", fontFamily: "'Syne', sans-serif" }}>{retencion}%</span>
-          </div>
-          <input type="range" min="10" max="90" value={retencion} onChange={(e) => setRetencion(Number(e.target.value))} className="simSlider" />
-        </div>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-            <span style={{ fontSize: "0.9rem" }}>{t.t01simImpr}</span>
-            <span style={{ fontSize: "1.3rem", fontWeight: 700, color: "#FF4D00", fontFamily: "'Syne', sans-serif" }}>{impresiones.toLocaleString()}</span>
-          </div>
-          <input type="range" min="1000" max="100000" step="1000" value={impresiones} onChange={(e) => setImpresiones(Number(e.target.value))} className="simSlider" />
-        </div>
+        ))}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", marginTop: "2rem" }}>
-        <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "12px", padding: "1.25rem", borderLeft: "3px solid #FF4D00" }}>
-          <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{t.t01simResClicks}</div>
-          <div style={{ fontSize: "1.8rem", fontWeight: 800, fontFamily: "'Syne', sans-serif" }}>{clicks.toLocaleString()}</div>
-        </div>
-        <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "12px", padding: "1.25rem", borderLeft: "3px solid #FFD60A" }}>
-          <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{t.t01simResMin}</div>
-          <div style={{ fontSize: "1.8rem", fontWeight: 800, fontFamily: "'Syne', sans-serif" }}>{minutosVistos.toLocaleString()}</div>
-        </div>
-        <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "12px", padding: "1.25rem", borderLeft: "3px solid #06D6A0" }}>
-          <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{t.t01simResScore}</div>
-          <div style={{ fontSize: "1.8rem", fontWeight: 800, fontFamily: "'Syne', sans-serif", color: "#06D6A0" }}>{scoreCombinado}</div>
-        </div>
+        {[
+          { label: t.t01simResClicks, value: clicks.toLocaleString(), color: "#FF4D00" },
+          { label: t.t01simResMin, value: minutosVistos.toLocaleString(), color: "#FFD60A" },
+          { label: t.t01simResScore, value: scoreCombinado, color: "#06D6A0" },
+        ].map((r, i) => (
+          <div key={i} style={{ background: "rgba(0,0,0,0.3)", borderRadius: "12px", padding: "1.25rem", borderLeft: "3px solid " + r.color }}>
+            <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{r.label}</div>
+            <div style={{ fontSize: "1.8rem", fontWeight: 800, fontFamily: "'Syne', sans-serif", color: i === 2 ? r.color : "#fff" }}>{r.value}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-function Trafico3FuentesInteractivo({ t }: { t: typeof translations.es }) {
-  const [activa, setActiva] = useState(0);
+// ============================================================
+// T02 REDISEÑADA: Simulador de YouTube
+// ============================================================
+function YouTubeSimulator({ t }: { t: typeof translations.es }) {
+  const [tab, setTab] = useState<"busqueda" | "sugeridos" | "home">("busqueda");
+
+  const MiniFake = ({ texto, bg, acento, ganadora, razon }: { texto: string; bg: string; acento: string; ganadora?: boolean; razon?: string }) => (
+    <div style={{ position: "relative", aspectRatio: "16/9", background: bg, borderRadius: "8px", overflow: "hidden", border: ganadora ? "2px solid #06D6A0" : "1px solid rgba(255,255,255,0.1)", boxShadow: ganadora ? "0 0 20px rgba(6,214,160,0.4)" : "none" }}>
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "0.5rem" }}>
+        <div style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", fontWeight: 900, color: acento, fontFamily: "'Syne', sans-serif", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.7)", letterSpacing: "-0.02em" }}>{texto}</div>
+      </div>
+      {ganadora && (
+        <div style={{ position: "absolute", top: "4px", right: "4px", background: "#06D6A0", color: "#000", fontSize: "0.6rem", fontWeight: 900, padding: "2px 6px", borderRadius: "4px" }}>★ GANA</div>
+      )}
+      {razon && (
+        <div style={{ position: "absolute", bottom: "4px", left: "4px", right: "4px", background: "rgba(0,0,0,0.8)", color: "#fff", fontSize: "0.6rem", fontWeight: 600, padding: "3px 6px", borderRadius: "4px", textAlign: "center" }}>{razon}</div>
+      )}
+    </div>
+  );
+
+  const tabs = [
+    { id: "busqueda", label: t.t02tabBusqueda, icono: "🔍", color: "#FF4D00" },
+    { id: "sugeridos", label: t.t02tabSugeridos, icono: "▶", color: "#FFD60A" },
+    { id: "home", label: t.t02tabHome, icono: "🏠", color: "#06D6A0" },
+  ];
+
+  const colorActual = tabs.find(x => x.id === tab)?.color || "#FF4D00";
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        {t.t02fuentes.map((f, i) => (
-          <button key={i} onClick={() => setActiva(i)} style={{
-            background: activa === i ? f.color + "20" : "rgba(255,255,255,0.03)",
-            border: "1px solid " + (activa === i ? f.color : "rgba(255,255,255,0.1)"),
-            borderRadius: "14px", padding: "1rem", cursor: "pointer",
-            transition: "all 0.3s ease", textAlign: "left",
-            boxShadow: activa === i ? "0 0 30px " + f.color + "30" : "none"
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem", marginBottom: "1.5rem" }}>
+        {tabs.map((tb) => (
+          <button key={tb.id} onClick={() => setTab(tb.id as any)} style={{
+            background: tab === tb.id ? tb.color + "20" : "rgba(255,255,255,0.03)",
+            border: "1px solid " + (tab === tb.id ? tb.color : "rgba(255,255,255,0.1)"),
+            borderRadius: "12px", padding: "0.8rem", cursor: "pointer",
+            color: tab === tb.id ? tb.color : "rgba(255,255,255,0.7)",
+            fontWeight: 700, fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.9rem", transition: "all 0.2s",
+            boxShadow: tab === tb.id ? "0 0 20px " + tb.color + "30" : "none"
           }}>
-            <div style={{ fontSize: "1.75rem", marginBottom: "0.4rem" }}>{f.icono}</div>
-            <div style={{ fontSize: "1.1rem", fontWeight: 700, color: activa === i ? f.color : "#fff", fontFamily: "'Syne', sans-serif" }}>{f.titulo}</div>
+            <div style={{ fontSize: "1.3rem", marginBottom: "0.2rem" }}>{tb.icono}</div>
+            {tb.label}
           </button>
         ))}
       </div>
 
-      <div style={{ background: t.t02fuentes[activa].color + "10", border: "1px solid " + t.t02fuentes[activa].color + "40", borderRadius: "20px", padding: "clamp(1.5rem, 3vw, 2.5rem)", transition: "all 0.3s ease" }}>
-        <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6, marginBottom: "1.5rem" }}>{t.t02fuentes[activa].desc}</p>
-
-        <div style={{ aspectRatio: "16/9", background: "linear-gradient(135deg, " + t.t02fuentes[activa].color + "40 0%, " + t.t02fuentes[activa].color + "10 100%)", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem", border: "2px solid " + t.t02fuentes[activa].color + "60" }}>
-          <div style={{ fontSize: "clamp(1.2rem, 3vw, 2rem)", fontWeight: 900, color: "#fff", fontFamily: "'Syne', sans-serif", letterSpacing: "-0.02em", textShadow: "2px 2px 8px rgba(0,0,0,0.5)", padding: "1rem", textAlign: "center" }}>
-            {t.t02fuentes[activa].ejemploVisual}
+      {/* MARCO DE NAVEGADOR */}
+      <div style={{ background: "#0f0f10", borderRadius: "12px", border: "1px solid " + colorActual + "40", overflow: "hidden", boxShadow: "0 0 40px " + colorActual + "20" }}>
+        <div style={{ background: "#1a1a1c", padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", gap: "0.4rem" }}>
+            <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FF5F56" }}></div>
+            <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FFBD2E" }}></div>
+            <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#27C93F" }}></div>
+          </div>
+          <div style={{ flex: 1, background: "#0a0a0b", borderRadius: "6px", padding: "0.3rem 0.75rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginLeft: "0.5rem" }}>
+            videos.com / {tab}
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.5rem" }}>
-          {t.t02fuentes[activa].ejemplos.map((e, i) => (
-            <div key={i} style={{ background: "rgba(0,0,0,0.3)", borderRadius: "10px", padding: "0.7rem 1rem", fontSize: "0.85rem", color: "rgba(255,255,255,0.8)", borderLeft: "2px solid " + t.t02fuentes[activa].color }}>
-              ✓ {e}
+        {/* VISTA BÚSQUEDA */}
+        {tab === "busqueda" && (
+          <div style={{ padding: "1.25rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.25rem", background: "#1a1a1c", borderRadius: "999px", padding: "0.5rem 1rem", border: "1px solid rgba(255,77,0,0.3)" }}>
+              <span style={{ fontSize: "1rem" }}>🔍</span>
+              <div style={{ flex: 1, fontSize: "0.95rem", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{t.t02busquedaQuery}</div>
             </div>
-          ))}
-        </div>
+            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.75rem" }}>{t.t02busquedaTitulo}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+              <MiniFake texto="COMO EN 2 MIN" bg="linear-gradient(135deg, #FF4D00 0%, #000000 100%)" acento="#fff" ganadora razon="Texto directo + tiempo concreto" />
+              <MiniFake texto="PHOTOSHOP" bg="linear-gradient(135deg, #1a1a2e 0%, #0a0a1e 100%)" acento="#8B8FA8" razon="Muy generico" />
+              <MiniFake texto="TUTORIAL #1" bg="linear-gradient(135deg, #3a1a5e 0%, #1a0a3e 100%)" acento="#CCC" razon="No dice que aprenderas" />
+              <MiniFake texto="PASO A PASO 2026" bg="linear-gradient(135deg, #0D4F3C 0%, #064028 100%)" acento="#FFD60A" ganadora razon="Promesa de estructura + ano" />
+            </div>
+            <div style={{ marginTop: "1.25rem", background: "rgba(255,77,0,0.08)", borderLeft: "3px solid #FF4D00", borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
+              💡 {t.t02busquedaInsight}
+            </div>
+          </div>
+        )}
+
+        {/* VISTA SUGERIDOS */}
+        {tab === "sugeridos" && (
+          <div style={{ padding: "1.25rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem" }}>
+              <div>
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>Viendo ahora</div>
+                <div style={{ aspectRatio: "16/9", background: "linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <div style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.3rem)", fontWeight: 900, color: "#000", fontFamily: "'Syne', sans-serif", textShadow: "1px 1px 0 rgba(255,255,255,0.3)" }}>VIDEO ACTUAL</div>
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>{t.t02sugeridosTitulo}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <MiniFake texto="PARTE 2" bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon="Misma paleta" />
+                  <MiniFake texto="AVANZADO" bg="linear-gradient(135deg, #FFD60A 0%, #FF4D00 100%)" acento="#000" ganadora razon="Variacion coherente" />
+                  <MiniFake texto="OTRO TEMA" bg="linear-gradient(135deg, #1a1a3e 0%, #000 100%)" acento="#64FFDA" razon="Paleta distinta" />
+                </div>
+              </div>
+            </div>
+            <div style={{ marginTop: "1.25rem", background: "rgba(255,214,10,0.08)", borderLeft: "3px solid #FFD60A", borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
+              💡 {t.t02sugeridosInsight}
+            </div>
+          </div>
+        )}
+
+        {/* VISTA HOME */}
+        {tab === "home" && (
+          <div style={{ padding: "1.25rem" }}>
+            <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.75rem" }}>{t.t02homeTitulo}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.6rem" }}>
+              <MiniFake texto="SIN EMOCION" bg="linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%)" acento="#8B8FA8" razon="Pasa desapercibida" />
+              <MiniFake texto="!SHOCK!" bg="linear-gradient(135deg, #FF0040 0%, #000 100%)" acento="#FFD60A" ganadora razon="Contraste brutal" />
+              <MiniFake texto="video #47" bg="linear-gradient(135deg, #1a3a2a 0%, #0a2a1a 100%)" acento="#8B8FA8" razon="Aburrida" />
+              <MiniFake texto="EPICO" bg="linear-gradient(135deg, #00E5FF 0%, #0050FF 100%)" acento="#FFD60A" ganadora razon="Color inesperado" />
+              <MiniFake texto="contenido" bg="linear-gradient(135deg, #333 0%, #111 100%)" acento="#666" razon="Gris anodino" />
+              <MiniFake texto="!POR FIN!" bg="linear-gradient(135deg, #FF4D00 0%, #FFD60A 100%)" acento="#000" ganadora razon="Emocion clara" />
+            </div>
+            <div style={{ marginTop: "1.25rem", background: "rgba(6,214,160,0.08)", borderLeft: "3px solid #06D6A0", borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
+              💡 {t.t02homeInsight}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -510,75 +535,84 @@ function SelectorColor({ t }: { t: typeof translations.es }) {
   );
 }
 
-function VisualAIDAInteractivo({ t }: { t: typeof translations.es }) {
-  const [activa, setActiva] = useState<number | null>(null);
+// ============================================================
+// T05 REDISEÑADA: AIDA paso a paso
+// ============================================================
+function AIDABuilder({ t }: { t: typeof translations.es }) {
+  const [activas, setActivas] = useState<boolean[]>([false, false, false, false]);
   const colores = ["#FF4D00", "#FFD60A", "#06D6A0", "#7F77DD"];
-  const zonas = [
-    { top: "15%", left: "50%", translate: "translateX(-50%)" },
-    { top: "60%", left: "50%", translate: "translateX(-50%)" },
-    { top: "10%", right: "8%", translate: "" },
-    { bottom: "12%", left: "12%", translate: "" }
-  ];
+
+  const toggle = (i: number) => {
+    const n = [...activas];
+    n[i] = !n[i];
+    setActivas(n);
+  };
+  const activarTodas = () => setActivas([true, true, true, true]);
+  const reiniciar = () => setActivas([false, false, false, false]);
+  const totalActivas = activas.filter(Boolean).length;
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1.5rem", fontFamily: "'Syne', sans-serif", textAlign: "center" }}>{t.t05aidaTitulo}</h3>
+      {/* MINIATURA DEMO */}
+      <div style={{ position: "relative", maxWidth: "560px", margin: "0 auto 1.5rem", aspectRatio: "16/9", background: activas[0] ? "linear-gradient(135deg, #FF4D00 0%, #000000 100%)" : "linear-gradient(135deg, #1a1a2e 0%, #0a0a1a 100%)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.1)", overflow: "hidden", transition: "background 0.5s ease" }}>
+        {/* ATENCION - cambia el fondo cuando activa */}
 
-      <div style={{ position: "relative", maxWidth: "560px", margin: "0 auto 2rem", aspectRatio: "16/9", background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%)", borderRadius: "16px", border: "1px solid rgba(255,77,0,0.3)", overflow: "hidden" }}>
-        {t.t05aida.map((capa, i) => {
-          const pos = zonas[i];
-          const esActiva = activa === i;
-          const esFondo = activa !== null && activa !== i;
-          return (
-            <div key={i} style={{
-              position: "absolute",
-              top: pos.top,
-              left: pos.left,
-              right: pos.right,
-              bottom: pos.bottom,
-              transform: pos.translate,
-              background: esFondo ? colores[i] + "30" : colores[i] + (esActiva ? "" : "90"),
-              color: i === 1 ? "#000" : "#fff",
-              padding: "6px 14px",
-              borderRadius: "8px",
-              fontSize: esActiva ? "1rem" : "0.85rem",
-              fontWeight: 800,
-              fontFamily: "'Syne', sans-serif",
-              border: "2px solid " + colores[i],
-              transition: "all 0.3s ease",
-              boxShadow: esActiva ? "0 0 30px " + colores[i] + "80" : "none",
-              opacity: esFondo ? 0.4 : 1,
-              zIndex: esActiva ? 10 : 1
-            }}>{capa.letra} · {capa.nombre}</div>
-          );
-        })}
+        {/* INTERES - simbolo de interrogacion misterioso */}
+        {activas[1] && (
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "80px", height: "80px", borderRadius: "50%", border: "3px dashed #FFD60A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", fontWeight: 900, color: "#FFD60A", fontFamily: "'Syne', sans-serif", animation: "pulse 2s infinite" }}>?</div>
+        )}
+
+        {/* DESEO - texto de beneficio */}
+        {activas[2] && (
+          <div style={{ position: "absolute", top: "10%", right: "5%", background: "#06D6A0", color: "#000", padding: "0.4rem 0.8rem", borderRadius: "6px", fontSize: "0.85rem", fontWeight: 900, fontFamily: "'Syne', sans-serif", letterSpacing: "-0.01em", boxShadow: "0 4px 12px rgba(6,214,160,0.4)" }}>+50% MAS</div>
+        )}
+
+        {/* ACCION - flecha */}
+        {activas[3] && (
+          <div style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)", fontSize: "2.5rem", color: "#fff", textShadow: "0 0 20px #7F77DD", animation: "bounce 1.5s infinite" }}>▶</div>
+        )}
+
+        {/* Estado visual */}
+        {totalActivas === 0 && (
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.3)", fontSize: "0.9rem", fontStyle: "italic" }}>{t.t05vacia}</div>
+        )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
-        {t.t05aida.map((capa, i) => {
-          const esActiva = activa === i;
+      {/* ESTADO */}
+      <div style={{ textAlign: "center", marginBottom: "1.5rem", fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>
+        {t.t05activas}: <span style={{ color: totalActivas === 4 ? "#06D6A0" : "#FFD60A", fontWeight: 700, fontSize: "1.1rem" }}>{totalActivas}/4</span>
+      </div>
+
+      {/* CONTROLES */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+        <button onClick={activarTodas} style={{ padding: "0.6rem 1.2rem", background: "#FF4D00", color: "#fff", border: "none", borderRadius: "999px", cursor: "pointer", fontSize: "0.85rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>
+          {t.t05verTodas}
+        </button>
+        <button onClick={reiniciar} style={{ padding: "0.6rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
+          {t.t05quitarTodas}
+        </button>
+      </div>
+
+      {/* CARDS TOGGLE */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
+        {t.t05layers.map((capa, i) => {
+          const activa = activas[i];
           return (
-            <button key={i}
-              onMouseEnter={() => setActiva(i)}
-              onMouseLeave={() => setActiva(null)}
-              onClick={() => setActiva(esActiva ? null : i)}
-              style={{
-                background: "rgba(0,0,0,0.3)",
-                border: "1px solid " + colores[i] + (esActiva ? "" : "40"),
-                borderRadius: "12px", padding: "1.25rem",
-                position: "relative", overflow: "hidden",
-                cursor: "pointer", textAlign: "left",
-                transition: "all 0.2s ease",
-                transform: esActiva ? "translateY(-4px)" : "translateY(0)",
-                boxShadow: esActiva ? "0 8px 30px " + colores[i] + "40" : "none"
-              }}>
-              <div style={{ position: "absolute", top: 0, left: 0, height: "3px", width: "100%", background: colores[i] }}></div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
-                <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: colores[i], color: i === 1 ? "#000" : "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Syne', sans-serif" }}>{capa.letra}</div>
-                <div style={{ fontWeight: 700, fontSize: "1.1rem", fontFamily: "'Syne', sans-serif", color: colores[i] }}>{capa.nombre}</div>
+            <button key={i} onClick={() => toggle(i)} style={{
+              background: activa ? colores[i] + "20" : "rgba(0,0,0,0.3)",
+              border: "1px solid " + (activa ? colores[i] : "rgba(255,255,255,0.1)"),
+              borderRadius: "12px", padding: "1rem",
+              position: "relative", overflow: "hidden",
+              cursor: "pointer", textAlign: "left",
+              transition: "all 0.2s ease",
+              boxShadow: activa ? "0 0 20px " + colores[i] + "40" : "none"
+            }}>
+              <div style={{ position: "absolute", top: 0, left: 0, height: "3px", width: "100%", background: colores[i], opacity: activa ? 1 : 0.3 }}></div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem" }}>
+                <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: colores[i], color: i === 1 ? "#000" : "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", fontWeight: 900, fontFamily: "'Syne', sans-serif", opacity: activa ? 1 : 0.5 }}>{capa.letra}</div>
+                <div style={{ fontWeight: 700, fontSize: "0.95rem", fontFamily: "'Syne', sans-serif", color: activa ? colores[i] : "rgba(255,255,255,0.7)" }}>{capa.nombre}</div>
               </div>
-              <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.5, marginBottom: "0.5rem" }}>{capa.desc}</p>
-              <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>📍 {capa.zona}</div>
+              <p style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.4, margin: 0 }}>{capa.desc}</p>
             </button>
           );
         })}
@@ -587,166 +621,77 @@ function VisualAIDAInteractivo({ t }: { t: typeof translations.es }) {
   );
 }
 
-function TipografiaInteractiva({ t }: { t: typeof translations.es }) {
+// ============================================================
+// T06 REDISEÑADA: Tipografía en contexto de miniatura
+// ============================================================
+function TipografiaContexto({ t }: { t: typeof translations.es }) {
   const [texto, setTexto] = useState("");
-  const placeholder = t.t06inputPlaceholder;
-  const textoMostrar = texto || placeholder;
+  const [ctx, setCtx] = useState(0);
+  const contexto = t.t06contextos[ctx];
+  const textoMostrar = (texto || t.t06inputPlaceholder).toUpperCase();
+  const recomendaSerif = contexto.recomendada === "serif";
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.5rem", marginBottom: "1.5rem" }}>
+      {/* INPUT */}
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.25rem", marginBottom: "1rem" }}>
         <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.5rem", display: "block" }}>{t.t06inputLabel}</label>
-        <input type="text" value={texto} onChange={(e) => setTexto(e.target.value.toUpperCase().slice(0, 20))} placeholder={placeholder} style={{
+        <input type="text" value={texto} onChange={(e) => setTexto(e.target.value.slice(0, 20))} placeholder={t.t06inputPlaceholder} style={{
           width: "100%", padding: "0.75rem 1rem", background: "rgba(0,0,0,0.4)",
           border: "1px solid rgba(255,77,0,0.3)", borderRadius: "10px", color: "#fff",
           fontSize: "1rem", fontFamily: "'DM Sans', sans-serif", outline: "none", boxSizing: "border-box"
         }} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,214,10,0.3)", borderRadius: "20px", padding: "2rem", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "#FFD60A" }}></div>
-          <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFD60A", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{t.t06serif}</div>
-          <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "clamp(1.8rem, 4.5vw, 2.8rem)", fontWeight: 800, marginBottom: "1rem", letterSpacing: "-0.02em", color: "#fff", minHeight: "3rem", wordBreak: "break-word" }}>{textoMostrar}</div>
-          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1rem" }}>{t.t06serifDesc}</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-            {t.t06serifUsos.map((uso, i) => (
-              <span key={i} style={{ background: "rgba(255,214,10,0.1)", border: "1px solid rgba(255,214,10,0.3)", borderRadius: "999px", padding: "0.3rem 0.7rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.85)" }}>{uso}</span>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,77,0,0.3)", borderRadius: "20px", padding: "2rem", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "#FF4D00" }}></div>
-          <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{t.t06sans}</div>
-          <div style={{ fontFamily: "'Syne', 'Arial Black', sans-serif", fontSize: "clamp(1.8rem, 4.5vw, 2.8rem)", fontWeight: 900, marginBottom: "1rem", letterSpacing: "-0.03em", color: "#fff", minHeight: "3rem", wordBreak: "break-word" }}>{textoMostrar}</div>
-          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1rem" }}>{t.t06sansDesc}</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-            {t.t06sansUsos.map((uso, i) => (
-              <span key={i} style={{ background: "rgba(255,77,0,0.1)", border: "1px solid rgba(255,77,0,0.3)", borderRadius: "999px", padding: "0.3rem 0.7rem", fontSize: "0.75rem", color: "rgba(255,255,255,0.85)" }}>{uso}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ComposicionInteractiva({ t }: { t: typeof translations.es }) {
-  const [mostrarGrid, setMostrarGrid] = useState(true);
-  const [puntoActivo, setPuntoActivo] = useState(0);
-
-  const posiciones = [
-    { top: "33.33%", left: "33.33%" },
-    { top: "33.33%", left: "66.66%" },
-    { top: "66.66%", left: "33.33%" },
-    { top: "66.66%", left: "66.66%" },
-    { top: "50%", left: "50%" }
-  ];
-
-  const esAmateur = puntoActivo === 4;
-
-  return (
-    <div style={{ marginTop: "2rem" }}>
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,77,0,0.2)", borderRadius: "20px", padding: "clamp(1.5rem, 3vw, 2.5rem)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", fontSize: "0.9rem", color: "rgba(255,255,255,0.9)" }}>
-            <input type="checkbox" checked={mostrarGrid} onChange={(e) => setMostrarGrid(e.target.checked)} style={{ width: "20px", height: "20px", accentColor: "#FF4D00", cursor: "pointer" }} />
-            {t.t07toggleGrid}
-          </label>
-        </div>
-
-        <div style={{ aspectRatio: "16/9", background: esAmateur ? "linear-gradient(135deg, #2a1a3e 0%, #1a0a2e 100%)" : "linear-gradient(135deg, #1a3e2a 0%, #0a2e1a 100%)", borderRadius: "16px", border: "1px solid " + (esAmateur ? "rgba(255,77,77,0.4)" : "rgba(6,214,160,0.4)"), position: "relative", overflow: "hidden", marginBottom: "1.5rem", transition: "all 0.5s ease" }}>
-          {mostrarGrid && (
-            <>
-              <div style={{ position: "absolute", top: "33.33%", left: 0, right: 0, height: "1px", background: "rgba(255,255,255,0.3)" }}></div>
-              <div style={{ position: "absolute", top: "66.66%", left: 0, right: 0, height: "1px", background: "rgba(255,255,255,0.3)" }}></div>
-              <div style={{ position: "absolute", left: "33.33%", top: 0, bottom: 0, width: "1px", background: "rgba(255,255,255,0.3)" }}></div>
-              <div style={{ position: "absolute", left: "66.66%", top: 0, bottom: 0, width: "1px", background: "rgba(255,255,255,0.3)" }}></div>
-            </>
-          )}
-
-          <div style={{
-            position: "absolute",
-            top: posiciones[puntoActivo].top,
-            left: posiciones[puntoActivo].left,
-            transform: "translate(-50%, -50%)",
-            width: "60px", height: "60px",
-            background: esAmateur ? "rgba(255,77,77,0.4)" : "rgba(6,214,160,0.4)",
-            border: "3px solid " + (esAmateur ? "#FF4D4D" : "#06D6A0"),
-            borderRadius: "50%",
-            transition: "all 0.5s ease",
-            boxShadow: "0 0 30px " + (esAmateur ? "#FF4D4D60" : "#06D6A060")
-          }}></div>
-
-          <div style={{
-            position: "absolute",
-            top: posiciones[puntoActivo].top,
-            left: posiciones[puntoActivo].left,
-            transform: "translate(-50%, -50%)",
-            width: "12px", height: "12px",
-            background: esAmateur ? "#FF4D4D" : "#06D6A0",
-            borderRadius: "50%",
-            transition: "all 0.5s ease"
-          }}></div>
-        </div>
-
-        <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem" }}>{t.t07puntoLabel}</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.5rem" }}>
-          {t.t07puntos.map((p, i) => (
-            <button key={i} onClick={() => setPuntoActivo(i)} style={{
-              padding: "0.6rem", fontSize: "0.8rem",
-              background: puntoActivo === i ? (i === 4 ? "#FF4D4D" : "#06D6A0") : "rgba(255,255,255,0.05)",
-              color: puntoActivo === i ? "#fff" : "rgba(255,255,255,0.7)",
-              border: "1px solid " + (puntoActivo === i ? (i === 4 ? "#FF4D4D" : "#06D6A0") : "rgba(255,255,255,0.1)"),
-              borderRadius: "8px", cursor: "pointer", fontWeight: 600,
-              transition: "all 0.2s", fontFamily: "'DM Sans', sans-serif"
-            }}>{p}</button>
+      {/* CONTEXTO */}
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.25rem", marginBottom: "1.5rem" }}>
+        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem", display: "block" }}>{t.t06contextoLabel}</label>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.5rem" }}>
+          {t.t06contextos.map((c, i) => (
+            <button key={i} onClick={() => setCtx(i)} style={{
+              padding: "0.6rem", background: ctx === i ? "#FF4D00" : "rgba(255,255,255,0.05)",
+              color: ctx === i ? "#fff" : "rgba(255,255,255,0.7)",
+              border: "1px solid " + (ctx === i ? "#FF4D00" : "rgba(255,255,255,0.1)"),
+              borderRadius: "8px", cursor: "pointer", fontWeight: 600, fontSize: "0.85rem",
+              fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s"
+            }}>{c.nombre}</button>
           ))}
         </div>
       </div>
-    </div>
-  );
-}
 
-function ABTestInteractivo({ t }: { t: typeof translations.es }) {
-  const [expandida, setExpandida] = useState<number | null>(1);
+      {/* 2 MINIATURAS */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
+        {/* SERIF */}
+        <div style={{ position: "relative" }}>
+          {recomendaSerif && (
+            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>★ RECOMENDADA</div>
+          )}
+          <div style={{ aspectRatio: "16/9", background: contexto.fondo, borderRadius: "12px", border: recomendaSerif ? "2px solid #06D6A0" : "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem", overflow: "hidden", boxShadow: recomendaSerif ? "0 0 20px rgba(6,214,160,0.3)" : "none", transition: "all 0.3s ease" }}>
+            <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "clamp(1.4rem, 4vw, 2.4rem)", fontWeight: 800, color: contexto.acento, letterSpacing: "-0.01em", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.5)", wordBreak: "break-word", lineHeight: 1 }}>{textoMostrar}</div>
+          </div>
+          <div style={{ marginTop: "0.5rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", textAlign: "center", fontWeight: 600 }}>{t.t06serif}</div>
+          {recomendaSerif && (
+            <div style={{ marginTop: "0.5rem", background: "rgba(6,214,160,0.1)", border: "1px solid rgba(6,214,160,0.3)", borderRadius: "8px", padding: "0.5rem 0.75rem", fontSize: "0.75rem", color: "#06D6A0", textAlign: "center" }}>
+              ✓ {t.t06recomendadaSerif}
+            </div>
+          )}
+        </div>
 
-  return (
-    <div style={{ marginTop: "2rem" }}>
-      <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1.5rem", fontFamily: "'Syne', sans-serif", textAlign: "center" }}>{t.t08abTitulo}</h3>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
-        {t.t08variantes.map((v, i) => {
-          const esExpandida = expandida === i;
-          const esGanadora = i === 1;
-          return (
-            <button key={i} onClick={() => setExpandida(esExpandida ? null : i)} style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid " + (esGanadora ? "#06D6A0" : (esExpandida ? v.color : "rgba(255,255,255,0.1)")),
-              borderRadius: "16px", padding: "1.25rem", position: "relative", overflow: "hidden",
-              boxShadow: esGanadora ? "0 0 30px rgba(6,214,160,0.25)" : (esExpandida ? "0 0 20px " + v.color + "30" : "none"),
-              cursor: "pointer", textAlign: "left",
-              transition: "all 0.3s ease",
-              transform: esExpandida ? "translateY(-4px)" : "translateY(0)"
-            }}>
-              {esGanadora && (
-                <div style={{ position: "absolute", top: "-1px", right: "-1px", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "4px 10px", borderRadius: "0 16px 0 8px", letterSpacing: "0.05em" }}>★ {v.veredicto}</div>
-              )}
-              <div style={{ fontSize: "0.7rem", fontWeight: 700, color: v.color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>{v.label}</div>
-              <div style={{ aspectRatio: "16/9", background: "linear-gradient(135deg, " + (esGanadora ? "#06D6A040" : v.color + "40") + " 0%, " + (esGanadora ? "#06D6A020" : v.color + "20") + " 100%)", borderRadius: "8px", marginBottom: "0.75rem", position: "relative", border: "1px solid " + (esGanadora ? "rgba(6,214,160,0.3)" : v.color + "30") }}>
-                <div style={{ position: "absolute", bottom: "8px", right: "10px", background: "rgba(0,0,0,0.7)", color: "#fff", fontSize: "0.7rem", fontWeight: 700, padding: "2px 6px", borderRadius: "4px" }}>{v.ctr}% CTR</div>
-                <div style={{ position: "absolute", bottom: "8px", left: "10px", background: "rgba(0,0,0,0.7)", color: "#fff", fontSize: "0.7rem", fontWeight: 700, padding: "2px 6px", borderRadius: "4px" }}>{v.retencion}% RET</div>
-              </div>
-              <div style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "0.3rem", color: esGanadora ? "#06D6A0" : "#fff" }}>{v.titulo}</div>
-              <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, marginBottom: esExpandida ? "1rem" : 0 }}>{v.desc}</div>
-              {esExpandida && (
-                <div style={{ background: "rgba(0,0,0,0.4)", borderLeft: "2px solid " + v.color, padding: "0.75rem 1rem", borderRadius: "0 8px 8px 0", marginTop: "0.75rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.5 }}>
-                  {v.hipotesis}
-                </div>
-              )}
-            </button>
-          );
-        })}
+        {/* SANS */}
+        <div style={{ position: "relative" }}>
+          {!recomendaSerif && (
+            <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#06D6A0", color: "#000", fontSize: "0.65rem", fontWeight: 900, padding: "3px 10px", borderRadius: "999px", zIndex: 2, letterSpacing: "0.05em" }}>★ RECOMENDADA</div>
+          )}
+          <div style={{ aspectRatio: "16/9", background: contexto.fondo, borderRadius: "12px", border: !recomendaSerif ? "2px solid #06D6A0" : "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem", overflow: "hidden", boxShadow: !recomendaSerif ? "0 0 20px rgba(6,214,160,0.3)" : "none", transition: "all 0.3s ease" }}>
+            <div style={{ fontFamily: "'Syne', 'Arial Black', sans-serif", fontSize: "clamp(1.4rem, 4vw, 2.4rem)", fontWeight: 900, color: contexto.acento, letterSpacing: "-0.03em", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.5)", wordBreak: "break-word", lineHeight: 1 }}>{textoMostrar}</div>
+          </div>
+          <div style={{ marginTop: "0.5rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", textAlign: "center", fontWeight: 600 }}>{t.t06sans}</div>
+          {!recomendaSerif && (
+            <div style={{ marginTop: "0.5rem", background: "rgba(6,214,160,0.1)", border: "1px solid rgba(6,214,160,0.3)", borderRadius: "8px", padding: "0.5rem 0.75rem", fontSize: "0.75rem", color: "#06D6A0", textAlign: "center" }}>
+              ✓ {t.t06recomendadaSans}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -786,20 +731,17 @@ function PaywallSection({ t }: { t: typeof translations.es }) {
   );
 }
 
-function TecnicaSection({ numero, categoria, titulo, subtitulo, parrafos, tipTitulo, tip, nota, color, children }: { numero: string; categoria: string; titulo: string; subtitulo: string; parrafos: string[]; tipTitulo: string; tip: string; nota?: string; color: string; children?: React.ReactNode }) {
+function TecnicaSection({ numero, categoria, titulo, subtitulo, parrafos, tipTitulo, tip, nota, color, children }: any) {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
   return (
-    <section ref={ref} style={{ marginBottom: "6rem", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(40px)", transition: "opacity 0.8s ease, transform 0.8s ease" }}>
+    <section ref={ref} style={{ marginBottom: "6rem", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(40px)", transition: "opacity 0.8s, transform 0.8s" }}>
       <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexWrap: "wrap", marginBottom: "2rem" }}>
         <div style={{ fontSize: "clamp(4rem, 10vw, 7rem)", fontWeight: 900, color: color, lineHeight: 0.8, letterSpacing: "-0.05em", fontFamily: "'Syne', sans-serif", textShadow: "0 0 80px " + color + "40", flexShrink: 0 }}>{numero}</div>
         <div style={{ flex: 1, minWidth: "280px" }}>
@@ -809,7 +751,7 @@ function TecnicaSection({ numero, categoria, titulo, subtitulo, parrafos, tipTit
         </div>
       </div>
       <div style={{ maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
-        {parrafos.map((p, i) => (
+        {parrafos.map((p: string, i: number) => (
           <p key={i} style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.8)", lineHeight: 1.8, marginBottom: "1.25rem" }}>{p}</p>
         ))}
       </div>
@@ -847,13 +789,11 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
       </div>
 
       <TecnicaSection numero={t.t01num} categoria={t.t01categoria} titulo={t.t01titulo} subtitulo={t.t01subtitulo} parrafos={[t.t01parrafo1, t.t01parrafo2]} tipTitulo={t.t01tipTitulo} tip={t.t01tip} color="#FF4D00"><SimuladorCtr t={t} /></TecnicaSection>
-      <TecnicaSection numero={t.t02num} categoria={t.t02categoria} titulo={t.t02titulo} subtitulo={t.t02subtitulo} parrafos={[t.t02parrafo1, t.t02parrafo2]} tipTitulo={t.t02tipTitulo} tip={t.t02tip} color="#FFD60A"><Trafico3FuentesInteractivo t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t02num} categoria={t.t02categoria} titulo={t.t02titulo} subtitulo={t.t02subtitulo} parrafos={[t.t02parrafo1, t.t02parrafo2]} tipTitulo={t.t02tipTitulo} tip={t.t02tip} color="#FFD60A"><YouTubeSimulator t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t03num} categoria={t.t03categoria} titulo={t.t03titulo} subtitulo={t.t03subtitulo} parrafos={[t.t03parrafo1, t.t03parrafo2]} tipTitulo={t.t03tipTitulo} tip={t.t03tip} nota={t.t03nota} color="#06D6A0"><SimuladorClickbait t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t04num} categoria={t.t04categoria} titulo={t.t04titulo} subtitulo={t.t04subtitulo} parrafos={[t.t04parrafo1, t.t04parrafo2]} tipTitulo={t.t04tipTitulo} tip={t.t04tip} color="#FF4D00"><SelectorColor t={t} /></TecnicaSection>
-      <TecnicaSection numero={t.t05num} categoria={t.t05categoria} titulo={t.t05titulo} subtitulo={t.t05subtitulo} parrafos={[t.t05parrafo1, t.t05parrafo2]} tipTitulo={t.t05tipTitulo} tip={t.t05tip} color="#FFD60A"><VisualAIDAInteractivo t={t} /></TecnicaSection>
-      <TecnicaSection numero={t.t06num} categoria={t.t06categoria} titulo={t.t06titulo} subtitulo={t.t06subtitulo} parrafos={[t.t06parrafo1, t.t06parrafo2]} tipTitulo={t.t06tipTitulo} tip={t.t06tip} color="#06D6A0"><TipografiaInteractiva t={t} /></TecnicaSection>
-      <TecnicaSection numero={t.t07num} categoria={t.t07categoria} titulo={t.t07titulo} subtitulo={t.t07subtitulo} parrafos={[t.t07parrafo1, t.t07parrafo2]} tipTitulo={t.t07tipTitulo} tip={t.t07tip} color="#FF4D00"><ComposicionInteractiva t={t} /></TecnicaSection>
-      <TecnicaSection numero={t.t08num} categoria={t.t08categoria} titulo={t.t08titulo} subtitulo={t.t08subtitulo} parrafos={[t.t08parrafo1, t.t08parrafo2]} tipTitulo={t.t08tipTitulo} tip={t.t08tip} color="#FFD60A"><ABTestInteractivo t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t05num} categoria={t.t05categoria} titulo={t.t05titulo} subtitulo={t.t05subtitulo} parrafos={[t.t05parrafo1, t.t05parrafo2]} tipTitulo={t.t05tipTitulo} tip={t.t05tip} color="#FFD60A"><AIDABuilder t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t06num} categoria={t.t06categoria} titulo={t.t06titulo} subtitulo={t.t06subtitulo} parrafos={[t.t06parrafo1, t.t06parrafo2]} tipTitulo={t.t06tipTitulo} tip={t.t06tip} color="#06D6A0"><TipografiaContexto t={t} /></TecnicaSection>
 
       <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1rem", textTransform: "uppercase" }}>{t.proximamenteTag}</div>
@@ -889,11 +829,7 @@ export default function TipsMiniaturasPro() {
       .catch(() => { setPlan("gratis"); setVerificando(false); });
   }, []);
 
-  const changeLang = (l: "es" | "en") => {
-    setLang(l);
-    localStorage.setItem("tl_lang", l);
-  };
-
+  const changeLang = (l: "es" | "en") => { setLang(l); localStorage.setItem("tl_lang", l); };
   const t = translations[lang];
   const esPro = plan === "pro" || plan === "studio";
 
@@ -922,7 +858,8 @@ export default function TipsMiniaturasPro() {
         .simSlider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; background: #FF4D00; border-radius: 50%; cursor: pointer; box-shadow: 0 0 0 4px rgba(255,77,0,0.2), 0 4px 12px rgba(255,77,0,0.3); transition: all 0.2s; }
         .simSlider::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(255,77,0,0.3), 0 4px 16px rgba(255,77,0,0.5); }
         .simSlider::-moz-range-thumb { width: 22px; height: 22px; background: #FF4D00; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 0 0 4px rgba(255,77,0,0.2), 0 4px 12px rgba(255,77,0,0.3); }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 0.7; transform: translate(-50%,-50%) scale(1.05); } }
+        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
       `}</style>
 
       <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #0A0E27 0%, #050816 100%)", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
