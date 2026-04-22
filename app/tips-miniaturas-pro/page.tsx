@@ -784,44 +784,60 @@ function TipografiaContexto({ t }: { t: typeof translations.es }) {
 }
 
 function ZonaMirada({ t }: { t: typeof translations.es }) {
-  const [posicion, setPosicion] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [facePos, setFacePos] = useState({ x: 75, y: 25 }); // porcentaje
+  const isDragging = useRef(false);
   const isES = t.t07instruccion.includes("Arrastra");
 
-  const posiciones = [
-    { x: "20%", y: "25%", miraDerecha: true, miraAbajo: true },
-    { x: "75%", y: "25%", miraDerecha: false, miraAbajo: true },
-    { x: "20%", y: "70%", miraDerecha: true, miraAbajo: false },
-    { x: "75%", y: "70%", miraDerecha: false, miraAbajo: false },
-  ];
+  const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, min), max);
 
-  const pos = posiciones[posicion];
-  const textoX = pos.miraDerecha ? "65%" : "15%";
-  const textoY = pos.miraAbajo ? "65%" : "20%";
+  const updatePos = (clientX: number, clientY: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clamp(((clientX - rect.left) / rect.width) * 100, 8, 92);
+    const y = clamp(((clientY - rect.top) / rect.height) * 100, 8, 85);
+    setFacePos({ x, y });
+  };
 
-  const arrowAngle = Math.atan2(
-    parseFloat(textoY) - parseFloat(pos.y),
-    parseFloat(textoX) - parseFloat(pos.x)
-  ) * (180 / Math.PI);
+  const onMouseDown = (e: React.MouseEvent) => { isDragging.current = true; e.preventDefault(); };
+  const onMouseMove = (e: React.MouseEvent) => { if (isDragging.current) updatePos(e.clientX, e.clientY); };
+  const onMouseUp = () => { isDragging.current = false; };
+  const onTouchStart = (e: React.TouchEvent) => { isDragging.current = true; };
+  const onTouchMove = (e: React.TouchEvent) => { if (isDragging.current) { e.preventDefault(); updatePos(e.touches[0].clientX, e.touches[0].clientY); } };
+  const onTouchEnd = () => { isDragging.current = false; };
+
+  // Texto clave siempre en el cuadrante opuesto, pero clampeado al interior
+  const textoX = clamp(facePos.x > 50 ? 22 : 78, 15, 82);
+  const textoY = clamp(facePos.y > 50 ? 25 : 72, 12, 78);
+
+  // Ángulo de la flecha desde la cara hacia el texto
+  const dx = textoX - facePos.x;
+  const dy = textoY - facePos.y;
+  const arrowAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+  const dist = Math.sqrt(dx * dx + dy * dy);
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.25rem", textAlign: "center" }}>{t.t07instruccion}</p>
+      <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.25rem", textAlign: "center" }}>
+        {isES ? "Arrastra el rostro dentro de la miniatura" : "Drag the face inside the thumbnail"}
+      </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.5rem", maxWidth: "400px", margin: "0 auto 1.5rem" }}>
-        {t.t07posiciones.map((label, i) => (
-          <button key={i} onClick={() => setPosicion(i)} style={{
-            padding: "0.65rem 0.75rem",
-            background: posicion === i ? "#7F77DD20" : "rgba(255,255,255,0.03)",
-            border: "1px solid " + (posicion === i ? "#7F77DD" : "rgba(255,255,255,0.1)"),
-            borderRadius: "10px", cursor: "pointer",
-            color: posicion === i ? "#7F77DD" : "rgba(255,255,255,0.6)",
-            fontWeight: 600, fontSize: "0.8rem",
-            fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
-          }}>{label}</button>
-        ))}
-      </div>
-
-      <div style={{ position: "relative", maxWidth: "600px", margin: "0 auto", aspectRatio: "16/9", background: "linear-gradient(135deg, #1a1040 0%, #0a0a1e 100%)", borderRadius: "16px", border: "1px solid rgba(127,119,221,0.3)", overflow: "hidden" }}>
+      <div
+        ref={containerRef}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{
+          position: "relative", maxWidth: "600px", margin: "0 auto",
+          aspectRatio: "16/9",
+          background: "linear-gradient(135deg, #1a1040 0%, #0a0a1e 100%)",
+          borderRadius: "16px", border: "1px solid rgba(127,119,221,0.3)",
+          overflow: "hidden", userSelect: "none",
+          cursor: isDragging.current ? "grabbing" : "default",
+        }}
+      >
         {/* Grid de tercios */}
         {[33, 66].map(p => (
           <div key={p}>
@@ -830,49 +846,52 @@ function ZonaMirada({ t }: { t: typeof translations.es }) {
           </div>
         ))}
 
-        {/* Texto / elemento clave */}
-        <div style={{
-          position: "absolute", left: textoX, top: textoY,
-          transform: "translate(-50%, -50%)",
-          background: "#FF4D00", color: "#fff",
-          padding: "0.4rem 0.9rem", borderRadius: "6px",
-          fontSize: "clamp(0.7rem, 2vw, 1rem)", fontWeight: 900,
-          fontFamily: "'Syne', sans-serif",
-          boxShadow: "0 0 20px rgba(255,77,0,0.5)",
-          transition: "all 0.4s ease",
-          whiteSpace: "nowrap",
-        }}>{isES ? "TEXTO CLAVE" : "KEY TEXT"}</div>
-
-        {/* Flecha de atención */}
-        <div style={{
-          position: "absolute",
-          left: pos.x, top: pos.y,
-          transform: `translate(-50%, -50%)`,
-          transition: "all 0.4s ease",
-          zIndex: 3,
-        }}>
-          <svg width="60" height="60" viewBox="0 0 60 60" style={{ transform: `rotate(${arrowAngle}deg)`, transition: "transform 0.4s ease", overflow: "visible" }}>
+        {/* Flecha SVG de cara → texto */}
+        {dist > 5 && (
+          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" }}>
             <defs>
-              <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
                 <path d="M0,0 L6,3 L0,6 Z" fill="#FFD60A" />
               </marker>
             </defs>
-            <line x1="10" y1="30" x2="48" y2="30" stroke="#FFD60A" strokeWidth="2.5" markerEnd="url(#arrow)" strokeDasharray="4 2" />
+            <line
+              x1={facePos.x + "%"} y1={facePos.y + "%"}
+              x2={textoX + "%"} y2={textoY + "%"}
+              stroke="#FFD60A" strokeWidth="2" strokeDasharray="5 3"
+              markerEnd="url(#arrowhead)"
+            />
           </svg>
-        </div>
+        )}
 
-        {/* Rostro emoji */}
+        {/* Texto clave */}
         <div style={{
           position: "absolute",
-          left: pos.x, top: pos.y,
+          left: textoX + "%", top: textoY + "%",
           transform: "translate(-50%, -50%)",
-          fontSize: "clamp(2rem, 5vw, 3rem)",
-          transition: "all 0.4s ease",
-          filter: "drop-shadow(0 0 12px rgba(127,119,221,0.6))",
-          zIndex: 4,
-          cursor: "pointer",
-          userSelect: "none",
-        }}>😮</div>
+          background: "#FF4D00", color: "#fff",
+          padding: "0.35rem 0.8rem", borderRadius: "6px",
+          fontSize: "clamp(0.6rem, 1.8vw, 0.9rem)", fontWeight: 900,
+          fontFamily: "'Syne', sans-serif",
+          boxShadow: "0 0 20px rgba(255,77,0,0.5)",
+          transition: "left 0.3s ease, top 0.3s ease",
+          whiteSpace: "nowrap", pointerEvents: "none",
+        }}>{isES ? "TEXTO CLAVE" : "KEY TEXT"}</div>
+
+        {/* Rostro draggable */}
+        <div
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+          style={{
+            position: "absolute",
+            left: facePos.x + "%", top: facePos.y + "%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+            cursor: "grab",
+            filter: "drop-shadow(0 0 12px rgba(127,119,221,0.7))",
+            transition: isDragging.current ? "none" : "left 0.1s, top 0.1s",
+            zIndex: 4, touchAction: "none",
+          }}
+        >😮</div>
 
         {/* Insight */}
         <div style={{
@@ -880,11 +899,13 @@ function ZonaMirada({ t }: { t: typeof translations.es }) {
           background: "rgba(0,0,0,0.75)", borderRadius: "6px",
           padding: "0.4rem 0.75rem", fontSize: "0.72rem",
           color: "rgba(255,255,255,0.8)", textAlign: "center",
+          pointerEvents: "none",
         }}>💡 {t.t07insight}</div>
       </div>
     </div>
   );
 }
+
 
 function ABTesting({ t }: { t: typeof translations.es }) {
   const [seleccionada, setSeleccionada] = useState<string | null>(null);
