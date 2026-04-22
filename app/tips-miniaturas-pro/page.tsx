@@ -194,15 +194,113 @@ const translations = {
     t08tipTitulo: "Tip accionable",
     t08tip: "En YouTube Studio puedes activar el A/B testing oficial desde el editor de miniaturas. Prueba siempre 2 versiones: una segura y una arriesgada. La arriesgada gana más veces de lo que crees.",
 
+
+    t09num: "09", t09categoria: "Estrategia de canal",
+    t09titulo: "Consistencia visual",
+    t09subtitulo: "Tu canal es una marca. Trátalo como tal.",
+    t09parrafo1: "Un canal con identidad visual consistente genera confianza. El espectador reconoce tus miniaturas antes de leer el título, igual que reconoce una lata de Coca-Cola sin leer la etiqueta.",
+    t09parrafo2: "Haz clic en los dos estados para ver la diferencia entre un canal con y sin consistencia visual.",
+    t09labelCon: "Con consistencia",
+    t09labelSin: "Sin consistencia",
+    t09insight: "Los canales con identidad visual consistente tienen hasta 3x más tasa de retorno de audiencia.",
+    t09tipTitulo: "Tip accionable",
+    t09tip: "Define 3 reglas fijas para todas tus miniaturas: paleta de 2-3 colores, 1 tipografía principal, y posición fija del logo o marca personal.",
+
+    t10num: "10", t10categoria: "Formatos y plataforma",
+    t10titulo: "Shorts vs videos largos",
+    t10subtitulo: "Mismo canal, estrategia visual diferente.",
+    t10parrafo1: "YouTube Shorts y los videos largos compiten en contextos completamente distintos. Lo que funciona en uno puede destruirte en el otro.",
+    t10parrafo2: "Selecciona el formato para ver las diferencias clave que debes aplicar en tu estrategia visual.",
+    t10tabShorts: "Shorts",
+    t10tabLargos: "Videos largos",
+    t10shorts: {
+      ratio: "9:16 vertical",
+      ratioDesc: "Diseñado para móvil, pantalla completa",
+      texto: "Texto grande, máximo 3 palabras",
+      textoDesc: "Se lee en 0.5 segundos o no se lee",
+      rostro: "Rostro central, emoción extrema",
+      rostroDesc: "Ocupa 60-70% del encuadre",
+      color: "Contraste brutal, saturación alta",
+      colorDesc: "Compite en feed vertical de scroll rápido",
+      logo: "Sin logo ni marca personal",
+      logoDesc: "El encuadre no tiene espacio",
+      insight: "En Shorts, la miniatura se ve 0.3 segundos. Emoción + contraste es todo lo que tienes.",
+    },
+    t10largos: {
+      ratio: "16:9 horizontal",
+      ratioDesc: "Desktop y mobile landscape",
+      texto: "Texto complementario al título",
+      textoDesc: "Puede ser más elaborado, 4-6 palabras",
+      rostro: "Rostro en tercio izquierdo o derecho",
+      rostroDesc: "Mirando hacia el texto clave",
+      color: "Paleta de nicho, identidad consistente",
+      colorDesc: "El espectador reconoce tu canal",
+      logo: "Logo sutil en esquina inferior",
+      logoDesc: "Refuerza la marca sin distraer",
+      insight: "En videos largos, la miniatura + título se leen juntos. Diseña para que se complementen, no se repitan.",
+    },
+    t10tipTitulo: "Tip accionable",
+    t10tip: "Si publicas Shorts y videos largos en el mismo canal, usa paletas de color distintas para diferenciarlos. Tus suscriptores aprenderán a identificar el formato antes de hacer clic.",
+
+    t11num: "11", t11categoria: "Herramientas y flujo",
+    t11titulo: "Prompts optimizados",
+    t11subtitulo: "Copia y usa. Resultados en segundos.",
+    t11parrafo1: "Un buen prompt para ThumbsLatam no describe la imagen que quieres. Describe el impacto que debe generar en el espectador.",
+    t11parrafo2: "Selecciona tu nicho y copia el prompt optimizado. Está diseñado para extraer el máximo potencial del generador.",
+    t11nichoLabel: "Selecciona tu nicho",
+    t11copiar: "Copiar",
+    t11copiado: "¡Copiado!",
+    t11nichos: [
+      {
+        nombre: "Gaming",
+        prompt: "Miniatura estilo gaming con rostro masculino expresión shock extremo, boca abierta, ojos muy abiertos, fondo negro con destellos rojos y amarillos, texto 'IMPOSIBLE' en tipografía agresiva sans-serif amarillo neón, contraste brutal, estilo MrBeast gaming, alta saturación",
+      },
+      {
+        nombre: "Finanzas",
+        prompt: "Miniatura profesional finanzas personales, hombre 30s traje oscuro expresión segura confiada, fondo degradado azul marino a verde oscuro, gráfico de barras ascendente en esquina, texto '10X' tipografía serif dorada, iluminación dramática lateral, aire de autoridad y éxito",
+      },
+      {
+        nombre: "Lifestyle",
+        prompt: "Miniatura lifestyle femenina, mujer sonrisa genuina cálida, fondo tonos tierra beige y terracota, luz natural golden hour, elementos minimalistas, texto elegante serif crema, composición limpia espaciosa, sensación de bienestar y autenticidad",
+      },
+      {
+        nombre: "Tech",
+        prompt: "Miniatura tecnología, persona señalando pantalla holográfica azul, fondo oscuro con elementos de código y circuitos, acento naranja en elemento clave, texto sans-serif blanco limpio, estética futurista pero accesible, sensación de descubrimiento y novedad",
+      },
+      {
+        nombre: "Educación",
+        prompt: "Miniatura educativa, persona expresión sorpresa positiva, fondo limpio con elementos visuales del tema (iconos, diagramas), paleta azul y blanco con acento amarillo, texto claro con número concreto, sensación de claridad y aprendizaje acelerado",
+      },
+    ],
+    t11tipTitulo: "Tip accionable",
+    t11tip: "Agrega siempre el contexto de tu video al final del prompt: 'para video sobre [tema específico]'. Eso mejora la relevancia del resultado un 40%.",
+
+    t12num: "12", t12categoria: "Control de calidad",
+    t12titulo: "Checklist pre-publicación",
+    t12subtitulo: "7 puntos. Si falla uno, no publiques.",
+    t12parrafo1: "Los canales que crecen consistentemente tienen un proceso, no solo talento. Este checklist de 7 puntos es el filtro final antes de publicar cualquier miniatura.",
+    t12parrafo2: "Marca cada punto. Si no puedes marcar los 7, tu miniatura no está lista.",
+    t12items: [
+      { id: 1, texto: "El texto principal se lee en menos de 2 segundos", detalle: "Reduce a pantalla del 10% para simular cómo se ve en feed" },
+      { id: 2, texto: "Hay contraste suficiente entre texto y fondo", detalle: "Ratio mínimo recomendado: 4.5:1 según estándares de accesibilidad" },
+      { id: 3, texto: "El rostro o elemento principal ocupa al menos 40% del encuadre", detalle: "Los elementos pequeños no generan impacto emocional en miniaturas" },
+      { id: 4, texto: "La miniatura y el título se complementan (no se repiten)", detalle: "Si dicen lo mismo, estás desperdiciando el doble de espacio de comunicación" },
+      { id: 5, texto: "No hay elementos que distraigan del mensaje principal", detalle: "Regla: si lo quitas y no se pierde nada, quítalo" },
+      { id: 6, texto: "La paleta es consistente con tu identidad de canal", detalle: "El espectador debe reconocerte antes de leer tu nombre" },
+      { id: 7, texto: "La miniatura cumple lo que el video entrega", detalle: "Pregúntate: ¿alguien que haga clic quedará satisfecho al minuto 2?" },
+    ],
+    t12scoreLabels: ["Necesitas trabajo", "Casi lista", "Lista para publicar", "Miniatura perfecta"],
+    t12reiniciar: "Reiniciar checklist",
+    t12tipTitulo: "Tip accionable",
+    t12tip: "Guarda este checklist como imagen y pégalo en tu escritorio. Úsalo en cada miniatura durante 30 días. Después de ese tiempo, lo tendrás automatizado en tu cabeza.",
+
     proximamenteTag: "Continuará",
-    proximamenteTitulo: "Las técnicas restantes + bonus Studio",
-    proximamenteDesc: "Las siguientes técnicas se publicarán próximamente:",
+    proximamenteTitulo: "Bonus exclusivos Studio",
+    proximamenteDesc: "Contenido adicional disponible para miembros Studio:",
     proximamenteItems: [
-      "09. Consistencia visual del canal",
-      "10. Shorts vs videos largos",
-      "11. Prompts optimizados para ThumbsLatam",
-      "12. Checklist pre-publicación de 7 puntos",
-      "Bonus Studio: Análisis competitivo, calendario editorial, biblioteca de prompts",
+      "Bonus 1: Análisis competitivo de miniaturas",
+      "Bonus 2: Calendario editorial visual",
+      "Bonus 3: Biblioteca de 50 prompts avanzados",
     ],
   },
   en: {
@@ -394,15 +492,113 @@ const translations = {
     t08tipTitulo: "Actionable tip",
     t08tip: "In YouTube Studio you can activate official A/B testing from the thumbnail editor. Always test 2 versions: one safe and one risky. The risky one wins more often than you think.",
 
+
+    t09num: "09", t09categoria: "Channel strategy",
+    t09titulo: "Visual consistency",
+    t09subtitulo: "Your channel is a brand. Treat it like one.",
+    t09parrafo1: "A channel with consistent visual identity builds trust. Viewers recognize your thumbnails before reading the title, just like recognizing a Coca-Cola can without reading the label.",
+    t09parrafo2: "Click both states to see the difference between a channel with and without visual consistency.",
+    t09labelCon: "With consistency",
+    t09labelSin: "Without consistency",
+    t09insight: "Channels with consistent visual identity have up to 3x higher return audience rate.",
+    t09tipTitulo: "Actionable tip",
+    t09tip: "Define 3 fixed rules for all your thumbnails: 2-3 color palette, 1 main typeface, and fixed position for your logo or personal brand.",
+
+    t10num: "10", t10categoria: "Formats & platform",
+    t10titulo: "Shorts vs long videos",
+    t10subtitulo: "Same channel, different visual strategy.",
+    t10parrafo1: "YouTube Shorts and long videos compete in completely different contexts. What works in one can destroy you in the other.",
+    t10parrafo2: "Select the format to see the key differences you need to apply in your visual strategy.",
+    t10tabShorts: "Shorts",
+    t10tabLargos: "Long videos",
+    t10shorts: {
+      ratio: "9:16 vertical",
+      ratioDesc: "Built for mobile, full screen",
+      texto: "Large text, 3 words maximum",
+      textoDesc: "Read in 0.5 seconds or not read at all",
+      rostro: "Central face, extreme emotion",
+      rostroDesc: "Takes up 60-70% of the frame",
+      color: "Brutal contrast, high saturation",
+      colorDesc: "Competes in fast-scroll vertical feed",
+      logo: "No logo or personal brand",
+      logoDesc: "The frame has no space for it",
+      insight: "In Shorts, the thumbnail is seen for 0.3 seconds. Emotion + contrast is all you have.",
+    },
+    t10largos: {
+      ratio: "16:9 horizontal",
+      ratioDesc: "Desktop and mobile landscape",
+      texto: "Text that complements the title",
+      textoDesc: "Can be more elaborate, 4-6 words",
+      rostro: "Face in left or right third",
+      rostroDesc: "Looking toward the key text",
+      color: "Niche palette, consistent identity",
+      colorDesc: "Viewers recognize your channel",
+      logo: "Subtle logo in bottom corner",
+      logoDesc: "Reinforces brand without distracting",
+      insight: "In long videos, thumbnail + title are read together. Design them to complement, not repeat each other.",
+    },
+    t10tipTitulo: "Actionable tip",
+    t10tip: "If you publish both Shorts and long videos on the same channel, use different color palettes to differentiate them. Your subscribers will learn to identify the format before clicking.",
+
+    t11num: "11", t11categoria: "Tools & workflow",
+    t11titulo: "Optimized prompts",
+    t11subtitulo: "Copy and use. Results in seconds.",
+    t11parrafo1: "A good ThumbsLatam prompt does not describe the image you want. It describes the impact it should generate on the viewer.",
+    t11parrafo2: "Select your niche and copy the optimized prompt. It is designed to extract maximum potential from the generator.",
+    t11nichoLabel: "Select your niche",
+    t11copiar: "Copy",
+    t11copiado: "Copied!",
+    t11nichos: [
+      {
+        nombre: "Gaming",
+        prompt: "Gaming thumbnail with male face extreme shock expression, open mouth, wide open eyes, black background with red and yellow flashes, text 'IMPOSSIBLE' in aggressive yellow neon sans-serif typography, brutal contrast, MrBeast gaming style, high saturation",
+      },
+      {
+        nombre: "Finance",
+        prompt: "Professional personal finance thumbnail, man 30s dark suit confident secure expression, navy to dark green gradient background, ascending bar chart in corner, text '10X' gold serif typography, dramatic side lighting, air of authority and success",
+      },
+      {
+        nombre: "Lifestyle",
+        prompt: "Feminine lifestyle thumbnail, woman genuine warm smile, earth tones beige and terracotta background, natural golden hour light, minimalist elements, elegant cream serif text, clean spacious composition, feeling of wellbeing and authenticity",
+      },
+      {
+        nombre: "Tech",
+        prompt: "Technology thumbnail, person pointing at blue holographic screen, dark background with code elements and circuits, orange accent on key element, clean white sans-serif text, futuristic but accessible aesthetic, feeling of discovery and novelty",
+      },
+      {
+        nombre: "Education",
+        prompt: "Educational thumbnail, person positive surprise expression, clean background with visual topic elements (icons, diagrams), blue and white palette with yellow accent, clear text with concrete number, feeling of clarity and accelerated learning",
+      },
+    ],
+    t11tipTitulo: "Actionable tip",
+    t11tip: "Always add your video context at the end of the prompt: 'for video about [specific topic]'. That improves result relevance by 40%.",
+
+    t12num: "12", t12categoria: "Quality control",
+    t12titulo: "Pre-publication checklist",
+    t12subtitulo: "7 points. If one fails, don't publish.",
+    t12parrafo1: "Channels that grow consistently have a process, not just talent. This 7-point checklist is the final filter before publishing any thumbnail.",
+    t12parrafo2: "Check each point. If you cannot check all 7, your thumbnail is not ready.",
+    t12items: [
+      { id: 1, texto: "The main text reads in under 2 seconds", detalle: "Reduce to 10% screen size to simulate how it looks in feed" },
+      { id: 2, texto: "There is enough contrast between text and background", detalle: "Minimum recommended ratio: 4.5:1 per accessibility standards" },
+      { id: 3, texto: "The face or main element occupies at least 40% of the frame", detalle: "Small elements generate no emotional impact in thumbnails" },
+      { id: 4, texto: "The thumbnail and title complement each other (not repeat)", detalle: "If they say the same thing, you are wasting double your communication space" },
+      { id: 5, texto: "There are no elements distracting from the main message", detalle: "Rule: if you remove it and nothing is lost, remove it" },
+      { id: 6, texto: "The palette is consistent with your channel identity", detalle: "Viewers should recognize you before reading your name" },
+      { id: 7, texto: "The thumbnail delivers what the video delivers", detalle: "Ask yourself: will someone who clicks be satisfied at minute 2?" },
+    ],
+    t12scoreLabels: ["Needs work", "Almost ready", "Ready to publish", "Perfect thumbnail"],
+    t12reiniciar: "Reset checklist",
+    t12tipTitulo: "Actionable tip",
+    t12tip: "Save this checklist as an image and pin it to your desktop. Use it on every thumbnail for 30 days. After that time, it will be automated in your head.",
+
     proximamenteTag: "To be continued",
-    proximamenteTitulo: "Remaining techniques + Studio bonus",
-    proximamenteDesc: "The following techniques will be published soon:",
+    proximamenteTitulo: "Exclusive Studio bonuses",
+    proximamenteDesc: "Additional content available for Studio members:",
     proximamenteItems: [
-      "09. Visual channel consistency",
-      "10. Shorts vs long videos",
-      "11. Optimized prompts for ThumbsLatam",
-      "12. Pre-publication 7-point checklist",
-      "Studio bonus: Competitive analysis, editorial calendar, prompt library",
+      "Bonus 1: Thumbnail competitive analysis",
+      "Bonus 2: Visual editorial calendar",
+      "Bonus 3: Library of 50 advanced prompts",
     ],
   },
 };
@@ -976,6 +1172,230 @@ function ABTesting({ t }: { t: typeof translations.es }) {
   );
 }
 
+function ConsistenciaVisual({ t }: { t: typeof translations.es }) {
+  const [modo, setModo] = useState<"con" | "sin">("con");
+  const isES = t.t09labelCon === "Con consistencia";
+
+  const paleta = { bg: "#FF4D00", bg2: "#1a0a00", acento: "#FFD60A" };
+  const miniaturasCon = [
+    { texto: isES ? "SECRETO #1" : "SECRET #1", sub: isES ? "que nadie dice" : "nobody tells you" },
+    { texto: isES ? "SECRETO #2" : "SECRET #2", sub: isES ? "del algoritmo" : "of the algorithm" },
+    { texto: isES ? "SECRETO #3" : "SECRET #3", sub: isES ? "para crecer" : "to grow" },
+    { texto: isES ? "SECRETO #4" : "SECRET #4", sub: isES ? "de los grandes" : "of the big ones" },
+  ];
+  const miniaturasSin = [
+    { bg: "linear-gradient(135deg,#1a3a5e,#0a1a3e)", acento: "#64FFDA", texto: isES ? "Mi nuevo video" : "My new video", sub: "" },
+    { bg: "linear-gradient(135deg,#3e1a1a,#1a0a0a)", acento: "#FF8888", texto: isES ? "TUTORIAL COMPLETO" : "FULL TUTORIAL", sub: "" },
+    { bg: "linear-gradient(135deg,#1a3e1a,#0a1a0a)", acento: "#88FF88", texto: isES ? "Tips útiles" : "Useful tips", sub: "" },
+    { bg: "linear-gradient(135deg,#3e3e1a,#1a1a0a)", acento: "#FFFF88", texto: isES ? "VIDEO #47" : "VIDEO #47", sub: "" },
+  ];
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", marginBottom: "1.5rem" }}>
+        {(["con", "sin"] as const).map((m) => (
+          <button key={m} onClick={() => setModo(m)} style={{
+            padding: "0.65rem 1.5rem",
+            background: modo === m ? (m === "con" ? "#06D6A0" : "#FF4D4D") : "rgba(255,255,255,0.05)",
+            color: modo === m ? (m === "con" ? "#000" : "#fff") : "rgba(255,255,255,0.6)",
+            border: "1px solid " + (modo === m ? (m === "con" ? "#06D6A0" : "#FF4D4D") : "rgba(255,255,255,0.1)"),
+            borderRadius: "999px", cursor: "pointer", fontWeight: 700,
+            fontSize: "0.9rem", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
+          }}>{m === "con" ? t.t09labelCon : t.t09labelSin}</button>
+        ))}
+      </div>
+
+      <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "16px", padding: "1.25rem", border: "1px solid " + (modo === "con" ? "rgba(6,214,160,0.3)" : "rgba(255,77,77,0.3)"), transition: "border 0.3s" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
+          {(modo === "con" ? miniaturasCon : miniaturasSin).map((mini: any, i: number) => (
+            <div key={i} style={{
+              aspectRatio: "16/9",
+              background: modo === "con" ? `linear-gradient(135deg, ${paleta.bg} 0%, ${paleta.bg2} 100%)` : mini.bg,
+              borderRadius: "10px", display: "flex", flexDirection: "column",
+              alignItems: "center", justifyContent: "center", padding: "0.5rem",
+              border: "1px solid rgba(255,255,255,0.1)", position: "relative", overflow: "hidden",
+            }}>
+              {modo === "con" && <div style={{ position: "absolute", top: "6px", left: "6px", width: "20px", height: "20px", background: paleta.acento, borderRadius: "50%", opacity: 0.8 }} />}
+              <div style={{ fontSize: "clamp(0.65rem, 2vw, 0.9rem)", fontWeight: 900, color: modo === "con" ? paleta.acento : mini.acento, fontFamily: "'Syne', sans-serif", textAlign: "center", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>{mini.texto}</div>
+              {mini.sub && <div style={{ fontSize: "clamp(0.5rem, 1.2vw, 0.65rem)", color: "#fff", opacity: 0.8, textAlign: "center", marginTop: "2px" }}>{mini.sub}</div>}
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: "1rem", background: modo === "con" ? "rgba(6,214,160,0.08)" : "rgba(255,77,77,0.08)", borderLeft: "3px solid " + (modo === "con" ? "#06D6A0" : "#FF4D4D"), borderRadius: "0 8px 8px 0", padding: "0.75rem 1rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.5 }}>
+          {modo === "con" ? (isES ? "✓ Misma paleta, mismo estilo tipográfico, mismo elemento de marca. El espectador reconoce el canal instantáneamente." : "✓ Same palette, same typographic style, same brand element. Viewers recognize the channel instantly.") : (isES ? "✗ Cada miniatura parece de un canal diferente. El espectador no puede asociar los videos con una identidad." : "✗ Each thumbnail looks like a different channel. Viewers cannot associate the videos with an identity.")}
+        </div>
+      </div>
+      <p style={{ textAlign: "center", fontSize: "0.82rem", color: "rgba(255,255,255,0.5)", marginTop: "1rem", fontStyle: "italic" }}>💡 {t.t09insight}</p>
+    </div>
+  );
+}
+
+function ShortsVsLargos({ t }: { t: typeof translations.es }) {
+  const [tab, setTab] = useState<"shorts" | "largos">("shorts");
+  const data = tab === "shorts" ? t.t10shorts : t.t10largos;
+  const color = tab === "shorts" ? "#FF4D00" : "#7F77DD";
+
+  const filas = [
+    { icono: "📐", label: data.ratio, desc: data.ratioDesc },
+    { icono: "✍️", label: data.texto, desc: data.textoDesc },
+    { icono: "😮", label: data.rostro, desc: data.rostroDesc },
+    { icono: "🎨", label: data.color, desc: data.colorDesc },
+    { icono: "🏷️", label: data.logo, desc: data.logoDesc },
+  ];
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", maxWidth: "400px", margin: "0 auto 1.5rem" }}>
+        {(["shorts", "largos"] as const).map((f) => (
+          <button key={f} onClick={() => setTab(f)} style={{
+            padding: "0.75rem", background: tab === f ? (f === "shorts" ? "#FF4D00" : "#7F77DD") : "rgba(255,255,255,0.05)",
+            color: tab === f ? "#fff" : "rgba(255,255,255,0.6)",
+            border: "1px solid " + (tab === f ? (f === "shorts" ? "#FF4D00" : "#7F77DD") : "rgba(255,255,255,0.1)"),
+            borderRadius: "12px", cursor: "pointer", fontWeight: 700, fontSize: "0.95rem",
+            fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s", textAlign: "center",
+          }}>
+            {f === "shorts" ? "⚡ " + t.t10tabShorts : "🎬 " + t.t10tabLargos}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start", flexWrap: "wrap" }}>
+        {/* Preview visual */}
+        <div style={{ flexShrink: 0 }}>
+          {tab === "shorts" ? (
+            <div style={{ width: "100px", aspectRatio: "9/16", background: "linear-gradient(180deg, #FF0040 0%, #000 100%)", borderRadius: "10px", border: "2px solid #FF4D00", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 20px rgba(255,77,0,0.3)" }}>
+              <div style={{ fontSize: "1.4rem", fontWeight: 900, color: "#FFD60A", fontFamily: "'Syne', sans-serif", textAlign: "center", padding: "0.5rem", lineHeight: 1.1 }}>¡YA!</div>
+            </div>
+          ) : (
+            <div style={{ width: "160px", aspectRatio: "16/9", background: "linear-gradient(135deg, #0D4F3C 0%, #1E3A5F 100%)", borderRadius: "10px", border: "2px solid #7F77DD", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 20px rgba(127,119,221,0.3)" }}>
+              <div style={{ fontSize: "0.9rem", fontWeight: 900, color: "#D4AF37", fontFamily: "'Syne', sans-serif", textAlign: "center", padding: "0.5rem", lineHeight: 1.2 }}>3 PASOS</div>
+            </div>
+          )}
+        </div>
+
+        {/* Tabla de diferencias */}
+        <div style={{ flex: 1, minWidth: "220px", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {filas.map((fila, i) => (
+            <div key={i} style={{ background: "rgba(0,0,0,0.3)", borderRadius: "10px", padding: "0.65rem 0.9rem", border: "1px solid " + color + "20", borderLeft: "3px solid " + color }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fff", marginBottom: "0.2rem" }}>{fila.icono} {fila.label}</div>
+              <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}>{fila.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ marginTop: "1.25rem", background: tab === "shorts" ? "rgba(255,77,0,0.08)" : "rgba(127,119,221,0.08)", borderLeft: "3px solid " + color, borderRadius: "0 8px 8px 0", padding: "0.85rem 1.1rem", fontSize: "0.88rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
+        💡 {data.insight}
+      </div>
+    </div>
+  );
+}
+
+function PromptsBiblioteca({ t }: { t: typeof translations.es }) {
+  const [nichoActivo, setNichoActivo] = useState(0);
+  const [copiado, setCopiado] = useState(false);
+  const nicho = t.t11nichos[nichoActivo];
+
+  const copiar = () => {
+    navigator.clipboard.writeText(nicho.prompt).then(() => {
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 2000);
+    });
+  };
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ marginBottom: "1rem" }}>
+        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem", display: "block" }}>{t.t11nichoLabel}</label>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          {t.t11nichos.map((n, i) => (
+            <button key={i} onClick={() => { setNichoActivo(i); setCopiado(false); }} style={{
+              padding: "0.5rem 1rem", background: nichoActivo === i ? "#FF4D00" : "rgba(255,255,255,0.05)",
+              color: nichoActivo === i ? "#fff" : "rgba(255,255,255,0.7)",
+              border: "1px solid " + (nichoActivo === i ? "#FF4D00" : "rgba(255,255,255,0.1)"),
+              borderRadius: "999px", cursor: "pointer", fontWeight: 600, fontSize: "0.85rem",
+              fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
+            }}>{n.nombre}</button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,77,0,0.2)", borderRadius: "16px", padding: "1.25rem", position: "relative" }}>
+        <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.75rem" }}>Prompt · {nicho.nombre}</div>
+        <p style={{ fontSize: "0.92rem", color: "rgba(255,255,255,0.9)", lineHeight: 1.7, margin: "0 0 1rem", fontStyle: "italic" }}>{nicho.prompt}</p>
+        <button onClick={copiar} style={{
+          padding: "0.6rem 1.5rem", background: copiado ? "#06D6A0" : "#FF4D00",
+          color: copiado ? "#000" : "#fff", border: "none", borderRadius: "999px",
+          cursor: "pointer", fontWeight: 700, fontSize: "0.85rem",
+          fontFamily: "'DM Sans', sans-serif", transition: "all 0.3s",
+        }}>{copiado ? "✓ " + t.t11copiado : t.t11copiar}</button>
+      </div>
+    </div>
+  );
+}
+
+function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
+  const [checks, setChecks] = useState<boolean[]>(new Array(t.t12items.length).fill(false));
+  const total = checks.filter(Boolean).length;
+  const pct = Math.round((total / t.t12items.length) * 100);
+  const scoreIdx = total <= 2 ? 0 : total <= 4 ? 1 : total <= 6 ? 2 : 3;
+  const scoreColor = ["#FF4D4D", "#FFD60A", "#06D6A0", "#06D6A0"][scoreIdx];
+
+  const toggle = (i: number) => {
+    const n = [...checks];
+    n[i] = !n[i];
+    setChecks(n);
+  };
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      {/* Score bar */}
+      <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "16px", padding: "1.25rem", marginBottom: "1.5rem", border: "1px solid " + scoreColor + "30" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+          <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>{t.t12scoreLabels[scoreIdx]}</span>
+          <span style={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "'Syne', sans-serif", color: scoreColor }}>{total}/{t.t12items.length}</span>
+        </div>
+        <div style={{ height: "8px", background: "rgba(255,255,255,0.1)", borderRadius: "999px", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: pct + "%", background: `linear-gradient(90deg, ${scoreColor}, ${scoreColor}cc)`, borderRadius: "999px", transition: "width 0.4s ease" }} />
+        </div>
+      </div>
+
+      {/* Items */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+        {t.t12items.map((item, i) => (
+          <div key={i} onClick={() => toggle(i)} style={{
+            background: checks[i] ? "rgba(6,214,160,0.08)" : "rgba(0,0,0,0.3)",
+            border: "1px solid " + (checks[i] ? "rgba(6,214,160,0.4)" : "rgba(255,255,255,0.08)"),
+            borderRadius: "12px", padding: "0.9rem 1rem", cursor: "pointer",
+            transition: "all 0.2s", display: "flex", gap: "0.9rem", alignItems: "flex-start",
+          }}>
+            <div style={{
+              width: "22px", height: "22px", borderRadius: "6px", flexShrink: 0, marginTop: "1px",
+              background: checks[i] ? "#06D6A0" : "transparent",
+              border: "2px solid " + (checks[i] ? "#06D6A0" : "rgba(255,255,255,0.3)"),
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "0.8rem", color: "#000", fontWeight: 900, transition: "all 0.2s",
+            }}>{checks[i] ? "✓" : ""}</div>
+            <div>
+              <div style={{ fontSize: "0.9rem", fontWeight: 600, color: checks[i] ? "#06D6A0" : "#fff", marginBottom: "0.2rem", transition: "color 0.2s" }}>{item.texto}</div>
+              <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4 }}>{item.detalle}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
+        <button onClick={() => setChecks(new Array(t.t12items.length).fill(false))} style={{
+          padding: "0.5rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.5)",
+          border: "1px solid rgba(255,255,255,0.15)", borderRadius: "999px", cursor: "pointer",
+          fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif",
+        }}>{t.t12reiniciar}</button>
+      </div>
+    </div>
+  );
+}
+
+
 function PaywallSection({ t }: { t: typeof translations.es }) {
   return (
     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "4rem 2rem" }}>
@@ -1074,6 +1494,10 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
       <TecnicaSection numero={t.t05num} categoria={t.t05categoria} titulo={t.t05titulo} subtitulo={t.t05subtitulo} parrafos={[t.t05parrafo1, t.t05parrafo2]} tipTitulo={t.t05tipTitulo} tip={t.t05tip} color="#FFD60A"><AIDABuilder t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t06num} categoria={t.t06categoria} titulo={t.t06titulo} subtitulo={t.t06subtitulo} parrafos={[t.t06parrafo1, t.t06parrafo2]} tipTitulo={t.t06tipTitulo} tip={t.t06tip} color="#06D6A0"><TipografiaContexto t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t07num} categoria={t.t07categoria} titulo={t.t07titulo} subtitulo={t.t07subtitulo} parrafos={[t.t07parrafo1, t.t07parrafo2]} tipTitulo={t.t07tipTitulo} tip={t.t07tip} color="#7F77DD"><ZonaMirada t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t09num} categoria={t.t09categoria} titulo={t.t09titulo} subtitulo={t.t09subtitulo} parrafos={[t.t09parrafo1, t.t09parrafo2]} tipTitulo={t.t09tipTitulo} tip={t.t09tip} color="#FFD60A"><ConsistenciaVisual t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t10num} categoria={t.t10categoria} titulo={t.t10titulo} subtitulo={t.t10subtitulo} parrafos={[t.t10parrafo1, t.t10parrafo2]} tipTitulo={t.t10tipTitulo} tip={t.t10tip} color="#7F77DD"><ShortsVsLargos t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t11num} categoria={t.t11categoria} titulo={t.t11titulo} subtitulo={t.t11subtitulo} parrafos={[t.t11parrafo1, t.t11parrafo2]} tipTitulo={t.t11tipTitulo} tip={t.t11tip} color="#06D6A0"><PromptsBiblioteca t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t12num} categoria={t.t12categoria} titulo={t.t12titulo} subtitulo={t.t12subtitulo} parrafos={[t.t12parrafo1, t.t12parrafo2]} tipTitulo={t.t12tipTitulo} tip={t.t12tip} color="#FF4D00"><ChecklistPublicacion t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t08num} categoria={t.t08categoria} titulo={t.t08titulo} subtitulo={t.t08subtitulo} parrafos={[t.t08parrafo1, t.t08parrafo2]} tipTitulo={t.t08tipTitulo} tip={t.t08tip} color="#FF4D00"><ABTesting t={t} /></TecnicaSection>
 
       <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
