@@ -1385,7 +1385,7 @@ function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
       </div>
 
       <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
-        <button onClick={() => setChecks(new Array(t.t12items.length).fill(false))} style={{
+        <button onClick={() => setChecks(Array.from({ length: t.t12items.length }, () => false))} style={{
           padding: "0.5rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.5)",
           border: "1px solid rgba(255,255,255,0.15)", borderRadius: "999px", cursor: "pointer",
           fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif",
