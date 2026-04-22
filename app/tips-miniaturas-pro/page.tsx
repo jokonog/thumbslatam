@@ -2036,7 +2036,27 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
       <TecnicaSection numero={t.t11num} categoria={t.t11categoria} titulo={t.t11titulo} subtitulo={t.t11subtitulo} parrafos={[t.t11parrafo1, t.t11parrafo2]} tipTitulo={t.t11tipTitulo} tip={t.t11tip} color="#06D6A0"><PromptsBiblioteca t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t12num} categoria={t.t12categoria} titulo={t.t12titulo} subtitulo={t.t12subtitulo} parrafos={[t.t12parrafo1, t.t12parrafo2]} tipTitulo={t.t12tipTitulo} tip={t.t12tip} color="#FF4D00"><ChecklistPublicacion t={t} /></TecnicaSection>
 
-      {plan === "studio" && (
+      {plan === "pro" && (
+        <div style={{ background: "linear-gradient(135deg, rgba(255,214,10,0.08) 0%, rgba(255,77,0,0.05) 100%)", border: "1px solid rgba(255,214,10,0.25)", borderRadius: "20px", padding: "clamp(1.5rem, 3vw, 2.5rem)", marginTop: "2rem", marginBottom: "3rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <div>
+            <div style={{ fontSize: "0.7rem", fontWeight: 900, color: "#FFD60A", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>⭐ {t.b01categoria}</div>
+            <h3 style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", fontWeight: 800, fontFamily: "'Syne', sans-serif", margin: "0 0 0.4rem", color: "#fff" }}>
+              {t.b01titulo && (t.b01categoria === "Exclusivo Studio" ? "¿Quieres los 3 bonus exclusivos?" : "Want the 3 exclusive bonuses?")}
+            </h3>
+            <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.5 }}>
+              {t.b01categoria === "Exclusivo Studio"
+                ? "Análisis competitivo, calendario editorial y biblioteca de 50 prompts — solo en Studio."
+                : "Competitive analysis, editorial calendar and 50-prompt library — Studio only."}
+            </p>
+          </div>
+          <a href="https://thumbslatam.gumroad.com/l/thumbslatam-studio" target="_blank" rel="noopener noreferrer" style={{ padding: "0.75rem 1.75rem", background: "#FFD60A", color: "#000", borderRadius: "999px", fontSize: "0.9rem", fontWeight: 800, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap", flexShrink: 0, boxShadow: "0 4px 20px rgba(255,214,10,0.3)", transition: "all 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(255,214,10,0.5)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,214,10,0.3)"; }}>
+            {t.b01categoria === "Exclusivo Studio" ? "Upgrade a Studio — $25/mes" : "Upgrade to Studio — $25/mo"}
+          </a>
+        </div>
+      )}
+            {plan === "studio" && (
         <>
           <div style={{ borderTop: "1px solid rgba(255,214,10,0.2)", marginTop: "2rem", marginBottom: "4rem", position: "relative" }}>
             <div style={{ position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)", background: "#FFD60A", color: "#000", fontSize: "0.7rem", fontWeight: 900, padding: "4px 16px", borderRadius: "999px", letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
