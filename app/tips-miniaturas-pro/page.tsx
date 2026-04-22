@@ -1798,10 +1798,30 @@ function CalendarioEditorial({ t }: { t: typeof translations.es }) {
         const conteo: Record<number, number> = {};
         asignaciones.forEach(a => { if (a !== null) conteo[a] = (conteo[a] || 0) + 1; });
         const tipoMasFrecuente = Object.entries(conteo).sort((a,b) => b[1]-a[1])[0];
-        const insights = isES
-          ? ["Mes enfocado en autoridad y conversión", "Buena mezcla de alcance y retención", "Mix agresivo de crecimiento", "Estrategia de comunidad y fidelización"]
-          : ["Month focused on authority and conversion", "Good mix of reach and retention", "Aggressive growth mix", "Community and loyalty strategy"];
-        const insightIdx = asignadas <= 1 ? 0 : asignadas <= 2 ? 1 : asignadas <= 3 ? 2 : 3;
+        const tiposUsados = new Set(asignaciones.filter(a => a !== null) as number[]);
+        const getInsight = () => {
+          const has = (i: number) => tiposUsados.has(i); // 0=Edu/Educ, 1=Emo, 2=Trend, 3=Ever/Green, 4=Serie/Series
+          if (asignadas === 4) {
+            if (has(0) && has(1) && has(2) && has(3)) return isES ? "Mix perfecto: autoridad + emoción + alcance + retención. La fórmula de canales que crecen de forma sostenida." : "Perfect mix: authority + emotion + reach + retention. The formula of sustainably growing channels.";
+            if (has(0) && has(3)) return isES ? "Estrategia de posicionamiento: contenido que atrae y retiene. Ideal para canales que buscan crecer en búsqueda orgánica." : "Positioning strategy: content that attracts and retains. Ideal for channels seeking organic search growth.";
+            if (has(1) && has(2)) return isES ? "Estrategia de viralidad: alto potencial de shares y descubrimiento. Riesgo: depende de tendencias externas." : "Virality strategy: high share and discovery potential. Risk: depends on external trends.";
+            if (has(0) && has(1)) return isES ? "Autoridad con corazón: educas y conectas emocionalmente. Comunidad fiel pero crecimiento más lento." : "Authority with heart: you educate and connect emotionally. Loyal community but slower growth.";
+            if (has(2) && has(3)) return isES ? "Alcance amplio: capturas tráfico nuevo y lo retienes con contenido duradero. Buena base para escalar." : "Wide reach: you capture new traffic and retain it with lasting content. Good base to scale.";
+            if (has(4)) return isES ? "Estrategia de serie: fidelización alta. Los espectadores vuelven semana a semana." : "Series strategy: high loyalty. Viewers return week after week.";
+            return isES ? "Mix activo: variedad que mantiene la audiencia engaged durante todo el mes." : "Active mix: variety that keeps the audience engaged throughout the month.";
+          }
+          if (asignadas === 3) {
+            if (has(0) && has(1) && has(3)) return isES ? "Triángulo sólido: autoridad + emoción + permanencia. Solo falta un empuje de alcance." : "Solid triangle: authority + emotion + permanence. Just missing a reach push.";
+            if (has(0) && has(2) && has(3)) return isES ? "Estrategia de descubrimiento: buen balance entre nuevo tráfico y audiencia establecida." : "Discovery strategy: good balance between new traffic and established audience.";
+            return isES ? "Buen mix de 3. Considera agregar la cuarta semana para completar el balance mensual." : "Good 3-type mix. Consider adding the fourth week to complete the monthly balance.";
+          }
+          if (asignadas === 2) {
+            if (has(0) && has(3)) return isES ? "Foco en valor duradero: tu contenido seguirá generando vistas en 6 meses." : "Focus on lasting value: your content will keep generating views in 6 months.";
+            if (has(1) && has(2)) return isES ? "Foco en viralidad: alto potencial de alcance, pero sin contenido ancla que retenga." : "Focus on virality: high reach potential, but no anchor content to retain.";
+            return isES ? "Inicio sólido. Planifica las otras 2 semanas para maximizar el impacto del mes." : "Solid start. Plan the other 2 weeks to maximize the month's impact.";
+          }
+          return isES ? "Empieza bien. Asigna las semanas restantes para ver el análisis completo." : "Good start. Assign the remaining weeks to see the full analysis.";
+        };
         return (
           <div style={{ background: "rgba(255,214,10,0.06)", border: "1px solid rgba(255,214,10,0.2)", borderRadius: "12px", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
             <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFD60A", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.b02resumen}</div>
@@ -1813,11 +1833,9 @@ function CalendarioEditorial({ t }: { t: typeof translations.es }) {
                 </div>
               ))}
             </div>
-            {asignadas === 4 && (
-              <div style={{ background: "rgba(0,0,0,0.3)", borderLeft: "3px solid #FFD60A", borderRadius: "0 8px 8px 0", padding: "0.6rem 0.9rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.85)" }}>
-                💡 {insights[insightIdx]} — {isES ? "tipo dominante" : "dominant type"}: <strong style={{ color: t.b02colores[Number(tipoMasFrecuente[0])] }}>{t.b02tipos[Number(tipoMasFrecuente[0])]}</strong>
-              </div>
-            )}
+            <div style={{ background: "rgba(0,0,0,0.3)", borderLeft: "3px solid #FFD60A", borderRadius: "0 8px 8px 0", padding: "0.6rem 0.9rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>
+              💡 {getInsight()}
+            </div>
           </div>
         );
       })()}
