@@ -1794,19 +1794,33 @@ function CalendarioEditorial({ t }: { t: typeof translations.es }) {
         ))}
       </div>
 
-      {asignadas > 0 && (
-        <div style={{ background: "rgba(255,214,10,0.06)", border: "1px solid rgba(255,214,10,0.2)", borderRadius: "12px", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
-          <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFD60A", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.b02resumen}</div>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-            {t.b02semanas.map((semana, si) => asignaciones[si] !== null && (
-              <div key={si} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(0,0,0,0.3)", padding: "0.3rem 0.75rem", borderRadius: "6px" }}>
-                <div style={{ width: "8px", height: "8px", background: t.b02colores[asignaciones[si]!], borderRadius: "50%" }} />
-                <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>{semana}: <strong style={{ color: t.b02colores[asignaciones[si]!] }}>{t.b02tipos[asignaciones[si]!]}</strong></span>
+      {asignadas > 0 && (() => {
+        const conteo: Record<number, number> = {};
+        asignaciones.forEach(a => { if (a !== null) conteo[a] = (conteo[a] || 0) + 1; });
+        const tipoMasFrecuente = Object.entries(conteo).sort((a,b) => b[1]-a[1])[0];
+        const insights = isES
+          ? ["Mes enfocado en autoridad y conversión", "Buena mezcla de alcance y retención", "Mix agresivo de crecimiento", "Estrategia de comunidad y fidelización"]
+          : ["Month focused on authority and conversion", "Good mix of reach and retention", "Aggressive growth mix", "Community and loyalty strategy"];
+        const insightIdx = asignadas <= 1 ? 0 : asignadas <= 2 ? 1 : asignadas <= 3 ? 2 : 3;
+        return (
+          <div style={{ background: "rgba(255,214,10,0.06)", border: "1px solid rgba(255,214,10,0.2)", borderRadius: "12px", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
+            <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFD60A", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.b02resumen}</div>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+              {t.b02semanas.map((semana, si) => asignaciones[si] !== null && (
+                <div key={si} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(0,0,0,0.3)", padding: "0.3rem 0.75rem", borderRadius: "6px" }}>
+                  <div style={{ width: "8px", height: "8px", background: t.b02colores[asignaciones[si]!], borderRadius: "50%" }} />
+                  <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>{semana}: <strong style={{ color: t.b02colores[asignaciones[si]!] }}>{t.b02tipos[asignaciones[si]!]}</strong></span>
+                </div>
+              ))}
+            </div>
+            {asignadas === 4 && (
+              <div style={{ background: "rgba(0,0,0,0.3)", borderLeft: "3px solid #FFD60A", borderRadius: "0 8px 8px 0", padding: "0.6rem 0.9rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.85)" }}>
+                💡 {insights[insightIdx]} — {isES ? "tipo dominante" : "dominant type"}: <strong style={{ color: t.b02colores[Number(tipoMasFrecuente[0])] }}>{t.b02tipos[Number(tipoMasFrecuente[0])]}</strong>
               </div>
-            ))}
+            )}
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       <button onClick={limpiar} style={{ padding: "0.5rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "999px", cursor: "pointer", fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif" }}>{t.b02limpiar}</button>
     </div>
@@ -1977,7 +1991,8 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
           <BonusSection numero={t.b03num} categoria={t.b03categoria} titulo={t.b03titulo} subtitulo={t.b03subtitulo} parrafos={[t.b03parrafo1, t.b03parrafo2]} tipTitulo={t.b03tipTitulo} tip={t.b03tip}><Biblioteca50Prompts t={t} /></BonusSection>
         </>
       )}
-            <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
+            {plan !== "studio" && (
+      <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1rem", textTransform: "uppercase" }}>{t.proximamenteTag}</div>
         <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, fontFamily: "'Syne', sans-serif", marginBottom: "1rem" }}>{t.proximamenteTitulo}</h2>
         <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "2rem", fontSize: "0.95rem" }}>{t.proximamenteDesc}</p>
@@ -1987,6 +2002,7 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
           ))}
         </div>
       </div>
+      )}
     </div>
   );
 }
