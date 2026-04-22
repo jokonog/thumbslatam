@@ -294,6 +294,144 @@ const translations = {
     t12tipTitulo: "Tip accionable",
     t12tip: "Guarda este checklist como imagen y pégalo en tu escritorio. Úsalo en cada miniatura durante 30 días. Después de ese tiempo, lo tendrás automatizado en tu cabeza.",
 
+
+    b01num: "B1", b01categoria: "Exclusivo Studio",
+    b01titulo: "Análisis competitivo",
+    b01subtitulo: "Descubre qué hace ganar a los canales líderes de tu nicho.",
+    b01parrafo1: "Los canales que dominan su nicho no tienen suerte — tienen un patrón. Este análisis te muestra exactamente qué elementos visuales repiten los top 5 de cualquier categoría.",
+    b01parrafo2: "Selecciona un nicho y analiza las miniaturas de los canales líderes. Identifica los patrones que puedes aplicar hoy.",
+    b01nichoLabel: "Selecciona nicho a analizar",
+    b01analizarBtn: "Analizar competencia",
+    b01patrones: "Patrones detectados",
+    b01frecuencia: "Frecuencia",
+    b01nichos: [
+      {
+        nombre: "Gaming",
+        canales: ["MrBeast Gaming", "Rubius", "TheGrefg", "Vegetta777", "ElRubius"],
+        patrones: [
+          { elemento: "Rostro con expresión shock", frecuencia: 94 },
+          { elemento: "Fondo oscuro alto contraste", frecuencia: 88 },
+          { elemento: "Texto en mayúsculas 1-3 palabras", frecuencia: 82 },
+          { elemento: "Color acento amarillo/rojo", frecuencia: 79 },
+          { elemento: "Elemento de juego visible", frecuencia: 71 },
+        ],
+      },
+      {
+        nombre: "Finanzas",
+        canales: ["Andyfreire", "Inversión Simple", "Tu Dinero", "Finanzas con Sentido", "Economía Hoy"],
+        patrones: [
+          { elemento: "Persona en traje o formal", frecuencia: 91 },
+          { elemento: "Números grandes ($, %, x)", frecuencia: 87 },
+          { elemento: "Paleta verde/azul oscuro", frecuencia: 83 },
+          { elemento: "Gráfico o flecha ascendente", frecuencia: 76 },
+          { elemento: "Texto serif dorado o blanco", frecuencia: 68 },
+        ],
+      },
+      {
+        nombre: "Lifestyle",
+        canales: ["Dulce Candy", "Yuya", "Lovely Pepa", "Soy Georgina", "El Mundo de Cloe"],
+        patrones: [
+          { elemento: "Foto lifestyle luminosa", frecuencia: 96 },
+          { elemento: "Paleta pastel o tierra", frecuencia: 89 },
+          { elemento: "Texto serif o script elegante", frecuencia: 84 },
+          { elemento: "Composición centrada limpia", frecuencia: 77 },
+          { elemento: "Sin texto en algunos casos", frecuencia: 65 },
+        ],
+      },
+      {
+        nombre: "Tech",
+        canales: ["Dot CSV", "Midudev", "Gentleman Programming", "HolaMundo", "Fazt"],
+        patrones: [
+          { elemento: "Fondo oscuro azul/negro", frecuencia: 93 },
+          { elemento: "Texto técnico + número", frecuencia: 85 },
+          { elemento: "Acento naranja o cyan", frecuencia: 80 },
+          { elemento: "Logo de tecnología visible", frecuencia: 74 },
+          { elemento: "Persona señalando elemento", frecuencia: 69 },
+        ],
+      },
+    ],
+    b01tipTitulo: "Tip accionable",
+    b01tip: "Toma los 3 patrones con mayor frecuencia de tu nicho y crea una miniatura que los combine. Eso no es copiar — es entender el lenguaje visual que tu audiencia ya reconoce.",
+
+    b02num: "B2", b02categoria: "Exclusivo Studio",
+    b02titulo: "Calendario editorial",
+    b02subtitulo: "Planifica tu estrategia visual del mes.",
+    b02parrafo1: "La consistencia no es publicar seguido — es publicar con intención. Este calendario te ayuda a planificar qué tipo de miniatura vas a usar cada semana y por qué.",
+    b02parrafo2: "Haz clic en cualquier semana para asignarle un tipo de miniatura. Al final del mes tendrás un mapa visual de tu estrategia.",
+    b02semanas: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
+    b02tipos: ["Educativo", "Emocional", "Trending", "Evergreen", "Serie"],
+    b02colores: ["#FF4D00", "#7F77DD", "#FFD60A", "#06D6A0", "#FF6B9D"],
+    b02placeholder: "Haz clic para asignar tipo",
+    b02resumen: "Resumen del mes",
+    b02limpiar: "Limpiar calendario",
+    b02tipTitulo: "Tip accionable",
+    b02tip: "Un mes bien planificado tiene: 2 educativos (construyen autoridad), 1 emocional (genera engagement), 1 trending o evergreen (atrae nuevos suscriptores). Esa es la fórmula de los canales que crecen de forma sostenida.",
+
+    b03num: "B3", b03categoria: "Exclusivo Studio",
+    b03titulo: "Biblioteca de 50 prompts",
+    b03subtitulo: "El arsenal completo. Filtra, copia y genera.",
+    b03parrafo1: "50 prompts organizados por tipo de video, emoción y formato. Cada uno está optimizado para ThumbsLatam y probado con canales LATAM reales.",
+    b03parrafo2: "Usa los filtros para encontrar el prompt exacto que necesitas. Un clic para copiar.",
+    b03filtroLabel: "Filtrar por categoría",
+    b03todos: "Todos",
+    b03copiar: "Copiar",
+    b03copiado: "¡Copiado!",
+    b03categorias: ["Tutorial", "Motivacional", "Trending", "Reacción", "Vlog", "Review", "Educativo", "Gaming"],
+    b03prompts: [
+      { cat: "Tutorial", texto: "Persona señalando pantalla con expresión de descubrimiento, fondo oscuro, texto PASO A PASO en naranja, resultado final visible en esquina, estilo instructivo profesional" },
+      { cat: "Tutorial", texto: "Manos mostrando proceso paso a paso, fondo limpio blanco o crema, tipografía clara serif, número grande destacado, sensación de facilidad y claridad" },
+      { cat: "Tutorial", texto: "Antes y después lado a lado, flecha central naranja, contraste fuerte entre ambos lados, texto TRANSFORMACIÓN en grande, impacto visual inmediato" },
+      { cat: "Tutorial", texto: "Persona con herramienta o dispositivo, expresión concentrada segura, fondo de taller o espacio de trabajo, texto técnico sans-serif blanco, profesionalismo y expertise" },
+      { cat: "Tutorial", texto: "Diagrama visual simplificado del proceso, iconos limpios en paleta azul y naranja, texto que dice EL MÉTODO, fondo oscuro premium, sensación de sistema probado" },
+      { cat: "Tutorial", texto: "Error tachado en rojo versus solución en verde, layout comparativo, tipografía bold impactante, fondo negro, urgencia visual de problema resuelto" },
+      { cat: "Motivacional", texto: "Persona mirando horizonte o ciudad desde altura, iluminación épica contraluz dorada, texto poderoso en grande, paleta cálida amanecer, sensación de posibilidad y ambición" },
+      { cat: "Motivacional", texto: "Primer plano rostro con expresión de determinación intensa, iluminación dramática lateral, fondo oscuro con partículas de luz, texto motivacional corto impactante" },
+      { cat: "Motivacional", texto: "Gráfica de crecimiento exponencial en fondo, persona señalándola con confianza, paleta verde éxito, texto con número de días o años de transformación" },
+      { cat: "Motivacional", texto: "Collage antes después dramático, división diagonal, lado izquierdo oscuro apagado, lado derecho brillante colorido, texto de transformación personal" },
+      { cat: "Motivacional", texto: "Manos abriendo puerta hacia luz brillante, metáfora visual de oportunidad, tipografía serif elegante dorada, fondo oscuro dramático, sensación de umbral y decisión" },
+      { cat: "Motivacional", texto: "Persona escalando montaña o edificio, perspectiva desde abajo hacia arriba, cielo épico, texto en la cima, paleta azul profundo y dorado, ambición y logro" },
+      { cat: "Trending", texto: "Elemento viral del momento en primer plano, reacción facial exagerada de sorpresa, texto con nombre del trend en tipografía reconocible, colores saturados de tendencia" },
+      { cat: "Trending", texto: "Pantalla de teléfono con app de tendencia, persona reaccionando con asombro, fondo dinámico colorido, texto llamativo sobre el tema viral del momento" },
+      { cat: "Trending", texto: "Comparativa visual del trend antes vs ahora, layout dividido, flechas de evolución, texto temporal con año o fecha, sensación de estar al día y actualizado" },
+      { cat: "Trending", texto: "Meme popular adaptado al nicho, elemento reconocible del momento, texto que lo conecta con el tema del video, humor visual controlado, alta identificación" },
+      { cat: "Trending", texto: "Personaje o producto viral en contexto del canal, expresión de sorpresa o descubrimiento, paleta vibrante neón, texto urgente limitado, sensación de exclusiva" },
+      { cat: "Reacción", texto: "Persona con expresión de shock absoluto, boca y ojos muy abiertos, mano en mejilla o cabeza, fondo del elemento que causa reacción, contraste máximo emocional" },
+      { cat: "Reacción", texto: "Cara en primer plano mitad curiosa mitad sorprendida, elemento pequeño en esquina de lo que reacciona, paleta naranja y negro, texto con signo de pregunta o exclamación" },
+      { cat: "Reacción", texto: "Split screen cara reaccionando versus contenido al que reacciona, emociones opuestas si aplica, texto REACCIÓN en grande, diseño dinámico con líneas diagonales" },
+      { cat: "Reacción", texto: "Expresión de incredulidad total, cejas muy arriba, punto de interrogación o exclamación gigante flotando, fondo simple que no compita con emoción del rostro" },
+      { cat: "Reacción", texto: "Persona tapándose la boca en shock, ojos muy abiertos, iluminación de pantalla de computador azulada, fondo oscuro, texto con número o dato impactante" },
+      { cat: "Vlog", texto: "Foto lifestyle auténtica en locación, luz natural cálida, persona relajada natural no posada, texto del lugar o actividad en tipografía viajera, sensación de estar ahí" },
+      { cat: "Vlog", texto: "Collage de 3-4 momentos del día o viaje, layout grid limpio, colores cohesivos del mood del vlog, texto del tema central, energía positiva y auténtica" },
+      { cat: "Vlog", texto: "Persona en actividad disfrutando genuinamente, no mirando a cámara, momento robado natural, paleta según locación, texto mínimo elegante, autenticidad máxima" },
+      { cat: "Vlog", texto: "Atardecer o paisaje épico con persona pequeña en encuadre, escala humana vs naturaleza, texto poético o reflexivo, paleta cálida dorada, sensación de aventura" },
+      { cat: "Vlog", texto: "Comida o experiencia local primer plano apetitosa, persona detrás expresión de disfrute, texto del lugar en tipografía turística, colores vibrantes del destino" },
+      { cat: "Review", texto: "Producto en primer plano sobre fondo limpio minimalista, iluminación de estudio profesional, texto con nombre y rating, paleta neutral con un acento de color del producto" },
+      { cat: "Review", texto: "Persona sosteniendo producto con expresión evaluativa seria, fondo neutro, texto REVIEW o ANÁLISIS con puntuación visible, profesionalismo y objetividad visual" },
+      { cat: "Review", texto: "Comparativa de dos productos lado a lado, layout limpio con vs en centro naranja, iconos de pros y contras, texto de la decisión final, diseño de consumer report" },
+      { cat: "Review", texto: "Producto con badge de calificación grande superpuesto, estrellas o número de puntuación prominente, fondo del producto en uso real, texto de veredicto directo" },
+      { cat: "Review", texto: "Unboxing primer plano manos abriendo caja, expresión de anticipación, fondo ordenado, texto con precio o nombre del producto, sensación de descubrimiento" },
+      { cat: "Educativo", texto: "Diagrama o infografía visual simplificada, paleta de colores educativa azul y naranja, tipografía clara legible, concepto central en grande, fondo oscuro premium" },
+      { cat: "Educativo", texto: "Persona en pizarrón o con apuntes, expresión de enseñanza entusiasta, fondo académico organizado, texto con el concepto clave, sensación de clase premium" },
+      { cat: "Educativo", texto: "Dato o estadística impactante en grande, contexto visual mínimo que lo amplifique, tipografía bold de impacto, color que denote importancia, fondo que no compita" },
+      { cat: "Educativo", texto: "Timeline o proceso visual de pasos, iconos simples limpios, paleta cohesiva educativa, texto que anuncia el aprendizaje, sensación de mapa o guía clara" },
+      { cat: "Educativo", texto: "Metáfora visual del concepto (cerebro, engranajes, luz), diseño conceptual elegante, paleta sofisticada, texto que explica el tema en forma simple directa" },
+      { cat: "Educativo", texto: "Pregunta provocadora en grande tipo titular de revista, fondo minimalista, tipografía editorial impactante, color de acento para la palabra clave, curiosidad intelectual" },
+      { cat: "Gaming", texto: "Personaje del juego en pose épica de acción, fondo de escenario del juego, efectos de partículas y luz, texto del juego en tipografía oficial o similar, alta energía" },
+      { cat: "Gaming", texto: "Captura de gameplay en momento climático, overlay de cara del gamer con expresión extrema, texto de la hazaña o logro, paleta del juego, intensidad máxima" },
+      { cat: "Gaming", texto: "Estadísticas de partida épica en pantalla, número récord destacado, fondo oscuro con neones del juego, expresión de orgullo del gamer, texto de récord o logro" },
+      { cat: "Gaming", texto: "Versus de dos personajes o jugadores, layout de pelea clásico, efectos de energía y chispas entre ellos, texto VS en grande, colores de cada bando" },
+      { cat: "Gaming", texto: "Momento de derrota o victoria dramática, emoción extrema del gamer, fondo con el resultado en pantalla, texto de la historia que cuenta el video, máximo drama" },
+      { cat: "Gaming", texto: "Inventario o colección de items raros del juego, layout de treasures, brillo y efectos dorados, texto con rareza o valor, sensación de logro y flexeo" },
+      { cat: "Gaming", texto: "Mapa del juego con ruta o estrategia marcada, estilo de briefing táctico, texto del plan o secreto, paleta militar o de estrategia, sensación de insider knowledge" },
+      { cat: "Tutorial", texto: "Checklist visual con ítems siendo marcados, paleta verde de logros, tipografía clara, número de pasos en badge naranja, sensación de proceso claro y alcanzable" },
+      { cat: "Motivacional", texto: "Cita poderosa en tipografía impactante, fondo con textura sutil o gradiente premium, firma del autor en pequeño, composición de póster inspiracional, alta compartibilidad" },
+      { cat: "Trending", texto: "Noticias o titular del momento adaptado visualmente, diseño de breaking news, texto urgente en rojo, fondo de pantalla de noticias, sensación de primicia" },
+      { cat: "Review", texto: "Precio tachado versus nuevo precio, ahorro en grande y verde, producto al fondo, expresión de sorpresa positiva del presentador, urgencia de oferta limitada" },
+      { cat: "Educativo", texto: "Mapa mental o mindmap visual del tema, nodos conectados con colores por categoría, texto central del tema principal, fondo oscuro para contraste, visión holística" },
+    ],
+    b03tipTitulo: "Tip accionable",
+    b03tip: "Guarda los 5 prompts que mejor funcionaron para tu canal en un documento. Con el tiempo tendrás tu propia biblioteca personalizada basada en resultados reales.",
+
     proximamenteTag: "Continuará",
     proximamenteTitulo: "Bonus exclusivos Studio",
     proximamenteDesc: "Contenido adicional disponible para miembros Studio:",
@@ -591,6 +729,144 @@ const translations = {
     t12reiniciar: "Reset checklist",
     t12tipTitulo: "Actionable tip",
     t12tip: "Save this checklist as an image and pin it to your desktop. Use it on every thumbnail for 30 days. After that time, it will be automated in your head.",
+
+
+    b01num: "B1", b01categoria: "Studio Exclusive",
+    b01titulo: "Competitive analysis",
+    b01subtitulo: "Discover what makes leading channels in your niche win.",
+    b01parrafo1: "Channels that dominate their niche do not have luck — they have a pattern. This analysis shows you exactly which visual elements the top 5 in any category repeat.",
+    b01parrafo2: "Select a niche and analyze the thumbnails of leading channels. Identify the patterns you can apply today.",
+    b01nichoLabel: "Select niche to analyze",
+    b01analizarBtn: "Analyze competition",
+    b01patrones: "Detected patterns",
+    b01frecuencia: "Frequency",
+    b01nichos: [
+      {
+        nombre: "Gaming",
+        canales: ["MrBeast Gaming", "Rubius", "TheGrefg", "Vegetta777", "ElRubius"],
+        patrones: [
+          { elemento: "Face with shock expression", frecuencia: 94 },
+          { elemento: "Dark high-contrast background", frecuencia: 88 },
+          { elemento: "Uppercase text 1-3 words", frecuencia: 82 },
+          { elemento: "Yellow or red accent color", frecuencia: 79 },
+          { elemento: "Visible game element", frecuencia: 71 },
+        ],
+      },
+      {
+        nombre: "Finance",
+        canales: ["Andyfreire", "Simple Investment", "Your Money", "Finance with Sense", "Economy Today"],
+        patrones: [
+          { elemento: "Person in suit or formal wear", frecuencia: 91 },
+          { elemento: "Large numbers ($, %, x)", frecuencia: 87 },
+          { elemento: "Dark green or blue palette", frecuencia: 83 },
+          { elemento: "Chart or ascending arrow", frecuencia: 76 },
+          { elemento: "Gold or white serif text", frecuencia: 68 },
+        ],
+      },
+      {
+        nombre: "Lifestyle",
+        canales: ["Dulce Candy", "Yuya", "Lovely Pepa", "Soy Georgina", "El Mundo de Cloe"],
+        patrones: [
+          { elemento: "Bright lifestyle photo", frecuencia: 96 },
+          { elemento: "Pastel or earth tone palette", frecuencia: 89 },
+          { elemento: "Elegant serif or script text", frecuencia: 84 },
+          { elemento: "Clean centered composition", frecuencia: 77 },
+          { elemento: "No text in some cases", frecuencia: 65 },
+        ],
+      },
+      {
+        nombre: "Tech",
+        canales: ["Dot CSV", "Midudev", "Gentleman Programming", "HolaMundo", "Fazt"],
+        patrones: [
+          { elemento: "Dark blue or black background", frecuencia: 93 },
+          { elemento: "Technical text with number", frecuencia: 85 },
+          { elemento: "Orange or cyan accent", frecuencia: 80 },
+          { elemento: "Visible technology logo", frecuencia: 74 },
+          { elemento: "Person pointing at element", frecuencia: 69 },
+        ],
+      },
+    ],
+    b01tipTitulo: "Actionable tip",
+    b01tip: "Take the 3 most frequent patterns from your niche and create a thumbnail that combines them. That is not copying — it is understanding the visual language your audience already recognizes.",
+
+    b02num: "B2", b02categoria: "Studio Exclusive",
+    b02titulo: "Editorial calendar",
+    b02subtitulo: "Plan your visual strategy for the month.",
+    b02parrafo1: "Consistency is not publishing often — it is publishing with intention. This calendar helps you plan what type of thumbnail you will use each week and why.",
+    b02parrafo2: "Click on any week to assign a thumbnail type. At the end of the month you will have a visual map of your strategy.",
+    b02semanas: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    b02tipos: ["Educational", "Emotional", "Trending", "Evergreen", "Series"],
+    b02colores: ["#FF4D00", "#7F77DD", "#FFD60A", "#06D6A0", "#FF6B9D"],
+    b02placeholder: "Click to assign type",
+    b02resumen: "Month summary",
+    b02limpiar: "Clear calendar",
+    b02tipTitulo: "Actionable tip",
+    b02tip: "A well-planned month has: 2 educational (builds authority), 1 emotional (generates engagement), 1 trending or evergreen (attracts new subscribers). That is the formula of channels that grow sustainably.",
+
+    b03num: "B3", b03categoria: "Studio Exclusive",
+    b03titulo: "Library of 50 prompts",
+    b03subtitulo: "The complete arsenal. Filter, copy and generate.",
+    b03parrafo1: "50 prompts organized by video type, emotion and format. Each one is optimized for ThumbsLatam and tested with real LATAM channels.",
+    b03parrafo2: "Use the filters to find the exact prompt you need. One click to copy.",
+    b03filtroLabel: "Filter by category",
+    b03todos: "All",
+    b03copiar: "Copy",
+    b03copiado: "Copied!",
+    b03categorias: ["Tutorial", "Motivational", "Trending", "Reaction", "Vlog", "Review", "Educational", "Gaming"],
+    b03prompts: [
+      { cat: "Tutorial", texto: "Person pointing at screen with expression of discovery, dark background, text STEP BY STEP in orange, final result visible in corner, professional instructive style" },
+      { cat: "Tutorial", texto: "Hands showing step by step process, clean white or cream background, clear serif typography, large highlighted number, feeling of ease and clarity" },
+      { cat: "Tutorial", texto: "Before and after side by side, central orange arrow, strong contrast between both sides, text TRANSFORMATION in large, immediate visual impact" },
+      { cat: "Tutorial", texto: "Person with tool or device, focused confident expression, workshop or workspace background, white sans-serif technical text, professionalism and expertise" },
+      { cat: "Tutorial", texto: "Simplified visual diagram of the process, clean icons in blue and orange palette, text THE METHOD, dark premium background, feeling of proven system" },
+      { cat: "Tutorial", texto: "Error crossed out in red versus solution in green, comparative layout, bold impactful typography, black background, visual urgency of solved problem" },
+      { cat: "Motivational", texto: "Person looking at horizon or city from height, epic golden backlight lighting, powerful text in large, warm sunrise palette, feeling of possibility and ambition" },
+      { cat: "Motivational", texto: "Close up face with intense determination expression, dramatic side lighting, dark background with light particles, short impactful motivational text" },
+      { cat: "Motivational", texto: "Exponential growth chart in background, person pointing at it with confidence, success green palette, text with number of days or years of transformation" },
+      { cat: "Motivational", texto: "Dramatic before after collage, diagonal division, dark dull left side, bright colorful right side, personal transformation text" },
+      { cat: "Motivational", texto: "Hands opening door toward bright light, visual metaphor of opportunity, elegant gold serif typography, dramatic dark background, feeling of threshold and decision" },
+      { cat: "Motivational", texto: "Person climbing mountain or building, perspective from below upward, epic sky, text at the top, deep blue and gold palette, ambition and achievement" },
+      { cat: "Trending", texto: "Viral element of the moment in foreground, exaggerated surprised facial reaction, text with trend name in recognizable typography, saturated trending colors" },
+      { cat: "Trending", texto: "Phone screen with trending app, person reacting with amazement, colorful dynamic background, striking text about the viral topic of the moment" },
+      { cat: "Trending", texto: "Visual comparison of trend before vs now, divided layout, evolution arrows, temporal text with year or date, feeling of being current and updated" },
+      { cat: "Trending", texto: "Popular meme adapted to niche, recognizable element of the moment, text connecting it to video topic, controlled visual humor, high identification" },
+      { cat: "Trending", texto: "Viral character or product in channel context, surprised or discovery expression, vibrant neon palette, urgent limited text, feeling of exclusive" },
+      { cat: "Reaction", texto: "Person with absolute shock expression, very open mouth and eyes, hand on cheek or head, background of element causing reaction, maximum emotional contrast" },
+      { cat: "Reaction", texto: "Face in close up half curious half surprised, small element in corner of what is being reacted to, orange and black palette, text with question or exclamation mark" },
+      { cat: "Reaction", texto: "Split screen face reacting versus content being reacted to, opposite emotions if applicable, text REACTION in large, dynamic design with diagonal lines" },
+      { cat: "Reaction", texto: "Expression of total incredulity, eyebrows very high, giant question or exclamation mark floating, simple background that does not compete with face emotion" },
+      { cat: "Reaction", texto: "Person covering mouth in shock, very open eyes, blue computer screen lighting, dark background, text with impactful number or fact" },
+      { cat: "Vlog", texto: "Authentic lifestyle photo on location, warm natural light, relaxed natural person not posed, text of place or activity in travel typography, feeling of being there" },
+      { cat: "Vlog", texto: "Collage of 3-4 moments from the day or trip, clean grid layout, cohesive colors of vlog mood, text of central theme, positive and authentic energy" },
+      { cat: "Vlog", texto: "Person genuinely enjoying an activity, not looking at camera, naturally candid moment, palette according to location, minimal elegant text, maximum authenticity" },
+      { cat: "Vlog", texto: "Epic sunset or landscape with small person in frame, human scale vs nature, poetic or reflective text, warm golden palette, feeling of adventure" },
+      { cat: "Vlog", texto: "Local food or experience appetizing close up, person behind with enjoyment expression, text of place in tourist typography, vibrant colors of destination" },
+      { cat: "Review", texto: "Product in foreground on clean minimalist background, professional studio lighting, text with name and rating, neutral palette with one color accent from product" },
+      { cat: "Review", texto: "Person holding product with serious evaluative expression, neutral background, text REVIEW or ANALYSIS with visible score, professionalism and visual objectivity" },
+      { cat: "Review", texto: "Comparison of two products side by side, clean layout with orange vs in center, pros and cons icons, text of final decision, consumer report design" },
+      { cat: "Review", texto: "Product with large rating badge superimposed, prominent stars or score number, background of product in real use, direct verdict text" },
+      { cat: "Review", texto: "Unboxing close up hands opening box, expression of anticipation, tidy background, text with product price or name, feeling of discovery" },
+      { cat: "Educational", texto: "Simplified visual diagram or infographic, educational blue and orange color palette, clear readable typography, central concept in large, dark premium background" },
+      { cat: "Educational", texto: "Person at whiteboard or with notes, enthusiastic teaching expression, organized academic background, text with key concept, feeling of premium class" },
+      { cat: "Educational", texto: "Impactful fact or statistic in large, minimal visual context that amplifies it, bold impact typography, color denoting importance, background that does not compete" },
+      { cat: "Educational", texto: "Visual timeline or step process, simple clean icons, cohesive educational palette, text announcing the learning, feeling of clear map or guide" },
+      { cat: "Educational", texto: "Visual metaphor of concept brain gears light, elegant conceptual design, sophisticated palette, text explaining the topic in simple direct form" },
+      { cat: "Educational", texto: "Provocative question in large magazine headline style, minimalist background, impactful editorial typography, accent color for key word, intellectual curiosity" },
+      { cat: "Gaming", texto: "Game character in epic action pose, game scenario background, particle and light effects, game text in official or similar typography, high energy" },
+      { cat: "Gaming", texto: "Climactic gameplay capture, gamer face overlay with extreme expression, text of feat or achievement, game palette, maximum intensity" },
+      { cat: "Gaming", texto: "Epic match statistics on screen, record number highlighted, dark game neon background, proud gamer expression, text of record or achievement" },
+      { cat: "Gaming", texto: "Versus of two characters or players, classic fight layout, energy and spark effects between them, VS text in large, colors of each side" },
+      { cat: "Gaming", texto: "Dramatic defeat or victory moment, extreme gamer emotion, background with result on screen, text of the story the video tells, maximum drama" },
+      { cat: "Gaming", texto: "Rare game items inventory or collection, treasures layout, golden shine and effects, text with rarity or value, feeling of achievement and flex" },
+      { cat: "Gaming", texto: "Game map with marked route or strategy, tactical briefing style, text of plan or secret, military or strategy palette, feeling of insider knowledge" },
+      { cat: "Tutorial", texto: "Visual checklist with items being checked, achievement green palette, clear typography, number of steps in orange badge, feeling of clear and achievable process" },
+      { cat: "Motivational", texto: "Powerful quote in impactful typography, background with subtle texture or premium gradient, author signature small, inspirational poster composition, high shareability" },
+      { cat: "Trending", texto: "Current news or headline visually adapted, breaking news design, urgent red text, news screen background, feeling of exclusive scoop" },
+      { cat: "Review", texto: "Crossed out price versus new price, large green savings, product in background, presenter positive surprise expression, limited offer urgency" },
+      { cat: "Educational", texto: "Mind map or mindmap visual of topic, nodes connected with colors by category, central topic text, dark background for contrast, holistic vision" },
+    ],
+    b03tipTitulo: "Actionable tip",
+    b03tip: "Save the 5 prompts that worked best for your channel in a document. Over time you will have your own personalized library based on real results.",
 
     proximamenteTag: "To be continued",
     proximamenteTitulo: "Exclusive Studio bonuses",
@@ -1397,6 +1673,194 @@ function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
 }
 
 
+function BonusSection({ numero, categoria, titulo, subtitulo, parrafos, tipTitulo, tip, children }: any) {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} style={{ marginBottom: "6rem", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(40px)", transition: "opacity 0.8s, transform 0.8s" }}>
+      <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexWrap: "wrap", marginBottom: "2rem" }}>
+        <div style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", fontWeight: 900, color: "#FFD60A", lineHeight: 0.8, letterSpacing: "-0.05em", fontFamily: "'Syne', sans-serif", textShadow: "0 0 80px rgba(255,214,10,0.4)", flexShrink: 0 }}>{numero}</div>
+        <div style={{ flex: 1, minWidth: "280px" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.25rem 0.75rem", background: "rgba(255,214,10,0.15)", border: "1px solid rgba(255,214,10,0.4)", borderRadius: "999px", marginBottom: "0.75rem" }}>
+            <span style={{ fontSize: "0.65rem", fontWeight: 900, color: "#FFD60A", letterSpacing: "0.15em", textTransform: "uppercase" }}>⭐ {categoria}</span>
+          </div>
+          <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", fontWeight: 800, fontFamily: "'Syne', sans-serif", lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: "0.5rem", wordBreak: "break-word" }}>{titulo}</h2>
+          <p style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.15rem)", color: "#FFD60A", fontStyle: "italic", fontWeight: 500 }}>{subtitulo}</p>
+        </div>
+      </div>
+      <div style={{ maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
+        {parrafos.map((p: string, i: number) => (
+          <p key={i} style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.8)", lineHeight: 1.8, marginBottom: "1.25rem" }}>{p}</p>
+        ))}
+      </div>
+      {children}
+      <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,214,10,0.2)", borderLeft: "3px solid #FFD60A", padding: "1.25rem 1.5rem", borderRadius: "0 12px 12px 0", marginTop: "2rem", maxWidth: "800px", marginLeft: "auto", marginRight: "auto" }}>
+        <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#FFD60A", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>★ {tipTitulo}</div>
+        <p style={{ color: "rgba(255,255,255,0.9)", fontSize: "1rem", lineHeight: 1.6, margin: 0 }}>{tip}</p>
+      </div>
+    </section>
+  );
+}
+
+function AnalisisCompetitivo({ t }: { t: typeof translations.es }) {
+  const [nichoActivo, setNichoActivo] = useState(0);
+  const [analizado, setAnalizado] = useState(false);
+  const [cargando, setCargando] = useState(false);
+  const nicho = t.b01nichos[nichoActivo];
+
+  const analizar = () => {
+    setCargando(true);
+    setAnalizado(false);
+    setTimeout(() => { setCargando(false); setAnalizado(true); }, 1200);
+  };
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ marginBottom: "1.25rem" }}>
+        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem", display: "block" }}>{t.b01nichoLabel}</label>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+          {t.b01nichos.map((n, i) => (
+            <button key={i} onClick={() => { setNichoActivo(i); setAnalizado(false); }} style={{ padding: "0.5rem 1rem", background: nichoActivo === i ? "#FFD60A" : "rgba(255,255,255,0.05)", color: nichoActivo === i ? "#000" : "rgba(255,255,255,0.7)", border: "1px solid " + (nichoActivo === i ? "#FFD60A" : "rgba(255,255,255,0.1)"), borderRadius: "999px", cursor: "pointer", fontWeight: 700, fontSize: "0.85rem", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s" }}>{n.nombre}</button>
+          ))}
+        </div>
+        <button onClick={analizar} disabled={cargando} style={{ padding: "0.7rem 1.75rem", background: cargando ? "rgba(255,214,10,0.3)" : "#FFD60A", color: "#000", border: "none", borderRadius: "999px", cursor: cargando ? "wait" : "pointer", fontWeight: 700, fontSize: "0.9rem", fontFamily: "'DM Sans', sans-serif", transition: "all 0.3s" }}>
+          {cargando ? "⏳ Analizando..." : t.b01analizarBtn}
+        </button>
+      </div>
+
+      {analizado && (
+        <div style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,214,10,0.25)", borderRadius: "16px", padding: "1.5rem", animation: "fadeIn 0.4s ease" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.5rem" }}>
+            <div style={{ fontSize: "1rem", fontWeight: 700, color: "#FFD60A" }}>{nicho.nombre} — {t.b01patrones}</div>
+            <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>Top 5: {nicho.canales.join(", ")}</div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {nicho.patrones.map((p, i) => (
+              <div key={i}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
+                  <span style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.9)" }}>{p.elemento}</span>
+                  <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#FFD60A" }}>{p.frecuencia}%</span>
+                </div>
+                <div style={{ height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "999px", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: p.frecuencia + "%", background: `linear-gradient(90deg, #FFD60A, #FF4D00)`, borderRadius: "999px", animation: "barGrow 0.8s ease-out" }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CalendarioEditorial({ t }: { t: typeof translations.es }) {
+  const [asignaciones, setAsignaciones] = useState<(number | null)[]>([null, null, null, null]);
+  const isES = t.b02semanas[0] === "Semana 1";
+
+  const asignar = (semana: number, tipo: number) => {
+    const n = [...asignaciones];
+    n[semana] = n[semana] === tipo ? null : tipo;
+    setAsignaciones(n);
+  };
+
+  const limpiar = () => setAsignaciones([null, null, null, null]);
+  const asignadas = asignaciones.filter(a => a !== null).length;
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
+        {t.b02semanas.map((semana, si) => (
+          <div key={si} style={{ background: "rgba(0,0,0,0.3)", borderRadius: "14px", padding: "1rem", border: "1px solid " + (asignaciones[si] !== null ? t.b02colores[asignaciones[si]!] + "60" : "rgba(255,255,255,0.08)"), transition: "border 0.2s" }}>
+            <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>{semana}</div>
+            {asignaciones[si] !== null ? (
+              <div style={{ background: t.b02colores[asignaciones[si]!], color: "#000", padding: "0.4rem 0.75rem", borderRadius: "8px", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.75rem", textAlign: "center" }}>
+                {t.b02tipos[asignaciones[si]!]}
+              </div>
+            ) : (
+              <div style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.8rem", fontStyle: "italic", marginBottom: "0.75rem", textAlign: "center", padding: "0.4rem" }}>{t.b02placeholder}</div>
+            )}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
+              {t.b02tipos.map((tipo, ti) => (
+                <button key={ti} onClick={() => asignar(si, ti)} style={{ padding: "0.25rem 0.6rem", background: asignaciones[si] === ti ? t.b02colores[ti] : "rgba(255,255,255,0.05)", color: asignaciones[si] === ti ? "#000" : "rgba(255,255,255,0.6)", border: "1px solid " + (asignaciones[si] === ti ? t.b02colores[ti] : "rgba(255,255,255,0.1)"), borderRadius: "6px", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", transition: "all 0.15s" }}>{tipo}</button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {asignadas > 0 && (
+        <div style={{ background: "rgba(255,214,10,0.06)", border: "1px solid rgba(255,214,10,0.2)", borderRadius: "12px", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
+          <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FFD60A", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.b02resumen}</div>
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            {t.b02semanas.map((semana, si) => asignaciones[si] !== null && (
+              <div key={si} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "rgba(0,0,0,0.3)", padding: "0.3rem 0.75rem", borderRadius: "6px" }}>
+                <div style={{ width: "8px", height: "8px", background: t.b02colores[asignaciones[si]!], borderRadius: "50%" }} />
+                <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>{semana}: <strong style={{ color: t.b02colores[asignaciones[si]!] }}>{t.b02tipos[asignaciones[si]!]}</strong></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <button onClick={limpiar} style={{ padding: "0.5rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "999px", cursor: "pointer", fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif" }}>{t.b02limpiar}</button>
+    </div>
+  );
+}
+
+function Biblioteca50Prompts({ t }: { t: typeof translations.es }) {
+  const [filtro, setFiltro] = useState<string>("todos");
+  const [copiado, setCopiado] = useState<number | null>(null);
+  const isES = t.b03todos === "Todos";
+  const todosLabel = t.b03todos;
+
+  const categorias = [todosLabel, ...t.b03categorias];
+  const prompts = filtro === todosLabel ? t.b03prompts : t.b03prompts.filter((p: any) => {
+    const catMap: Record<string, string> = isES
+      ? { "Tutorial": "Tutorial", "Motivacional": "Motivacional", "Trending": "Trending", "Reacción": "Reacción", "Vlog": "Vlog", "Review": "Review", "Educativo": "Educativo", "Gaming": "Gaming" }
+      : { "Tutorial": "Tutorial", "Motivational": "Motivational", "Trending": "Trending", "Reaction": "Reaction", "Vlog": "Vlog", "Review": "Review", "Educational": "Educational", "Gaming": "Gaming" };
+    return p.cat === filtro || p.cat === catMap[filtro];
+  });
+
+  const copiar = (texto: string, idx: number) => {
+    navigator.clipboard.writeText(texto).then(() => {
+      setCopiado(idx);
+      setTimeout(() => setCopiado(null), 2000);
+    });
+  };
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <div style={{ marginBottom: "1.25rem" }}>
+        <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginBottom: "0.75rem", display: "block" }}>{t.b03filtroLabel}</label>
+        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+          {categorias.map((cat, i) => (
+            <button key={i} onClick={() => setFiltro(cat)} style={{ padding: "0.4rem 0.9rem", background: filtro === cat ? "#FFD60A" : "rgba(255,255,255,0.05)", color: filtro === cat ? "#000" : "rgba(255,255,255,0.7)", border: "1px solid " + (filtro === cat ? "#FFD60A" : "rgba(255,255,255,0.1)"), borderRadius: "999px", cursor: "pointer", fontWeight: 600, fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s" }}>{cat}</button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", marginBottom: "1rem" }}>{prompts.length} prompts</div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxHeight: "500px", overflowY: "auto", paddingRight: "0.5rem" }}>
+        {prompts.map((p: any, i: number) => (
+          <div key={i} style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "0.9rem 1rem", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+            <div style={{ flexShrink: 0, padding: "0.2rem 0.5rem", background: "rgba(255,214,10,0.12)", border: "1px solid rgba(255,214,10,0.25)", borderRadius: "6px", fontSize: "0.65rem", fontWeight: 700, color: "#FFD60A", whiteSpace: "nowrap" }}>{p.cat}</div>
+            <div style={{ flex: 1, fontSize: "0.82rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.6, fontStyle: "italic" }}>{p.texto}</div>
+            <button onClick={() => copiar(p.texto, i)} style={{ flexShrink: 0, padding: "0.3rem 0.8rem", background: copiado === i ? "#06D6A0" : "#FF4D00", color: copiado === i ? "#000" : "#fff", border: "none", borderRadius: "6px", cursor: "pointer", fontSize: "0.75rem", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s", whiteSpace: "nowrap" }}>{copiado === i ? "✓" : t.b03copiar}</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
 function PaywallSection({ t }: { t: typeof translations.es }) {
   return (
     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "4rem 2rem" }}>
@@ -1501,7 +1965,19 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
       <TecnicaSection numero={t.t11num} categoria={t.t11categoria} titulo={t.t11titulo} subtitulo={t.t11subtitulo} parrafos={[t.t11parrafo1, t.t11parrafo2]} tipTitulo={t.t11tipTitulo} tip={t.t11tip} color="#06D6A0"><PromptsBiblioteca t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t12num} categoria={t.t12categoria} titulo={t.t12titulo} subtitulo={t.t12subtitulo} parrafos={[t.t12parrafo1, t.t12parrafo2]} tipTitulo={t.t12tipTitulo} tip={t.t12tip} color="#FF4D00"><ChecklistPublicacion t={t} /></TecnicaSection>
 
-      <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
+      {plan === "studio" && (
+        <>
+          <div style={{ borderTop: "1px solid rgba(255,214,10,0.2)", marginTop: "2rem", marginBottom: "4rem", position: "relative" }}>
+            <div style={{ position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)", background: "#FFD60A", color: "#000", fontSize: "0.7rem", fontWeight: 900, padding: "4px 16px", borderRadius: "999px", letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
+              ⭐ {t.b01categoria}
+            </div>
+          </div>
+          <BonusSection numero={t.b01num} categoria={t.b01categoria} titulo={t.b01titulo} subtitulo={t.b01subtitulo} parrafos={[t.b01parrafo1, t.b01parrafo2]} tipTitulo={t.b01tipTitulo} tip={t.b01tip}><AnalisisCompetitivo t={t} /></BonusSection>
+          <BonusSection numero={t.b02num} categoria={t.b02categoria} titulo={t.b02titulo} subtitulo={t.b02subtitulo} parrafos={[t.b02parrafo1, t.b02parrafo2]} tipTitulo={t.b02tipTitulo} tip={t.b02tip}><CalendarioEditorial t={t} /></BonusSection>
+          <BonusSection numero={t.b03num} categoria={t.b03categoria} titulo={t.b03titulo} subtitulo={t.b03subtitulo} parrafos={[t.b03parrafo1, t.b03parrafo2]} tipTitulo={t.b03tipTitulo} tip={t.b03tip}><Biblioteca50Prompts t={t} /></BonusSection>
+        </>
+      )}
+            <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1rem", textTransform: "uppercase" }}>{t.proximamenteTag}</div>
         <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, fontFamily: "'Syne', sans-serif", marginBottom: "1rem" }}>{t.proximamenteTitulo}</h2>
         <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "2rem", fontSize: "0.95rem" }}>{t.proximamenteDesc}</p>
