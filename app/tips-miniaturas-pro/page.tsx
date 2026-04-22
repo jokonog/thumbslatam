@@ -135,12 +135,69 @@ const translations = {
     t06tipTitulo: "Tip accionable",
     t06tip: "Finanzas, educación y lujo funcionan mejor con serif. Gaming, tech y fitness funcionan mejor con sans-serif.",
 
+    t07num: "07", t07categoria: "Composición visual",
+    t07titulo: "Zona de mirada del espectador",
+    t07subtitulo: "Mueve el rostro y ve hacia dónde va la atención.",
+    t07parrafo1: "El cerebro humano procesa rostros antes que cualquier otro elemento. Cuando hay una cara en la miniatura, los ojos del espectador siguen la dirección de su mirada.",
+    t07parrafo2: "Usa esto a tu favor: coloca el rostro mirando hacia el texto o elemento clave. El espectador lo leerá automáticamente, aunque no se dé cuenta.",
+    t07instruccion: "Arrastra el rostro a los 4 puntos de la miniatura",
+    t07posiciones: ["Superior izquierda", "Superior derecha", "Inferior izquierda", "Inferior derecha"],
+    t07insight: "La flecha representa hacia dónde van los ojos del espectador.",
+    t07tipTitulo: "Tip accionable",
+    t07tip: "Siempre coloca el rostro mirando hacia el texto principal. Nunca mirando hacia afuera del encuadre: eso hace que la atención escape de tu miniatura.",
+
+    t08num: "08", t08categoria: "Optimización y datos",
+    t08titulo: "A/B Testing en vivo",
+    t08subtitulo: "Ve cuál miniatura gana y por qué.",
+    t08parrafo1: "El A/B testing real ocurre dentro de YouTube Studio: publicas dos miniaturas y la plataforma decide cuál tiene mejor CTR en 48 horas.",
+    t08parrafo2: "Pero antes de publicar, puedes predecir el ganador aplicando los principios que ya aprendiste. Haz clic en cada miniatura y ve su puntuación.",
+    t08instruccion: "Haz clic en cada miniatura para ver su análisis",
+    t08ctrLabel: "CTR estimado",
+    t08puntuacion: "Puntuación",
+    t08ganadora: "GANADORA",
+    t08perdedora: "PIERDE",
+    t08miniaturas: [
+      {
+        id: "a",
+        bg: "linear-gradient(135deg, #FF4D00 0%, #1a0a00 100%)",
+        texto: "SECRETO",
+        subtexto: "que nadie dice",
+        acento: "#FFD60A",
+        ctr: 8.4,
+        puntuacion: 91,
+        gana: true,
+        razones: ["Contraste extremo fondo/texto", "Promesa de valor clara", "Texto legible en miniatura pequeña", "Color de acento crea jerarquía"],
+      },
+      {
+        id: "b",
+        bg: "linear-gradient(135deg, #2a2a3e 0%, #111122 100%)",
+        texto: "Mi video sobre el tema",
+        subtexto: "",
+        acento: "#8B8FA8",
+        ctr: 2.1,
+        puntuacion: 28,
+        gana: false,
+        razones: ["Texto genérico sin promesa", "Bajo contraste, difícil de leer", "Sin jerarquía visual clara", "No genera curiosidad"],
+      },
+      {
+        id: "c",
+        bg: "linear-gradient(135deg, #0D4F3C 0%, #064028 100%)",
+        texto: "3 PASOS",
+        subtexto: "para duplicar tus views",
+        acento: "#FFD60A",
+        ctr: 6.7,
+        puntuacion: 74,
+        gana: false,
+        razones: ["Número concreto genera confianza", "Promesa de resultado específico", "Buen contraste verde/amarillo", "Podría mejorar con rostro"],
+      },
+    ],
+    t08tipTitulo: "Tip accionable",
+    t08tip: "En YouTube Studio puedes activar el A/B testing oficial desde el editor de miniaturas. Prueba siempre 2 versiones: una segura y una arriesgada. La arriesgada gana más veces de lo que crees.",
+
     proximamenteTag: "Continuará",
-    proximamenteTitulo: "Las 4 técnicas restantes + bonus Studio",
+    proximamenteTitulo: "Las técnicas restantes + bonus Studio",
     proximamenteDesc: "Las siguientes técnicas se publicarán próximamente:",
     proximamenteItems: [
-      "07. Composición: zona de mirada del espectador",
-      "08. A/B testing simulado en vivo",
       "09. Consistencia visual del canal",
       "10. Shorts vs videos largos",
       "11. Prompts optimizados para ThumbsLatam",
@@ -278,12 +335,69 @@ const translations = {
     t06tipTitulo: "Actionable tip",
     t06tip: "Finance, education and luxury work better with serif. Gaming, tech and fitness work better with sans-serif.",
 
+    t07num: "07", t07categoria: "Visual composition",
+    t07titulo: "Viewer gaze zone",
+    t07subtitulo: "Move the face and see where attention goes.",
+    t07parrafo1: "The human brain processes faces before any other element. When there is a face in the thumbnail, the viewer's eyes follow the direction of its gaze.",
+    t07parrafo2: "Use this to your advantage: place the face looking toward the text or key element. The viewer will read it automatically, without even noticing.",
+    t07instruccion: "Drag the face to the 4 positions in the thumbnail",
+    t07posiciones: ["Top left", "Top right", "Bottom left", "Bottom right"],
+    t07insight: "The arrow shows where the viewer's eyes go.",
+    t07tipTitulo: "Actionable tip",
+    t07tip: "Always place the face looking toward the main text. Never looking outward from the frame: that causes attention to escape your thumbnail.",
+
+    t08num: "08", t08categoria: "Optimization & data",
+    t08titulo: "Live A/B Testing",
+    t08subtitulo: "See which thumbnail wins and why.",
+    t08parrafo1: "Real A/B testing happens inside YouTube Studio: you publish two thumbnails and the platform decides which has better CTR in 48 hours.",
+    t08parrafo2: "But before publishing, you can predict the winner by applying the principles you have already learned. Click each thumbnail to see its score.",
+    t08instruccion: "Click each thumbnail to see its analysis",
+    t08ctrLabel: "Estimated CTR",
+    t08puntuacion: "Score",
+    t08ganadora: "WINNER",
+    t08perdedora: "LOSES",
+    t08miniaturas: [
+      {
+        id: "a",
+        bg: "linear-gradient(135deg, #FF4D00 0%, #1a0a00 100%)",
+        texto: "SECRET",
+        subtexto: "nobody tells you",
+        acento: "#FFD60A",
+        ctr: 8.4,
+        puntuacion: 91,
+        gana: true,
+        razones: ["Extreme background/text contrast", "Clear value promise", "Readable text at small size", "Accent color creates hierarchy"],
+      },
+      {
+        id: "b",
+        bg: "linear-gradient(135deg, #2a2a3e 0%, #111122 100%)",
+        texto: "My video about the topic",
+        subtexto: "",
+        acento: "#8B8FA8",
+        ctr: 2.1,
+        puntuacion: 28,
+        gana: false,
+        razones: ["Generic text without promise", "Low contrast, hard to read", "No clear visual hierarchy", "Does not generate curiosity"],
+      },
+      {
+        id: "c",
+        bg: "linear-gradient(135deg, #0D4F3C 0%, #064028 100%)",
+        texto: "3 STEPS",
+        subtexto: "to double your views",
+        acento: "#FFD60A",
+        ctr: 6.7,
+        puntuacion: 74,
+        gana: false,
+        razones: ["Concrete number builds trust", "Specific result promise", "Good green/yellow contrast", "Could improve with a face"],
+      },
+    ],
+    t08tipTitulo: "Actionable tip",
+    t08tip: "In YouTube Studio you can activate official A/B testing from the thumbnail editor. Always test 2 versions: one safe and one risky. The risky one wins more often than you think.",
+
     proximamenteTag: "To be continued",
-    proximamenteTitulo: "Remaining 4 techniques + Studio bonus",
+    proximamenteTitulo: "Remaining techniques + Studio bonus",
     proximamenteDesc: "The following techniques will be published soon:",
     proximamenteItems: [
-      "07. Composition: viewer gaze zone",
-      "08. Live A/B testing simulation",
       "09. Visual channel consistency",
       "10. Shorts vs long videos",
       "11. Optimized prompts for ThumbsLatam",
@@ -669,6 +783,178 @@ function TipografiaContexto({ t }: { t: typeof translations.es }) {
   );
 }
 
+function ZonaMirada({ t }: { t: typeof translations.es }) {
+  const [posicion, setPosicion] = useState(0);
+  const isES = t.t07instruccion.includes("Arrastra");
+
+  const posiciones = [
+    { x: "20%", y: "25%", miraDerecha: true, miraAbajo: true },
+    { x: "75%", y: "25%", miraDerecha: false, miraAbajo: true },
+    { x: "20%", y: "70%", miraDerecha: true, miraAbajo: false },
+    { x: "75%", y: "70%", miraDerecha: false, miraAbajo: false },
+  ];
+
+  const pos = posiciones[posicion];
+  const textoX = pos.miraDerecha ? "65%" : "15%";
+  const textoY = pos.miraAbajo ? "65%" : "20%";
+
+  const arrowAngle = Math.atan2(
+    parseFloat(textoY) - parseFloat(pos.y),
+    parseFloat(textoX) - parseFloat(pos.x)
+  ) * (180 / Math.PI);
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.25rem", textAlign: "center" }}>{t.t07instruccion}</p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.5rem", maxWidth: "400px", margin: "0 auto 1.5rem" }}>
+        {t.t07posiciones.map((label, i) => (
+          <button key={i} onClick={() => setPosicion(i)} style={{
+            padding: "0.65rem 0.75rem",
+            background: posicion === i ? "#7F77DD20" : "rgba(255,255,255,0.03)",
+            border: "1px solid " + (posicion === i ? "#7F77DD" : "rgba(255,255,255,0.1)"),
+            borderRadius: "10px", cursor: "pointer",
+            color: posicion === i ? "#7F77DD" : "rgba(255,255,255,0.6)",
+            fontWeight: 600, fontSize: "0.8rem",
+            fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
+          }}>{label}</button>
+        ))}
+      </div>
+
+      <div style={{ position: "relative", maxWidth: "600px", margin: "0 auto", aspectRatio: "16/9", background: "linear-gradient(135deg, #1a1040 0%, #0a0a1e 100%)", borderRadius: "16px", border: "1px solid rgba(127,119,221,0.3)", overflow: "hidden" }}>
+        {/* Grid de tercios */}
+        {[33, 66].map(p => (
+          <div key={p}>
+            <div style={{ position: "absolute", left: p + "%", top: 0, bottom: 0, width: "1px", background: "rgba(255,255,255,0.08)" }} />
+            <div style={{ position: "absolute", top: p + "%", left: 0, right: 0, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+          </div>
+        ))}
+
+        {/* Texto / elemento clave */}
+        <div style={{
+          position: "absolute", left: textoX, top: textoY,
+          transform: "translate(-50%, -50%)",
+          background: "#FF4D00", color: "#fff",
+          padding: "0.4rem 0.9rem", borderRadius: "6px",
+          fontSize: "clamp(0.7rem, 2vw, 1rem)", fontWeight: 900,
+          fontFamily: "'Syne', sans-serif",
+          boxShadow: "0 0 20px rgba(255,77,0,0.5)",
+          transition: "all 0.4s ease",
+          whiteSpace: "nowrap",
+        }}>{isES ? "TEXTO CLAVE" : "KEY TEXT"}</div>
+
+        {/* Flecha de atención */}
+        <div style={{
+          position: "absolute",
+          left: pos.x, top: pos.y,
+          transform: `translate(-50%, -50%)`,
+          transition: "all 0.4s ease",
+          zIndex: 3,
+        }}>
+          <svg width="60" height="60" viewBox="0 0 60 60" style={{ transform: `rotate(${arrowAngle}deg)`, transition: "transform 0.4s ease", overflow: "visible" }}>
+            <defs>
+              <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#FFD60A" />
+              </marker>
+            </defs>
+            <line x1="10" y1="30" x2="48" y2="30" stroke="#FFD60A" strokeWidth="2.5" markerEnd="url(#arrow)" strokeDasharray="4 2" />
+          </svg>
+        </div>
+
+        {/* Rostro emoji */}
+        <div style={{
+          position: "absolute",
+          left: pos.x, top: pos.y,
+          transform: "translate(-50%, -50%)",
+          fontSize: "clamp(2rem, 5vw, 3rem)",
+          transition: "all 0.4s ease",
+          filter: "drop-shadow(0 0 12px rgba(127,119,221,0.6))",
+          zIndex: 4,
+          cursor: "pointer",
+          userSelect: "none",
+        }}>😮</div>
+
+        {/* Insight */}
+        <div style={{
+          position: "absolute", bottom: "8px", left: "8px", right: "8px",
+          background: "rgba(0,0,0,0.75)", borderRadius: "6px",
+          padding: "0.4rem 0.75rem", fontSize: "0.72rem",
+          color: "rgba(255,255,255,0.8)", textAlign: "center",
+        }}>💡 {t.t07insight}</div>
+      </div>
+    </div>
+  );
+}
+
+function ABTesting({ t }: { t: typeof translations.es }) {
+  const [seleccionada, setSeleccionada] = useState<string | null>(null);
+
+  return (
+    <div style={{ marginTop: "2rem" }}>
+      <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.5rem", textAlign: "center" }}>{t.t08instruccion}</p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+        {t.t08miniaturas.map((mini) => {
+          const activa = seleccionada === mini.id;
+          return (
+            <div key={mini.id} onClick={() => setSeleccionada(activa ? null : mini.id)}
+              style={{ cursor: "pointer", borderRadius: "16px", overflow: "hidden", border: activa ? (mini.gana ? "2px solid #06D6A0" : "2px solid #FF4D4D") : "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease", boxShadow: activa ? (mini.gana ? "0 0 30px rgba(6,214,160,0.3)" : "0 0 30px rgba(255,77,77,0.2)") : "none" }}>
+
+              {/* Miniatura simulada */}
+              <div style={{ position: "relative", aspectRatio: "16/9", background: mini.bg }}>
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0.75rem", gap: "0.25rem" }}>
+                  <div style={{ fontSize: "clamp(1rem, 3vw, 1.5rem)", fontWeight: 900, color: mini.acento, fontFamily: "'Syne', sans-serif", textAlign: "center", textShadow: "2px 2px 4px rgba(0,0,0,0.8)", lineHeight: 1 }}>{mini.texto}</div>
+                  {mini.subtexto && <div style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.85rem)", fontWeight: 600, color: "#fff", fontFamily: "'DM Sans', sans-serif", textAlign: "center", opacity: 0.9 }}>{mini.subtexto}</div>}
+                </div>
+                {activa && (
+                  <div style={{ position: "absolute", top: "8px", right: "8px", background: mini.gana ? "#06D6A0" : "#FF4D4D", color: mini.gana ? "#000" : "#fff", fontSize: "0.6rem", fontWeight: 900, padding: "3px 8px", borderRadius: "4px", letterSpacing: "0.05em" }}>
+                    {mini.gana ? t.t08ganadora : t.t08perdedora}
+                  </div>
+                )}
+              </div>
+
+              {/* Panel de análisis */}
+              {activa && (
+                <div style={{ background: "rgba(0,0,0,0.5)", padding: "1rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                    <div>
+                      <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.t08ctrLabel}</div>
+                      <div style={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "'Syne', sans-serif", color: mini.gana ? "#06D6A0" : "#FF4D4D" }}>{mini.ctr}%</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{t.t08puntuacion}</div>
+                      <div style={{ fontSize: "1.5rem", fontWeight: 800, fontFamily: "'Syne', sans-serif", color: mini.gana ? "#06D6A0" : "#FF4D4D" }}>{mini.puntuacion}/100</div>
+                    </div>
+                  </div>
+                  {/* Barra de puntuación animada */}
+                  <div style={{ height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "999px", marginBottom: "1rem", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: mini.puntuacion + "%", background: mini.gana ? "linear-gradient(90deg, #06D6A0, #04A578)" : "linear-gradient(90deg, #FF4D4D, #CC0000)", borderRadius: "999px", animation: "barGrow 0.6s ease-out" }} />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    {mini.razones.map((r, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>
+                        <span style={{ color: mini.gana ? "#06D6A0" : "#FF4D4D", flexShrink: 0, marginTop: "1px" }}>{mini.gana ? "✓" : "✗"}</span>
+                        {r}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Estado inactivo */}
+              {!activa && (
+                <div style={{ background: "rgba(0,0,0,0.3)", padding: "0.75rem", textAlign: "center", fontSize: "0.78rem", color: "rgba(255,255,255,0.4)" }}>
+                  {t.t02tabBusqueda === "Búsqueda" ? "Haz clic para analizar" : "Click to analyze"}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function PaywallSection({ t }: { t: typeof translations.es }) {
   return (
     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "4rem 2rem" }}>
@@ -766,6 +1052,8 @@ function ContenidoPro({ t, plan }: { t: typeof translations.es; plan: Plan }) {
       <TecnicaSection numero={t.t04num} categoria={t.t04categoria} titulo={t.t04titulo} subtitulo={t.t04subtitulo} parrafos={[t.t04parrafo1, t.t04parrafo2]} tipTitulo={t.t04tipTitulo} tip={t.t04tip} color="#FF4D00"><SelectorColor t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t05num} categoria={t.t05categoria} titulo={t.t05titulo} subtitulo={t.t05subtitulo} parrafos={[t.t05parrafo1, t.t05parrafo2]} tipTitulo={t.t05tipTitulo} tip={t.t05tip} color="#FFD60A"><AIDABuilder t={t} /></TecnicaSection>
       <TecnicaSection numero={t.t06num} categoria={t.t06categoria} titulo={t.t06titulo} subtitulo={t.t06subtitulo} parrafos={[t.t06parrafo1, t.t06parrafo2]} tipTitulo={t.t06tipTitulo} tip={t.t06tip} color="#06D6A0"><TipografiaContexto t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t07num} categoria={t.t07categoria} titulo={t.t07titulo} subtitulo={t.t07subtitulo} parrafos={[t.t07parrafo1, t.t07parrafo2]} tipTitulo={t.t07tipTitulo} tip={t.t07tip} color="#7F77DD"><ZonaMirada t={t} /></TecnicaSection>
+      <TecnicaSection numero={t.t08num} categoria={t.t08categoria} titulo={t.t08titulo} subtitulo={t.t08subtitulo} parrafos={[t.t08parrafo1, t.t08parrafo2]} tipTitulo={t.t08tipTitulo} tip={t.t08tip} color="#FF4D00"><ABTesting t={t} /></TecnicaSection>
 
       <div style={{ background: "linear-gradient(135deg, rgba(255,77,0,0.08) 0%, rgba(255,214,10,0.02) 100%)", border: "1px dashed rgba(255,77,0,0.3)", borderRadius: "24px", padding: "clamp(2rem, 4vw, 3.5rem)", textAlign: "center", marginTop: "4rem", marginBottom: "3rem" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#FF4D00", letterSpacing: "0.2em", marginBottom: "1rem", textTransform: "uppercase" }}>{t.proximamenteTag}</div>
@@ -832,6 +1120,7 @@ export default function TipsMiniaturasPro() {
         .simSlider::-moz-range-thumb { width: 22px; height: 22px; background: #FF4D00; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 0 0 4px rgba(255,77,0,0.2), 0 4px 12px rgba(255,77,0,0.3); }
         @keyframes pulse { 0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 0.7; transform: translate(-50%,-50%) scale(1.05); } }
         @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+        @keyframes barGrow { from { width: 0; } }
       `}</style>
 
       <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #0A0E27 0%, #050816 100%)", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
