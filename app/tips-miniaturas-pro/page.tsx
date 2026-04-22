@@ -1336,6 +1336,7 @@ function PromptsBiblioteca({ t }: { t: typeof translations.es }) {
 
 function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
   const [checks, setChecks] = useState<boolean[]>(new Array(t.t12items.length).fill(false));
+  const [resetKey, setResetKey] = useState(0);
   const total = checks.filter(Boolean).length;
   const pct = Math.round((total / t.t12items.length) * 100);
   const scoreIdx = total <= 2 ? 0 : total <= 4 ? 1 : total <= 6 ? 2 : 3;
@@ -1363,7 +1364,7 @@ function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
       {/* Items */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
         {t.t12items.map((item, i) => (
-          <div key={i} onClick={() => toggle(i)} style={{
+          <div key={resetKey + "-" + i} onClick={() => toggle(i)} style={{
             background: checks[i] ? "rgba(6,214,160,0.08)" : "rgba(0,0,0,0.3)",
             border: "1px solid " + (checks[i] ? "rgba(6,214,160,0.4)" : "rgba(255,255,255,0.08)"),
             borderRadius: "12px", padding: "0.9rem 1rem", cursor: "pointer",
@@ -1385,7 +1386,7 @@ function ChecklistPublicacion({ t }: { t: typeof translations.es }) {
       </div>
 
       <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
-        <button onClick={() => setChecks(Array.from({ length: t.t12items.length }, () => false))} style={{
+        <button onClick={() => { setChecks(new Array(t.t12items.length).fill(false)); setResetKey(k => k + 1); }} style={{
           padding: "0.5rem 1.2rem", background: "transparent", color: "rgba(255,255,255,0.5)",
           border: "1px solid rgba(255,255,255,0.15)", borderRadius: "999px", cursor: "pointer",
           fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif",
