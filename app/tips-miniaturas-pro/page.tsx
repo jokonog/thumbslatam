@@ -1798,29 +1798,68 @@ function CalendarioEditorial({ t }: { t: typeof translations.es }) {
         const conteo: Record<number, number> = {};
         asignaciones.forEach(a => { if (a !== null) conteo[a] = (conteo[a] || 0) + 1; });
         const tipoMasFrecuente = Object.entries(conteo).sort((a,b) => b[1]-a[1])[0];
-        const tiposUsados = new Set(asignaciones.filter(a => a !== null) as number[]);
+        const tiposAsignados = asignaciones.filter(a => a !== null) as number[];
+        const conteoTipos: Record<number, number> = {};
+        tiposAsignados.forEach(a => { conteoTipos[a] = (conteoTipos[a] || 0) + 1; });
+        const tiposUnicos = Object.keys(conteoTipos).map(Number);
+        const dominante = tiposUnicos.sort((a,b) => conteoTipos[b]-conteoTipos[a])[0];
+        const contDominante = conteoTipos[dominante] || 0;
+        const nombreTipo = (i: number) => t.b02tipos[i] || "";
+
         const getInsight = () => {
-          const has = (i: number) => tiposUsados.has(i); // 0=Edu/Educ, 1=Emo, 2=Trend, 3=Ever/Green, 4=Serie/Series
-          if (asignadas === 4) {
-            if (has(0) && has(1) && has(2) && has(3)) return isES ? "Mix perfecto: autoridad + emoción + alcance + retención. La fórmula de canales que crecen de forma sostenida." : "Perfect mix: authority + emotion + reach + retention. The formula of sustainably growing channels.";
-            if (has(0) && has(3)) return isES ? "Estrategia de posicionamiento: contenido que atrae y retiene. Ideal para canales que buscan crecer en búsqueda orgánica." : "Positioning strategy: content that attracts and retains. Ideal for channels seeking organic search growth.";
-            if (has(1) && has(2)) return isES ? "Estrategia de viralidad: alto potencial de shares y descubrimiento. Riesgo: depende de tendencias externas." : "Virality strategy: high share and discovery potential. Risk: depends on external trends.";
-            if (has(0) && has(1)) return isES ? "Autoridad con corazón: educas y conectas emocionalmente. Comunidad fiel pero crecimiento más lento." : "Authority with heart: you educate and connect emotionally. Loyal community but slower growth.";
-            if (has(2) && has(3)) return isES ? "Alcance amplio: capturas tráfico nuevo y lo retienes con contenido duradero. Buena base para escalar." : "Wide reach: you capture new traffic and retain it with lasting content. Good base to scale.";
-            if (has(4)) return isES ? "Estrategia de serie: fidelización alta. Los espectadores vuelven semana a semana." : "Series strategy: high loyalty. Viewers return week after week.";
-            return isES ? "Mix activo: variedad que mantiene la audiencia engaged durante todo el mes." : "Active mix: variety that keeps the audience engaged throughout the month.";
+          if (asignadas === 0) return isES ? "Asigna al menos una semana para ver el análisis." : "Assign at least one week to see the analysis.";
+
+          // Todas iguales
+          if (tiposUnicos.length === 1) {
+            const n = nombreTipo(dominante);
+            return isES
+              ? `⚠️ Las 4 semanas son "${n}". Eso genera monotonía — tu audiencia predice lo que viene y el CTR baja. Considera diversificar al menos 1 semana con otro tipo.`
+              : `⚠️ All 4 weeks are "${n}". That creates monotony — your audience predicts what's coming and CTR drops. Consider diversifying at least 1 week with another type.`;
           }
+
+          // 3 de un tipo + 1 diferente
+          if (asignadas === 4 && contDominante === 3) {
+            const n = nombreTipo(dominante);
+            const otro = tiposUnicos.find(t => t !== dominante);
+            const nOtro = otro !== undefined ? nombreTipo(otro) : "";
+            return isES
+              ? `Apuesta clara en "${n}" (3/4 semanas) con un respiro de "${nOtro}". Funciona si tu canal ya tiene audiencia establecida. Riesgo: poco alcance a nuevos espectadores.`
+              : `Clear bet on "${n}" (3/4 weeks) with a breather of "${nOtro}". Works if your channel already has an established audience. Risk: little reach to new viewers.`;
+          }
+
+          // 4 tipos diferentes — balance total
+          if (asignadas === 4 && tiposUnicos.length === 4) {
+            return isES
+              ? "✅ Mix diversificado: cada semana tiene un propósito distinto. Esta es la estructura que usan los canales con crecimiento sostenido — alcance, retención, autoridad y comunidad cubiertos."
+              : "✅ Diversified mix: each week has a different purpose. This is the structure used by channels with sustained growth — reach, retention, authority and community all covered.";
+          }
+
+          // 2 tipos en 4 semanas (2+2)
+          if (asignadas === 4 && tiposUnicos.length === 2 && contDominante === 2) {
+            const n1 = nombreTipo(tiposUnicos[0]);
+            const n2 = nombreTipo(tiposUnicos[1]);
+            return isES
+              ? `Balance de dos pilares: "${n1}" y "${n2}" alternados. Predecible pero consistente. Considera agregar variedad en el siguiente mes para no estancar el crecimiento.`
+              : `Two-pillar balance: "${n1}" and "${n2}" alternating. Predictable but consistent. Consider adding variety next month to avoid stagnating growth.`;
+          }
+
+          // 3 semanas asignadas
           if (asignadas === 3) {
-            if (has(0) && has(1) && has(3)) return isES ? "Triángulo sólido: autoridad + emoción + permanencia. Solo falta un empuje de alcance." : "Solid triangle: authority + emotion + permanence. Just missing a reach push.";
-            if (has(0) && has(2) && has(3)) return isES ? "Estrategia de descubrimiento: buen balance entre nuevo tráfico y audiencia establecida." : "Discovery strategy: good balance between new traffic and established audience.";
-            return isES ? "Buen mix de 3. Considera agregar la cuarta semana para completar el balance mensual." : "Good 3-type mix. Consider adding the fourth week to complete the monthly balance.";
+            const faltante = isES ? "Falta 1 semana por planificar." : "1 week left to plan.";
+            if (tiposUnicos.length === 3) return isES ? `Buena diversidad. ${faltante} Para completar el mes, considera qué audiencia no estás alcanzando aún.` : `Good diversity. ${faltante} To complete the month, consider what audience you are not reaching yet.`;
+            return isES ? `${faltante} Tipo dominante: "${nombreTipo(dominante)}" (${contDominante}x). Diversifica la semana restante para balancear.` : `${faltante} Dominant type: "${nombreTipo(dominante)}" (${contDominante}x). Diversify the remaining week to balance.`;
           }
+
+          // 2 semanas asignadas
           if (asignadas === 2) {
-            if (has(0) && has(3)) return isES ? "Foco en valor duradero: tu contenido seguirá generando vistas en 6 meses." : "Focus on lasting value: your content will keep generating views in 6 months.";
-            if (has(1) && has(2)) return isES ? "Foco en viralidad: alto potencial de alcance, pero sin contenido ancla que retenga." : "Focus on virality: high reach potential, but no anchor content to retain.";
-            return isES ? "Inicio sólido. Planifica las otras 2 semanas para maximizar el impacto del mes." : "Solid start. Plan the other 2 weeks to maximize the month's impact.";
+            if (tiposUnicos.length === 1) return isES ? `Mismo tipo dos semanas seguidas. Planifica las otras 2 con tipos diferentes para no perder variedad.` : `Same type two weeks in a row. Plan the other 2 with different types to maintain variety.`;
+            return isES ? `Buen arranque con "${nombreTipo(tiposUnicos[0])}" y "${nombreTipo(tiposUnicos[1])}". Planifica las 2 semanas restantes para ver el análisis completo del mes.` : `Good start with "${nombreTipo(tiposUnicos[0])}" and "${nombreTipo(tiposUnicos[1])}". Plan the 2 remaining weeks to see the full monthly analysis.`;
           }
-          return isES ? "Empieza bien. Asigna las semanas restantes para ver el análisis completo." : "Good start. Assign the remaining weeks to see the full analysis.";
+
+          // 1 semana
+          return isES
+            ? `Semana 1 planificada: "${nombreTipo(dominante)}". Asigna las demás para ver cómo queda el mix del mes.`
+            : `Week 1 planned: "${nombreTipo(dominante)}". Assign the rest to see how the monthly mix looks.`;
         };
         return (
           <div style={{ background: "rgba(255,214,10,0.06)", border: "1px solid rgba(255,214,10,0.2)", borderRadius: "12px", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
