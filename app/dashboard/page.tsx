@@ -71,7 +71,7 @@ export default function Dashboard() {
 
     const { data: usuarioData } = await supabase
       .from("usuarios")
-      .select("creditos, plan, avatar_url, email_creditos_bajos_enviado")
+      .select("creditos, plan, avatar_url, email_creditos_bajos_enviado, email_bienvenida_enviado")
       .eq("id", authData.user.id)
       .maybeSingle();
 
@@ -79,8 +79,8 @@ export default function Dashboard() {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
       setAvatarUrl(usuarioData.avatar_url || null);
-      // Email bienvenida solo si es la primera vez (creditos = 5 y 0 miniaturas)
-      if (usuarioData.creditos === 5) {
+      // Email bienvenida solo si es la primera vez y no se ha enviado antes
+      if (usuarioData.creditos === 5 && !usuarioData.email_bienvenida_enviado) {
         fetch("/api/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -91,6 +91,11 @@ export default function Dashboard() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tipo: "nuevo_usuario_admin", email: authData.user.email }),
         }).catch(() => {});
+        // Marcar como enviado en Supabase
+        await supabase
+          .from("usuarios")
+          .update({ email_bienvenida_enviado: true })
+          .eq("id", authData.user.id);
       }
       // Email creditos bajos — solo una vez
       if (usuarioData.creditos > 0 && usuarioData.creditos < 5 && !usuarioData.email_creditos_bajos_enviado) {
