@@ -751,15 +751,15 @@ export default function Dashboard() {
             <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"0.5rem"}}>Al cancelar perderás acceso a los beneficios de tu plan <strong style={{color:"#fff",textTransform:"capitalize"}}>{plan}</strong>.</p>
             <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"1.5rem"}}>Tus créditos restantes estarán disponibles hasta el final del período de facturación actual.</p>
             <div style={{display:"flex",gap:"0.75rem",justifyContent:"flex-end",flexWrap:"wrap"}}>
-              <button onClick={() => setModalCancelar(false)}
-                style={{padding:"0.65rem 1.25rem",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:"10px",color:"#8B8FA8",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif"}}>
-                Mantener suscripción
-              </button>
               <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
                 onClick={() => setModalCancelar(false)}
-                style={{padding:"0.65rem 1.25rem",background:"#FF4D4D",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",textDecoration:"none"}}>
+                style={{padding:"0.65rem 1.25rem",background:"transparent",border:"1px solid rgba(255,77,77,0.3)",borderRadius:"10px",color:"#FF4D4D",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif",textDecoration:"none"}}>
                 Sí, cancelar
               </a>
+              <button onClick={() => setModalCancelar(false)}
+                style={{padding:"0.65rem 1.25rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",boxShadow:"0 4px 20px rgba(255,77,0,0.3)"}}>
+                Mantener suscripción
+              </button>
             </div>
           </div>
         </div>
