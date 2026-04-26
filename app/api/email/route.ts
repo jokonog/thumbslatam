@@ -115,6 +115,32 @@ export async function POST(request: Request) {
       `;
     }
 
+
+    if (tipo === "cancelacion") {
+      subject = "Tu suscripción a ThumbsLatam ha sido cancelada";
+      html = `
+        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#060810;color:white;padding:32px;border-radius:12px">
+          <img src="https://www.thumbslatam.com/logo.png" alt="ThumbsLatam" style="height:36px;margin-bottom:24px"/>
+          <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 12px">Tu suscripción ha sido cancelada</h1>
+          <p style="color:#8B8FA8;line-height:1.6;margin:0 0 20px">
+            Lamentamos que te vayas. Tu plan ha vuelto a <strong style="color:#fff">Gratis</strong> con 5 créditos disponibles.
+          </p>
+          <p style="color:#8B8FA8;line-height:1.6;margin:0 0 24px">
+            Si fue un error o quieres volver, puedes reactivar tu suscripción en cualquier momento desde el dashboard.
+          </p>
+          <a href="https://www.thumbslatam.com/dashboard" style="display:inline-block;padding:12px 24px;background:#FF4D00;color:white;border-radius:8px;font-weight:700;text-decoration:none;font-size:0.95rem;margin-bottom:24px">
+            Volver al dashboard →
+          </a>
+          <div style="background:#0D1020;border-left:3px solid #FF4D00;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:24px">
+            <p style="color:#e0e0e0;line-height:1.7;margin:0;font-size:0.9rem">
+              ¿Tienes algún comentario sobre tu experiencia? Responde este correo — leemos cada mensaje personalmente.
+            </p>
+          </div>
+          <p style="color:#3A3D52;font-size:0.78rem;margin-top:32px">ThumbsLatam — Miniaturas para streamers latinos · <a href="https://www.thumbslatam.com" style="color:#3A3D52">thumbslatam.com</a></p>
+        </div>
+      `;
+    }
+
     if (tipo === "nuevo_usuario_admin") {
       subject = `Nuevo usuario registrado: ${email}`;
       html = `
