@@ -42,6 +42,7 @@ export default function Dashboard() {
   const [listaMinis, setListaMinis] = useState<{id:number, imagen_url:string, created_at:string}[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>(null);
   const [plataforma, setPlataforma] = useState("youtube");
   
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
@@ -68,6 +69,7 @@ export default function Dashboard() {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session?.user) { window.location.href = "/registro"; return; }
     setUserId(session.user.id);
+    setAuthToken(session.access_token);
     const authData = { user: session.user };
 
     const { data: usuarioData } = await supabase
@@ -158,7 +160,7 @@ export default function Dashboard() {
       if (modo === "cara") {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
           body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right", imagenReferencia, plan }),
         });
         const data = await res.json();
@@ -180,7 +182,7 @@ export default function Dashboard() {
 
       const res = await fetch("/api/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
         body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo, imagenReferencia, plan }),
       });
       const data = await res.json();

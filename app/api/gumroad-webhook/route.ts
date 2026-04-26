@@ -14,6 +14,10 @@ const creditosMap: Record<string, number> = {
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
+    const sellerId = formData.get("seller_id") as string;
+    if (sellerId && process.env.GUMROAD_SELLER_ID && sellerId !== process.env.GUMROAD_SELLER_ID) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const email = formData.get("email") as string;
     const productPermalink = formData.get("product_permalink") as string;
     const saleTimestamp = formData.get("sale_timestamp") as string;

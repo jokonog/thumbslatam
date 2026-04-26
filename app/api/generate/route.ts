@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { verificarAuth } from "@/lib/auth-helper";
 export const maxDuration = 60;
 import Replicate from "replicate";
 import { v2 as cloudinary } from "cloudinary";
@@ -205,8 +206,12 @@ function contienePalabraProhibida(texto: string): boolean {
   return PALABRAS_PROHIBIDAS.some(palabra => textoLower.includes(palabra));
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    const auth = await verificarAuth(request);
+    if (!auth) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    }
     const { descripcion, emocion, orientacion, elementos, titulo, tituloModo, imagenReferencia, plan } = await request.json();
 
     if (contienePalabraProhibida(descripcion || "") || contienePalabraProhibida(titulo || "")) {
