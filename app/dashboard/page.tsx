@@ -753,11 +753,15 @@ export default function Dashboard() {
             <div style={{display:"flex",gap:"0.75rem",justifyContent:"flex-end",flexWrap:"wrap"}}>
               <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
                 onClick={() => setModalCancelar(false)}
-                style={{padding:"0.65rem 1.25rem",background:"transparent",border:"1px solid rgba(255,77,77,0.3)",borderRadius:"10px",color:"#FF4D4D",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif",textDecoration:"none"}}>
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,77,77,0.15)"; e.currentTarget.style.borderColor = "#FF4D4D"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,77,77,0.3)"; }}
+                style={{padding:"0.65rem 1.25rem",background:"transparent",border:"1px solid rgba(255,77,77,0.3)",borderRadius:"10px",color:"#FF4D4D",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif",textDecoration:"none",transition:"all 0.2s"}}>
                 Sí, cancelar
               </a>
               <button onClick={() => setModalCancelar(false)}
-                style={{padding:"0.65rem 1.25rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",boxShadow:"0 4px 20px rgba(255,77,0,0.3)"}}>
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#FF6520"; e.currentTarget.style.boxShadow = "0 6px 25px rgba(255,77,0,0.5)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "#FF4D00"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,77,0,0.3)"; }}
+                style={{padding:"0.65rem 1.25rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",boxShadow:"0 4px 20px rgba(255,77,0,0.3)",transition:"all 0.2s"}}>
                 Mantener suscripción
               </button>
             </div>
