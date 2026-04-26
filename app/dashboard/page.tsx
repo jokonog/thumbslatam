@@ -425,6 +425,12 @@ export default function Dashboard() {
         <div style={{background:"#111827",borderRadius:"12px",padding:"20px",border:"1px solid rgba(255,255,255,0.07)"}}>
           <div style={{fontSize:"1rem",fontWeight:"700",color:"#06D6A0",textTransform:"capitalize"}}>{plan}</div>
           <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Plan actual</div>
+          {(plan === "pro" || plan === "studio") && (
+            <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
+              style={{display:"inline-block",marginTop:"10px",fontSize:"0.75rem",color:"#FF4D4D",textDecoration:"none",borderBottom:"1px solid rgba(255,77,77,0.3)",paddingBottom:"1px"}}>
+              Cancelar suscripción
+            </a>
+          )}
         </div>
         <a href="/tips-miniaturas-pro" style={{
           background: plan === "studio" ? "linear-gradient(135deg, rgba(6,214,160,0.15) 0%, rgba(6,214,160,0.05) 100%)" : plan === "pro" ? "linear-gradient(135deg, rgba(255,77,0,0.15) 0%, rgba(255,77,0,0.05) 100%)" : "#111827",
