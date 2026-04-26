@@ -427,6 +427,11 @@ export default function Dashboard() {
           <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Plan actual</div>
           {(plan === "pro" || plan === "studio") && (
             <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
+              onClick={(e) => {
+                if (!window.confirm("¿Seguro que deseas cancelar tu suscripción?\n\nAl cancelar perderás acceso a los beneficios de tu plan y tus créditos restantes al final del período de facturación.")) {
+                  e.preventDefault();
+                }
+              }}
               style={{display:"inline-block",marginTop:"10px",fontSize:"0.75rem",color:"#FF4D4D",textDecoration:"none",borderBottom:"1px solid rgba(255,77,77,0.3)",paddingBottom:"1px"}}>
               Cancelar suscripción
             </a>
