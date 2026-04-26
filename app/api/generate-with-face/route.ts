@@ -1,3 +1,4 @@
+import sharp from "sharp";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 120;
@@ -34,7 +35,7 @@ const supabaseAdmin = createClient(
 
 export async function POST(request: Request) {
   try {
-    const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia } = await request.json();
+    const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia , plan } = await request.json();
 
     if (contienePalabraProhibida(descripcion || "")) {
       return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam." }, { status: 400 });
@@ -182,6 +183,29 @@ export async function POST(request: Request) {
       finalImageUrl = fallbackUpload.secure_url;
     }
 
+    // Watermark para usuarios gratis
+    if (!plan || plan === "gratis") {
+      try {
+        const rawBuf = await fetch(finalImageUrl).then(r => r.arrayBuffer()).then(b => Buffer.from(b));
+        const meta = await sharp(rawBuf).metadata();
+        const w = meta.width || 1280;
+        const h = meta.height || 720;
+        const fontSize = Math.floor(w * 0.028);
+        const wmSvg = `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+          <rect x="${Math.floor(w*0.02)}" y="${Math.floor(h*0.84)}" width="${Math.floor(w*0.22)}" height="${Math.floor(h*0.1)}" rx="6" fill="rgba(0,0,0,0.55)"/>
+          <text x="${Math.floor(w*0.035)}" y="${Math.floor(h*0.915)}" font-family="Arial Black, sans-serif" font-weight="900" font-size="${fontSize}" fill="#FF4D00">Thumbs</text>
+          <text x="${Math.floor(w*0.035) + Math.floor(fontSize*3.2)}" y="${Math.floor(h*0.915)}" font-family="Arial Black, sans-serif" font-weight="900" font-size="${fontSize}" fill="white">Latam</text>
+        </svg>`;
+        const wmBuf = await sharp(rawBuf).composite([{ input: Buffer.from(wmSvg), top: 0, left: 0 }]).jpeg({ quality: 92 }).toBuffer();
+        const wmUpload = await cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${wmBuf.toString("base64")}`,
+          { folder: "thumbslatam-generated" }
+        );
+        finalImageUrl = wmUpload.secure_url;
+      } catch (wmError: any) {
+        console.log("Watermark fallo:", wmError.message);
+      }
+    }
     return NextResponse.json({ imageUrl: finalImageUrl });
 
   } catch (error: any) {

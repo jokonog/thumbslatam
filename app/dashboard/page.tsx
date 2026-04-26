@@ -159,7 +159,7 @@ export default function Dashboard() {
         const res = await fetch("/api/generate-with-face", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right", imagenReferencia }),
+          body: JSON.stringify({ userId, descripcion, estilo: "gaming", emocion, orientacion, avatarOverride: fotoTemporal, posicionAvatar: elementos.findIndex((el: any) => el.usarAvatar) === 0 ? "left" : elementos.findIndex((el: any) => el.usarAvatar) === 1 ? "center" : "right", imagenReferencia, plan }),
         });
         const data = await res.json();
         if (data.error) {
@@ -181,7 +181,7 @@ export default function Dashboard() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo, imagenReferencia }),
+        body: JSON.stringify({ descripcion, estilo: "gaming", emocion, orientacion, elementos: elementosConUrl, titulo, tituloModo, imagenReferencia, plan }),
       });
       const data = await res.json();
       if (data.error) {
@@ -751,7 +751,7 @@ export default function Dashboard() {
             <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"0.5rem"}}>Al cancelar perderás acceso a los beneficios de tu plan <strong style={{color:"#fff",textTransform:"capitalize"}}>{plan}</strong>.</p>
             <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"1.5rem"}}>Tus créditos restantes estarán disponibles hasta el final del período de facturación actual.</p>
             <div style={{display:"flex",gap:"0.75rem",justifyContent:"flex-end",flexWrap:"wrap"}}>
-              <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
+              <a href="https://gumroad.com/library" target="_blank" rel="noopener noreferrer"
                 onClick={() => setModalCancelar(false)}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,77,77,0.15)"; e.currentTarget.style.borderColor = "#FF4D4D"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,77,77,0.3)"; }}

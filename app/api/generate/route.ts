@@ -207,7 +207,7 @@ function contienePalabraProhibida(texto: string): boolean {
 
 export async function POST(request: Request) {
   try {
-    const { descripcion, emocion, orientacion, elementos, titulo, tituloModo, imagenReferencia } = await request.json();
+    const { descripcion, emocion, orientacion, elementos, titulo, tituloModo, imagenReferencia, plan } = await request.json();
 
     if (contienePalabraProhibida(descripcion || "") || contienePalabraProhibida(titulo || "")) {
       return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam." }, { status: 400 });
@@ -284,17 +284,39 @@ export async function POST(request: Request) {
     }
 
     const conTitulo = tituloModo === "manual" && titulo && titulo.trim();
+    const esGratis = !plan || plan === "gratis";
+
+    async function agregarWatermark(buf: Buffer): Promise<Buffer> {
+      if (!esGratis) return buf;
+      const meta = await sharp(buf).metadata();
+      const w = meta.width || 1280;
+      const h = meta.height || 720;
+      const fontSize = Math.floor(w * 0.028);
+      const wmSvg = `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+        <rect x="${Math.floor(w*0.02)}" y="${Math.floor(h*0.84)}" width="${Math.floor(w*0.22)}" height="${Math.floor(h*0.1)}" rx="6" fill="rgba(0,0,0,0.55)"/>
+        <text x="${Math.floor(w*0.035)}" y="${Math.floor(h*0.915)}" font-family="Arial Black, sans-serif" font-weight="900" font-size="${fontSize}" fill="#FF4D00">Thumbs</text>
+        <text x="${Math.floor(w*0.035) + Math.floor(fontSize*3.2)}" y="${Math.floor(h*0.915)}" font-family="Arial Black, sans-serif" font-weight="900" font-size="${fontSize}" fill="white">Latam</text>
+      </svg>`;
+      return sharp(buf).composite([{ input: Buffer.from(wmSvg), top: 0, left: 0 }]).jpeg({ quality: 92 }).toBuffer();
+    }
+
 
     async function subirFondo(url: string): Promise<string> {
       if (!conTitulo) {
-        const u = await cloudinary.uploader.upload(url, { folder: "thumbslatam/fondos" });
+        const rawBuf = await descargarBuffer(url);
+        const wmBuf = await agregarWatermark(rawBuf);
+        const u = await cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${wmBuf.toString("base64")}`,
+          { folder: "thumbslatam/fondos" }
+        );
         return u.secure_url;
       }
       const buf = await descargarBuffer(url);
       const resized = await sharp(buf).resize(W, H, { fit: "cover" }).png().toBuffer();
       const conTit = await agregarTitulo(resized, titulo, W, H);
+      const wmBuf2 = await agregarWatermark(conTit);
       const u = await cloudinary.uploader.upload(
-        `data:image/jpeg;base64,${conTit.toString("base64")}`,
+        `data:image/jpeg;base64,${wmBuf2.toString("base64")}`,
         { folder: "thumbslatam/fondos" }
       );
       return u.secure_url;
