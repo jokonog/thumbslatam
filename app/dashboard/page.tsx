@@ -303,7 +303,7 @@ export default function Dashboard() {
     <main style={{minHeight:"100vh",background:"#060810",color:"white",fontFamily:"var(--font-geist-sans)",padding:"32px 24px",maxWidth:"900px",margin:"0 auto"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}}>
         <Logo height={28} />
-        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"1px solid #3A3D52",cursor:"pointer",padding:"8px 16px",borderRadius:"8px"}}>← Volver</button>
+        <button onClick={() => { setVariaciones([]); setVarSeleccionada(null); setConfirmando(false); }} className="btn-ghost" style={{color:"#8B8FA8",fontSize:"0.85rem",background:"none",border:"1px solid #3A3D52",cursor:"pointer",padding:"8px 16px",borderRadius:"8px"}}>← Volver</button>
       </div>
       <h2 style={{fontSize:"1.1rem",fontWeight:"700",margin:"0 0 4px",letterSpacing:"-0.02em"}}>Elige tu miniatura</h2>
       <p style={{color:"#8B8FA8",fontSize:"0.82rem",margin:"0 0 24px"}}>
@@ -407,8 +407,8 @@ export default function Dashboard() {
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
         <Logo height={32} />
         <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
-          <a href="/help" target="_blank" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>¿Ayuda?</a>
-          <button onClick={async () => { await fetch("/api/signout", { method: "POST" }); await supabase.auth.signOut({ scope: "local" }); window.location.href = "/registro?t=" + Date.now(); }} style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
+          <a href="/help" target="_blank" className="btn-ghost" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>¿Ayuda?</a>
+          <button onClick={async () => { await fetch("/api/signout", { method: "POST" }); await supabase.auth.signOut({ scope: "local" }); window.location.href = "/registro?t=" + Date.now(); }} className="btn-ghost" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
             Cerrar sesion
           </button>
         </div>
@@ -698,7 +698,7 @@ export default function Dashboard() {
       ) : (
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(200px, 1fr))",gap:"12px"}}>
           {listaMinis.map((mini, index) => (
-            <div key={mini.id} style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
+            <div key={mini.id} className="mini-card" style={{position:"relative",borderRadius:"10px",overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",background:"#111827",cursor:"pointer"}} onClick={() => window.open(mini.imagen_url, "_blank")}>
               <img src={mini.imagen_url} alt="miniatura" style={{width:"100%",display:"block",aspectRatio:"16/9",objectFit:"cover"}}/>
               <button onClick={e => { e.stopPropagation(); setConfirmarBorrar(mini.id); }}
                 style={{position:"absolute",top:"6px",right:"6px",background:"rgba(239,68,68,0.9)",border:"none",borderRadius:"50%",width:"20px",height:"20px",cursor:"pointer",color:"white",fontSize:"11px",padding:0}}>
@@ -709,7 +709,7 @@ export default function Dashboard() {
                   {new Date(mini.created_at).toLocaleDateString("es-ES", {day:"numeric",month:"short"})}
                 </span>
                 <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
-                  <button onClick={e => { e.stopPropagation(); const params = new URLSearchParams({ imageUrl: mini.imagen_url, plataforma: "youtube" }); window.location.href = `/editor?${params.toString()}`; }} style={{fontSize:"0.72rem",color:"#8B8FA8",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
+                  <button onClick={e => { e.stopPropagation(); const params = new URLSearchParams({ imageUrl: mini.imagen_url, plataforma: "youtube" }); window.location.href = `/editor?${params.toString()}`; }} className="btn-text" style={{fontSize:"0.72rem",color:"#8B8FA8",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
                     Editor
                   </button>
                   <button onClick={e => { e.stopPropagation(); descargarMini(mini.imagen_url, index); }} style={{fontSize:"0.72rem",color:"#FF4D00",background:"none",border:"none",cursor:"pointer",fontWeight:"600",padding:0}}>
