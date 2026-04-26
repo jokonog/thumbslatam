@@ -54,6 +54,7 @@ export default function Dashboard() {
   const [variaciones, setVariaciones] = useState<string[]>([]);
   const [varSeleccionada, setVarSeleccionada] = useState<string | null>(null);
   const [confirmando, setConfirmando] = useState(false);
+  const [modalCancelar, setModalCancelar] = useState(false);
 
   const plataformas = [
     { id: "youtube", label: "YouTube 16:9" },
@@ -426,15 +427,10 @@ export default function Dashboard() {
           <div style={{fontSize:"1rem",fontWeight:"700",color:"#06D6A0",textTransform:"capitalize"}}>{plan}</div>
           <div style={{color:"#8B8FA8",fontSize:"0.82rem",marginTop:"4px"}}>Plan actual</div>
           {(plan === "pro" || plan === "studio") && (
-            <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
-              onClick={(e) => {
-                if (!window.confirm("¿Seguro que deseas cancelar tu suscripción?\n\nAl cancelar perderás acceso a los beneficios de tu plan y tus créditos restantes al final del período de facturación.")) {
-                  e.preventDefault();
-                }
-              }}
-              style={{display:"inline-block",marginTop:"10px",fontSize:"0.75rem",color:"#FF4D4D",textDecoration:"none",borderBottom:"1px solid rgba(255,77,77,0.3)",paddingBottom:"1px"}}>
+            <button onClick={() => setModalCancelar(true)}
+              style={{display:"inline-block",marginTop:"10px",fontSize:"0.75rem",color:"#FF4D4D",background:"transparent",border:"none",borderBottom:"1px solid rgba(255,77,77,0.3)",paddingBottom:"1px",cursor:"pointer",paddingLeft:0,paddingRight:0}}>
               Cancelar suscripción
-            </a>
+            </button>
           )}
         </div>
         <a href="/tips-miniaturas-pro" style={{
@@ -745,6 +741,30 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Modal cancelar suscripción */}
+      {modalCancelar && (
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"1rem"}}>
+          <div style={{background:"#111827",borderRadius:"20px",padding:"2rem",maxWidth:"420px",width:"100%",border:"1px solid rgba(255,77,77,0.3)",boxShadow:"0 0 40px rgba(255,77,77,0.15)"}}>
+            <div style={{fontSize:"1.5rem",marginBottom:"0.75rem"}}>⚠️</div>
+            <h2 style={{fontSize:"1.2rem",fontWeight:800,fontFamily:"'Syne',sans-serif",marginBottom:"0.75rem",color:"#fff"}}>¿Cancelar tu suscripción?</h2>
+            <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"0.5rem"}}>Al cancelar perderás acceso a los beneficios de tu plan <strong style={{color:"#fff",textTransform:"capitalize"}}>{plan}</strong>.</p>
+            <p style={{color:"#8B8FA8",fontSize:"0.9rem",lineHeight:1.6,marginBottom:"1.5rem"}}>Tus créditos restantes estarán disponibles hasta el final del período de facturación actual.</p>
+            <div style={{display:"flex",gap:"0.75rem",justifyContent:"flex-end",flexWrap:"wrap"}}>
+              <button onClick={() => setModalCancelar(false)}
+                style={{padding:"0.65rem 1.25rem",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:"10px",color:"#8B8FA8",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif"}}>
+                Mantener suscripción
+              </button>
+              <a href="https://app.gumroad.com/subscriptions" target="_blank" rel="noopener noreferrer"
+                onClick={() => setModalCancelar(false)}
+                style={{padding:"0.65rem 1.25rem",background:"#FF4D4D",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",textDecoration:"none"}}>
+                Sí, cancelar
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
