@@ -420,6 +420,9 @@ export default function Dashboard() {
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"32px"}}>
         <Logo height={32} />
         <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+          <button onClick={() => { setTutorialStep(0); setShowTutorial(true); }} className="btn-ghost" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",cursor:"pointer"}}>
+            {tutorialLang === "es" ? "Tutorial" : "Tutorial"}
+          </button>
           <a href="/help" target="_blank" className="btn-ghost" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",fontSize:"0.85rem",textDecoration:"none"}}>¿Ayuda?</a>
           <button onClick={async () => { await fetch("/api/signout", { method: "POST" }); await supabase.auth.signOut({ scope: "local" }); window.location.href = "/registro?t=" + Date.now(); }} className="btn-ghost" style={{padding:"8px 16px",borderRadius:"8px",background:"transparent",border:"1px solid #3A3D52",color:"#8B8FA8",cursor:"pointer",fontSize:"0.85rem"}}>
             Cerrar sesion
