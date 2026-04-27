@@ -43,6 +43,10 @@ export default function Dashboard() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
+  const [tutorialLang, setTutorialLang] = useState<"es" | "en">("es");
+  const [typingText, setTypingText] = useState("");
   const [fechaCancelacion, setFechaCancelacion] = useState<string | null>(null);
   const [plataforma, setPlataforma] = useState("youtube");
   
@@ -83,6 +87,11 @@ export default function Dashboard() {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
       setFechaCancelacion(usuarioData.fecha_cancelacion || null);
+      // Mostrar tutorial si es primera vez
+      const tutorialVisto = localStorage.getItem("tl_tutorial_visto");
+      const savedLang = localStorage.getItem("tl_lang") as "es" | "en" || "es";
+      setTutorialLang(savedLang);
+      if (!tutorialVisto) setShowTutorial(true);
       setAvatarUrl(usuarioData.avatar_url || null);
       // Email bienvenida solo si es la primera vez y no se ha enviado antes
       if (usuarioData.creditos === 5 && !usuarioData.email_bienvenida_enviado) {
@@ -759,6 +768,233 @@ export default function Dashboard() {
         </div>
       )}
 
+
+      {/* Tutorial onboarding */}
+      {showTutorial && (
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:2000,padding:"1rem"}}>
+          <div style={{background:"#111827",borderRadius:"20px",padding:"1.5rem",maxWidth:"480px",width:"100%",border:"1px solid rgba(255,255,255,0.08)",maxHeight:"90vh",overflowY:"auto"}}>
+
+            {/* Header dots + controles */}
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"1.25rem"}}>
+              <div style={{display:"flex",gap:"5px"}}>
+                {[0,1,2,3,4,5,6].map(i => (
+                  <div key={i} style={{width:"7px",height:"7px",borderRadius:"50%",background:i===tutorialStep?"#FF4D00":"rgba(255,255,255,0.15)",transition:"background 0.2s",cursor:"pointer"}} onClick={() => setTutorialStep(i)} />
+                ))}
+              </div>
+              <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+                <button onClick={() => setTutorialLang(tutorialLang === "es" ? "en" : "es")} style={{fontSize:"11px",padding:"3px 8px",borderRadius:"4px",background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.1)",color:"rgba(255,255,255,0.7)",cursor:"pointer"}}>ES/EN</button>
+                <button onClick={() => { setShowTutorial(false); localStorage.setItem("tl_tutorial_visto","1"); }} style={{fontSize:"12px",color:"rgba(255,255,255,0.4)",background:"none",border:"none",cursor:"pointer"}}>{tutorialLang === "es" ? "Saltar" : "Skip"}</button>
+              </div>
+            </div>
+
+            {/* Contenido del paso */}
+            {tutorialStep === 0 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>👋</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 1 de 7":"Step 1 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Bienvenido a ThumbsLatam":"Welcome to ThumbsLatam"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"Genera miniaturas cinematográficas con IA en segundos. Este tour te guía por los pasos clave.":"Generate cinematic thumbnails with AI in seconds. This tour guides you through the key steps."}</p>
+                <div style={{background:"rgba(255,77,0,0.08)",borderRadius:"12px",padding:"1rem",textAlign:"center"}}>
+                  <div style={{fontSize:"40px",marginBottom:"0.5rem"}}>🎬</div>
+                  <div style={{display:"flex",gap:"8px",justifyContent:"center",flexWrap:"wrap"}}>
+                    {(tutorialLang==="es"?["Miniaturas IA","Sin diseñador","Para LATAM"]:["AI Thumbnails","No designer","For LATAM"]).map((t,i) => (
+                      <span key={i} style={{fontSize:"11px",padding:"3px 10px",background:"rgba(255,77,0,0.15)",color:"#FF4D00",borderRadius:"20px",border:"1px solid rgba(255,77,0,0.3)"}}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 1 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>💳</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 2 de 7":"Step 2 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Tus créditos disponibles":"Your available credits"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"Aquí ves cuántos créditos tienes. Fondo IA = 4 créditos · Con tu cara = 5 créditos.":"Here you see how many credits you have. AI background = 4 credits · With your face = 5 credits."}</p>
+                <div style={{background:"rgba(255,255,255,0.03)",borderRadius:"12px",padding:"1rem",border:"1px solid rgba(255,255,255,0.06)"}}>
+                  <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px"}}>
+                    <div style={{background:"#0D1020",borderRadius:"10px",padding:"14px",border:"2px solid #FF4D00",textAlign:"center",boxShadow:"0 0 0 0 rgba(255,77,0,0.6)",animation:"tutPulse 1.8s ease-out infinite"}}>
+                      <div style={{fontSize:"22px",fontWeight:800,color:"#FF4D00"}}>{creditos ?? 5}</div>
+                      <div style={{fontSize:"11px",color:"rgba(255,255,255,0.5)",marginTop:"2px"}}>{tutorialLang==="es"?"Créditos":"Credits"}</div>
+                    </div>
+                    <div style={{background:"#0D1020",borderRadius:"10px",padding:"14px",border:"1px solid rgba(255,255,255,0.06)",textAlign:"center",opacity:0.5}}>
+                      <div style={{fontSize:"22px",fontWeight:800,color:"#fff"}}>0</div>
+                      <div style={{fontSize:"11px",color:"rgba(255,255,255,0.5)",marginTop:"2px"}}>{tutorialLang==="es"?"Miniaturas":"Thumbnails"}</div>
+                    </div>
+                    <div style={{background:"#0D1020",borderRadius:"10px",padding:"14px",border:"1px solid rgba(255,255,255,0.06)",textAlign:"center",opacity:0.5}}>
+                      <div style={{fontSize:"14px",fontWeight:700,color:"#06D6A0",textTransform:"capitalize"}}>{plan}</div>
+                      <div style={{fontSize:"11px",color:"rgba(255,255,255,0.5)",marginTop:"2px"}}>Plan</div>
+                    </div>
+                  </div>
+                  <div style={{textAlign:"center",marginTop:"8px",color:"#FF4D00",fontSize:"16px",animation:"tutBounce 1s ease-in-out infinite"}}>↑</div>
+                  <div style={{textAlign:"center",fontSize:"11px",color:"#FF4D00"}}>{tutorialLang==="es"?"Tu saldo de créditos":"Your credit balance"}</div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 2 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>📸</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 3 de 7":"Step 3 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Sube tus fotos de referencia":"Upload your reference photos"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"El panel tiene 3 zonas: Izquierda, Centro y Derecha. Usa 'Usar mi cara' para integrar tu avatar guardado.":"The panel has 3 zones: Left, Center and Right. Use 'Use my face' to integrate your saved avatar."}</p>
+                <div style={{background:"#060810",borderRadius:"12px",padding:"12px",border:"1px solid rgba(255,255,255,0.08)"}}>
+                  <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"6px",marginBottom:"8px"}}>
+                    {[tutorialLang==="es"?"Izquierda":"Left",tutorialLang==="es"?"Centro":"Center",tutorialLang==="es"?"Derecha":"Right"].map((lbl,i) => (
+                      <div key={i} style={{borderRadius:"8px",border:i===0?"2px dashed #FF4D00":"1px dashed rgba(255,255,255,0.15)",aspectRatio:"3/4",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"4px",background:i===0?"rgba(255,77,0,0.08)":"rgba(255,255,255,0.02)",boxShadow:i===0?"0 0 0 0 rgba(255,77,0,0.6)":undefined,animation:i===0?"tutPulse 1.8s ease-out infinite":undefined}}>
+                        <span style={{fontSize:"16px",opacity:0.5}}>📎</span>
+                        <span style={{fontSize:"9px",color:"rgba(255,255,255,0.4)"}}>{lbl}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"6px"}}>
+                    {[0,1,2].map(i => (
+                      <button key={i} style={{background:i===0?"#FF4D00":"transparent",border:"1px solid #FF4D00",borderRadius:"6px",padding:"5px",color:i===0?"white":"#FF4D00",fontSize:"9px",cursor:"pointer"}}>{tutorialLang==="es"?"Usar mi cara":"Use my face"}</button>
+                    ))}
+                  </div>
+                  <div style={{textAlign:"left",marginTop:"8px",color:"#FF4D00",fontSize:"14px",animation:"tutBounce 1s ease-in-out infinite",paddingLeft:"10%"}}>↑</div>
+                  <div style={{fontSize:"11px",color:"#FF4D00",paddingLeft:"6px"}}>{tutorialLang==="es"?"Clic o arrastra tu foto":"Click or drag your photo"}</div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 3 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>✍️</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 4 de 7":"Step 4 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Describe la escena":"Describe the scene"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"Escribe el tema de tu video y describe la escena. Más detalle = mejor resultado.":"Write your video topic and describe the scene. More detail = better result."}</p>
+                <div style={{background:"rgba(255,255,255,0.03)",borderRadius:"12px",padding:"1rem",border:"2px solid #FF4D00",boxShadow:"0 0 0 0 rgba(255,77,0,0.6)",animation:"tutPulse 1.8s ease-out infinite"}}>
+                  <div style={{background:"#0D1020",borderRadius:"8px",padding:"10px 12px",minHeight:"70px",fontSize:"13px",color:"rgba(255,255,255,0.4)",fontStyle:"italic"}}>
+                    {tutorialLang==="es"?"Streamer gaming, expresión de shock, fondo ruinas oscuras...":"Gaming streamer, shock expression, dark ruins background..."}
+                    <span style={{display:"inline-block",width:"2px",height:"12px",background:"#FF4D00",verticalAlign:"middle",marginLeft:"1px",animation:"tutBlink 1s infinite"}}></span>
+                  </div>
+                  <div style={{textAlign:"left",marginTop:"8px",color:"#FF4D00",fontSize:"14px",animation:"tutBounce 1s ease-in-out infinite"}}>↑</div>
+                  <div style={{fontSize:"11px",color:"#FF4D00"}}>{tutorialLang==="es"?"Escribe aquí la descripción":"Write the description here"}</div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 4 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>🚀</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 5 de 7":"Step 5 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Genera tu miniatura":"Generate your thumbnail"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"Haz clic en el botón naranja. El proceso toma 30-120 segundos. No cierres la pantalla mientras genera.":"Click the orange button. The process takes 30-120 seconds. Do not close the screen while generating."}</p>
+                <div style={{background:"#060810",borderRadius:"12px",padding:"20px",textAlign:"center",border:"1px solid rgba(255,255,255,0.08)"}}>
+                  <div style={{fontSize:"11px",fontWeight:700,letterSpacing:"0.1em",marginBottom:"12px"}}>
+                    <span style={{color:"white"}}>Thumbs</span><span style={{color:"#FF4D00"}}>Latam</span>
+                  </div>
+                  <div style={{fontSize:"28px",marginBottom:"10px"}}>🎨</div>
+                  <div style={{fontSize:"14px",fontWeight:700,color:"white",marginBottom:"4px"}}>{tutorialLang==="es"?"Generando tu miniatura...":"Generating your thumbnail..."}</div>
+                  <div style={{fontSize:"11px",color:"rgba(255,255,255,0.4)",marginBottom:"12px"}}>{tutorialLang==="es"?"Generando 2 variaciones — unos 30 segundos":"Generating 2 variations — about 30 seconds"}</div>
+                  <div style={{height:"6px",background:"rgba(255,255,255,0.1)",borderRadius:"999px",overflow:"hidden",marginBottom:"8px"}}>
+                    <div style={{height:"100%",background:"#FF4D00",borderRadius:"999px",width:"70%",animation:"tutProgress 2s ease-in-out infinite"}}></div>
+                  </div>
+                  <div style={{fontSize:"10px",color:"rgba(255,255,255,0.3)"}}>{tutorialLang==="es"?"No cierres esta pantalla":"Do not close this screen"}</div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 5 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>🎯</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 6 de 7":"Step 6 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Elige tu variación":"Choose your variation"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"Aparecen 2 opciones generadas. Haz clic en la que más te guste para ir al editor.":"2 generated options appear. Click the one you prefer to go to the editor."}</p>
+                <div style={{background:"rgba(255,255,255,0.03)",borderRadius:"12px",padding:"1rem",border:"1px solid rgba(255,255,255,0.06)"}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px"}}>
+                    <div style={{aspectRatio:"16/9",borderRadius:"8px",background:"linear-gradient(135deg,#FF4D00,#1a0a00)",border:"2px solid #FF4D00",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",position:"relative",boxShadow:"0 0 0 0 rgba(255,77,0,0.6)",animation:"tutPulse 1.8s ease-out infinite"}}>
+                      <div style={{fontSize:"10px",fontWeight:700,color:"#FFD60A"}}>{tutorialLang==="es"?"OPCIÓN A":"OPTION A"}</div>
+                      <div style={{position:"absolute",top:"4px",right:"4px",background:"#06D6A0",color:"#000",fontSize:"9px",fontWeight:700,padding:"2px 5px",borderRadius:"4px"}}>★</div>
+                    </div>
+                    <div style={{aspectRatio:"16/9",borderRadius:"8px",background:"linear-gradient(135deg,#0D4F3C,#1E3A5F)",border:"1px solid rgba(255,255,255,0.1)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",opacity:0.6}}>
+                      <div style={{fontSize:"10px",fontWeight:700,color:"#D4AF37"}}>{tutorialLang==="es"?"OPCIÓN B":"OPTION B"}</div>
+                    </div>
+                  </div>
+                  <div style={{textAlign:"left",marginTop:"8px",color:"#FF4D00",fontSize:"14px",animation:"tutBounce 1s ease-in-out infinite",paddingLeft:"12%"}}>↑</div>
+                  <div style={{fontSize:"11px",color:"#FF4D00",paddingLeft:"8px"}}>{tutorialLang==="es"?"Haz clic en la que más te guste":"Click the one you prefer"}</div>
+                </div>
+              </div>
+            )}
+
+            {tutorialStep === 6 && (
+              <div>
+                <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                  <span style={{fontSize:"20px"}}>✅</span>
+                  <div>
+                    <p style={{fontSize:"10px",color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",margin:0}}>{tutorialLang==="es"?"Paso 7 de 7":"Step 7 of 7"}</p>
+                    <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Edita y descarga":"Edit and download"}</h2>
+                  </div>
+                </div>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"En el editor agrega texto, ajusta y descarga en alta resolución. ¡Lista para publicar!":"In the editor add text, adjust and download in high resolution. Ready to publish!"}</p>
+                <div style={{background:"rgba(255,255,255,0.03)",borderRadius:"12px",padding:"1rem",border:"1px solid rgba(255,255,255,0.06)"}}>
+                  <div style={{aspectRatio:"16/9",borderRadius:"8px",background:"linear-gradient(135deg,#FF4D00,#1a0a00)",marginBottom:"10px",display:"flex",alignItems:"center",justifyContent:"center",position:"relative"}}>
+                    <div style={{position:"absolute",bottom:"8px",left:"50%",transform:"translateX(-50%)",background:"rgba(0,0,0,0.7)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:"6px",padding:"4px 10px",fontSize:"11px",color:"#FFD60A",whiteSpace:"nowrap",boxShadow:"0 0 0 0 rgba(255,77,0,0.6)",animation:"tutPulse 1.8s ease-out infinite"}}>{tutorialLang==="es"?"TU TEXTO AQUÍ":"YOUR TEXT HERE"}</div>
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px"}}>
+                    <div style={{background:"rgba(255,255,255,0.05)",borderRadius:"8px",padding:"8px",textAlign:"center",fontSize:"12px",color:"rgba(255,255,255,0.6)",cursor:"pointer"}}>{tutorialLang==="es"?"✏️ Agregar texto":"✏️ Add text"}</div>
+                    <div style={{background:"#FF4D00",borderRadius:"8px",padding:"8px",textAlign:"center",fontSize:"12px",color:"white",fontWeight:700,cursor:"pointer",boxShadow:"0 0 0 0 rgba(255,77,0,0.6)",animation:"tutPulse 1.8s ease-out infinite"}}>{tutorialLang==="es"?"⬇ Descargar":"⬇ Download"}</div>
+                  </div>
+                  <div style={{textAlign:"right",marginTop:"8px",color:"#FF4D00",fontSize:"14px",animation:"tutBounce 1s ease-in-out infinite",paddingRight:"12%"}}>↑</div>
+                  <div style={{fontSize:"11px",color:"#FF4D00",textAlign:"right",paddingRight:"8px"}}>{tutorialLang==="es"?"Descarga tu miniatura":"Download your thumbnail"}</div>
+                </div>
+              </div>
+            )}
+
+            {/* Footer navegación */}
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"1.25rem",flexWrap:"wrap",gap:"8px"}}>
+              <label style={{display:"flex",alignItems:"center",gap:"6px",fontSize:"12px",color:"rgba(255,255,255,0.4)",cursor:"pointer"}}>
+                <input type="checkbox" onChange={e => { if(e.target.checked) localStorage.setItem("tl_tutorial_visto","1"); }} style={{width:"13px",height:"13px"}} />
+                {tutorialLang==="es"?"No mostrar de nuevo":"Don't show again"}
+              </label>
+              <div style={{display:"flex",gap:"8px"}}>
+                {tutorialStep > 0 && (
+                  <button onClick={() => setTutorialStep(s => s-1)} style={{fontSize:"13px",padding:"7px 14px",background:"transparent",border:"1px solid rgba(255,255,255,0.15)",borderRadius:"8px",color:"rgba(255,255,255,0.6)",cursor:"pointer"}}>{tutorialLang==="es"?"Anterior":"Back"}</button>
+                )}
+                <button onClick={() => {
+                  if (tutorialStep < 6) setTutorialStep(s => s+1);
+                  else { setShowTutorial(false); localStorage.setItem("tl_tutorial_visto","1"); }
+                }} style={{fontSize:"13px",padding:"7px 18px",background:"#FF4D00",color:"white",border:"none",borderRadius:"8px",cursor:"pointer",fontWeight:700}}>
+                  {tutorialStep === 6 ? (tutorialLang==="es"?"¡Empezar!":"Let's go!") : (tutorialLang==="es"?"Siguiente":"Next")}
+                </button>
+              </div>
+            </div>
+
+            <style>{`
+              @keyframes tutPulse { 0%{box-shadow:0 0 0 0 rgba(255,77,0,0.6)} 70%{box-shadow:0 0 0 10px rgba(255,77,0,0)} 100%{box-shadow:0 0 0 0 rgba(255,77,0,0)} }
+              @keyframes tutBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+              @keyframes tutBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+              @keyframes tutProgress { 0%{width:0%} 100%{width:72%} }
+            `}</style>
+
+          </div>
+        </div>
+      )}
       {/* Modal cancelar suscripción */}
       {modalCancelar && (
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"1rem"}}>
