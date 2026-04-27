@@ -785,7 +785,11 @@ export default function Dashboard() {
                 ))}
               </div>
               <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
-                <button onClick={() => setTutorialLang(tutorialLang === "es" ? "en" : "es")} style={{fontSize:"11px",padding:"3px 8px",borderRadius:"4px",background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.1)",color:"rgba(255,255,255,0.7)",cursor:"pointer"}}>ES/EN</button>
+                <div style={{display:"flex",gap:0,border:"1px solid rgba(255,255,255,0.2)",borderRadius:"6px",overflow:"hidden"}}>
+                  <button onClick={() => setTutorialLang("es")} style={{background:tutorialLang==="es"?"#FF4D00":"transparent",border:"none",color:tutorialLang==="es"?"white":"#8B8FA8",fontSize:"0.8rem",padding:"6px 12px",cursor:"pointer",fontWeight:600,fontFamily:"'DM Sans',sans-serif"}}>ES</button>
+                  <span style={{width:"1px",background:"rgba(255,255,255,0.2)"}}></span>
+                  <button onClick={() => setTutorialLang("en")} style={{background:tutorialLang==="en"?"#FF4D00":"transparent",border:"none",color:tutorialLang==="en"?"white":"#8B8FA8",fontSize:"0.8rem",padding:"6px 12px",cursor:"pointer",fontWeight:600,fontFamily:"'DM Sans',sans-serif"}}>EN</button>
+                </div>
                 <button onClick={() => { setShowTutorial(false); localStorage.setItem("tl_tutorial_visto","1"); }} style={{fontSize:"12px",color:"rgba(255,255,255,0.4)",background:"none",border:"none",cursor:"pointer"}}>{tutorialLang === "es" ? "Saltar" : "Skip"}</button>
               </div>
             </div>
