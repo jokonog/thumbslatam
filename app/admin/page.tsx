@@ -6,6 +6,7 @@ type Codigo = {
   id: string;
   codigo: string;
   creditos: number;
+  fecha_cancelacion?: string | null;
   creador_nombre: string;
   usado: boolean;
   usado_at: string | null;
@@ -344,6 +345,7 @@ export default function AdminPage() {
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Plan</th>
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Creditos</th>
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Registro</th>
+                <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Cancelado</th>
                 <th style={{textAlign:"left",padding:"8px",color:"#8B8FA8",fontWeight:500}}>Accion</th>
               </tr>
             </thead>
@@ -371,6 +373,15 @@ export default function AdminPage() {
                   </td>
                   <td style={{padding:"8px",color:"#8B8FA8",fontSize:"0.75rem"}}>
                     {new Date(u.created_at).toLocaleDateString("es-ES")}
+                  </td>
+                  <td style={{padding:"8px",fontSize:"0.75rem"}}>
+                    {u.fecha_cancelacion ? (
+                      <span style={{color:"#FF4D4D"}}>
+                        {new Date(u.fecha_cancelacion).toLocaleDateString("es-ES")}
+                      </span>
+                    ) : (
+                      <span style={{color:"#3A3D52"}}>—</span>
+                    )}
                   </td>
                   <td style={{padding:"8px"}}>
                     {editandoId === u.id ? (

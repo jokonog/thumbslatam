@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
   const { data: usuarios } = await supabaseAdmin
     .from("usuarios")
-    .select("id, email, creditos, plan, created_at, avatar_url")
+    .select("id, email, creditos, plan, created_at, avatar_url, fecha_cancelacion")
     .order("created_at", { ascending: false })
     .limit(50);
 
