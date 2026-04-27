@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     if (subscriptionCancelled === "true" || subscriptionEnded === "true" || refunded === "true") {
       await supabaseAdmin
         .from("usuarios")
-        .update({ plan: "gratis", creditos: 5 })
+        .update({ plan: "gratis", creditos: 5, fecha_cancelacion: new Date().toISOString() })
         .eq("id", usuario.id);
 
       await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/email`, {

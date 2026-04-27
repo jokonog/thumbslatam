@@ -43,7 +43,7 @@ export async function GET(request: Request) {
         // El usuario ya no tiene suscripción activa — bajar a gratis
         await supabaseAdmin
           .from("usuarios")
-          .update({ plan: "gratis", creditos: 5 })
+          .update({ plan: "gratis", creditos: 5, fecha_cancelacion: new Date().toISOString() })
           .eq("id", usuario.id);
 
         // Email de notificación

@@ -43,6 +43,7 @@ export default function Dashboard() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [fechaCancelacion, setFechaCancelacion] = useState<string | null>(null);
   const [plataforma, setPlataforma] = useState("youtube");
   
   const [modo, setModo] = useState<"fondo" | "cara">("fondo");
@@ -74,13 +75,14 @@ export default function Dashboard() {
 
     const { data: usuarioData } = await supabase
       .from("usuarios")
-      .select("creditos, plan, avatar_url, email_creditos_bajos_enviado, email_bienvenida_enviado")
+      .select("creditos, plan, avatar_url, email_creditos_bajos_enviado, email_bienvenida_enviado, fecha_cancelacion")
       .eq("id", authData.user.id)
       .maybeSingle();
 
     if (usuarioData) {
       setCreditos(usuarioData.creditos);
       setPlan(usuarioData.plan);
+      setFechaCancelacion(usuarioData.fecha_cancelacion || null);
       setAvatarUrl(usuarioData.avatar_url || null);
       // Email bienvenida solo si es la primera vez y no se ha enviado antes
       if (usuarioData.creditos === 5 && !usuarioData.email_bienvenida_enviado) {
@@ -433,6 +435,19 @@ export default function Dashboard() {
               style={{display:"inline-block",marginTop:"10px",fontSize:"0.75rem",color:"#FF4D4D",background:"transparent",border:"none",borderBottom:"1px solid rgba(255,77,77,0.3)",paddingBottom:"1px",cursor:"pointer",paddingLeft:0,paddingRight:0}}>
               Cancelar suscripción
             </button>
+          )}
+          {plan === "gratis" && fechaCancelacion && (
+            <div style={{marginTop:"10px"}}>
+              <div style={{fontSize:"0.72rem",color:"#8B8FA8",marginBottom:"6px"}}>
+                Cancelado el {new Date(fechaCancelacion).toLocaleDateString("es-ES", {day:"numeric",month:"long",year:"numeric"})}
+              </div>
+              <a href="https://gumroad.com/l/thumbslatam-pro" target="_blank" rel="noopener noreferrer"
+                onMouseEnter={(e) => { e.currentTarget.style.background="#FF6520"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background="#FF4D00"; }}
+                style={{display:"inline-block",padding:"6px 14px",background:"#FF4D00",color:"#fff",borderRadius:"8px",fontSize:"0.75rem",fontWeight:700,textDecoration:"none",fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
+                Reactivar suscripción →
+              </a>
+            </div>
           )}
         </div>
         <a href="/tips-miniaturas-pro" style={{
