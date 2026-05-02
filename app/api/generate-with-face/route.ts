@@ -2,7 +2,7 @@ import sharp from "sharp";
 import { NextResponse, NextRequest } from "next/server";
 import { verificarAuth } from "@/lib/auth-helper";
 
-export const maxDuration = 120;
+export const maxDuration = 300;
 import Replicate from "replicate";
 import { v2 as cloudinary } from "cloudinary";
 import { createClient } from "@supabase/supabase-js";
