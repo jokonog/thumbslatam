@@ -57,6 +57,8 @@ export default function Dashboard() {
   const [emocion, setEmocion] = useState("epico");
   const [generando, setGenerando] = useState(false);
   const [errorGen, setErrorGen] = useState("");
+  const [modalError, setModalError] = useState(false);
+  const [errorTimer, setErrorTimer] = useState(0);
   const [variaciones, setVariaciones] = useState<string[]>([]);
   const [varSeleccionada, setVarSeleccionada] = useState<string | null>(null);
   const [confirmando, setConfirmando] = useState(false);
@@ -217,6 +219,7 @@ export default function Dashboard() {
         window.location.href = `/editor?${params.toString()}`;
       }
     } catch (err: any) {
+      setModalError(true);
       const msg = err.message || "";
       if (msg.includes("Contenido no permitido") || msg.includes("Content not allowed")) {
         setErrorGen("⚠️ Contenido no permitido / Content not allowed — Tu descripción contiene términos que violan nuestras políticas de uso. No se descontaron créditos. / Your description contains terms that violate our usage policies. No credits were deducted.");
@@ -706,11 +709,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {errorGen && (
-          <div style={{padding:"10px 14px",borderRadius:"8px",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",color:"#ef4444",fontSize:"0.82rem",marginBottom:"10px"}}>
-            {errorGen}
-          </div>
-        )}
+
 
         <button onClick={generarVariaciones} suppressHydrationWarning style={{width:"100%",padding:"13px",borderRadius:"10px",background:!tema||sinCreditos?"#3A3D52":"#FF4D00",border:"none",color:"white",fontWeight:"700",fontSize:"0.95rem",cursor:!tema||sinCreditos?"not-allowed":"pointer",transition:"transform 0.1s",transform:"scale(1)",opacity:!tema||sinCreditos?0.6:1}} onMouseDown={e=>{ if(!tema||sinCreditos) return; e.currentTarget.style.transform="scale(0.97)"; }} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")}>
           {sinCreditos ? "Sin creditos — Mejora tu plan" : `Generar — se descontarán ${costo} creditos →`}
@@ -1002,6 +1001,66 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Modal de error general */}
+      {modalError && (() => {
+        const esContenido = errorGen.includes("permitid") || errorGen.includes("prohibid") || errorGen.includes("allowed") || errorGen.includes("Content not allowed");
+        const esCreditos = errorGen.includes("credito") || errorGen.includes("credit");
+        const esConexion = !esContenido && !esCreditos;
+        const titulo = esContenido ? "Contenido no permitido" : esCreditos ? "Sin créditos suficientes" : "Error de conexión";
+        const descripcion = esContenido ? errorGen : esCreditos ? errorGen : "Ocurrió un problema al conectar con el servicio de IA.";
+        return (
+          <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"1rem"}}>
+            <div style={{background:"#111827",borderRadius:"20px",padding:"2rem",maxWidth:"420px",width:"100%",border:"1px solid rgba(239,68,68,0.3)",boxShadow:"0 0 40px rgba(239,68,68,0.15)"}}>
+              <div style={{fontSize:"2rem",marginBottom:"0.75rem",textAlign:"center"}}>{esContenido ? "🚫" : esCreditos ? "💳" : "⚠️"}</div>
+              <h2 style={{fontSize:"1.1rem",fontWeight:800,fontFamily:"'Syne',sans-serif",marginBottom:"0.75rem",color:"#fff",textAlign:"center"}}>{titulo}</h2>
+              <p style={{color:"#8B8FA8",fontSize:"0.88rem",lineHeight:1.6,marginBottom:"0.5rem",textAlign:"center"}}>{descripcion}</p>
+              {esConexion && (
+                <p style={{color:"rgba(255,255,255,0.35)",fontSize:"0.78rem",textAlign:"center",marginBottom:"0.5rem",fontStyle:"italic"}}>
+                  Intenta de nuevo en unos segundos. Si el problema persiste, escribe a soporte@thumbslatam.com
+                </p>
+              )}
+              <div style={{display:"flex",gap:"0.75rem",justifyContent:"center",marginTop:"1.25rem",flexWrap:"wrap"}}>
+                {esConexion && (
+                  <>
+                    <button onClick={() => { setModalError(false); setErrorGen(""); generarVariaciones(); }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background="#FF6520"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background="#FF4D00"; }}
+                      style={{padding:"0.65rem 1.5rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
+                      Intentar de nuevo
+                    </button>
+                    <button onClick={() => window.location.reload()}
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor="#FF4D00"; e.currentTarget.style.color="#FF4D00"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.borderColor="rgba(255,255,255,0.15)"; e.currentTarget.style.color="rgba(255,255,255,0.5)"; }}
+                      style={{padding:"0.65rem 1.5rem",background:"transparent",border:"1px solid rgba(255,255,255,0.15)",borderRadius:"10px",color:"rgba(255,255,255,0.5)",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
+                      Recargar página
+                    </button>
+                  </>
+                )}
+                {esCreditos && (
+                  <>
+                    <a href="/#pricing" style={{padding:"0.65rem 1.5rem",background:"#FF4D00",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",textDecoration:"none"}}>
+                      Ver planes
+                    </a>
+                    <button onClick={() => { setModalError(false); setErrorGen(""); }}
+                      style={{padding:"0.65rem 1.5rem",background:"transparent",border:"1px solid rgba(255,255,255,0.15)",borderRadius:"10px",color:"rgba(255,255,255,0.5)",cursor:"pointer",fontSize:"0.9rem",fontFamily:"'DM Sans',sans-serif"}}>
+                      Cerrar
+                    </button>
+                  </>
+                )}
+                {esContenido && (
+                  <button onClick={() => { setModalError(false); setErrorGen(""); }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background="#FF6520"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background="#FF4D00"; }}
+                    style={{padding:"0.65rem 2rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
+                    Entendido
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
       {/* Modal cancelar suscripción */}
       {modalCancelar && (
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"1rem"}}>
