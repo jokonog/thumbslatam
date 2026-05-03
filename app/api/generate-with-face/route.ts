@@ -115,10 +115,20 @@ export async function POST(request: NextRequest) {
       folder: "thumbslatam-temp"
     });
 
-    // Subir avatar a Cloudinary
+    // Subir avatar a Cloudinary con moderacion de contenido explicito
     const avatarUpload = await cloudinary.uploader.upload(avatarFinal, {
-      folder: "thumbslatam-temp"
+      folder: "thumbslatam-temp",
+      moderation: "aws_rek"
     });
+
+    // Verificar si la imagen fue rechazada por contenido explicito
+    if (avatarUpload.moderation && (avatarUpload.moderation as any)[0]?.status === "rejected") {
+      await registrarIntentoProhibido(auth.userId);
+      return NextResponse.json({ 
+        error: "La imagen fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", 
+        codigo: "COPYRIGHT" 
+      }, { status: 400 });
+    }
 
     // PASO 2: Composición facial para integrar el avatar
     let imagenParaUpscale = escenaUpload.secure_url;
