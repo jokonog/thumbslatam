@@ -855,7 +855,7 @@ export default function Dashboard() {
                     <h2 style={{fontSize:"16px",fontWeight:700,margin:0,color:"#fff",fontFamily:"'Syne',sans-serif"}}>{tutorialLang==="es"?"Sube tus fotos de referencia":"Upload your reference photos"}</h2>
                   </div>
                 </div>
-                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"El panel tiene 3 zonas: Izquierda, Centro y Derecha. Usa 'Usar mi cara' para integrar tu avatar guardado.":"The panel has 3 zones: Left, Center and Right. Use 'Use my face' to integrate your saved avatar."}</p>
+                <p style={{fontSize:"13px",color:"rgba(255,255,255,0.65)",lineHeight:1.6,margin:"0 0 1rem"}}>{tutorialLang==="es"?"El panel tiene 3 zonas: Izquierda, Centro y Derecha. Si subes una foto directamente, la IA la usará como referencia pero priorizará el prompt. Si usas 'Usar mi cara' con tu avatar guardado, la IA preservará tus rasgos faciales con mayor precisión. Por eso cuesta 1 crédito más.":"The panel has 3 zones: Left, Center and Right. If you upload a photo directly, the AI uses it as a visual reference but prioritizes your prompt. If you use 'Use my face' with your saved avatar, the AI preserves your facial features with greater precision. That is why it costs 1 extra credit."}</p>
                 <div style={{background:"#060810",borderRadius:"12px",padding:"12px",border:"1px solid rgba(255,255,255,0.08)"}}>
                   <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"6px",marginBottom:"8px"}}>
                     {[tutorialLang==="es"?"Izquierda":"Left",tutorialLang==="es"?"Centro":"Center",tutorialLang==="es"?"Derecha":"Right"].map((lbl,i) => (
