@@ -1,6 +1,7 @@
 import sharp from "sharp";
 import { NextResponse, NextRequest } from "next/server";
 import { verificarAuth } from "@/lib/auth-helper";
+import { verificarSuspension, registrarIntentoProhibido } from "@/lib/suspension-helper";
 
 export const maxDuration = 300;
 import Replicate from "replicate";
@@ -42,8 +43,17 @@ export async function POST(request: NextRequest) {
     }
     const { userId, descripcion, estilo, orientacion, emocion, avatarOverride, posicionAvatar, imagenReferencia , plan } = await request.json();
 
+
+    // Verificar suspension
+    const suspension = await verificarSuspension(auth.userId);
+    if (suspension.suspendido) {
+      const hasta = new Date(suspension.hasta!).toLocaleString("es-ES", { dateStyle: "short", timeStyle: "short" });
+      return NextResponse.json({ error: `Tu cuenta está suspendida hasta el ${hasta} por intentos de generar contenido prohibido.`, codigo: "SUSPENDIDO" }, { status: 403 });
+    }
+
     if (contienePalabraProhibida(descripcion || "")) {
-      return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam." }, { status: 400 });
+      await registrarIntentoProhibido(auth.userId);
+      return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam.", codigo: "COPYRIGHT" }, { status: 400 });
     }
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense, dramatic cinematic lighting",

@@ -1004,15 +1004,16 @@ export default function Dashboard() {
 
       {/* Modal de error general */}
       {modalError && (() => {
-        const esContenido = errorGen.includes("permitid") || errorGen.includes("prohibid") || errorGen.includes("allowed") || errorGen.includes("Content not allowed");
-        const esCreditos = errorGen.includes("credito") || errorGen.includes("credit");
-        const esConexion = !esContenido && !esCreditos;
-        const titulo = esContenido ? "Contenido no permitido" : esCreditos ? "Sin créditos suficientes" : "Error de conexión";
-        const descripcion = esContenido ? errorGen : esCreditos ? errorGen : "Ocurrió un problema al conectar con el servicio de IA.";
+        const esSuspendido = errorGen.includes("suspendida");
+        const esContenido = !esSuspendido && (errorGen.includes("permitid") || errorGen.includes("prohibid") || errorGen.includes("allowed") || errorGen.includes("Content not allowed"));
+        const esCreditos = !esSuspendido && (errorGen.includes("credito") || errorGen.includes("credit"));
+        const esConexion = !esContenido && !esCreditos && !esSuspendido;
+        const titulo = esSuspendido ? "Cuenta suspendida" : esContenido ? "Contenido no permitido" : esCreditos ? "Sin créditos suficientes" : "Error de conexión";
+        const descripcion = esSuspendido ? errorGen : esContenido ? errorGen : esCreditos ? errorGen : "Ocurrió un problema al conectar con el servicio de IA.";
         return (
           <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:"1rem"}}>
             <div style={{background:"#111827",borderRadius:"20px",padding:"2rem",maxWidth:"420px",width:"100%",border:"1px solid rgba(239,68,68,0.3)",boxShadow:"0 0 40px rgba(239,68,68,0.15)"}}>
-              <div style={{fontSize:"2rem",marginBottom:"0.75rem",textAlign:"center"}}>{esContenido ? "🚫" : esCreditos ? "💳" : "⚠️"}</div>
+              <div style={{fontSize:"2rem",marginBottom:"0.75rem",textAlign:"center"}}>{esSuspendido ? "🔒" : esContenido ? "🚫" : esCreditos ? "💳" : "⚠️"}</div>
               <h2 style={{fontSize:"1.1rem",fontWeight:800,fontFamily:"'Syne',sans-serif",marginBottom:"0.75rem",color:"#fff",textAlign:"center"}}>{titulo}</h2>
               <p style={{color:"#8B8FA8",fontSize:"0.88rem",lineHeight:1.6,marginBottom:"0.5rem",textAlign:"center"}}>{descripcion}</p>
               {esConexion && (
@@ -1053,6 +1054,14 @@ export default function Dashboard() {
                     onMouseEnter={(e) => { e.currentTarget.style.background="#FF6520"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background="#FF4D00"; }}
                     style={{padding:"0.65rem 2rem",background:"#FF4D00",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
+                    Entendido
+                  </button>
+                )}
+                {esSuspendido && (
+                  <button onClick={() => { setModalError(false); setErrorGen(""); }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background="#555"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background="#3A3D52"; }}
+                    style={{padding:"0.65rem 2rem",background:"#3A3D52",border:"none",borderRadius:"10px",color:"#fff",cursor:"pointer",fontSize:"0.9rem",fontWeight:700,fontFamily:"'DM Sans',sans-serif",transition:"all 0.2s"}}>
                     Entendido
                   </button>
                 )}
