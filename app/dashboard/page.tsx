@@ -1005,7 +1005,7 @@ export default function Dashboard() {
       {/* Modal de error general */}
       {modalError && (() => {
         const esSuspendido = errorGen.includes("suspendida");
-        const esContenido = !esSuspendido && (errorGen.includes("permitid") || errorGen.includes("prohibid") || errorGen.includes("allowed") || errorGen.includes("Content not allowed"));
+        const esContenido = !esSuspendido && (errorGen.includes("permitid") || errorGen.includes("prohibid") || errorGen.includes("allowed") || errorGen.includes("Content not allowed") || errorGen.includes("rechazada") || errorGen.includes("copyright") || errorGen.includes("⚠️"));
         const esCreditos = !esSuspendido && (errorGen.includes("credito") || errorGen.includes("credit"));
         const esConexion = !esContenido && !esCreditos && !esSuspendido;
         const titulo = esSuspendido ? "Cuenta suspendida" : esContenido ? "Contenido no permitido" : esCreditos ? "Sin créditos suficientes" : "Error de conexión";
