@@ -141,6 +141,23 @@ export async function POST(request: Request) {
       `;
     }
 
+    if (tipo === "suspension_permanente") {
+      subject = "Tu cuenta de ThumbsLatam ha sido suspendida permanentemente";
+      html = `
+        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#060810;color:white;padding:32px;border-radius:12px">
+          <img src="https://www.thumbslatam.com/logo.png" alt="ThumbsLatam" style="height:36px;margin-bottom:24px"/>
+          <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 12px;color:#ef4444">Cuenta suspendida permanentemente</h1>
+          <p style="color:#8B8FA8;line-height:1.6;margin:0 0 20px">
+            Tu cuenta ha sido suspendida de forma permanente por intentos reiterados de generar contenido que viola nuestras políticas de uso, después de haber recibido una suspensión temporal previa.
+          </p>
+          <p style="color:#8B8FA8;line-height:1.6;margin:0 0 20px">
+            Si crees que esto es un error, escribe a <a href="mailto:soporte@thumbslatam.com" style="color:#FF4D00">soporte@thumbslatam.com</a>.
+          </p>
+          <p style="color:#3A3D52;font-size:0.78rem;margin-top:32px">ThumbsLatam — Miniaturas para streamers latinos</p>
+        </div>
+      `;
+    }
+
     if (tipo === "nuevo_usuario_admin") {
       subject = `Nuevo usuario registrado: ${email}`;
       html = `
