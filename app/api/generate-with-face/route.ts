@@ -2,6 +2,9 @@ import sharp from "sharp";
 import { NextResponse, NextRequest } from "next/server";
 import { verificarAuth } from "@/lib/auth-helper";
 import { verificarSuspension, registrarIntentoProhibido } from "@/lib/suspension-helper";
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export const maxDuration = 300;
 import Replicate from "replicate";
@@ -54,6 +57,41 @@ export async function POST(request: NextRequest) {
     if (contienePalabraProhibida(descripcion || "")) {
       await registrarIntentoProhibido(auth.userId);
       return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam.", codigo: "COPYRIGHT" }, { status: 400 });
+    }
+
+    // Moderacion de imagen con OpenAI antes de procesar
+    if (avatarOverride && avatarOverride.startsWith("data:image")) {
+      try {
+        const moderationResponse = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "image_url",
+                  image_url: { url: avatarOverride, detail: "low" }
+                },
+                {
+                  type: "text",
+                  text: "Does this image contain explicit nudity, pornographic content, or sexually explicit material? Answer only YES or NO."
+                }
+              ]
+            }
+          ],
+          max_tokens: 5,
+        });
+        const respuesta = moderationResponse.choices[0]?.message?.content?.trim().toUpperCase();
+        if (respuesta === "YES") {
+          await registrarIntentoProhibido(auth.userId);
+          return NextResponse.json({ 
+            error: "La imagen fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", 
+            codigo: "COPYRIGHT" 
+          }, { status: 400 });
+        }
+      } catch (modErr) {
+        console.log("Moderacion OpenAI fallo, continuando:", modErr);
+      }
     }
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense, dramatic cinematic lighting",
