@@ -39,8 +39,9 @@ const supabaseAdmin = createClient(
 );
 
 export async function POST(request: NextRequest) {
+  let auth: { userId: string; email: string } | null = null;
   try {
-    const auth = await verificarAuth(request);
+    auth = await verificarAuth(request);
     if (!auth) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
@@ -273,6 +274,11 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error("generate-with-face error:", error.message);
+    const errMsg = (error.message || "").toLowerCase();
+    if (errMsg.includes("sensitive") || errMsg.includes("flagged") || errMsg.includes("e005") || errMsg.includes("safety")) {
+      if (auth?.userId) await registrarIntentoProhibido(auth.userId);
+      return NextResponse.json({ error: "La imagen fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", codigo: "COPYRIGHT" }, { status: 400 });
+    }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
