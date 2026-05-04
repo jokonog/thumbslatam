@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Moderacion de imagen con OpenAI antes de procesar
-    if (avatarOverride && avatarOverride.startsWith("data:image")) {
+    if (avatarOverride) {
       try {
         const moderationResponse = await openai.chat.completions.create({
           model: "gpt-4o-mini",
@@ -70,7 +70,10 @@ export async function POST(request: NextRequest) {
               content: [
                 {
                   type: "image_url",
-                  image_url: { url: avatarOverride, detail: "low" }
+                  image_url: { 
+                    url: avatarOverride.startsWith("data:image") ? avatarOverride : avatarOverride,
+                    detail: "low" 
+                  }
                 },
                 {
                   type: "text",
