@@ -95,6 +95,39 @@ export async function POST(request: NextRequest) {
         console.log("Moderacion OpenAI fallo, continuando:", modErr);
       }
     }
+    // Moderacion de imagenReferencia con OpenAI Moderation API
+    console.log("imagenReferencia tipo:", imagenReferencia ? imagenReferencia.substring(0, 50) : "null");
+    if (imagenReferencia) {
+      try {
+        let urlParaModerarRef = imagenReferencia;
+        if (imagenReferencia.startsWith("data:image")) {
+          const tempUploadRef = await cloudinary.uploader.upload(imagenReferencia, {
+            folder: "thumbslatam-moderation"
+          });
+          urlParaModerarRef = tempUploadRef.secure_url;
+        }
+        const moderationResponseRef = await openai.moderations.create({
+          model: "omni-moderation-latest",
+          input: [
+            {
+              type: "image_url",
+              image_url: { url: urlParaModerarRef }
+            }
+          ],
+        });
+        const resultRef = moderationResponseRef.results[0];
+        console.log("OpenAI moderation imagenReferencia flagged:", resultRef.flagged, "sexual:", resultRef.categories.sexual);
+        if (resultRef.flagged && (resultRef.categories.sexual || resultRef.categories["sexual/minors"])) {
+          await registrarIntentoProhibido(auth.userId);
+          return NextResponse.json({ 
+            error: "La imagen de referencia fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", 
+            codigo: "COPYRIGHT" 
+          }, { status: 400 });
+        }
+      } catch (modErrRef) {
+        console.log("Moderacion OpenAI imagenReferencia fallo, continuando:", modErrRef);
+      }
+    }
     const emocionMap: Record<string, string> = {
       epico: "epic, powerful, intense, dramatic cinematic lighting",
       emocionado: "excited, energetic, enthusiastic, vibrant warm colors",
