@@ -62,16 +62,26 @@ export async function POST(request: NextRequest) {
     // Moderacion de imagen con OpenAI Moderation API
     if (avatarOverride) {
       try {
+        // Si es base64, subir primero a Cloudinary para obtener URL publica
+        let urlParaModerar = avatarOverride;
+        if (avatarOverride.startsWith("data:image")) {
+          const tempUpload = await cloudinary.uploader.upload(avatarOverride, {
+            folder: "thumbslatam-moderation"
+          });
+          urlParaModerar = tempUpload.secure_url;
+        }
+
         const moderationResponse = await openai.moderations.create({
           model: "omni-moderation-latest",
           input: [
             {
               type: "image_url",
-              image_url: { url: avatarOverride }
+              image_url: { url: urlParaModerar }
             }
           ],
         });
         const result = moderationResponse.results[0];
+        console.log("OpenAI moderation flagged:", result.flagged, "sexual:", result.categories.sexual);
         if (result.flagged && (result.categories.sexual || result.categories["sexual/minors"])) {
           await registrarIntentoProhibido(auth.userId);
           return NextResponse.json({ 
