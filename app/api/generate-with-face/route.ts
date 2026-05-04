@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
         if (resultRef.flagged && (resultRef.categories.sexual || resultRef.categories["sexual/minors"])) {
           await registrarIntentoProhibido(auth.userId);
           return NextResponse.json({ 
-            error: "La imagen de referencia fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", 
+            error: "Imagen rechazada por contenido inapropiado. Sube una foto apropiada para continuar. La reincidencia puede suspender tu cuenta.", 
             codigo: "COPYRIGHT" 
           }, { status: 400 });
         }
