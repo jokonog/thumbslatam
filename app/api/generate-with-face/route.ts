@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Moderacion de imagen con OpenAI Moderation API
+    console.log("avatarOverride tipo:", avatarOverride ? avatarOverride.substring(0, 50) : "null");
     if (avatarOverride) {
       try {
         // Si es base64, subir primero a Cloudinary para obtener URL publica
