@@ -178,9 +178,6 @@ export default function Dashboard() {
         });
         const data = await res.json();
         if (data.error) {
-          if (data.codigo === "COPYRIGHT") {
-            throw new Error("⚠️ La imagen fue rechazada. Si usaste una imagen de referencia con copyright, intenta sin ella o usa un prompt de texto.");
-          }
           throw new Error(data.error);
         }
         // Cara solo genera 1 por el costo
@@ -200,9 +197,6 @@ export default function Dashboard() {
       });
       const data = await res.json();
       if (data.error) {
-        if (data.codigo === "COPYRIGHT") {
-          throw new Error("⚠️ La imagen fue rechazada por contener contenido con derechos de autor. Por favor usa una imagen propia o genera el fondo con IA.");
-        }
         throw new Error(data.error);
       }
 
