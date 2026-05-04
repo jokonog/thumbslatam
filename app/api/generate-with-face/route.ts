@@ -59,33 +59,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Contenido no permitido por las politicas de uso de ThumbsLatam.", codigo: "COPYRIGHT" }, { status: 400 });
     }
 
-    // Moderacion de imagen con OpenAI antes de procesar
+    // Moderacion de imagen con OpenAI Moderation API
     if (avatarOverride) {
       try {
-        const moderationResponse = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
-          messages: [
+        const moderationResponse = await openai.moderations.create({
+          model: "omni-moderation-latest",
+          input: [
             {
-              role: "user",
-              content: [
-                {
-                  type: "image_url",
-                  image_url: { 
-                    url: avatarOverride.startsWith("data:image") ? avatarOverride : avatarOverride,
-                    detail: "low" 
-                  }
-                },
-                {
-                  type: "text",
-                  text: "Does this image contain explicit nudity, pornographic content, or sexually explicit material? Answer only YES or NO."
-                }
-              ]
+              type: "image_url",
+              image_url: { url: avatarOverride }
             }
           ],
-          max_tokens: 5,
         });
-        const respuesta = moderationResponse.choices[0]?.message?.content?.trim().toUpperCase();
-        if (respuesta === "YES") {
+        const result = moderationResponse.results[0];
+        if (result.flagged && (result.categories.sexual || result.categories["sexual/minors"])) {
           await registrarIntentoProhibido(auth.userId);
           return NextResponse.json({ 
             error: "La imagen fue rechazada por contener contenido explícito o inapropiado. Por favor usa una foto apropiada.", 
