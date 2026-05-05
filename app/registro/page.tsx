@@ -41,6 +41,23 @@ export default function Registro() {
   const txt = t[lang];
   async function registrar() {
     setCargando(true);
+    // Bloquear emails temporales
+    const dominiosTemporales = [
+      "mailinator.com", "guerrillamail.com", "tempmail.com", "temp-mail.org",
+      "throwam.com", "yopmail.com", "sharklasers.com", "guerrillamailblock.com",
+      "grr.la", "guerrillamail.info", "trashmail.com", "dispostable.com",
+      "maildrop.cc", "spamgourmet.com", "fakeinbox.com", "mailnull.com",
+      "spamex.com", "mailexpire.com", "temporarymail.com", "throwam.com",
+      "spamfree24.org", "spam4.me", "trashmail.at", "trashmail.io",
+      "discard.email", "mailnesia.com", "spamspot.com", "tempr.email"
+    ];
+    const dominio = email.split("@")[1]?.toLowerCase();
+    if (dominiosTemporales.includes(dominio)) {
+      setMensaje(lang === "es" ? "No se permiten emails temporales. Usa tu email real." : "Temporary emails are not allowed. Please use your real email.");
+      setCargando(false);
+      return;
+    }
+
     const { error: errReg } = await supabase.auth.signUp({ email, password });
     if (errReg) {
       const m = errReg.message.toLowerCase();
